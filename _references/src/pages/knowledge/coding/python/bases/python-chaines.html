@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<title>Python - Chaînes de caractères</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="C:\Users\Utilisateur\VSrepos\SitePerso\css\style.css">
+</head>
+
+<body>
+
+	<header>
+		<nav>
+			<ul>
+				<li><a href="C:\Users\Utilisateur\VSrepos\SitePerso\html\index.html">Accueil</a></li>
+				<li><a href="C:\Users\Utilisateur\VSrepos\SitePerso\html\cours.html">Cours</a></li>
+				<li><a href="C:\Users\Utilisateur\VSrepos\SitePerso\html\projets.html">Projets</a></li>
+				<li><a href="C:\Users\Utilisateur\VSrepos\SitePerso\html\contact.html">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main>
+		<h2>Chaînes de caractères en Python</h2>
+
+		<section>
+			<h3>Définition des chaînes de caractères</h3>
+			<p>Les chaînes de caractères sont des séquences de caractères, définies entre guillemets simples ('...') ou doubles ("...") :</p>
+			<pre><code>
+ma_chaine = "Hello, world!"
+print(ma_chaine)
+			</code></pre>
+		</section>
+
+		<section>
+			<h3>Concaténation de chaînes de caractères</h3>
+			<p>Les chaînes de caractères peuvent être concaténées avec l'opérateur '+' :</p>
+			<pre><code>
+chaine1 = "Bonjour"
+chaine2 = "le monde"
+ma_chaine = chaine1 + ", " + chaine2 + "!"
+print(ma_chaine)</code></pre>
+		</section>
+
+		<section>
+			<h3>Formatage des chaînes de caractères</h3>
+			<p>Les chaînes de caractères peuvent être formatées avec la méthode 'format()' :</p>
+			<pre><code>nom = "Dupont"
+prenom = "Jean"
+age = 30
+ma_chaine = "Je m'appelle {} {}, j'ai {} ans.".format(prenom, nom, age)
+print(ma_chaine)</code></pre>
+		</section>
+
+		<section>
+			<h3>Méthodes des chaînes de caractères</h3>
+			<p>Les chaînes de caractères ont de nombreuses méthodes intégrées, telles que 'upper()', 'lower()', 'strip()', 'split()', etc. :</p>
+			<pre><code>ma_chaine = "   Hello, world!   "
+print(ma_chaine.upper())  # mettre en majuscules
+print(ma_chaine.lower())  # mettre en minuscules
+print(ma_chaine.strip())  # supprimer les espaces en début et fin de chaîne
+print(ma_chaine.split(", "))  # diviser la chaîne en une liste de sous-chaînes</code></pre>
+		</section>
+
+	</main>
+
+</body>
+
+</html>

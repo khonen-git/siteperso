@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Variables en Python - Théo Charron</title>
+    <link rel="stylesheet" href="C:\Users\Utilisateur\VSrepos\SitePerso\css\style.css">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="C:\Users\Utilisateur\VSrepos\SitePerso\html\index.html">Accueil</a></li>
+          <li><a href="C:\Users\Utilisateur\VSrepos\SitePerso\html\cours.html">Cours</a></li>
+          <li><a href="C:\Users\Utilisateur\VSrepos\SitePerso\html\projets.html">Projets</a></li>
+          <li><a href="C:\Users\Utilisateur\VSrepos\SitePerso\html\contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Variables en Python</h1>
+
+      <h2>Types de données en Python</h2>
+      <p>En Python, les types de données les plus courants sont:</p>
+      <ul>
+        <li>Nombres entiers (int)</li>
+        <li>Nombres à virgule flottante (float)</li>
+        <li>Chaînes de caractères (str)</li>
+        <li>Listes (list)</li>
+        <li>Tuples (tuple)</li>
+        <li>Dictionnaires (dict)</li>
+        <li>Ensembles (set)</li>
+        <li>Booléens (bool)</li>
+        <li>Objets None (NoneType)</li>
+      </ul>
+
+      <h2>Règles pour nommer les variables</h2>
+      <p>Les variables en Python doivent respecter certaines conventions de nommage. Les noms de variables doivent être en minuscules, avec des mots séparés par des underscores (_). Les noms de variables ne doivent pas commencer par des chiffres, ni contenir d'espaces. Les noms de variables doivent être descriptifs et concis. Par exemple:</p>
+      <pre><code>ma_variable = 42
+nom_complet = "John Smith"
+liste_de_nombres = [1, 2, 3, 4]</code></pre>
+
+      <h2>Portée des variables</h2>
+      <p>En Python, la portée d'une variable peut être locale ou globale. Les variables définies à l'intérieur d'une fonction ont une portée locale, tandis que les variables définies à l'extérieur d'une fonction ont une portée globale. Par exemple:</p>
+      <pre><code>x = 42  # variable globale
+
+def foo():
+  x = 21  # variable locale
+  print(x)
+
+foo()  # affiche 21
+print(x)  # affiche 42</code></pre>
+
+      <h2>Opérations de base sur les variables</h2>
+      <p>En Python, vous pouvez effectuer plusieurs opérations sur les variables, notamment:</p>
+      <ul>
+        <li>Affectation: <code>x = 42</code></li>
+        <li>Modification: <code>x = x + 1</code></li>
+        <li>Suppression: <code>del x</code></li>
+      </ul>
+
+      <h2>Conversions de type</h2>
+      <p>En Python, vous pouvez convertir une variable d'un type de données à un autre en utilisant des fonctions intégrées telles que <code>int()</code>, <code>float()</code>, <code>str()</code>, etc. Par exemple:</p>
+      <pre><code>x = "42"
+print(int(x))  # convertit x en un entier</code></pre>
+      
+      <h2>Fonctions intégrées liées aux variables</h2>
+      <p>Python offre de nombreuses fonctions intégrées qui peuvent être utilisées avec des variables. Voici quelques exemples:</p>
+      <ul>
+        <li><code>len()</code>: renvoie la longueur d'une chaîne de caractères ou d'une liste</li>
+        <li><code>str()</code>: convertit un objet en une chaîne de caractères</li>
+        <li><code>int()</code>: convertit un objet en un nombre entier</li>
+        <li><code>float()</code>: convertit un objet en un nombre à virgule flottante</li>
+        <li><code>type()</code>: renvoie le type de données d'un objet</li>
+      </ul>
+      <p>Voici quelques exemples d'utilisation:</p>
+      <pre><code>ma_liste = [1, 2, 3, 4, 5]
+ma_chaine = "Hello, World!"
+mon_nombre = 42
+
+print(len(ma_liste))  # affiche 5
+print(str(mon_nombre))  # affiche "42"
+print(int(3.14))  # affiche 3
+print(float(42))  # affiche 42.0
+print(type(ma_chaine))  # affiche &lt;class 'str'&gt;</code></pre>
+
+    </main>
+    <footer>
+      <p>© 2023 Théo Charron</p>
+    </footer>
+  </body>
+</html>

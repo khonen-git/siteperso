@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Python - Les classes</title>
+	<link rel="stylesheet" href="C:\Users\Utilisateur\VSrepos\SitePerso\css\style.css">
+</head>
+
+<body>
+
+	<header>
+		<nav>
+			<ul>
+				<li><a href="C:\Users\Utilisateur\VSrepos\SitePerso\html\index.html">Accueil</a></li>
+				<li><a href="C:\Users\Utilisateur\VSrepos\SitePerso\html\cours.html">Cours</a></li>
+				<li><a href="C:\Users\Utilisateur\VSrepos\SitePerso\html\projets.html">Projets</a></li>
+				<li><a href="C:\Users\Utilisateur\VSrepos\SitePerso\html\contact.html">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main>
+		<h2>Les classes en Python</h2>
+
+		<section>
+			<h3>Introduction</h3>
+			<p>Les classes permettent de définir de nouveaux types de données en regroupant des variables et des fonctions liées :</p>
+			<pre><code># définir une classe 'Personne'
+class Personne:
+    def __init__(self, nom, age):
+        self.nom = nom
+        self.age = age
+
+    def afficher_infos(self):
+        print(f"{self.nom} a {self.age} ans")
+
+# créer une instance de la classe 'Personne'
+p1 = Personne("Jean", 30)
+
+# appeler la méthode 'afficher_infos' de l'instance
+p1.afficher_infos()</code></pre>
+		</section>
+
+		<section>
+			<h3>Méthodes et attributs</h3>
+			<p>Les fonctions définies dans une classe sont appelées des "méthodes", et les variables définies dans une classe sont appelées des "attributs" :</p>
+			<pre><code># définir une classe 'Personne'
+class Personne:
+    def __init__(self, nom, age):
+        self.nom = nom
+        self.age = age
+
+    def afficher_infos(self):
+        print(f"{self.nom} a {self.age} ans")
+
+# créer une instance de la classe 'Personne'
+p1 = Personne("Jean", 30)
+
+# accéder à l'attribut 'nom' de l'instance
+print(p1.nom)
+
+# appeler la méthode 'afficher_infos' de l'instance
+p1.afficher_infos()</code></pre>
+		</section>
+
+		<section>
+			<h3>Héritage</h3>
+			<p>Les classes peuvent hériter de classes existantes, en utilisant le mécanisme d'héritage :</p>
+			<pre><code># définir une classe 'Employe', qui hérite de 'Personne'
+class Employe(Personne):
+    def __init__(self, nom, age, salaire):
+        super().__init__(nom, age)
+        self.salaire = salaire
+
+    def afficher_infos(self):
+        super().afficher_infos()
+        print(f"Son salaire est de {self.salaire} euros")
+
+# créer une instance de la classe 'Employe'
+e1 = Employe("Marie", 25, 2000)
+
+# appeler la méthode 'afficher_infos' de l'instance
+e1.afficher_infos()</code></pre>
+		</section>
+
+	</main>
+
+</body>
+
+</html>

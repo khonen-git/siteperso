@@ -1,0 +1,126 @@
+/* Styles pour le conteneur du menu latéral */
+.knowledge-menu{
+    background-color: #ff3650;
+    position: fixed; /* Fixe le menu à gauche de l'écran */
+    top: 0px; /* Espace sous le header (ajuster en fonction de la hauteur du header) */
+    left: 0;
+    width: 250px; /* Largeur du menu latéral */
+    height: calc(100vh); /* 100% de la hauteur de la fenêtre moins la hauteur du header et du footer */
+    overflow-y: auto; /* Permet le défilement si le menu dépasse la hauteur disponible */
+    color: #fff; /* Couleur du texte */
+    z-index: 1000; /* Assure que le menu reste au-dessus du contenu */
+}
+
+.knowledge-iframe{
+    border: 0;
+    width: 250px;
+}
+
+.knowledge-nav {
+    width: 250px; /* Largeur du menu latéral */
+    height: 100%; /* Couleur de fond du menu */
+    color: #fff; /* Couleur du texte */
+    position: relative; /* Fixer le menu latéral à gauche de la page */
+    top: auto;
+    left: 0;
+    bottom: auto;
+    overflow-y: auto; /* Ajouter une barre de défilement vertical si le contenu dépasse la hauteur du menu */
+}
+
+/* Styles pour la liste de navigation principale */
+/*.toctree-l1__list, .toctree-l2__list, .toctree-l3__list, .toctree-l4__list {*/
+.toctree-l2__list, .toctree-l3__list, .toctree-l4__list, .toctree-l5__list {
+    list-style: none;
+    padding: 0;
+    margin-left: 0rem;
+}
+
+/* Styles pour les éléments de menu */
+.has-children {
+    display: flex !important;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0px;
+    border-bottom: 0 solid #3a5773; /* Ligne de séparation entre les éléments */
+}
+
+/* Styles pour les liens de menu */
+.reference-internal {
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s ease; /* Ajouter une transition au survol */
+    display: inline-flex; /* Inline-flex permet au lien de rester en ligne mais avec flexbox */
+    align-items: center; /* Centrer verticalement le texte et l'icône */
+    justify-content: space-between; /* Texte à gauche, flèche à droite */
+    width: 80%;
+    flex: 1;
+    max-width: calc(100% - 40px);
+}
+
+/* Style au survol d'un lien de menu */
+.reference-internal:hover {
+    background-color: #3a5773; /* Couleur de fond au survol */
+}
+
+/* Styles pour afficher/masquer les sous-catégories */
+.has-children > ul {
+    max-height: 0; /* Masque les sous-catégories par défaut */
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out; /* Animation de transition en hauteur */
+}
+
+.has-children.open > ul {
+    max-height: 1000px; /* Affiche les sous-catégories lorsqu'elles sont ouvertes */
+}
+
+/* Nouveaux styles pour les flèches */
+.arrow-down {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.arrow-down svg {
+    width: 100%;
+    height: 100%;
+    transition: fill 0.2s ease;
+}
+
+.arrow-down:hover svg {
+    fill: #fff;
+}
+
+/* Conserver la rotation existante */
+.arrow-down.upside-down {
+    transform: rotate(180deg);
+}
+
+/* Amélioration de l'affichage des sous-menus */
+.has-children > ul {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-left: 1rem;
+}
+
+.has-children.open > ul {
+    max-height: 100vh;
+}
+
+/* Design plus moderne */
+.reference-internal {
+    padding: 8px 12px;
+    border-radius: 6px;
+    width: auto;
+    font-size: 0.95em;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.reference-internal:hover {
+    background-color: #3a5773;
+    padding-left: 16px;
+}

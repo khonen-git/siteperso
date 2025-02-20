@@ -1,0 +1,11 @@
+/* CSS pour la disposition en deux colonnes */
+.knowledge-container {
+    display: flex;
+}
+
+.knowledge-content {
+    flex: 1; /* La colonne de contenu prendra le reste de l'espace disponible */
+    padding: 20px; /* Ajoutez de la marge pour l'espace entre le menu et le contenu */
+    background-color: #f4f4f4; /* Couleur de fond du contenu */
+}
+

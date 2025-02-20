@@ -1,0 +1,26 @@
+/* Ajoute des bordures aux cellules du tableau */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid #000; /* Couleur et épaisseur de la bordure */
+}
+
+/* Ajuste la taille des cases du tableau */
+th, td {
+    padding: 10px; /* Espacement interne des cellules */
+    text-align: center; /* Centre le texte dans les cellules */
+}
+
+/* Style de l'en-tête du tableau (th) */
+th {
+    background-color: #f2f2f2; /* Couleur de fond */
+    font-weight: bold; /* Texte en gras */
+}
+
+/* Style des cellules de données (td) */
+td {
+    background-color: #fff; /* Couleur de fond */
+}

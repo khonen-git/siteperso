@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/assets/css/main.css">
+    <script src="/src/assets/js/scripts.js"></script>
+    <script src="/src/assets/js/knowledge/data-analytics/mathematics/probabilities/probability-distributions/continuous-probability-distributions/normal-distribution.js"></script>
+    <link rel="stylesheet" href="/src/assets/lib/katex/katex.css">
+    <script src="/src/assets/lib/katex/katex.js"></script>
+    <title>Votre Nom - Data Analyst</title>
+</head>
+<body>
+    <nav class="header-menu">
+        <ul class="header-menu__list">
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/index.html">Accueil</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/about.html">À Propos</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/knowledge/index.html">Connaissances</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/projects/index.html">Projets Réalisés</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/contact.html">Contact</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="knowledge-container">
+        
+        <iframe class="knowledge-iframe" src="/src/knowledge/utils/knowledge-nav.html"></iframe>
+    
+        <main class="knowledge-content">
+            <section id="python-asyncio__introduction">
+                <h1>Coroutines et tâches</h1>
+                <p>
+                    Les coroutines et les tâches sont des éléments fondamentaux d'asyncio, permettant de réaliser des opérations asynchrones.
+                </p>
+            </section>
+            <section id="python-asyncio__keys-concepts">
+                <h2>Coroutines</h2>
+                <p>
+                    Les coroutines sont des fonctions définies avec async def et sont le moyen de créer une unité de travail asynchrone. Elles peuvent être mises en pause et reprises à l'aide du mot-clé await.
+                </p>
+                <pre><code>
+import asyncio
+
+async def coroutine_example():
+    print("Début de la coroutine")
+    await asyncio.sleep(1)
+    print("Fin de la coroutine")                                      
+                </code></pre>
+                <p>
+                    Dans cet exemple, la coroutine coroutine_example imprime un message, s'endort pendant 1 seconde (simulant une opération asynchrone), puis imprime un autre message.
+                </p>
+                <h2>Tâches</h2>
+                <p>
+                    Les tâches sont utilisées pour planifier l'exécution des coroutines de manière concurrente. Elles enveloppent les coroutines et les gèrent, permettant ainsi à plusieurs coroutines de s'exécuter simultanément.
+                </p>
+                <pre><code>
+async def main():
+    # Création d'une tâche pour exécuter la coroutine
+    task = asyncio.create_task(coroutine_example())
+    
+    print("Autres opérations pendant que la coroutine est en pause")
+    await task  # Attente de la fin de la tâche
+
+asyncio.run(main())
+                </code></pre>
+                <p>
+                    Dans cet exemple, asyncio.create_task() est utilisé pour créer une tâche à partir de la coroutine coroutine_example. La fonction main continue de s'exécuter après la création de la tâche, illustrant la concurrence. L'attente de la tâche avec await task garantit que main attend que la coroutine enveloppée dans la tâche soit terminée avant de terminer.
+                </p>
+                <h2>Enchaînement de Coroutines</h2>
+                <p>
+                    On peut également enchaîner des coroutines, c'est-à-dire en exécuter une après l'autre.
+                </p>
+                <pre><code>
+async def first_coroutine():
+    print("Première coroutine")
+    await asyncio.sleep(1)
+    return "Résultat 1"
+
+async def second_coroutine():
+    print("Seconde coroutine")
+    await asyncio.sleep(2)
+    return "Résultat 2"
+
+async def main():
+    result1 = await first_coroutine()
+    result2 = await second_coroutine()
+    print(result1, result2)
+
+asyncio.run(main())
+                </code></pre>
+                <p>
+                    Ici, main attend d'abord que first_coroutine se termine, puis exécute second_coroutine. Cette approche garantit un ordre d'exécution spécifique.
+                </p>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p><a href="/src/credits.html">Crédits</a> | <a href="/src/contact.html">Contact</a> | <a href="/src/curriculum-vitae.html">Curriculum vitae</a></p>
+    </footer>
+    
+</body>
+</html>

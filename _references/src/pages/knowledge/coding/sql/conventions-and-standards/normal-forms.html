@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/css/main.css">
+    <script src="/src/js/scripts.js"></script>
+    <title>Formes normales dans les bases de données relationnelles - Théo Charron - Data Analyst</title>
+</head>
+<body>
+    <iframe class="header-iframe" src="/src/partials/header.html"></iframe>
+    
+    <div class="knowledge-container">
+        
+        <iframe class="knowledge-iframe" src="/src/partials/knowledge-toctree.html"></iframe>
+    
+        <main class="knowledge-content">
+            <section>
+                <h1>Formes normales dans les bases de données relationnelles</h1>
+                <p>
+                    Dans une base de données relationnelle, une forme normale caractérise le fait que la structure de 
+                    la base respecte certaines contraintes de modélisation. Le respect par une base de données d'une forme 
+                    normale permet de garantir certaines propriétés. La normalisation consiste à restructurer une base de 
+                    données pour respecter certaines formes normales, afin d'éviter la redondance des données (des données 
+                    apparaissent plusieurs fois) et d'assurer l'intégrité des données.
+                </p>
+            </section>
+            <section>
+                <h2>Première forme normale (1NF)</h2>
+                <ul>
+                    <li>Toutes les colonnes contiennent des valeurs atomiques (indivisibles)</li>
+                    <!--<li>Aucun groupe de colonnes répétées</li> ( A verifier)-->
+                    <li>Chaque ligne est unique (grâce à une clé primaire)</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Deuxième forme normale (2NF)</h2>
+                <ul>
+                    <li>Doit être en 1NF</li>
+                    <li>Toutes les colonnes non clés doivent dépendre de l'intégralité de la clé primaire (pas de dépendances partielles)</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Troisième forme normale (3NF)</h2>
+                <ul>
+                    <li>Doit être en 2NF</li>
+                    <li>Aucune dépendances transitives entre colonnes non clés</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Autres formes normales</h2>
+                <p>EKNF, BCNF, 4NF, 5NF, DKNF, 6NF</p>
+            </section>
+        </main>
+    </div>
+
+    <iframe class="footer-iframe" src="/src/partials/footer.html"></iframe>
+    
+</body>
+</html>

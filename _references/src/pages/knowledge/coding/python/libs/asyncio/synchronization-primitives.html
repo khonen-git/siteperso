@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/assets/css/main.css">
+    <script src="/src/assets/js/scripts.js"></script>
+    <script src="/src/assets/js/knowledge/data-analytics/mathematics/probabilities/probability-distributions/continuous-probability-distributions/normal-distribution.js"></script>
+    <link rel="stylesheet" href="/src/assets/lib/katex/katex.css">
+    <script src="/src/assets/lib/katex/katex.js"></script>
+    <title>Votre Nom - Data Analyst</title>
+</head>
+<body>
+    <nav class="header-menu">
+        <ul class="header-menu__list">
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/index.html">Accueil</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/about.html">À Propos</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/knowledge/index.html">Connaissances</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/projects/index.html">Projets Réalisés</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/contact.html">Contact</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="knowledge-container">
+        
+        <iframe class="knowledge-iframe" src="/src/knowledge/utils/knowledge-nav.html"></iframe>
+    
+        <main class="knowledge-content">
+            <section id="python-asyncio__introduction">
+                <h1>Primitives de synchronisation</h1>
+                <p>
+                    Les primitives de synchronisation dans asyncio sont des outils qui permettent de coordonner ou de synchroniser l'exécution des coroutines, similairement à ce que font les verrous (locks), événements (events), et sémaphores dans la programmation multithread.
+                </p>
+            </section>
+            <section id="python-asyncio__keys-concepts">
+                <h2>Lock (Verrou)</h2>
+                <p>
+                    Un Lock est utilisé pour garantir qu'une seule coroutine accède à une section de code à la fois. Cela est utile pour protéger une ressource partagée.
+                </p>
+                <pre><code>
+import asyncio
+
+lock = asyncio.Lock()
+
+async def critical_section():
+    async with lock:
+        # Seule une coroutine à la fois peut exécuter ce bloc
+        print("Section critique")
+        await asyncio.sleep(1)
+
+async def main():
+    await asyncio.gather(critical_section(), critical_section())
+
+asyncio.run(main())                                    
+                </code></pre>
+                <p>
+                    Dans cet exemple, deux coroutines essaient d'entrer dans la section critique. Le Lock garantit qu'elles ne l'exécutent pas simultanément.
+                </p>
+                <h2>Event (Événement)</h2>
+                <p>
+                    Un Event est utilisé pour notifier une ou plusieurs coroutines qu'un certain événement s'est produit.
+                </p>
+                <pre><code>
+import asyncio
+
+event = asyncio.Event()
+
+async def waiter():
+    print("En attente de l'événement")
+    await event.wait()
+    print("L'événement est survenu")
+
+async def main():
+    asyncio.create_task(waiter())
+    await asyncio.sleep(1)  # Simuler le travail
+    event.set()  # Déclenche l'événement
+
+asyncio.run(main())                                      
+                </code></pre>
+                <p>
+                    Ici, waiter attend que l'événement soit déclenché. main déclenche l'événement après une pause, ce qui permet à waiter de continuer.
+                </p>
+                <h2>Semaphore (Sémaphore)</h2>
+                <p>
+                    Un Semaphore est une généralisation d'un Lock. Il limite le nombre de coroutines qui peuvent accéder à une section de code à la fois.
+                </p>
+                <pre><code>
+import asyncio
+
+sem = asyncio.Semaphore(2)
+
+async def limited_section(i):
+    async with sem:
+        print(f"Section limitée entrée {i}")
+        await asyncio.sleep(1)
+        print(f"Section limitée sortie {i}")
+
+async def main():
+    await asyncio.gather(*(limited_section(i) for i in range(4)))
+
+asyncio.run(main())                                
+                </code></pre>
+                <p>
+                    Dans cet exemple, le Semaphore permet à un maximum de 2 coroutines de s'exécuter simultanément dans la section limitée. 
+                </p>
+                <h2>Condition</h2>
+                <p>
+                    Une Condition est utilisée pour attendre qu'une certaine condition soit remplie. Elle est souvent utilisée en combinaison avec un Lock.
+                </p>
+                <pre><code>
+import asyncio
+
+condition = asyncio.Condition()
+
+async def consumer(condition):
+    async with condition:
+        await condition.wait()
+        print("Condition remplie, consommateur activé")
+
+async def producer(condition):
+    await asyncio.sleep(1)
+    async with condition:
+        condition.notify_all()  # Réveille tous les consommateurs en attente
+
+async def main():
+    await asyncio.gather(producer(condition), consumer(condition))
+
+asyncio.run(main())
+                </code></pre>
+                <p>
+                    Ici, le consumer attend que la condition soit remplie, tandis que le producer remplit cette condition après une pause.
+                </p>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p><a href="/src/credits.html">Crédits</a> | <a href="/src/contact.html">Contact</a> | <a href="/src/curriculum-vitae.html">Curriculum vitae</a></p>
+    </footer>
+    
+</body>
+</html>

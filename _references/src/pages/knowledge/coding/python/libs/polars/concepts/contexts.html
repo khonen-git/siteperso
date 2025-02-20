@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/assets/css/main.css">
+    <script src="/src/assets/js/scripts.js"></script>
+    <script src="/src/assets/js/knowledge/data-analytics/mathematics/probabilities/probability-distributions/continuous-probability-distributions/normal-distribution.js"></script>
+    <link rel="stylesheet" href="/src/assets/lib/katex/katex.css">
+    <script src="/src/assets/lib/katex/katex.js"></script>
+    <title>Votre Nom - Data Analyst</title>
+</head>
+<body>
+    <nav class="header-menu">
+        <ul class="header-menu__list">
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/index.html">Accueil</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/about.html">À Propos</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/knowledge/index.html">Connaissances</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/projects/index.html">Projets Réalisés</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/contact.html">Contact</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="knowledge-container">
+        
+        <iframe class="knowledge-iframe" src="/src/knowledge/utils/knowledge-nav.html"></iframe>
+    
+        <main class="knowledge-content">
+            <section>
+                <h1>Contextes</h1>
+                <p>
+                    Polars a développé son propre langage spécifique au domaine (DSL) pour la transformation des données. Le langage est très facile à utiliser et permet des requêtes complexes tout en restant lisible par l'homme. Les deux composants principaux du langage sont les Contextes et les Expressions.
+                </p>
+                <p>
+                    Un contexte, comme son nom l'indique, se réfère au contexte dans lequel une expression doit être évaluée. Il existe trois principaux contextes :
+                </p>
+                <ul>
+                    <li>
+                        <strong>Sélection :</strong> df.select([..]), df.with_columns([..])
+                    </li>
+                    <li>
+                        <strong>Filtrage :</strong> df.filter()
+                    </li>
+                    <li>
+                        <strong>Groupement / Agrégation :</strong> df.group_by(..).agg([..])"
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h2>Sélection</h2>
+                <p>
+                    Dans le contexte de sélection, la sélection applique des expressions sur des colonnes. Les expressions dans ce contexte doivent produire des séries qui ont toutes la même longueur ou une longueur de 1.
+                </p>
+                <p>
+                    Une série d'une longueur de 1 sera diffusée pour correspondre à la hauteur du DataFrame. Une sélection peut produire de nouvelles colonnes qui sont des agrégations, des combinaisons d'expressions ou des littéraux."
+                </p>
+                <pre><code>
+import polars as pl
+
+# Exemple de DataFrame
+df = pl.DataFrame({
+    "A": [1, 2, 3, 4],
+    "B": [5, 6, 7, 8]
+})
+
+# Utilisation de df.select pour créer de nouvelles colonnes
+result = df.select([
+    pl.col("A"),  # Simple sélection
+    pl.col("A").mean().alias("moyenne_A"),  # Agrégation
+    (pl.col("A") + pl.col("B")).alias("A_plus_B"),  # Combinaison d'expressions
+    pl.lit(42).alias("constante")  # Littéral
+])
+
+print(result)
+                </code></pre>
+                <p>
+                    Le contexte de sélection est très puissant et permet d'effectuer des expressions arbitraires indépendamment (et en parallèle) les unes des autres.
+                </p>
+                <p>
+                    De manière similaire à l'instruction select, il y a l'instruction with_columns qui est également une entrée dans le contexte de sélection. La principale différence est que with_columns conserve les colonnes originales et en ajoute de nouvelles, tandis que select supprime les colonnes originales.
+                </p>
+                <pre><code>
+import polars as pl
+
+# Exemple de DataFrame
+df = pl.DataFrame({
+    "A": [1, 2, 3, 4],
+    "B": [5, 6, 7, 8]
+})
+
+# # Ajout de nouvelles colonnes avec with_columns
+df = df.with_columns([
+    pl.col("A"),  # Simple sélection
+    pl.col("A").mean().alias("moyenne_A"),  # Agrégation
+    (pl.col("A") + pl.col("B")).alias("A_plus_B"),  # Combinaison d'expressions
+    pl.lit(42).alias("constante")  # Littéral
+])
+
+print(df)
+                </code></pre>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p><a href="/src/credits.html">Crédits</a> | <a href="/src/contact.html">Contact</a> | <a href="/src/curriculum-vitae.html">Curriculum vitae</a></p>
+    </footer>
+    
+</body>
+</html>

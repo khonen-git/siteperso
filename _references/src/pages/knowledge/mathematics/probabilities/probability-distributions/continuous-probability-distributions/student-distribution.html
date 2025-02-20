@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/assets/css/main.css">
+    <script src="/src/assets/js/scripts.js"></script>
+    <script src="/src/assets/js/knowledge/data-analytics/mathematics/probabilities/probability-distributions/continuous-probability-distributions/normal-distribution.js"></script>
+    <link rel="stylesheet" href="/src/assets/lib/katex/katex.css">
+    <script src="/src/assets/lib/katex/katex.js"></script>
+    <script src="/src/assets/lib/katex/contrib/auto-render.js"></script>
+    <title>Votre Nom - Data Analyst</title>
+</head>
+<body>
+    <nav class="header-menu">
+        <ul class="header-menu__list">
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/index.html">Accueil</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/about.html">À Propos</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/knowledge/index.html">Connaissances</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/projects/index.html">Projets Réalisés</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/contact.html">Contact</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="knowledge-container">
+        
+        <iframe class="knowledge-iframe" src="/src/knowledge/utils/knowledge-nav.html"></iframe>
+    
+        <main class="knowledge-content">
+            <section id="normal-distribution__introduction">
+                <h1>Loi normale</h1>
+                <p>
+                    La loi normale, également connue sous le nom de distribution normale ou courbe en cloche, 
+                    est l'une des distributions de probabilité les plus importantes en statistiques et en probabilités. 
+                    Elle est caractérisée par une courbe symétrique en forme de cloche qui décrit la répartition des 
+                    valeurs d'une variable aléatoire continue.
+                </p>
+
+            </section>
+            
+            <section id="normal-distribution__definition">
+                <h2>Définition et propriétés</h2>
+                <table id="normal-distribution__charts" class="probability-distribution__charts">
+
+                </table>
+                <table class="katex student-distribution__features" class="probability-distribution__features">
+                    <tr>
+                        <th>Notation</th>
+                        <td>
+                            \( t(\nu) \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Paramètres</th>
+                        <td>
+                            \( \nu > 0 \) (degrés de liberté)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Support</th>
+                        <td>
+                            \( x \in \mathbb{R} \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Densité de probabilité</th>
+                        <td>
+                            \( \frac{\Gamma(\frac{\nu+1}{2})}{\sqrt{\nu\pi}\Gamma(\frac{\nu}{2})} \left(1+\frac{x^2}{\nu}\right)^{-\frac{\nu+1}{2}} \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Fonction de répartition</th>
+                        <td>
+                            \( \frac{1}{2} + x\Gamma\left(\frac{\nu+1}{2}\right)\frac{{}_{2}F_{1}\left(\frac{1}{2}, \frac{\nu+1}{2}; \frac{3}{2}; -\frac{x^2}{\nu}\right)}{\sqrt{\pi\nu}\Gamma\left(\frac{\nu}{2}\right)} \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Moyenne</th>
+                        <td>
+                            \( 0 \) pour \( \nu > 1 \), sinon indéfinie
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Médiane</th>
+                        <td>
+                            \( 0 \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Mode</th>
+                        <td>
+                            \( 0 \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Variance</th>
+                        <td>
+                            \( \frac{\nu}{\nu-2} \) pour \( \nu > 2 \), sinon indéfinie
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Asymétrie</th>
+                        <td>
+                            \( 0 \) pour \( \nu > 3 \), sinon indéfinie
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Kurtosis (aplatissement)</th>
+                        <td>
+                            \( \frac{6}{\nu-4} \) pour \( \nu > 4 \), sinon indéfinie
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Entropie de Shannon</th>
+                        <td>
+                            \( \frac{\nu+1}{2}\left[\psi\left(\frac{1+\nu}{2}\right)-\psi\left(\frac{\nu}{2}\right)\right] + \ln\left[\sqrt{\nu}B\left(\frac{\nu}{2}, \frac{1}{2}\right)\right] \) (en nats)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Fonction génératrice des moments</th>
+                        <td>
+                            Non définie
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Fonction caractéristiques</th>
+                        <td>
+                            \( \frac{K_{\nu/2}\left(\sqrt{\nu}|t|\right)\left(\sqrt{\nu}|t|\right)^{\nu/2}}{\Gamma(\nu/2)2^{\nu/2-1}} \) pour \( \nu > 0 \)
+                        </td>
+                    </tr>
+                </table>                
+            </section>
+            <section id="probability-distribution__distribution-links">
+                <h2>Relations avec les autres distributions</h2>
+                <div>
+                    <h3>Distributions dérivées</h3>
+                    <ul>
+                        
+                        <li>
+                            <strong>Loi de Fisher :</strong> Si \( X \sim t(k) \) alors \(X^2\) suit une loi de Fisher : \( X^2 \sim F(\mu_1=1, \mu_2=k) \)
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Cas particuliers</h3>
+                    <ul>
+                        <li>
+                            <strong>Loi de Cauchy :</strong> Si \( X \sim t(k=1) \) alors \(X\) suit une loi de Cauchy : \( X \sim Cauchy(0, 1) \).
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section id="probability-distribution__use-cases">
+                <h2>Utilisation</h2>
+                <p>
+                    La loi de Student est utilisé dans le contexte des échantillons de petite taille ou lorsque la variance de la population est inconnue.
+                </p>
+                <ul>
+                    <li>
+                        <strong>Tests d'hypothèses sur les moyennes :</strong>
+                        <ul>
+                            <li>
+                                <strong>Echantillons indépendants :</strong> Lors de la comparaison des moyennes de deux échantillons indépendants, en particulier lorsque les tailles d'échantillon sont petites et que les variances des populations sont inconnues et supposées égales.
+                            </li>
+                            <li>
+                                <strong>Echantillons appariés :</strong> Pour comparer les moyennes de deux mesures prises sur le même échantillon (par exemple, avant et après un traitement).
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Interalles de confiance :</strong> Permet construire des intervalles de confiance pour la moyenne d'une population, en particulier lorsque la taille de l'échantillon est petite et que la variance de la population est inconnue.
+                    </li>
+                    <li>
+                        <strong>Régression :</strong> Permet de tester l'importance des coefficients de régression.
+                    </li>
+                    <li>
+                        <strong>Analyse de la variance ANOVA :</strong> Permet de comparer les moyennes de plusieurs groupes.
+                    </li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p><a href="/src/credits.html">Crédits</a> | <a href="/src/contact.html">Contact</a> | <a href="/src/curriculum-vitae.html">Curriculum vitae</a></p>
+    </footer>
+    
+</body>
+</html>

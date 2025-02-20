@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/assets/css/main.css">
+    <script src="/src/assets/js/scripts.js"></script>
+    <script src="/src/assets/js/knowledge/data-analytics/mathematics/probabilities/probability-distributions/continuous-probability-distributions/normal-distribution.js"></script>
+    <link rel="stylesheet" href="/src/assets/lib/katex/katex.css">
+    <script src="/src/assets/lib/katex/katex.js"></script>
+    <title>Votre Nom - Data Analyst</title>
+</head>
+<body>
+    <nav class="header-menu">
+        <ul class="header-menu__list">
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/index.html">Accueil</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/about.html">À Propos</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/knowledge/index.html">Connaissances</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/projects/index.html">Projets Réalisés</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/contact.html">Contact</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="knowledge-container">
+        
+        <iframe class="knowledge-iframe" src="/src/knowledge/utils/knowledge-nav.html"></iframe>
+    
+        <main class="knowledge-content">
+            <section>
+                <h1>Types de données</h1>
+                <p>
+                    Polars repose entièrement sur les types de données Arrow et est soutenu par des tableaux de mémoire Arrow. Cela rend le traitement des données efficace en termes de cache et bien pris en charge pour la communication inter-processus. La plupart des types de données suivent exactement l'implémentation d'Arrow, à l'exception de Utf8 (qui est en réalité LargeUtf8), Categorical et Object (le support est limité). Les types de données sont : 
+                </p>
+            </section>
+            <section>
+                <h2>Numériques</h2>
+                <table>
+                    <tr>
+                        <th>Int8</th>
+                        <td>Entier signé 8-bit</td>
+                    </tr>
+                    <tr>
+                        <th>Int16</th>
+                        <td>Entier signé 16-bit</td>
+                    </tr>
+                    <tr>
+                        <th>Int32</th>
+                        <td>Entier signé 32-bit</td>
+                    </tr>
+                    <tr>
+                        <th>Int64</th>
+                        <td>Entier signé 64-bit</td>
+                    </tr>
+                    <tr>
+                        <th>UInt8</th>
+                        <td>Entier non signé 8-bit</td>
+                    </tr>
+                    <tr>
+                        <th>UInt16</th>
+                        <td>Entier non signé 16-bit</td>
+                    </tr>
+                    <tr>
+                        <th>UInt32</th>
+                        <td>Entier non signé 32-bit</td>
+                    </tr>
+                    <tr>
+                        <th>UInt64</th>
+                        <td>Entier non signé 64-bit</td>
+                    </tr>
+                    <tr>
+                        <th>Float32</th>
+                        <td>Flottant 32-bit</td>
+                    </tr>
+                    <tr>
+                        <th>Float64</th>
+                        <td>Flottant 64-bit</td>
+                    </tr>
+                </table>
+            </section>
+            <section>
+                <h2>Imbriqués</h2>
+                <table>
+                    <tr>
+                        <th>Struct</th>
+                        <td>Un tableau structuré est représenté comme un Vec<Series> et est utile pour regrouper plusieurs valeurs hétérogènes dans une seule colonne.</td>
+                    </tr>
+                    <tr>
+                        <th>List</th>
+                        <td>Un tableau de liste contient un tableau enfant contenant les valeurs de la liste et un tableau de décalage. (c'est en réalité un LargeList d'Arrow à l'interne).</td>
+                    </tr>
+                </table>
+            </section>
+            <section>
+                <h2>Temporelles</h2>
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <td>Représentation de la date, représentée en interne comme des jours depuis l'époque UNIX codés par un entier signé de 32 bits.</td>
+                    </tr>
+                    <tr>
+                        <th>Datetime</th>
+                        <td>Représentation datetime, représentée en interne comme des microsecondes depuis l'époque UNIX codées par un entier signé de 64 bits.</td>
+                    </tr>
+                    <tr>
+                        <th>Duration</th>
+                        <td>Un type timedelta, représenté en interne en microsecondes. Créé lors de la soustraction de Date/Datetime.</td>
+                    </tr>
+                    <tr>
+                        <th>Time</th>
+                        <td>Représentation du temps, représentée en interne comme des nanosecondes depuis minuit.</td>
+                    </tr>
+                </table>
+            </section>
+            <section>
+                <h2>Autres</h2>
+                <table>
+                    <tr>
+                        <th>Boolean</th>
+                        <td>Type booléen effectivement empaqueté en bits.</td>
+                    </tr>
+                    <tr>
+                        <th>Utf8</th>
+                        <td>Données de chaîne de caractères (c'est en réalité du LargeUtf8 d'Arrow à l'interne).</td>
+                    </tr>
+                    <tr>
+                        <th>Binary</th>
+                        <td>Stocker les données sous forme de bytes.</td>
+                    </tr>
+                    <tr>
+                        <th>Object</th>
+                        <td>Un type de données à prise en charge limitée qui peut être n'importe quelle valeur.</td>
+                    </tr>
+                    <tr>
+                        <th>Categorical</th>
+                        <td>Un encodage catégoriel d'un ensemble de chaînes de caractères.</td>
+                    </tr>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p><a href="/src/credits.html">Crédits</a> | <a href="/src/contact.html">Contact</a> | <a href="/src/curriculum-vitae.html">Curriculum vitae</a></p>
+    </footer>
+    
+</body>
+</html>

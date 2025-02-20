@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/assets/css/main.css">
+    <script src="/src/assets/js/scripts.js"></script>
+    <script src="/src/assets/js/knowledge/data-analytics/mathematics/probabilities/probability-distributions/continuous-probability-distributions/normal-distribution.js"></script>
+    <link rel="stylesheet" href="/src/assets/lib/katex/katex.css">
+    <script src="/src/assets/lib/katex/katex.js"></script>
+    <title>Votre Nom - Data Analyst</title>
+</head>
+<body>
+    <nav class="header-menu">
+        <ul class="header-menu__list">
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/index.html">Accueil</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/about.html">À Propos</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/knowledge/index.html">Connaissances</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/projects/index.html">Projets Réalisés</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/contact.html">Contact</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="knowledge-container">
+        
+        <iframe class="knowledge-iframe" src="/src/knowledge/utils/knowledge-nav.html"></iframe>
+    
+        <main class="knowledge-content">
+            <section id="python-asyncio__introduction">
+                <h1>Politiques</h1>
+                <p>
+                    Les politiques dans asyncio sont des objets qui gèrent la création de boucles d'événements et de comportements spécifiques à la plateforme. Elles sont particulièrement utiles pour personnaliser la façon dont asyncio fonctionne dans différents environnements, comme les systèmes Unix et Windows.
+                </p>
+            </section>
+            <section id="python-asyncio__keys-concepts">
+                <h2>Compréhension des Politiques</h2>
+                <p>
+                    Une politique est un objet qui fournit des méthodes pour créer des boucles d'événements et configurer leur comportement. Par défaut, asyncio utilise une politique qui est appropriée pour le système d'exploitation sur lequel il s'exécute.
+                </p>
+                <h2>Exemple d'Utilisation de Politique</h2>
+                <pre><code>
+import asyncio
+
+# Obtenir la politique actuelle
+current_policy = asyncio.get_event_loop_policy()
+
+# Créer une nouvelle boucle d'événements avec la politique actuelle
+new_loop = current_policy.new_event_loop()
+
+# Définir cette boucle comme la boucle d'événements actuelle
+asyncio.set_event_loop(new_loop)
+
+async def main():
+    print("Hello from the new event loop")
+    await asyncio.sleep(1)
+
+new_loop.run_until_complete(main())
+new_loop.close()                    
+                </code></pre>
+                <p>
+                    Dans cet exemple, nous récupérons la politique actuelle, créons une nouvelle boucle d'événements en utilisant cette politique, et exécutons une coroutine dans cette nouvelle boucle.
+                </p>
+                <h2>Changement de Politique</h2>
+                <p>
+                    Il est possible politique d'événement par défaut, ce qui peut être utile pour des tests ou pour des environnements spécifiques.
+                </p>
+                <pre><code>
+# Exemple de changement de politique pour une politique spécifique à Unix
+if sys.platform == 'posix':
+    asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())                    
+                </code></pre>
+                <p>
+                    Ici, si le système est basé sur POSIX (comme Unix ou Linux), nous définissons la politique par défaut de asyncio.
+                </p>
+                <h2>Implications des Politiques</h2>
+                <p>
+                    La modification des politiques peut avoir des implications importantes sur le comportement de vos programmes asynchrones, en particulier en ce qui concerne la gestion des threads et la compatibilité entre différentes plateformes. Il est donc recommandé de modifier les politiques avec prudence et de bien comprendre les implications.
+                </p>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p><a href="/src/credits.html">Crédits</a> | <a href="/src/contact.html">Contact</a> | <a href="/src/curriculum-vitae.html">Curriculum vitae</a></p>
+    </footer>
+    
+</body>
+</html>

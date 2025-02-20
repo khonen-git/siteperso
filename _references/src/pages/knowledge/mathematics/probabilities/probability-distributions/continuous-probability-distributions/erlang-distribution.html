@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/assets/css/main.css">
+    <script src="/src/assets/js/scripts.js"></script>
+    <script src="/src/assets/js/knowledge/data-analytics/mathematics/probabilities/probability-distributions/continuous-probability-distributions/normal-distribution.js"></script>
+    <link rel="stylesheet" href="/src/assets/lib/katex/katex.css">
+    <script src="/src/assets/lib/katex/katex.js"></script>
+    <title>Votre Nom - Data Analyst</title>
+</head>
+<body>
+    <nav class="header-menu">
+        <ul class="header-menu__list">
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/index.html">Accueil</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/about.html">À Propos</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/knowledge/index.html">Connaissances</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/projects/index.html">Projets Réalisés</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/contact.html">Contact</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="knowledge-container">
+        
+        <iframe class="knowledge-iframe" src="/src/knowledge/utils/knowledge-nav.html"></iframe>
+    
+        <main class="knowledge-content">
+            <section id="normal-distribution__introduction">
+                <h1>Loi normale</h1>
+                <p>
+                    La loi normale, également connue sous le nom de distribution normale ou courbe en cloche, 
+                    est l'une des distributions de probabilité les plus importantes en statistiques et en probabilités. 
+                    Elle est caractérisée par une courbe symétrique en forme de cloche qui décrit la répartition des 
+                    valeurs d'une variable aléatoire continue.
+                </p>
+
+            </section>
+            
+            <section id="normal-distribution__definition">
+                <h2>Définition et propriétés</h2>
+                <table id="normal-distribution__charts" class="probability-distribution__charts">
+
+                </table>
+                <table class="katex erlang-distribution__features" class="probability-distribution__features">
+                    <tr>
+                        <th>Paramètres</th>
+                        <td>
+                            \( k \in \{1, 2, 3, \ldots\} \) (forme), \( \lambda \in (0, \infty) \) (taux), alternativement \( \beta = 1/\lambda \) (échelle)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Support</th>
+                        <td>
+                            \( x \in [0, \infty) \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Densité de probabilité</th>
+                        <td>
+                            \( \frac{\lambda^k x^{k - 1} e^{-\lambda x}}{(k - 1)!} \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Fonction de répartition</th>
+                        <td>
+                            \( P(k, \lambda x) = \frac{\gamma(k, \lambda x)}{(k - 1)!} = 1 - \sum_{n=0}^{k-1} \frac{1}{n!} e^{-\lambda x} (\lambda x)^n \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Moyenne</th>
+                        <td>
+                            \( \frac{k}{\lambda} \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Médiane</th>
+                        <td>
+                            Pas de forme fermée simple
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Mode</th>
+                        <td>
+                            \( \frac{1}{\lambda} (k - 1) \) pour \( k > 1 \), 0 pour \( k = 1 \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Variance</th>
+                        <td>
+                            \( \frac{k}{\lambda^2} \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Asymétrie</th>
+                        <td>
+                            \( \frac{2}{\sqrt{k}} \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Kurtosis normalisé</th>
+                        <td>
+                            \( \frac{6}{k} \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Entropie</th>
+                        <td>
+                            \( (1 - k) \psi(k) + \ln \left[\frac{\Gamma(k)}{\lambda}\right] + k \) où \( \psi \) est la fonction digamma
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Fonction génératrice des moments</th>
+                        <td>
+                            \( \left(1 - \frac{t}{\lambda}\right)^{-k} \) pour \( t < \lambda \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Fonction caractéristique</th>
+                        <td>
+                            \( \left(1 - \frac{it}{\lambda}\right)^{-k} \)
+                        </td>
+                    </tr>
+                </table>                
+            </section>
+            <section id="probability-distribution__distribution-links">
+                <h2>Liens avec les autres distributions</h2>
+                <ul class="distribution-links__list">
+                    <li></li>
+                </ul>
+            </section>
+            <section id="probability-distribution__use-cases">
+                <h2>Cas d'utilisations</h2>
+                <ul class="use-cases__list">
+                    <li></li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p><a href="/src/credits.html">Crédits</a> | <a href="/src/contact.html">Contact</a> | <a href="/src/curriculum-vitae.html">Curriculum vitae</a></p>
+    </footer>
+    
+</body>
+</html>

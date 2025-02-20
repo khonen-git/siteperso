@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Python - Les modules</title>
+	<link rel="stylesheet" href="C:\Users\Utilisateur\VSrepos\SitePerso\css\style.css">
+</head>
+
+<body>
+
+	<header>
+		<nav>
+			<ul>
+				<li><a href="C:\Users\Utilisateur\VSrepos\SitePerso\html\index.html">Accueil</a></li>
+				<li><a href="C:\Users\Utilisateur\VSrepos\SitePerso\html\cours.html">Cours</a></li>
+				<li><a href="C:\Users\Utilisateur\VSrepos\SitePerso\html\projets.html">Projets</a></li>
+				<li><a href="C:\Users\Utilisateur\VSrepos\SitePerso\html\contact.html">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main>
+		<h2>Les modules en Python</h2>
+
+		<section>
+			<h3>Introduction</h3>
+			<p>Un module est un fichier contenant du code Python, qui peut être importé et utilisé dans d'autres programmes :</p>
+			<pre><code># importer le module 'math'
+import math
+
+# utiliser la fonction 'sqrt' du module 'math'
+x = math.sqrt(4)</code></pre>
+		</section>
+
+		<section>
+			<h3>Utilisation des modules</h3>
+			<p>Les fonctions et les classes définies dans un module peuvent être utilisées en appelant leur nom précédé du nom du module :</p>
+			<pre><code># importer le module 'math'
+import math
+
+# utiliser la fonction 'sqrt' du module 'math'
+x = math.sqrt(4)
+
+# utiliser la constante 'pi' du module 'math'
+y = math.pi</code></pre>
+		</section>
+
+		<section>
+			<h3>Les modules standards</h3>
+			<p>Les modules standards sont inclus dans l'installation de Python :</p>
+			<pre><code># importer le module 'os'
+import os
+
+# utiliser la fonction 'getcwd' du module 'os'
+x = os.getcwd()</code></pre>
+		</section>
+
+		<section>
+			<h3>Les modules tiers</h3>
+			<p>Les modules tiers doivent être installés séparément :</p>
+			<pre><code># installer le module 'pandas'
+!pip install pandas
+
+# importer le module 'pandas'
+import pandas as pd
+
+# utiliser la fonction 'read_csv' du module 'pandas'
+df = pd.read_csv('data.csv')</code></pre>
+		</section>
+
+	</main>
+	<footer>
+		<p>© 2023 Théo CHarron</p>
+	</footer>
+
+</body>
+
+</html>

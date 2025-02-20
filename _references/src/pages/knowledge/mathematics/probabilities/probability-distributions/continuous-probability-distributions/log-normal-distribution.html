@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/assets/css/main.css">
+    <script src="/src/assets/js/scripts.js"></script>
+    <script src="/src/assets/js/knowledge/data-analytics/mathematics/probabilities/probability-distributions/continuous-probability-distributions/normal-distribution.js"></script>
+    <link rel="stylesheet" href="/src/assets/lib/katex/katex.css">
+    <script src="/src/assets/lib/katex/katex.js"></script>
+    <title>Votre Nom - Data Analyst</title>
+</head>
+<body>
+    <nav class="header-menu">
+        <ul class="header-menu__list">
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/index.html">Accueil</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/about.html">À Propos</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/knowledge/index.html">Connaissances</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/projects/index.html">Projets Réalisés</a>
+            </li>
+            <li class="header-menu__item">
+                <a class="header-menu__link" href="/src/contact.html">Contact</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="knowledge-container">
+        
+        <iframe class="knowledge-iframe" src="/src/knowledge/utils/knowledge-nav.html"></iframe>
+    
+        <main class="knowledge-content">
+            <section id="normal-distribution__introduction">
+                <h1>Loi normale</h1>
+                <p>
+                    La loi normale, également connue sous le nom de distribution normale ou courbe en cloche, 
+                    est l'une des distributions de probabilité les plus importantes en statistiques et en probabilités. 
+                    Elle est caractérisée par une courbe symétrique en forme de cloche qui décrit la répartition des 
+                    valeurs d'une variable aléatoire continue.
+                </p>
+
+            </section>
+            
+            <section id="normal-distribution__definition">
+                <h2>Définition et propriétés</h2>
+                <table id="normal-distribution__charts" class="probability-distribution__charts">
+
+                </table>
+                <table class="katex lognormal-distribution__features" class="probability-distribution__features">
+                    <tr>
+                        <th>Notation</th>
+                        <td>
+                            \( \text{Log-}\mathcal{N}(\mu, \sigma^2) \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Paramètres</th>
+                        <td>
+                            \( \mu \in (-\infty, +\infty) \), \( \sigma > 0 \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Support</th>
+                        <td>
+                            \( x \in (0, +\infty) \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Densité de probabilité</th>
+                        <td>
+                            \( \frac{1}{x\sigma\sqrt{2\pi}} \exp\left(-\frac{(\ln x - \mu)^2}{2\sigma^2}\right) \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Fonction de répartition</th>
+                        <td>
+                            \( \frac{1}{2}\left[1 + \text{erf}\left(\frac{\ln x - \mu}{\sigma\sqrt{2}}\right)\right] \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Moyenne</th>
+                        <td>
+                            \( \exp\left(\mu + \frac{\sigma^2}{2}\right) \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Médiane</th>
+                        <td>
+                            \( \exp(\mu) \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Mode</th>
+                        <td>
+                            \( \exp(\mu - \sigma^2) \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Variance</th>
+                        <td>
+                            \( (\exp(\sigma^2) - 1) \exp(2\mu + \sigma^2) \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Asymétrie</th>
+                        <td>
+                            \( (\exp(\sigma^2) + 2) \sqrt{\exp(\sigma^2) - 1} \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Kurtosis normalisé</th>
+                        <td>
+                            \( \exp(4\sigma^2) + 2\exp(3\sigma^2) + 3\exp(2\sigma^2) - 6 \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Entropie</th>
+                        <td>
+                            \( \log\left(\sqrt{2\pi} \sigma e^{\mu + \frac{1}{2}}\right) \)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Fonction génératrice des moments</th>
+                        <td>
+                            Définie seulement pour les nombres ayant une partie réelle non positive
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Fonction caractéristique</th>
+                        <td>
+                            \( \sum_{n=0}^{\infty} \frac{(it)^n}{n!} e^{n\mu + \frac{n^2\sigma^2}{2}} \) (asymptotiquement divergente mais adéquate pour la plupart des usages numériques)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Information de Fisher</th>
+                        <td>
+                            \( \begin{pmatrix} \frac{1}{\sigma^2} & 0 \\ 0 & \frac{2}{\sigma^2} \end{pmatrix} \)
+                        </td>
+                    </tr>
+                </table>                
+            </section>
+            <section id="probability-distribution__distribution-links">
+                <h2>Relations avec les autres distributions</h2>
+                <div>
+                    <h3>Distributions dérivées</h3>
+                    <ul>
+                        <li>
+                            <strong>Loi normale :</strong> Si \( X \sim \text{Log-}\mathcal{N}(\mu, \sigma^2) \) alors \(ln(X)\) suit une loi normale : \( ln(X) \sim \mathcal{N}(\mu, \sigma^2) \).
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section id="probability-distribution__use-cases">
+                <h2>Utilisation</h2>
+                <p>
+                    
+                </p>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p><a href="/src/credits.html">Crédits</a> | <a href="/src/contact.html">Contact</a> | <a href="/src/curriculum-vitae.html">Curriculum vitae</a></p>
+    </footer>
+    
+</body>
+</html>
