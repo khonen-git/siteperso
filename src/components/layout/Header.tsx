@@ -8,17 +8,23 @@ const Header = (): React.JSX.Element => {
       <div className="container flex h-14 items-center">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
-            <span className="hidden font-bold sm:inline-block">Théo Knoepflin</span>
+            <span className="hidden font-bold sm:inline-block">Théo Charron</span>
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
             <Link href="/about" className="transition-colors hover:text-foreground/80">
               À propos
             </Link>
-            <Link href="/portfolio" className="transition-colors hover:text-foreground/80">
-              Portfolio
+            <Link href="/knowledge" className="transition-colors hover:text-foreground/80">
+              Connaissances
             </Link>
-            <Link href="/blog" className="transition-colors hover:text-foreground/80">
-              Blog
+            <Link href="/projects" className="transition-colors hover:text-foreground/80">
+              Projets
+            </Link>
+            <Link href="/references" className="transition-colors hover:text-foreground/80">
+              Références
+            </Link>
+            <Link href="/activity" className="transition-colors hover:text-foreground/80">
+              Activité du site
             </Link>
             <Link href="/contact" className="transition-colors hover:text-foreground/80">
               Contact

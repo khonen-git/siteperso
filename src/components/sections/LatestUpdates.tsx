@@ -52,11 +52,11 @@ const item = {
 
 export function LatestUpdates(): React.JSX.Element {
   return (
-    <section className="relative overflow-hidden py-20">
+    <section className="relative overflow-hidden bg-background/5 py-20 transition-all duration-[2000ms]">
       {/* Arrière-plan décoratif */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-grid-gray-900/5 bg-[size:40px_40px]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/20" />
+        <div className="absolute inset-0 bg-grid-gray-900/5 bg-[size:40px_40px] transition-all duration-[2000ms]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_500px_at_50%_50%,var(--primary-color),transparent)] opacity-10 transition-all duration-[2000ms]" />
       </div>
 
       <div className="container relative">

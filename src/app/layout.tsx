@@ -9,8 +9,8 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Théo Knoepflin - Développeur Full Stack',
-  description: 'Portfolio et blog personnel de Théo Knoepflin, développeur Full Stack passionné par le web et les nouvelles technologies.',
+  title: 'Théo Charron - Data Analyst',
+  description: 'Site personnel de Théo Charron, Data Analyst passionné par la data science, l\'analyse de données et la visualisation.',
 };
 
 export default function RootLayout({

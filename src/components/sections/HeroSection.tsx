@@ -13,19 +13,39 @@ interface HeroSectionProps {
 
 export function HeroSection({ title, subtitle, description }: HeroSectionProps): React.JSX.Element {
   return (
-    <section className="relative min-h-[90vh] overflow-hidden">
-      {/* Arrière-plan animé */}
-      <div className="absolute inset-0 -z-10">
-        {/* Grille de fond */}
-        <div className="absolute inset-0 bg-grid-gray-900/5 bg-[size:32px_32px]" />
+    <section className="relative overflow-hidden min-h-[90vh] bg-background/5 transition-all duration-[2000ms]">
+      {/* 
+        TODO(THEME-001): Corriger la transition du thème sur le fond décoratif
         
-        {/* Dégradé de couleur */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+        Problème:
+        - La transition du thème n'est pas fluide sur le fond décoratif complexe
+        - Les autres sections ont une transition fluide
+        
+        Causes potentielles:
+        - Structure complexe des dégradés et des couches
+        - Interaction entre les variables CSS et les transitions
+        - Comportement des transitions sur les dégradés multiples
+        
+        Solutions possibles:
+        - Simplifier la structure des couches
+        - Revoir la gestion des transitions CSS
+        - Utiliser Framer Motion pour les transitions
+        
+        Priorité: Moyenne
+        Impact: UX
+        Lié à: #THEME
+      */}
+      <div className="absolute inset-0 -z-10 transition-all duration-[2000ms]">
+        {/* Grille de fond */}
+        <div className="absolute inset-0 bg-grid-gray-900/5 bg-[size:32px_32px] transition-all duration-[2000ms]" />
+        
+        {/* Dégradé principal */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background to-background/80 transition-all duration-[2000ms]" />
         
         {/* Formes animées */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div
-            className="absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full bg-primary/20 blur-3xl"
+            className="absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full bg-primary/20 blur-3xl transition-all duration-[2000ms]"
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.3, 0.5, 0.3],
@@ -38,7 +58,7 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
             }}
           />
           <motion.div
-            className="absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-secondary/20 blur-3xl"
+            className="absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-secondary/20 blur-3xl transition-all duration-[2000ms]"
             animate={{
               scale: [1.2, 1, 1.2],
               opacity: [0.5, 0.3, 0.5],
@@ -61,7 +81,6 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
           transition={{ duration: 0.8 }}
           className="mx-auto max-w-3xl text-center"
         >
-          {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -71,7 +90,6 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
             Data Analyst & Développeur
           </motion.div>
           
-          {/* Titre */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -81,7 +99,6 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
             {title}
           </motion.h1>
           
-          {/* Sous-titre */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -91,7 +108,6 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
             {subtitle}
           </motion.p>
           
-          {/* Description */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

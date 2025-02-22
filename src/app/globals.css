@@ -4,6 +4,9 @@
  
 @layer base {
   :root {
+    --transition-duration: 2000ms;
+    --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+    
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -47,15 +50,33 @@
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
   }
-}
- 
-@layer base {
+
   * {
     @apply border-border;
   }
+  
+  html,
+  body {
+    transition-property: background-color, color, border-color, box-shadow;
+    transition-duration: var(--transition-duration);
+    transition-timing-function: var(--transition-timing);
+  }
+  
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Transitions spécifiques pour les éléments qui changent avec le thème */
+  .glass,
+  .btn,
+  .card,
+  .border,
+  [class*='bg-'],
+  [class*='text-'] {
+    transition-property: background-color, color, border-color, box-shadow, transform, opacity;
+    transition-duration: var(--transition-duration);
+    transition-timing-function: var(--transition-timing);
   }
 }
 
