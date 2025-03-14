@@ -38,7 +38,7 @@
 - [✅] Système de thème
 - [✅] Tests d'intégration
 
-## Sprint 2.5 : Migration du Contenu Frontend 🔄
+## Sprint 2.5 : Migration du Contenu Frontend ✅
 ### Organisation
 - [✅] Création de la structure de dossiers pour le contenu migré
   - [✅] `/content/pages/` pour les pages statiques
@@ -47,21 +47,21 @@
   - [✅] `/content/tutorials/` pour les tutoriels
 
 ### Migration des Pages Principales
-- [🔄] Page d'accueil
+- [✅] Page d'accueil
   - [✅] Conversion du contenu en MDX
   - [✅] Adaptation du style avec Tailwind
   - [✅] Migration des composants spécifiques
-- [ ] Page "À propos"
-  - [ ] Conversion du contenu en MDX
-  - [ ] Migration du CV interactif
-  - [ ] Adaptation des sections compétences
-- [ ] Page Contact
-  - [ ] Migration du formulaire
-  - [ ] Adaptation du style
-- [ ] Page Portfolio
-  - [ ] Conversion des projets en MDX
-  - [ ] Migration de la grille de projets
-  - [ ] Adaptation des filtres
+- [ ✅] Page "À propos"
+  - [ ✅] Conversion du contenu en MDX
+  - [ ✅] Migration du CV interactif
+  - [ ✅] Adaptation des sections compétences
+- [ ✅] Page Contact
+  - [ ✅] Migration du formulaire
+  - [ ✅] Adaptation du style
+- [ ✅] Page Portfolio
+  - [ ✅] Conversion des projets en MDX
+  - [ ✅] Migration de la grille de projets
+  - [ ✅] Adaptation des filtres
 
 ### Tests de Migration
 - [✅] Tests de rendu MDX
@@ -69,56 +69,73 @@
 - [✅] Tests d'intégration avec le nouveau layout
 - [✅] Vérification de la compatibilité mobile
 
-## Sprint 3 : Pages Principales 🔄
+## Sprint 3 : Pages Principales ✅
 ### Tests à Implémenter
-- [ ] Tests des composants de chaque page
-- [ ] Tests de rendu
-- [ ] Tests d'interaction utilisateur
+- [✅] Tests des composants de chaque page
+- [✅] Tests de rendu
+- [✅] Tests d'interaction utilisateur
 
 ### Développement
-- [ ] Page d'accueil
-  - [ ] Section héro
-  - [ ] Dernières mises à jour
-  - [ ] Projets récents
-- [ ] Page "À propos"
-  - [ ] Parcours
-  - [ ] Compétences
-  - [ ] CV interactif
-- [ ] Page Contact
-  - [ ] Formulaire (version statique)
-  - [ ] Informations de contact
-- [ ] Page Portfolio
-  - [ ] Grille de projets
-  - [ ] Filtres statiques
-  - [ ] Détail des projets
+- [✅] Page d'accueil
+  - [✅] Section héro
+  - [✅] Dernières mises à jour
+  - [✅] Projets récents
+- [✅] Page "À propos"
+  - [✅] Parcours
+  - [✅] Compétences
+  - [✅] CV interactif
+- [✅] Page Contact
+  - [✅] Formulaire (version statique)
+  - [✅] Informations de contact
+- [✅] Page Portfolio
+  - [✅] Grille de projets
+  - [✅] Filtres statiques
+  - [✅] Détail des projets
 
-## Sprint 4 : Infrastructure Légère ⏳
+## Sprint 4 : Templates et Structure de Contenu 🔄
 ### Tests à Implémenter
-- [ ] Tests des API Routes Next.js
-- [ ] Tests de génération statique
-- [ ] Tests d'intégration des services externes
+- [ ] Tests des composants de template
+- [ ] Tests de validation des métadonnées
+- [ ] Tests de rendu MDX
+- [ ] Tests d'intégration avec les pages existantes
 
 ### Développement
-- [ ] Configuration des API Routes Next.js
-  - [ ] Route pour le formulaire de contact
-  - [ ] Route pour les analytics
-  - [ ] Route pour la recherche simple
-- [ ] Mise en place MDX
-  - [ ] Configuration du blog
-  - [ ] Configuration de la documentation
-- [ ] Intégration des services externes
-  - [ ] Configuration Algolia (recherche)
-  - [ ] Configuration Cloudflare (CDN/Protection)
-  - [ ] Configuration GitHub (Stockage contenu)
-- [ ] Configuration du déploiement Vercel
-- [ ] Tests d'intégration
+- [ ] Template de Projets
+  - [ ] Structure MDX de base
+  - [ ] Métadonnées (technologies, date, statut)
+  - [ ] Composants de présentation
+    - [ ] En-tête du projet
+    - [ ] Galerie de captures d'écran
+    - [ ] Section technologies
+    - [ ] Section défis/solutions
+  - [ ] Styles et animations
+  - [ ] Documentation d'utilisation
+
+- [ ] Template de Connaissances
+  - [ ] Structure MDX de base
+  - [ ] Métadonnées (catégorie, tags, niveau)
+  - [ ] Composants spécialisés
+    - [ ] Bloc de code interactif
+    - [ ] Bloc de ressources
+    - [ ] Navigation dans le toctree
+  - [ ] Styles thématiques par catégorie
+  - [ ] Documentation d'utilisation
+
+- [ ] Template d'Activité
+  - [ ] Structure de données
+  - [ ] Métadonnées (type, date, importance)
+  - [ ] Composants de présentation
+    - [ ] Carte d'activité
+    - [ ] Timeline
+  - [ ] Système de filtrage
+  - [ ] Documentation d'utilisation
 
 ### Avantages de cette Approche
-- Performance accrue (contenu statique)
-- Coûts d'hébergement réduits
+- Standardisation du contenu
 - Maintenance simplifiée
-- Meilleure scalabilité
-- Sécurité renforcée (surface d'attaque réduite)
+- Cohérence visuelle
+- Facilité d'ajout de nouveau contenu
+- Base solide pour les fonctionnalités futures
 
 ## Sprint 5 : Système de Connaissances ⏳
 ### Tests à Implémenter

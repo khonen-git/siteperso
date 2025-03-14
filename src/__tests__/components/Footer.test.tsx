@@ -7,7 +7,7 @@ import Footer from '@/components/layout/Footer';
 describe('Footer', () => {
   it('renders copyright notice', () => {
     render(<Footer />);
-    expect(screen.getByText(/© 2024 Théo Knoepflin/)).toBeInTheDocument();
+    expect(screen.getByText(/© 2024 Théo Charron/)).toBeInTheDocument();
   });
 
   it('renders social links', () => {
@@ -20,7 +20,7 @@ describe('Footer', () => {
     expect(githubLink).toHaveAttribute('href', 'https://github.com/khonen-git');
     
     expect(linkedinLink).toBeInTheDocument();
-    expect(linkedinLink).toHaveAttribute('href', 'https://linkedin.com/in/theo-knoepflin');
+    expect(linkedinLink).toHaveAttribute('href', 'https://linkedin.com/in/tcharron');
   });
 
   it('adapts layout on mobile screens', () => {
@@ -41,7 +41,7 @@ describe('Footer', () => {
   it('adjusts text alignment based on screen size', () => {
     render(<Footer />);
     
-    const copyrightContainer = screen.getByText(/© 2024 Théo Knoepflin/).closest('p');
+    const copyrightContainer = screen.getByText(/© 2024 Théo Charron/).closest('p');
     expect(copyrightContainer).toHaveClass('text-center', 'md:text-left');
   });
 }); 

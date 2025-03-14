@@ -1,0 +1,399 @@
+import { MdxDistributionVisualizer } from '@/components/mdx/MdxDistributionVisualizer';
+import { normalDistribution } from '@/lib/distributions/normal';
+
+export const metadata = {
+  title: 'Loi Normale',
+  description: 'La loi normale, aussi appelée loi gaussienne, est une des lois de probabilité les plus utilisées en statistiques et en probabilités.'
+};
+
+import { MdxCard } from '@/components/mdx/MdxCard'
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table'
+import { CodeBlock } from '@/components/knowledge/CodeBlock'
+import { MathBlock, MathInline } from '@/components/knowledge/Math'
+import { DistributionVisualizer } from '@/components/knowledge/DistributionVisualizer'
+
+<MdxCard title="Définition">
+La loi normale est une distribution de probabilité continue qui est symétrique autour de sa moyenne μ et dont la forme est déterminée par son écart-type σ.
+</MdxCard>
+
+<MdxDistributionVisualizer distribution={normalDistribution} />
+
+## Caractéristiques
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Caractéristique</TableHead>
+        <TableHead>Formule</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Notation</TableCell>
+        <TableCell><MathInline>{"N(\\mu, \\sigma^2)"}</MathInline></TableCell>
+        <TableCell>Notation standard pour une loi normale de paramètres μ et σ²</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Paramètres</TableCell>
+        <TableCell><MathInline>{"\\mu \\in \\mathbb{R}, \\sigma^2 > 0"}</MathInline></TableCell>
+        <TableCell>μ peut prendre toute valeur réelle, σ² doit être strictement positif</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Support</TableCell>
+        <TableCell><MathInline>{"x \\in \\mathbb{R}"}</MathInline></TableCell>
+        <TableCell>La variable peut prendre n'importe quelle valeur réelle</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Densité de probabilité</TableCell>
+        <TableCell><MathInline>{"\\frac{1}{\\sqrt{2\\pi\\sigma^2}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}"}</MathInline></TableCell>
+        <TableCell>Fonction qui décrit la distribution de probabilité continue</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Fonction de répartition</TableCell>
+        <TableCell><MathInline>{"\\Phi\\left(\\frac{x-\\mu}{\\sigma}\\right) = \\frac{1}{2} \\left[1 + \\text{erf}\\left(\\frac{x - \\mu}{\\sigma\\sqrt{2}}\\right)\\right]"}</MathInline></TableCell>
+        <TableCell>Probabilité que la variable soit inférieure ou égale à x</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Fonction génératrice des moments</TableCell>
+        <TableCell><MathInline>{"M_X(t) = \\exp\\left(\\mu t + \\frac{1}{2}\\sigma^2 t^2\\right)"}</MathInline></TableCell>
+        <TableCell>Utilisée pour calculer les moments de la distribution</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Fonction caractéristique</TableCell>
+        <TableCell><MathInline>{"\\phi_X(t) = \\exp\\left(i\\mu t - \\frac{1}{2}\\sigma^2 t^2\\right)"}</MathInline></TableCell>
+        <TableCell>Transformée de Fourier de la densité de probabilité</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Quantile</TableCell>
+        <TableCell><MathInline>{"Q(p) = \\mu + \\sigma \\Phi^{-1}(p)"}</MathInline></TableCell>
+        <TableCell>Valeur x telle que la probabilité d'être inférieur à x est p</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Moyenne</TableCell>
+        <TableCell><MathInline>{"\\mu"}</MathInline></TableCell>
+        <TableCell>Centre de la distribution et valeur attendue</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Médiane</TableCell>
+        <TableCell><MathInline>{"\\mu"}</MathInline></TableCell>
+        <TableCell>Égale à la moyenne du fait de la symétrie</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Mode</TableCell>
+        <TableCell><MathInline>{"\\mu"}</MathInline></TableCell>
+        <TableCell>Valeur la plus probable, au sommet de la courbe</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Variance</TableCell>
+        <TableCell><MathInline>{"\\sigma^2"}</MathInline></TableCell>
+        <TableCell>Mesure de la dispersion autour de la moyenne</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Déviation absolue moyenne</TableCell>
+        <TableCell><MathInline>{"\\frac{\\sqrt{2}}{\\sigma\\sqrt{\\pi}}"}</MathInline></TableCell>
+        <TableCell>Moyenne des écarts absolus à la moyenne</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Asymétrie</TableCell>
+        <TableCell><MathInline>{"0"}</MathInline></TableCell>
+        <TableCell>Distribution parfaitement symétrique</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Kurtosis</TableCell>
+        <TableCell><MathInline>{"3"}</MathInline></TableCell>
+        <TableCell>Mesure de l'aplatissement de la distribution</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Kurtosis normalisé</TableCell>
+        <TableCell><MathInline>{"0"}</MathInline></TableCell>
+        <TableCell>Excès de kurtosis par rapport à la normale</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Entropie de Shannon</TableCell>
+        <TableCell><MathInline>{"\\frac{1}{2} + \\frac{1}{2} \\log(2\\pi\\sigma^2)"}</MathInline></TableCell>
+        <TableCell>Mesure de l'incertitude de la distribution</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Information de Fisher</TableCell>
+        <TableCell><MathInline>{"\\frac{1}{\\sigma^2}"}</MathInline></TableCell>
+        <TableCell>Mesure de l'information contenue dans la distribution</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Distance de Kullback-Leibler</TableCell>
+        <TableCell><MathInline>{"D_{KL}(N_0 || N_1) = \\log\\left(\\frac{\\sigma_1}{\\sigma_0}\\right) + \\frac{\\sigma_0^2 + (\\mu_0 - \\mu_1)^2}{2\\sigma_1^2} - \\frac{1}{2}"}</MathInline></TableCell>
+        <TableCell>Divergence entre deux distributions normales</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Propriétés et Théorèmes
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Propriété/Théorème</TableHead>
+        <TableHead>Formule</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Symétrie</TableCell>
+        <TableCell><MathInline>{"f(x-\\mu) = f(\\mu-x)"}</MathInline></TableCell>
+        <TableCell>Propriété fondamentale : la courbe est parfaitement symétrique autour de la moyenne <MathInline>\mu</MathInline>. Les valeurs équidistantes de la moyenne ont la même densité de probabilité.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Règle empirique</TableCell>
+        <TableCell>
+          <MathInline>{"P(\\mu \\pm \\sigma) \\approx 68\\%"}</MathInline><br />
+          <MathInline>{"P(\\mu \\pm 2\\sigma) \\approx 95\\%"}</MathInline><br />
+          <MathInline>{"P(\\mu \\pm 3\\sigma) \\approx 99.7\\%"}</MathInline>
+        </TableCell>
+        <TableCell>Propriété empirique connue sous le nom de "règle des 68-95-99.7" : pourcentage des observations dans les intervalles à 1, 2 et 3 écarts-types de la moyenne</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Standardisation</TableCell>
+        <TableCell><MathInline>{"Z = \\frac{X-\\mu}{\\sigma} \\sim \\mathcal{N}(0,1)"}</MathInline></TableCell>
+        <TableCell>Propriété fondamentale : toute loi normale peut être ramenée à la loi normale centrée réduite par cette transformation</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Stabilité linéaire</TableCell>
+        <TableCell><MathInline>{"aX + b \\sim \\mathcal{N}(a\\mu + b, a^2\\sigma^2)"}</MathInline></TableCell>
+        <TableCell>Propriété fondamentale : une combinaison linéaire d'une variable normale suit aussi une loi normale avec ces paramètres</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Additivité</TableCell>
+        <TableCell><MathInline>{"X_1 + X_2 \\sim \\mathcal{N}(\\mu_1 + \\mu_2, \\sigma_1^2 + \\sigma_2^2)"}</MathInline></TableCell>
+        <TableCell>Théorème de Cramér : la somme de variables normales indépendantes suit une loi normale avec ces paramètres</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Maximum d'entropie</TableCell>
+        <TableCell><MathInline>{"H(X) = \\frac{1}{2}\\ln(2\\pi e\\sigma^2)"}</MathInline></TableCell>
+        <TableCell>Théorème de Shannon-McMillan-Breiman : parmi toutes les distributions de même variance, la loi normale maximise l'entropie de Shannon</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Reproductibilité</TableCell>
+        <TableCell><MathInline>{"\\sum_{i=1}^n a_iX_i \\sim \\mathcal{N}(\\sum a_i\\mu_i, \\sum a_i^2\\sigma_i^2)"}</MathInline></TableCell>
+        <TableCell>Généralisation de la propriété de stabilité linéaire à toute combinaison linéaire de variables normales indépendantes</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Indépendance et corrélation</TableCell>
+        <TableCell><MathInline>{"\\text{Cov}(X,Y) = 0 \\iff X \\perp Y"}</MathInline></TableCell>
+        <TableCell>Théorème fondamental : pour des variables normales, l'absence de corrélation est équivalente à l'indépendance</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Convergence</TableCell>
+        <TableCell><MathInline>{"\\frac{\\bar{X}_n - \\mu}{\\sigma/\\sqrt{n}} \\xrightarrow{\\mathcal{L}} \\mathcal{N}(0,1)"}</MathInline></TableCell>
+        <TableCell>Cas particulier du théorème central limite : la moyenne empirique normalisée d'un échantillon normal converge en loi vers une normale centrée réduite</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Visualisation
+
+<MdxCard>
+  <DistributionVisualizer distribution={normalDistribution} />
+</MdxCard>
+
+## Applications
+
+<div className="grid gap-4 md:grid-cols-2">
+  <MdxCard>
+    <div className="space-y-2">
+      <h3 className="text-xl font-medium">Théorème central limite</h3>
+      <p>
+        La somme d'un grand nombre de variables aléatoires indépendantes et identiquement 
+        distribuées tend vers une loi normale (sous certaines conditions).
+      </p>
+    </div>
+  </MdxCard>
+  <MdxCard>
+    <div className="space-y-2">
+      <h3 className="text-xl font-medium">Tests statistiques</h3>
+      <p>
+        La loi normale est à la base de nombreux tests statistiques comme le test de Student 
+        ou l'ANOVA.
+      </p>
+    </div>
+  </MdxCard>
+</div>
+
+## Inférence Statistique
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Concept</TableHead>
+        <TableHead>Formule</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Estimation de la moyenne</TableCell>
+        <TableCell><MathInline>{"\\bar{X}_n \\sim \\mathcal{N}(\\mu, \\frac{\\sigma^2}{n})"}</MathInline></TableCell>
+        <TableCell>La moyenne empirique suit une loi normale de variance réduite par la taille de l'échantillon</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Intervalle de confiance pour μ (σ connu)</TableCell>
+        <TableCell><MathInline>{"\\bar{X}_n \\pm z_{1-\\alpha/2}\\frac{\\sigma}{\\sqrt{n}}"}</MathInline></TableCell>
+        <TableCell>Intervalle de confiance au niveau 1-α pour la moyenne, lorsque l'écart-type est connu</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Intervalle de confiance pour μ (σ inconnu)</TableCell>
+        <TableCell><MathInline>{"\\bar{X}_n \\pm t_{n-1,1-\\alpha/2}\\frac{S_n}{\\sqrt{n}}"}</MathInline></TableCell>
+        <TableCell>Intervalle de confiance utilisant la loi de Student lorsque l'écart-type est inconnu</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Test de Student</TableCell>
+        <TableCell><MathInline>{"T = \\frac{\\bar{X}_n - \\mu_0}{S_n/\\sqrt{n}} \\sim t_{n-1}"}</MathInline></TableCell>
+        <TableCell>Statistique de test pour la moyenne sous H₀ : μ = μ₀</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Test Z</TableCell>
+        <TableCell><MathInline>{"Z = \\frac{\\bar{X}_n - \\mu_0}{\\sigma/\\sqrt{n}} \\sim \\mathcal{N}(0,1)"}</MathInline></TableCell>
+        <TableCell>Test pour la moyenne lorsque σ est connu</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Intervalle de confiance pour σ²</TableCell>
+        <TableCell><MathInline>{"\\left[\\frac{(n-1)S_n^2}{\\chi^2_{n-1,1-\\alpha/2}}, \\frac{(n-1)S_n^2}{\\chi^2_{n-1,\\alpha/2}}\\right]"}</MathInline></TableCell>
+        <TableCell>Intervalle de confiance pour la variance</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+<MdxCard>
+  <div className="space-y-4">
+    <h3 className="text-xl font-medium">Remarques importantes</h3>
+    <ul className="list-disc pl-6 space-y-2">
+      <li>Les intervalles de confiance supposent la normalité des données</li>
+      <li>Le test de Student est robuste aux écarts modérés à la normalité pour de grands échantillons</li>
+      <li>Le test Z nécessite de connaître la variance de la population, ce qui est rare en pratique</li>
+      <li>Pour de grands échantillons, le théorème central limite permet d'utiliser ces tests même si la normalité n'est pas strictement vérifiée</li>
+      <li>La puissance des tests dépend de la taille d'échantillon, de la taille d'effet et du niveau de signification</li>
+      <li>Les tests multiples nécessitent des corrections pour contrôler le taux d'erreur de type I</li>
+      <li>L'ANOVA suppose l'homogénéité des variances entre les groupes (homoscédasticité)</li>
+      <li>La régression linéaire suppose l'indépendance et l'homoscédasticité des résidus</li>
+    </ul>
+  </div>
+</MdxCard>
+
+## Méthodes Computationnelles
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Méthode</TableHead>
+        <TableHead>Description</TableHead>
+        <TableHead>Applications</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Génération de nombres aléatoires</TableCell>
+        <TableCell>Méthode de Box-Muller et algorithme de Marsaglia</TableCell>
+        <TableCell>Simulations Monte-Carlo, bootstrap</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Approximation numérique</TableCell>
+        <TableCell>Méthodes d'approximation de la fonction de répartition et des quantiles</TableCell>
+        <TableCell>Calcul de probabilités et de valeurs critiques</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Tests de normalité</TableCell>
+        <TableCell>Tests de Shapiro-Wilk, Kolmogorov-Smirnov, et QQ-plots</TableCell>
+        <TableCell>Vérification des hypothèses de normalité</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Calcul de puissance</TableCell>
+        <TableCell>Simulation de la puissance des tests sous différentes alternatives</TableCell>
+        <TableCell>Dimensionnement d'échantillon, analyse de sensibilité</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+<MdxCard>
+  <CodeBlock language="python" autoRun={true}>
+    {`
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+
+# Génération de données normales avec différentes méthodes
+n = 1000
+# Méthode numpy (basée sur Box-Muller)
+data_numpy = np.random.normal(0, 1, n)
+# Méthode Box-Muller manuelle
+u1 = np.random.uniform(0, 1, n)
+u2 = np.random.uniform(0, 1, n)
+data_boxmuller = np.sqrt(-2 * np.log(u1)) * np.cos(2 * np.pi * u2)
+
+# Test de normalité
+_, p_value = stats.shapiro(data_numpy)
+
+# QQ-plot
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
+
+# Histogramme
+ax1.hist(data_numpy, bins=30, density=True, alpha=0.7)
+x = np.linspace(-4, 4, 100)
+ax1.plot(x, stats.norm.pdf(x, 0, 1), 'r-', lw=2)
+ax1.set_title(f'Histogramme (p-value Shapiro = {p_value:.3f})')
+
+# QQ-plot
+stats.probplot(data_numpy, dist="norm", plot=ax2)
+ax2.set_title('Q-Q Plot')
+
+plt.tight_layout()
+plt.show()
+`}
+  </CodeBlock>
+</MdxCard>
+
+## Exemples pratiques
+
+<MdxCard>
+  <CodeBlock language="python">
+    {`
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Génération d'un échantillon de taille 1000
+sample = np.random.normal(loc=0, scale=1, size=1000)
+
+# Calcul des statistiques descriptives
+mean = np.mean(sample)
+std = np.std(sample)
+print(f"Moyenne empirique : {mean:.2f}")
+print(f"Écart-type empirique : {std:.2f}")
+
+# Histogramme des données
+plt.figure(figsize=(10, 6))
+plt.hist(sample, bins=30, density=True, alpha=0.7, color='blue')
+plt.title('Histogramme des données générées')
+plt.xlabel('Valeurs')
+plt.ylabel('Densité')
+plt.grid(True)
+plt.show()
+`}
+  </CodeBlock>
+</MdxCard>
+
+## Références
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• Rice, John A. (2006). Mathematical Statistics and Data Analysis</p>
+    <p>• Wasserman, Larry (2004). All of Statistics: A Concise Course in Statistical Inference</p>
+    <p>• Documentation SciPy : scipy.stats.norm</p>
+  </div>
+</MdxCard> 
