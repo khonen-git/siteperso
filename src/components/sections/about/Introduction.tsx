@@ -8,11 +8,11 @@ import { Badge } from '@/components/ui/badge';
 const skills = [
   'Data Analysis',
   'Python',
-  'TypeScript',
-  'React',
-  'Next.js',
   'SQL',
+  'Machine Learning',
   'Power BI',
+  'IA',
+  'Développement web',
 ];
 
 export function Introduction(): React.JSX.Element {
@@ -68,8 +68,8 @@ export function Introduction(): React.JSX.Element {
               transition={{ duration: 0.5, delay: 0.5 }}
               className="mb-6 text-xl text-muted-foreground"
             >
-              Data Analyst passionné par la transformation des données en insights actionnables
-              et le développement d'applications web modernes.
+              Data Analyst, mon travail consiste à exploiter les données pour identifier des informations
+              clés utiles à la prise de décision et optimiser les processus.
             </motion.p>
 
             <motion.p
@@ -78,8 +78,9 @@ export function Introduction(): React.JSX.Element {
               transition={{ duration: 0.5, delay: 0.6 }}
               className="mb-8 text-muted-foreground"
             >
-              Avec une expertise en analyse de données et en développement web, je combine
-              ces compétences pour créer des solutions innovantes et data-driven.
+              Ayant un attrait pour les nouvelles technologies, je cherche constamment à me mettre à jour 
+              en adoptant les technologies qui accélère ma productivité et qui améliore la qualité de mon travail.
+              Je cherche aussi à développer des compétences annexes qui sont complémentaires à mes analyses.
             </motion.p>
 
             <motion.div

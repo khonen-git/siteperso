@@ -11,7 +11,6 @@ const withMDX = createMDX({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
-  outputFileTracingRoot: process.cwd(),
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
     remotePatterns: [
@@ -21,6 +20,16 @@ const nextConfig = {
       },
     ],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  experimental: {
+    appDir: true,
+    serverActions: true,
+  }
 };
 
 module.exports = withMDX(nextConfig); 

@@ -36,38 +36,27 @@ export function InteractiveCV(): React.JSX.Element {
           </motion.div>
 
           <div className="grid gap-6">
-            {/* Formation */}
             <Card>
               <CardHeader>
-                <CardTitle>Formation</CardTitle>
-                <CardDescription>Parcours académique et certifications</CardDescription>
+                <CardTitle>Formations</CardTitle>
+                <CardDescription>Parcours académique</CardDescription>
               </CardHeader>
               <CardContent className="text-left">
-                {/* Contenu à personnaliser */}
                 <div className="space-y-4">
                   <div>
-                    <h4 className="font-semibold">Master en Data Science</h4>
-                    <p className="text-sm text-muted-foreground">2020 - 2022 • Université XYZ</p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold">Certifications</h4>
-                    <ul className="list-inside list-disc text-sm text-muted-foreground">
-                      <li>Google Data Analytics Professional Certificate</li>
-                      <li>Microsoft Power BI Data Analyst Associate</li>
-                    </ul>
+                    <h4 className="font-semibold">Formation Data Analyst</h4>
+                    <p className="text-sm text-muted-foreground">2023 - 2024 • OpenClassrooms</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Expérience */}
-            <Card>
+            {/* <Card>
               <CardHeader>
                 <CardTitle>Expérience Professionnelle</CardTitle>
                 <CardDescription>Postes occupés et réalisations</CardDescription>
               </CardHeader>
               <CardContent className="text-left">
-                {/* Contenu à personnaliser */}
                 <div className="space-y-6">
                   <div>
                     <h4 className="font-semibold">Data Analyst Senior</h4>
@@ -80,7 +69,8 @@ export function InteractiveCV(): React.JSX.Element {
                   </div>
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
+            
           </div>
         </motion.div>
       </div>

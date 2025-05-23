@@ -1,0 +1,134 @@
+---
+id: 1
+title: "Création d'un site web"
+description: "Développement d'un site web professionnel pour présenter mes projets et mes compétences"
+image: "https://placehold.co/1200x600/png"
+date: "2025-02"
+category: "Développement web"
+tags: ["Web", "Javascript", "Typescript", "Next.js", "React", "Tailwind"]
+---
+
+## Résumé
+
+Ce projet est un élément central de mon parcours. Qu’il serve de CV en ligne, de vitrine pour mes projets, de synthèse de mes connaissances ou 
+même de bibliothèque de références, ce site web représente une base stable pour tout ce que je construis. Il m'accompagnera sur le long terme, 
+évoluant au fil de mes compétences et de mes besoins.
+
+## Objectifs
+
+- Développer un site web personnel moderne
+- Archiver et présenter mes projets
+- Archiver et structurer mes connaissances théoriques
+- Centraliser mes références
+- Présenter un CV en ligne complet et accessible
+
+## Contexte et première approche
+
+À l’origine, l’idée était simple : pouvoir montrer mes projets à des personnes non techniques. GitHub est un excellent outil pour versionner et documenter du code, mais il reste peu lisible pour les non-initiés. Créer un site web s’est donc imposé naturellement comme solution plus accessible.
+
+J’avais déjà quelques bases en HTML/CSS et un peu touché à JavaScript. J’ai donc commencé avec un site statique, développé à la main, parfois avec l'aide de ChatGPT. Le contenu était bon, mais la forme très rudimentaire, et surtout, le processus de développement s’est révélé lent. Manque de structure, productivité limitée... J’ai rapidement senti les limites de cette première version.
+
+Avec l’évolution rapide des outils d’IA, j’ai vu une opportunité d’explorer un stack plus moderne : React, TypeScript, Tailwind, Next.js… tout en me faisant assister par l’IA. J'avais récemment découvert l'éditeur de code Cursor.ai, et les premiers tests que j'avais réalisés m'avaient franchement impressionné.
+
+Le but n’était pas d’obtenir une application générée par l’IA sans chercher à comprendre — à l’image du fameux "vibe coding". Mon objectif était plutôt d’avoir une première base générée, de comprendre les technologies utilisées et le code produit (méthodes, organisation, logique), puis de reprendre la main pour ajuster le projet selon mes besoins, manuellement ou via des instructions ciblées à l’IA.
+
+## Seconde approche : construire avec l’IA, mais pas n’importe comment
+
+Cursor est un fork de Visual Studio Code qui intègre directement un agent IA dans l'éditeur. Cela permet à l’IA de comprendre le contexte du projet en accédant à l’arborescence, de modifier ou créer des fichiers, d’exécuter certaines commandes, de corriger automatiquement des bugs, d’expliquer du code ou de proposer des améliorations. J’ai voulu repartir sur des bases plus solides en m’appuyant sur Cursor pour accélérer le développement, mais pas en mode "vibe coding" — justement.
+
+On en entend beaucoup parler : l’IA qui code à ta place, la promesse d’un projet monté en une après-midi avec trois prompts bien posés. En réalité, ceux qui ont un peu d’expérience savent que cela se termine souvent en spaghetti code ingérable, et que le développeur "vibeur" passe plus de temps à tourner en rond dans ses prompts qu’à résoudre les vrais problèmes. Ce genre d'engouement, très séduisant sur le papier mais décevant dans la pratique, a déjà existé avec le NoCode ou le LowCode.
+
+J’ai donc pris une autre direction. Avant de coder quoi que ce soit, j’ai commencé par rédiger un cahier des charges structuré (CDC.md). J’y ai posé le contexte, les objectifs, les besoins fonctionnels. Ensuite, j’ai demandé à Cursor de transformer ce CDC en plan de développement détaillé, consigné dans un DEVBOOK.md, que j’ai fait évoluer au fil des itérations.
+
+L’idée était simple : utiliser l’IA comme un outil d’accélération, pas comme une béquille aveugle. J’ai donc conservé une logique métier, une organisation de projet et une approche orientée TDD (Test Driven Development), pour cadrer le développement et garder le contrôle. Le but n’était pas de faire confiance aveuglément au code généré, mais de le comprendre, de l’adapter, et de m’en servir comme point de départ.
+
+Cette méthode permet d’avoir un code fonctionnel assez rapidement, tout en gardant une logique de montée en compétences. Oui, le résultat initial n’est pas parfait : il y a parfois du code inutile, des structures mal pensées ou des fichiers trop verbeux. Mais cela fait partie du processus. Refactoriser le code généré permet non seulement d’améliorer la scalabilité du projet, mais aussi de comprendre les bonnes pratiques par contraste avec les mauvaises. Avant les LLM, un développeur débutant devait produire du mauvais code avant d’apprendre à l’améliorer. Cela reste vrai aujourd’hui, même avec l’aide de l’IA.
+
+## Dans la pratique
+
+### Etapes du projet
+
+- Configuration du projet
+- Architecture de base
+- Pages principales et templates de contenu
+- Fonctionnalités : KaTeX, Pyodide, animations
+- UI/UX
+- Deploiement et optimisation
+
+### Avancement du projet et difficultés rencontrées 
+
+La réalisation du projet a demandé beaucoup de travail, et mon manque d'expérience a souvent représenté un frein : c’est normal, on apprend. J’ai rencontré des situations de retour en arrière, des changements de plan, et parfois des incertitudes sur les choix techniques. L'IA a certes accéléré ma progression, mais il me reste beaucoup à apprendre. C’est déjà une très belle avancée pour quelqu’un qui ne compte pas faire du développement web son cœur de métier.
+
+Ma plus grande difficulté a été, au départ, mon incapacité à juger la qualité du code produit par l'IA. Je devais faire confiance à l’aveugle. Dans 90 % des cas, le code était bon : non seulement fonctionnel, mais aussi pertinent — et je m’en rendais compte à force d’avancer, en comprenant peu à peu les choix techniques. Mais dans les 10 % restants, soit le code ne fonctionnait pas (et je le corrigeais), soit — pire — il fonctionnait mais n’était pas pertinent.
+
+Et c’est probablement le cas le plus problématique. Un code qui ne fonctionne pas, on le corrige. Mais un code qui "fonctionne" tout en étant mal pensé, redondant, inutile ou trompeur peut créer des bugs subtils ou de la dette technique. Et surtout, il peut perturber l’IA elle-même, qui s’appuie sur ce code pour générer la suite. Dans ces cas-là, on découvre souvent le problème trop tard, et cela peut coûter beaucoup de temps à corriger.
+
+## Technologies
+
+### Langages
+
+<TechnologiesSection>
+  <Technology name="TypeScript" description="Langage de programmation typé qui ajoute des types statiques à JavaScript, améliorant la maintenabilité et la robustesse du code" />
+  <Technology name="Javascript" description="Langage de programmation principal utilisé pour le développement frontend et les interactions côté client" />
+</TechnologiesSection>
+
+### Framework frontend
+
+<TechnologiesSection>
+  <Technology name="Next.js" description="Framework React qui offre le rendu côté serveur, le routage et l'optimisation des performances" />
+  <Technology name="React" description="Bibliothèque JavaScript pour la construction d'interfaces utilisateur interactives et réactives" />
+</TechnologiesSection>
+
+### Styling et UI
+
+<TechnologiesSection>
+  <Technology name="Tailwind CSS" description="Framework CSS utilitaire pour construire des interfaces modernes et responsives" />
+  <Technology name="shadcn/ui" description="Collection de composants UI réutilisables et personnalisables" />
+</TechnologiesSection>
+
+### Gestion d'état
+
+<TechnologiesSection>
+  <Technology name="Zustand" description="Bibliothèque légère de gestion d'état pour React, offrant une API simple et intuitive" />
+</TechnologiesSection>
+
+### Outils de développement
+
+<TechnologiesSection>
+  <Technology name="ESLint" description="Outil d'analyse de code statique pour identifier et corriger les problèmes de code" />
+  <Technology name="Prettier" description="Formateur de code pour maintenir un style de code cohérent" />
+  <Technology name="Jest" description="Framework de test pour JavaScript, utilisé pour les tests unitaires et d'intégration" />
+</TechnologiesSection>
+
+### Fonctionnalités spécifiques
+
+<TechnologiesSection>
+  <Technology name="MDX" description="Format qui permet d'écrire du JSX dans des documents Markdown" />
+  <Technology name="KaTeX" description="Bibliothèque pour le rendu de formules mathématiques dans le navigateur" />
+  <Technology name="Recharts" description="Bibliothèque de graphiques composables pour React" />
+</TechnologiesSection>
+
+### Outils de build et bundling
+
+<TechnologiesSection>
+  <Technology name="SWC" description="Compilateur ultra-rapide pour JavaScript/TypeScript" />
+  <Technology name="PostCSS" description="Outil de transformation CSS avec un écosystème de plugins" />
+  <Technology name="Autoprefixer" description="Plugin PostCSS pour ajouter automatiquement les préfixes vendeurs CSS" />
+</TechnologiesSection>
+
+### Déploiement
+
+<TechnologiesSection>
+  <Technology name="Vercel" description="Plateforme de déploiement optimisée pour les applications Next.js" />
+  <Technology name="Digital Ocean" description="Fournisseur de cloud computing pour l'hébergement des applications" />
+</TechnologiesSection>
+
+## Résultats
+
+Le site est en open source sur mon GitHub : {/* Lien github */}
+
+## Leçons apprises
+
+## Conclusion
+
+{/* Conclusion */}

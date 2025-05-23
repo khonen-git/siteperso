@@ -2,6 +2,13 @@ import { useMemo } from 'react';
 import { useCalculationCache } from './useCalculationCache';
 import { DistributionConfig } from '@/types/distributions';
 
+export interface Curve {
+  id: string;
+  distributionName: string;
+  params: Record<string, number>;
+  color?: string;
+}
+
 interface CalculationOptions {
   xMin: number;
   xMax: number;

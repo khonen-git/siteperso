@@ -62,20 +62,20 @@ export const navigationData: TreeItem[] = [
               { title: "Fondamentaux", href: "/knowledge/mathematics/statistics/inductive/fundamentals" },
               { 
                 title: "Tests statistiques",
-                href: "/knowledge/mathematics/statistics/inductive/tests",
+                href: "/knowledge/mathematics/statistics/inductive/statistical-tests",
                 children: [
                   { title: "Tests paramétriques",
-                    href: "/knowledge/mathematics/statistics/inductive/tests/parametric",
+                    href: "/knowledge/mathematics/statistics/inductive/statistical-tests/parametric",
                     children: [
-                      { title: "Test t de Student", href: "/knowledge/mathematics/statistics/inductive/tests/parametric/t-test" },
-                      { title: "Test t de Welch", href: "/knowledge/mathematics/statistics/inductive/tests/parametric/t-test-welch" }
+                      { title: "Test t de Student", href: "/knowledge/mathematics/statistics/inductive/statistical-tests/parametric/t-test" },
+                      { title: "Test t de Welch", href: "/knowledge/mathematics/statistics/inductive/statistical-tests/parametric/t-test-welch" }
                     ]
                   },
                   { title: "Tests non paramétriques",
-                    href: "/knowledge/mathematics/statistics/inductive/tests/non-parametric",
+                    href: "/knowledge/mathematics/statistics/inductive/statistical-tests/non-parametric",
                     children: [
-                      { title: "Test de Mann-Whitney", href: "/knowledge/mathematics/statistics/inductive/tests/non-parametric/mann-whitney" },
-                      { title: "Test de Wilcoxon", href: "/knowledge/mathematics/statistics/inductive/tests/non-parametric/wilcoxon" }
+                      { title: "Test de Mann-Whitney", href: "/knowledge/mathematics/statistics/inductive/statistical-tests/non-parametric/mann-whitney" },
+                      { title: "Test de Wilcoxon", href: "/knowledge/mathematics/statistics/inductive/statistical-tests/non-parametric/wilcoxon" }
                     ]
                   }
                 ]

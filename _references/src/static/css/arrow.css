@@ -1,7 +1,0 @@
-/* Styles pour la flèche */
-.arrow-down {
-    font-size: 14px;
-    margin-left: 10px; /* Espace entre le texte et la flèche */
-    transition: transform 0.3s ease;
-    flex-shrink: 0; /* Empêche la flèche de se réduire */
-}

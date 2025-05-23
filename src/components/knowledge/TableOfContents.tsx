@@ -1,58 +1,102 @@
 "use client"
 
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
+
+interface HeadingInfo {
+  id: string;
+  text: string;
+  level: number;
+}
 
 interface TableOfContentsProps {
   className?: string;
 }
 
-export function TableOfContents({ className }: TableOfContentsProps) {
-  const [activeId, setActiveId] = React.useState<string>('');
+export function TableOfContents({ className }: TableOfContentsProps): React.JSX.Element {
+  const [headings, setHeadings] = useState<HeadingInfo[]>([]);
+  const [activeId, setActiveId] = useState<string>('');
 
-  // Observer pour suivre la position de lecture
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: '-20% 0px -35% 0px' }
-    );
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
 
-    // Observer tous les headings
+    const headingsArray: HeadingInfo[] = [];
     document.querySelectorAll('h2[id], h3[id], h4[id]').forEach((section) => {
-      observer.observe(section);
+      const id = section.id;
+      const text = section.textContent || '';
+      const level = parseInt(section.tagName[1]);
+      
+      headingsArray.push({
+        id,
+        text,
+        level
+      });
     });
 
-    return () => observer.disconnect();
+    setHeadings(headingsArray);
+
+    const handleScroll = (): void => {
+      if (headingsArray.length === 0) return;
+
+      // Trouver l'en-tête visible le plus haut
+      const headingElements = headingsArray.map(heading => 
+        document.getElementById(heading.id)
+      ).filter(el => el !== null) as HTMLElement[];
+
+      const scrollPosition = window.scrollY + 100;
+
+      for (let i = headingElements.length - 1; i >= 0; i--) {
+        const currentElement = headingElements[i];
+        if (currentElement && currentElement.offsetTop <= scrollPosition) {
+          setActiveId(currentElement.id);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
+  if (headings.length === 0) {
+    return <div className="text-sm text-muted-foreground">Aucune table des matières disponible</div>;
+  }
+
   return (
-    <div className={cn("space-y-2", className)}>
-      <h4 className="font-medium">Sur cette page</h4>
-      <nav className="text-sm">
-        <ul className="space-y-2 text-muted-foreground">
-          {Array.from(document.querySelectorAll('h2[id], h3[id], h4[id]')).map((heading) => {
-            const level = parseInt(heading.tagName[1]) - 2;
-            return (
-              <li
-                key={heading.id}
-                className={cn(
-                  "hover:text-foreground transition-colors",
-                  level > 0 && `ml-${level * 4}`,
-                  activeId === heading.id && "text-foreground font-medium"
-                )}
-              >
-                <a href={`#${heading.id}`}>{heading.textContent}</a>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
-    </div>
+    <nav className={cn("space-y-1", className)}>
+      <h4 className="font-medium mb-2 text-lg">Table des matières</h4>
+      <ul className="space-y-2 text-sm">
+        {headings.map((heading) => (
+          <li 
+            key={heading.id}
+            className={cn(
+              "transition-colors",
+              heading.level === 2 ? 'ml-0' : heading.level === 3 ? 'ml-4' : 'ml-8'
+            )}
+          >
+            <a
+              href={`#${heading.id}`}
+              className={cn(
+                "block py-1 text-muted-foreground hover:text-foreground transition-colors",
+                activeId === heading.id && "font-medium text-foreground"
+              )}
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById(heading.id)?.scrollIntoView({
+                  behavior: 'smooth'
+                });
+                setActiveId(heading.id);
+              }}
+            >
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 } 

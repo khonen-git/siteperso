@@ -9,23 +9,41 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 const timelineEvents = [
   {
     id: 1,
-    date: '2023 - Présent',
-    title: 'Data Analyst',
-    company: 'Entreprise XYZ',
-    description: 'Analyse de données et développement de solutions BI',
-    details: 'Utilisation avancée de Python et SQL pour l\'analyse de données. Création de dashboards interactifs avec Power BI. Optimisation des processus d\'ETL.',
-    tags: ['Python', 'SQL', 'Power BI'],
+    date: 'juillet 2024 - Présent',
+    title: 'Formation Data Analyst',
+    company: 'OpenClassrooms',
+    description: 'Formation en analyse de données, développement de solutions BI et machine learning',
+    details: '',
+    tags: ['Python', 'Data Analysis', 'SQL', 'Power BI', 'Machine Learning', 'Excel'],
   },
   {
     id: 2,
-    date: '2021 - 2023',
-    title: 'Formation Data Science',
-    company: 'École ABC',
-    description: 'Formation intensive en data science et programmation',
-    details: 'Apprentissage approfondi des algorithmes de machine learning. Projets pratiques en analyse de données. Certification en Data Science.',
-    tags: ['Machine Learning', 'Statistics', 'Python'],
+    date: 'août 2023 - mars 2024',
+    title: 'Employé commercial',
+    company: 'Intermarché',
+    description: 'Employé commercial dans le secteur boulangerie traditionnelle',
+    details: '',
+    tags: ['Grande distribution', ' Boulangerie traditionnelle'],
   },
-  // Ajoutez d'autres événements selon votre parcours
+  {
+    id: 3,
+    date: 'septembre 2021 - juin 2023',
+    title: 'Formation ingénieur (Non-validée)',
+    company: 'Ecole d\'ingénieurs Télécom Saint-Etienne',
+    description: 'Formation ingénieur en informatique',
+    details: '',
+    tags: ['Ingénierie', 'Informatique'],
+  },
+  {
+    id: 4,
+    date: 'septembre 2018 - juin 2021',
+    title: 'CPGE TSI',
+    company: 'Lycée Louis Rascol',
+    description: 'Classe préparatoire aux grandes écoles',
+    details: `Préparation aux concours CCP (Concours Communs Polytechniques) et CCS (Concours Centrale Supélec).
+    La prépa m'a permis de développer une discipline et m'a donné des bases solides dans les matières scientifiques.`,
+    tags: ['Prépa', 'Mathématiques', 'Physique', 'Sciences de l\'ingénieur', 'Informatique'],
+  },
 ];
 
 export function Timeline(): React.JSX.Element {
@@ -42,9 +60,6 @@ export function Timeline(): React.JSX.Element {
             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
               Mon Parcours
             </h2>
-            <p className="text-muted-foreground">
-              Une progression constante dans le domaine de la data et du développement.
-            </p>
           </motion.div>
 
           <div className="mt-16 grid grid-cols-[1fr_1fr] gap-8">
@@ -70,11 +85,13 @@ export function Timeline(): React.JSX.Element {
                   <div className="flex-1 pb-8">
                     <div className="relative mb-2">
                       <span className="text-sm text-muted-foreground">{event.date}</span>
+
+                      {/* Infobulle */}
                       <div className="absolute -right-4 -top-1">
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <button className="rounded-full bg-foreground p-1.5 transition-colors hover:bg-foreground/90 dark:bg-background dark:hover:bg-background/90">
-                              <Info className="h-3 w-3 text-background dark:text-foreground" />
+                              <Info className="h-6 w-6 text-background dark:text-foreground" />
                             </button>
                           </TooltipTrigger>
                           <TooltipContent 

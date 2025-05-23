@@ -1,0 +1,257 @@
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { CodeBlock } from '@/components/knowledge/CodeBlock';
+import { MathBlock, MathInline } from '@/components/knowledge/Math';
+
+export const metadata = {
+  title: 'Tests Statistiques',
+  description: 'Guide complet sur les tests statistiques : comprendre, choisir et appliquer le bon test statistique.'
+};
+
+# Tests Statistiques
+
+## Introduction
+
+<MdxCard>
+Les tests statistiques sont des outils fondamentaux en statistique inférentielle permettant de prendre des décisions à partir de données échantillonnées. Ils nous aident à déterminer si les différences ou relations observées dans nos données sont statistiquement significatives ou simplement dues au hasard.
+</MdxCard>
+
+## Principes Fondamentaux
+
+<MdxCard>
+### Les 5 étapes d'un test statistique
+
+1. **Formulation des hypothèses**
+   - H₀ : Hypothèse nulle (ce que l'on cherche à rejeter)
+   - H₁ : Hypothèse alternative (ce que l'on cherche à démontrer)
+
+2. **Choix du test approprié**
+   - En fonction de la nature des données
+   - En fonction des conditions d'application
+   - En fonction de l'objectif de l'étude
+
+3. **Définition du seuil de signification (α)**
+   - Généralement 5% (0.05) ou 1% (0.01)
+   - Représente le risque d'erreur de type I
+
+4. **Calcul de la statistique de test**
+   - Transformation des données en une valeur unique
+   - Comparaison avec la distribution théorique
+
+5. **Prise de décision**
+   - Basée sur la p-valeur ou la valeur critique
+   - Interprétation dans le contexte
+</MdxCard>
+
+## Types d'Erreurs
+
+<MdxCard>
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Type d'Erreur</TableHead>
+      <TableHead>Description</TableHead>
+      <TableHead>Symbole</TableHead>
+      <TableHead>Contrôle</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Erreur de Type I</TableCell>
+      <TableCell>Rejeter H₀ alors qu'elle est vraie (Faux Positif)</TableCell>
+      <TableCell>α</TableCell>
+      <TableCell>Fixé a priori (souvent 5%)</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Erreur de Type II</TableCell>
+      <TableCell>Ne pas rejeter H₀ alors qu'elle est fausse (Faux Négatif)</TableCell>
+      <TableCell>β</TableCell>
+      <TableCell>Dépend de la taille d'effet et de n</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+</MdxCard>
+
+## Choix du Test Statistique
+
+<MdxCard>
+### Critères de choix
+
+1. **Nature des variables**
+   - Qualitatives (nominales, ordinales)
+   - Quantitatives (discrètes, continues)
+
+2. **Distribution des données**
+   - Normalité
+   - Homoscédasticité
+   - Indépendance
+
+3. **Taille de l'échantillon**
+   - Petits échantillons (n < 30)
+   - Grands échantillons (n ≥ 30)
+
+4. **Objectif de l'analyse**
+   - Comparaison de moyennes
+   - Analyse de relations
+   - Test d'adéquation
+</MdxCard>
+
+## Classification des Tests
+
+<MdxCard>
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Type de Test</TableHead>
+      <TableHead>Tests Paramétriques</TableHead>
+      <TableHead>Tests Non-Paramétriques</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Comparaison à une valeur</TableCell>
+      <TableCell>Test Z, Test t</TableCell>
+      <TableCell>Test des signes, Wilcoxon</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Comparaison de 2 groupes indépendants</TableCell>
+      <TableCell>Test t de Student</TableCell>
+      <TableCell>Mann-Whitney U</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Comparaison de 2 groupes appariés</TableCell>
+      <TableCell>Test t apparié</TableCell>
+      <TableCell>Wilcoxon signé</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Comparaison de plus de 2 groupes</TableCell>
+      <TableCell>ANOVA</TableCell>
+      <TableCell>Kruskal-Wallis</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Relation entre variables</TableCell>
+      <TableCell>Corrélation de Pearson</TableCell>
+      <TableCell>Corrélation de Spearman</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+</MdxCard>
+
+## Puissance Statistique
+
+<MdxCard>
+La puissance d'un test statistique est sa capacité à détecter un effet lorsqu'il existe réellement. Elle est influencée par :
+
+1. **Taille de l'échantillon (n)**
+   - Plus n est grand, plus la puissance augmente
+
+2. **Taille d'effet (d)**
+   - Plus l'effet est important, plus il est facile à détecter
+
+3. **Niveau de signification (α)**
+   - Un α plus élevé augmente la puissance mais aussi le risque d'erreur
+
+4. **Variabilité des données**
+   - Une plus grande variabilité réduit la puissance
+
+La puissance est calculée comme : <MathInline>1 - \beta</MathInline>
+</MdxCard>
+
+## Exemple Pratique avec Python
+
+<MdxCard>
+<CodeBlock language="python">
+{`
+import numpy as np
+from scipy import stats
+import matplotlib.pyplot as plt
+
+# Génération de données
+np.random.seed(42)
+groupe1 = np.random.normal(100, 15, 30)  # Moyenne=100, Écart-type=15, n=30
+groupe2 = np.random.normal(110, 15, 30)  # Moyenne=110, Écart-type=15, n=30
+
+# Test de normalité
+_, p_norm1 = stats.shapiro(groupe1)
+_, p_norm2 = stats.shapiro(groupe2)
+
+# Test d'homogénéité des variances
+_, p_var = stats.levene(groupe1, groupe2)
+
+# Test t de Student
+t_stat, p_value = stats.ttest_ind(groupe1, groupe2)
+
+# Affichage des résultats
+print(f"Test de normalité groupe 1: p = {p_norm1:.3f}")
+print(f"Test de normalité groupe 2: p = {p_norm2:.3f}")
+print(f"Test d'homogénéité des variances: p = {p_var:.3f}")
+print(f"Test t de Student: t = {t_stat:.3f}, p = {p_value:.3f}")
+
+# Visualisation
+plt.figure(figsize=(10, 6))
+plt.boxplot([groupe1, groupe2], labels=['Groupe 1', 'Groupe 2'])
+plt.title('Comparaison des deux groupes')
+plt.ylabel('Valeurs')
+plt.show()
+`}
+</CodeBlock>
+</MdxCard>
+
+## Bonnes Pratiques
+
+<MdxCard>
+1. **Avant le test**
+   - Vérifier les conditions d'application
+   - Calculer la taille d'échantillon nécessaire
+   - Définir les hypothèses a priori
+
+2. **Pendant l'analyse**
+   - Examiner les données aberrantes
+   - Vérifier la qualité des données
+   - Documenter les choix méthodologiques
+
+3. **Pour l'interprétation**
+   - Ne pas confondre significativité statistique et importance pratique
+   - Considérer la taille d'effet
+   - Prendre en compte le contexte
+
+4. **Pour la communication**
+   - Rapporter les statistiques descriptives
+   - Inclure les intervalles de confiance
+   - Présenter les visualisations appropriées
+</MdxCard>
+
+## Limites et Considérations
+
+<MdxCard>
+### Points à garder à l'esprit
+
+1. **La significativité n'est pas tout**
+   - Une p-valeur significative ne garantit pas l'importance pratique
+   - La taille d'effet est souvent plus informative
+
+2. **Tests multiples**
+   - Le risque d'erreur augmente avec le nombre de tests
+   - Nécessité de corrections (Bonferroni, FDR, etc.)
+
+3. **Taille d'échantillon**
+   - Un grand n peut rendre tout significatif
+   - Un petit n peut masquer des effets importants
+
+4. **Hypothèses sous-jacentes**
+   - Les violations peuvent invalider les résultats
+   - Importance de la vérification des conditions
+</MdxCard>
+
+## Références
+
+<MdxCard>
+- **Wikipedia** : *Statistical hypothesis test* (https://en.wikipedia.org/wiki/Statistical_hypothesis_test)
+- XLSTAT : Guide de choix de test statistique (https://help.xlstat.com/fr/6443-which-statistical-test-should-you-use)
+- (https://www.math.univ-toulouse.fr/~besse/Wikistat/pdf/st-l-inf-tests.pdf)
+- Introduction aux statistiques - © 1996, Ramousse R., Le Berre M. & Le Guelte L. (https://www.cons-dev.org/elearning/stat/)
+- Introduction aux statistiques - © 1996, Ramousse R., Le Berre M. & Le Guelte L. (https://www.cons-dev.org/elearning/stat/St2b.html)
+- (https://bioinfo-fr.net/tests-statistiques-suivez-lguide)
+- Françoise Guillemot. Arbre de décision pour le choix d’un test statistique. Licence. Statistiques en
+psychologie, Nantes (Nantes Université), France. 2023, pp.1. ffhal-04292194f (https://shs.hal.science/hal-04292194v1)
+</MdxCard> 

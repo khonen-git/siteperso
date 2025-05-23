@@ -9,17 +9,17 @@ const ambitions = [
   {
     icon: Target,
     title: 'Objectifs',
-    description: 'Devenir expert en data science et contribuer à des projets innovants qui ont un impact réel.',
+    description: `Devenir expert en data et me spécialiser dans l\'étude des processus aléatoires, développer des connaissances et des compétences utiles et versatiles.`,
   },
   {
     icon: Brain,
     title: 'Domaines d\'intérêt',
-    description: 'Machine Learning, Data Visualization, et développement d\'applications web modernes.',
+    description: 'Data, machine learning, phénomènes aléatoires, développement d\'application et web, finance.',
   },
   {
     icon: Rocket,
     title: 'Projets Futurs',
-    description: 'Développer des solutions data-driven qui combinent analyse de données et interfaces utilisateur intuitives.',
+    description: `Développer des solutions data-driven combianant analyse des données et UI intuitive, expérimenter des modèles sur des phénomènes aléatoires et contribuer à des projets open source.`,
   },
 ];
 

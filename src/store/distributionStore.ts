@@ -28,7 +28,7 @@ interface DistributionState {
 
 export const useDistributionStore = create<DistributionState>()(
   persist(
-    (set: (fn: (state: DistributionState) => Partial<DistributionState>) => void) => ({
+    (set) => ({
       activeDistribution: null,
       curves: [],
       functionType: 'pdf',
@@ -76,7 +76,7 @@ export const useDistributionStore = create<DistributionState>()(
       loadPreset: (id: string) => 
         set((state: DistributionState) => {
           const preset = state.presets.find((p: PresetConfig) => p.id === id);
-          if (!preset) return state;
+          if (!preset) return {};
           return {
             curves: preset.curves,
             functionType: preset.functionType

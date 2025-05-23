@@ -2,9 +2,7 @@
 
 import * as React from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Search } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import {
@@ -16,79 +14,38 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { ArrowUpRight, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-// Définition des thématiques et leurs couleurs associées
-const themes = {
-  Python: { color: 'bg-blue-500/10 text-blue-500 dark:bg-blue-400/10 dark:text-blue-400' },
-  'Power BI': { color: 'bg-yellow-500/10 text-yellow-500 dark:bg-yellow-400/10 dark:text-yellow-400' },
-  DAX: { color: 'bg-orange-500/10 text-orange-500 dark:bg-orange-400/10 dark:text-orange-400' },
-  'scikit-learn': { color: 'bg-green-500/10 text-green-500 dark:bg-green-400/10 dark:text-green-400' },
-  PostgreSQL: { color: 'bg-indigo-500/10 text-indigo-500 dark:bg-indigo-400/10 dark:text-indigo-400' },
-  TypeScript: { color: 'bg-purple-500/10 text-purple-500 dark:bg-purple-400/10 dark:text-purple-400' },
-  React: { color: 'bg-cyan-500/10 text-cyan-500 dark:bg-cyan-400/10 dark:text-cyan-400' },
-};
-
-// Définition des catégories
-const categories = {
-  'Data': 'Projets liés à l\'analyse et au traitement des données',
-  'Mathématiques': 'Applications et études mathématiques',
-  'Finance': 'Analyses financières et modélisation',
-  'Développement Web': 'Applications et sites web',
-  'Machine Learning': 'Projets d\'intelligence artificielle',
-  'Automatisation': 'Scripts et outils d\'automatisation',
-};
-
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  date: string;
-  category: string;
-  tags: string[];
-  link: string;
-}
-
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "Analyse Prédictive des Ventes",
-    description: "Utilisation de modèles ML pour prédire les ventes futures et optimiser les stocks en temps réel.",
-    image: "https://placehold.co/600x400/png",
-    date: "2024-02",
-    category: "Machine Learning",
-    tags: ["Python", "scikit-learn", "PostgreSQL"],
-    link: "/projects/sales-prediction",
-  },
-  {
-    id: 2,
-    title: "Dashboard Power BI",
-    description: "Tableau de bord interactif pour l'analyse des KPIs et la visualisation des données en temps réel.",
-    image: "https://placehold.co/600x400/png",
-    date: "2024-01",
-    category: "Data",
-    tags: ["Power BI", "DAX"],
-    link: "/projects/powerbi-dashboard",
-  },
-  {
-    id: 3,
-    title: "ETL Pipeline",
-    description: "Pipeline de données automatisé pour le traitement des données à grande échelle.",
-    image: "https://placehold.co/600x400/png",
-    date: "2023-12",
-    category: "Automatisation",
-    tags: ["Python", "PostgreSQL"],
-    link: "/projects/etl-pipeline",
-  },
-];
+import ProjectCard from '@/components/project/ProjectCard';
+import ProjectTag from '@/components/project/ProjectTag';
+import fallbackProjects, { fetchProjects } from '@/data/projectsList';
+import categories from '@/config/categories';
+import themes from '@/config/themes';
+import { Project } from '@/types/project';
 
 export default function ProjectsPage(): React.JSX.Element {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [selectedCategory, setSelectedCategory] = React.useState<string>('all');
   const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
   const [sortBy, setSortBy] = React.useState<'date' | 'title'>('date');
+  const [projects, setProjects] = React.useState<Project[]>(fallbackProjects);
+  const [loading, setLoading] = React.useState(true);
+
+  // Charger les projets depuis l'API au chargement
+  React.useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        const data = await fetchProjects();
+        setProjects(data);
+      } catch (error) {
+        console.error('Erreur lors du chargement des projets:', error);
+        // Fallback sur les projets statiques déjà chargés
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProjects();
+  }, []);
 
   // Récupérer tous les tags uniques
   const allTags = Array.from(new Set(projects.flatMap(project => project.tags)));
@@ -225,6 +182,13 @@ export default function ProjectsPage(): React.JSX.Element {
           )}
         </div>
 
+        {/* Indicateur de chargement */}
+        {loading && (
+          <div className="mt-16 text-center">
+            <div className="animate-pulse text-lg">Chargement des projets...</div>
+          </div>
+        )}
+
         {/* Grille de projets */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -233,62 +197,15 @@ export default function ProjectsPage(): React.JSX.Element {
           className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
         >
           {filteredProjects.map((project) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Link href={project.link} className="group block">
-                <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-xl">
-                  <div className="aspect-[4/3] relative">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-background/0" />
-                  </div>
-                  <CardHeader className="relative">
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-xl font-bold">{project.title}</CardTitle>
-                      <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        className="rounded-full bg-primary/10 p-2 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground"
-                      >
-                        <ArrowUpRight size={20} />
-                      </motion.div>
-                    </div>
-                    <CardDescription className="mt-2.5 line-clamp-2">
-                      {project.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="mb-2">
-                      <Badge variant="outline" className="text-sm">
-                        {project.category}
-                      </Badge>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <Badge
-                          key={tag}
-                          variant="secondary"
-                          className={cn(
-                            themes[tag as keyof typeof themes]?.color,
-                            'transition-colors'
-                          )}
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            </motion.div>
+            <ProjectCard key={project.id} project={project} />
           ))}
+          
+          {/* Message si aucun projet ne correspond aux filtres */}
+          {filteredProjects.length === 0 && !loading && (
+            <div className="col-span-full text-center text-muted-foreground">
+              Aucun projet ne correspond à vos critères de recherche.
+            </div>
+          )}
         </motion.div>
       </section>
     </div>
