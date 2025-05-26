@@ -7,9 +7,9 @@ export default function Home(): React.JSX.Element {
   return (
     <>
       <HeroSection 
-        title="Data Analyst & Développeur" 
-        subtitle="Passionné par la data science et le développement web"
-        description="Je transforme des données complexes en insights actionnables et crée des applications web modernes."
+        title="Data Analyst" 
+        subtitle="Passionné par la data"
+        description="J'analyse des données pour en tirer des informations clés qui aident à la prise de décision"
       />
       <LatestUpdates />
       <RecentProjects />
