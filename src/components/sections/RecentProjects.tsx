@@ -7,42 +7,8 @@ import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ArrowUpRight } from 'lucide-react';
-
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  tags: string[];
-  link: string;
-}
-
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "Analyse Prédictive des Ventes",
-    description: "Utilisation de modèles ML pour prédire les ventes futures et optimiser les stocks en temps réel.",
-    image: "https://placehold.co/600x400/png",
-    tags: ["Python", "scikit-learn", "Pandas"],
-    link: "/portfolio/sales-prediction",
-  },
-  {
-    id: 2,
-    title: "Dashboard Power BI",
-    description: "Tableau de bord interactif pour l'analyse des KPIs et la visualisation des données en temps réel.",
-    image: "https://placehold.co/600x400/png",
-    tags: ["Power BI", "DAX", "SQL"],
-    link: "/portfolio/powerbi-dashboard",
-  },
-  {
-    id: 3,
-    title: "ETL Pipeline",
-    description: "Pipeline de données automatisé avec Apache Airflow pour le traitement des données à grande échelle.",
-    image: "https://placehold.co/600x400/png",
-    tags: ["Airflow", "Python", "PostgreSQL"],
-    link: "/portfolio/etl-pipeline",
-  },
-];
+import { Project } from '@/types/project';
+import { fetchProjects } from '@/data/projectsList';
 
 const container = {
   hidden: { opacity: 0 },
@@ -60,6 +26,37 @@ const item = {
 };
 
 export function RecentProjects(): React.JSX.Element {
+  const [projects, setProjects] = React.useState<Project[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        const allProjects = await fetchProjects();
+        // Prendre seulement les 3 projets les plus récents (déjà triés par date dans l'API)
+        setProjects(allProjects.slice(0, 3));
+      } catch (error) {
+        console.error('Erreur lors du chargement des projets récents:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProjects();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="relative overflow-hidden bg-secondary/5 py-20">
+        <div className="container relative">
+          <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
+            <div className="animate-pulse text-lg">Chargement des projets récents...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="relative overflow-hidden bg-secondary/5 py-20">
       {/* Arrière-plan décoratif */}
@@ -151,6 +148,22 @@ export function RecentProjects(): React.JSX.Element {
                 </Link>
               </motion.div>
             ))}
+          </motion.div>
+
+          {/* Lien vers tous les projets */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="mt-12"
+          >
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              Voir tous les projets
+              <ArrowUpRight size={16} />
+            </Link>
           </motion.div>
         </motion.div>
       </div>

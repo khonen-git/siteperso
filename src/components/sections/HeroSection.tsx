@@ -87,7 +87,7 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
             transition={{ delay: 0.2, duration: 0.5 }}
             className="glass mx-auto mb-8 inline-block rounded-full px-6 py-2 text-sm backdrop-blur-sm"
           >
-            Data Analyst & Développeur
+            Data - Développement - IA
           </motion.div>
           
           <motion.h1
@@ -128,7 +128,7 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
               size="lg"
               className="glass relative overflow-hidden rounded-full px-8 transition-all hover:shadow-lg"
             >
-              <Link href="/portfolio" className="relative z-10">
+              <Link href="/projects" className="relative z-10">
                 Voir mes projets
               </Link>
               <motion.div
