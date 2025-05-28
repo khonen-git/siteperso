@@ -95,7 +95,7 @@ export function RecentProjects(): React.JSX.Element {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="mt-4 text-lg text-muted-foreground"
           >
-            Découvrez mes derniers projets en data science et développement.
+            Découvrez mes derniers projets en data et développement.
           </motion.p>
 
           <motion.div
