@@ -118,6 +118,12 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
           </motion.p>
           
           {/* Boutons */}
+            {/*
+            TODO: Corriger la transition des boutons lors du switch entre le mode clair et sombre
+
+            Problème: Les boutons clignotent lors du switch entre le mode clair et sombre
+            */}
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -126,6 +132,7 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
           >
             <Button
               size="lg"
+              variant="outline"
               className="glass relative overflow-hidden rounded-full px-8 transition-all hover:shadow-lg"
             >
               <Link href="/projects" className="relative z-10">
@@ -133,8 +140,6 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
               </Link>
               <motion.div
                 className="absolute inset-0 -z-10 bg-primary/20"
-                whileHover={{ scale: 1.5, rotate: 12 }}
-                transition={{ duration: 0.4 }}
               />
             </Button>
             
@@ -148,8 +153,6 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
               </Link>
               <motion.div
                 className="absolute inset-0 -z-10 bg-secondary/10"
-                whileHover={{ scale: 1.5, rotate: -12 }}
-                transition={{ duration: 0.4 }}
               />
             </Button>
           </motion.div>
