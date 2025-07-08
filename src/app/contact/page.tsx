@@ -90,8 +90,7 @@ export default function ContactPage(): React.JSX.Element {
               </div>
             </Card>
           </motion.div>
-
-          {/* Formulaire de contact */}
+          {/* Formulaire de contact - Temporairement désactivé
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -147,6 +146,7 @@ export default function ContactPage(): React.JSX.Element {
               </form>
             </Card>
           </motion.div>
+          */}
         </div>
       </section>
     </div>
