@@ -53,8 +53,12 @@ export default function ProjectsPage(): React.JSX.Element {
   // Filtrer les projets
   const filteredProjects = projects
     .filter(project => {
+      if (!project || !project.title || !project.tags) {
+        return false;
+      }
+      
       const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          (project.description?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
                           project.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
       
       const matchesCategory = selectedCategory === 'all' || project.category === selectedCategory;
