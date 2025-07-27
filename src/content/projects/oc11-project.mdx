@@ -1,0 +1,61 @@
+---
+id: 11
+title: "OpenClassrooms Data Analyst - Projet 11 : Produiez une étude de marché avec Python"
+description: "Classification de pays via clustering machine learning K-means et CAH"
+image: "https://placehold.co/1200x600/png"
+date: "2025-07"
+category: "Data"
+tags: ["Python", "Machine learning", "Jupyter Notebook", "Clustering"]
+---
+
+# OpenClassrooms Data Analyst - Projet 11 : Produiez une étude de marché avec Python
+
+## Résumé
+
+Ce projet est un introduction au machine learning. L'entreprise, dont l'activité est l'élevage et la vente de poulets sous la label "Poulet Agriculture Biologique", souhaite s'étendre à l'international. Pour ce faire, on va réaliser une classification de plusieurs pays pour les hiéarchiser et prioriser les pays les plus prometteurs au développement de l'entreprise. Les données sont issues de la FAO (Food and Agriculture Organization), nous avons des données de base mais j'y ai rajoutés des données supplémentaires essentiels en me basant sur l'analyse PESTEL (Politique, Économique, Sociale, Technologique, Environnementale, Légale) comme par exemple l'indice de stabilité politique des pays : en effet, difficile de développer une entreprise et faire affaire dans un pays instable où les crises politiques et les conflits sont présents. J'ai ensuite préparé et nettoyer les données puis réalisé une EDA (Analyse exploratoire des données). À partir de ces données, j'ai essayé un premier clustering avec les modèles K-means et CAH : j'ai réalisé une ACP (Analyse en composanets principales) avec une réduction des dimensions puis analysé le cercle des corrélations et la projection des individus. Un premier problème est vite apparu : les effectifs des groupes étaient complétements inégaux et les clusters étaient difficilements distingables dans le plan factoriel. Pour résoudre ce problème majeur, j'ai eu recours au features engineering. Les données présentaient une forte asymétrie dans leur distribution et la plupart n'était pas ajusté à la population. Le choix des features a donc été vite trouvé : ajuster les données par rapport à la population et utiliser dans transformations logarithmiques pour réduire l'asymétrie et minimiser les outliers (valeurs extrêmes). Les résultats ont été significativement améliorés, les effectifs étaient homogènes et l'analyse des caractéristiques des groupes était plus claire. Les différences de classification entre le K-means et le CAH était mineures donc le choix des résultats de l'un ou l'autre était possible. J'ai conclu cette classification en hiéarchisant les groupes pour choisir les pays à viser en priorité pour le développement de l'entreprise.
+
+## Objectifs
+
+- Collecter & agréger les données
+- Traiter les données
+- Faire une EDA
+- Créer des nouvelles variables via du features engineering
+- Réduire les dimensions via une ACP
+- Analyser le cercle des corrélations et la projection des individus
+- Entraîner et optimiser les modèles d'apprentissage non supervisé : K-means et CAH
+- Analyser les résultats et proposer des pays où développer l'entreprise en priorité
+
+## Langages
+
+- Python
+
+### Librairies d'analyse de données
+
+- Pandas
+- NumPy
+- Matplotlib
+- Seaborn
+
+### Librairies de machine learning
+
+- Scikit-learn
+
+## Technologies
+
+- Jupyter Notebook
+- Visual Studio Code
+
+## Compétences acquises
+
+### Soft skills
+
+- Justification méthodologique
+- Esprit de synthèse
+- Recommandations stratégiques
+
+### Hard skills
+
+- Collecte de données & choix de variables
+- Features engineering
+- ACP (réduction de dimensions)
+- Clustering non supervisé (K-means, CAH)

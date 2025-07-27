@@ -1,54 +1,71 @@
 ---
 id: 4
-title: "OpenClassrooms Data Analyst - Projet 4 : Faites une analyse de ventes pour un e-commerce"
-description: "Pipeline de données automatisé pour le traitement des données à grande échelle."
+title: "OpenClassrooms Data Analyst - Projet 4 : Réalisez une étude de santé publique avec Python"
+description: "Création d'un rapport d'étude sur l'alimentation dans le monde"
 image: "https://placehold.co/1200x600/png"
-date: "2023-12"
-category: "Automatisation"
-tags: ["Python", "PostgreSQL"]
+date: "2024-10"
+category: "Data"
+tags: ["Data analysis", "Data visualization', "Python", "Jupyter Notebook"]
 ---
+
+<i>
+    Nota bene : Cette page présente les grandes lignes du projet réalisé avec OpenClassrooms. Par respect pour la plateforme, je ne mettrai aucun livrable en libre accès. Néanmoins si vous souhaitez consultez les livrables, vous pouvez me contacter en précisant les livrables de projets que vous souhaiteriez prendre connaissance afin que je puisse vous les présenter dans un entretien privée.
+</i>
 
 ## Résumé
 
-Ce projet présente une solution ETL (Extract, Transform, Load) robuste et évolutive, capable de traiter efficacement de grands volumes de données provenant de sources hétérogènes pour alimenter un entrepôt de données analytique.
+J'ai réalisé une étude sur l'alimentation dans le monde à partir des données de la FAO (Food and Agriculture Organization of the United Nations). Pour cela, j'ai utilisé un jupyter notebook sur l'éditeur de code VSCode (Visual Studio Code) . Ce notebook contient une analyse exploratoire des données (EDA), une analyse détaillé illustré de graphiques et d'exemples et des analyses complémentaires que j'ai ajoutées de ma propre initiative. La partie EDA consistait à comprendre comment nos données étaient structurées et y appliquer en conséquence les traitements et formatages nécessaires pour pouvoir exploiter correctement ces données. Ensuite, l'analyse détaillé fournit des chiffres clés et des graphiques comme des graphiques en courbes, en barres, en secteurs (graphique camembert). J'ai fourni aussi dans l'analyse complémentaire des informations sur l'évolution de la population et établi une relation linéraire permettant d'anticiper les besoins en nourriture ainsi que des informations sur le contexte géopolitique au Yémen à partir de l'année 2011.
+
+## Contexte
+
+Ce projet est une étude sur l'alimentation dans le monde. Nous nous mettons dans la place d'un data analyst travaillant pour la FAO.
 
 ## Objectifs
 
-- Automatiser entièrement le processus d'intégration des données
-- Gérer efficacement diverses sources de données (APIs, bases de données, fichiers plats)
-- Assurer la qualité et la cohérence des données
-- Créer un pipeline évolutif capable de traiter des volumes croissants
+- Analyser les données
+- Traiter les valeurs manquantes et ajuster les unités
+- Faire une jointure des fichiers pour exploiter l'ensemble
+- Réaliser des graphiques illustrant les analyses
+- Calculer des chiffres clés
+- Analyser des exemples
+- Réaliser des analyses complémentaires
 
-## Approche
+## Langages 
 
-La conception du pipeline ETL s'est faite en plusieurs étapes. Nous avons d'abord créé des connecteurs modulaires pour chaque source de données, puis développé un framework de transformation flexible utilisant des techniques de programmation fonctionnelle.
+- Python
 
-Un système de validation des données a été implémenté à chaque étape du processus pour garantir l'intégrité. Le chargement dans la base de données cible a été optimisé avec des opérations par lots et une gestion intelligente des mises à jour. 
+### Librairies d'analyse de données
 
-Enfin, un système de logging et de monitoring a été mis en place pour suivre les performances et détecter les anomalies.
+- Pandas
+- NumPy
+- Matplotlib
+- Seaborn
 
-<TechnologiesSection>
-  <Technology name="Python" description="Langage principal du pipeline ETL" />
-  <Technology name="PostgreSQL" description="Base de données cible pour le stockage des données transformées" />
-  <Technology name="Apache Airflow" description="Orchestration des tâches ETL et planification" />
-  <Technology name="Docker" description="Conteneurisation pour faciliter le déploiement" />
-  <Technology name="Pandas" description="Manipulation et transformation des données" />
-</TechnologiesSection>
+## Technologies 
+
+- Jupyter Notebook
+- Visual Studio Code
 
 ## Résultats
 
-Le pipeline ETL a permis de réduire le temps de traitement des données de 8 heures à 45 minutes quotidiennes, tout en augmentant la qualité des données avec une réduction de 98% des erreurs d'intégration.
+Nous avons une étude sur l'alimentation dans un notebook accessible aux utilisateurs donnant des insights essentiels permet de mieux comprendre la faim dans le monde et comment la réduire. J'ai mis en évidence par exemple que sur l'année 2017, on pourrait en théorie nourrir 3277 milliards d'humains avec l'ensemble de la nourriture produite et 2703 milliards d'humains avec seulement les produits végétaux alors que la part sous nutrition est de 7.1% pour une population de 7,5 milliards d'humains dans le monde. Par ailleurs, l'analyse complémentaire sur le contexte géopolitique du Yémen mets en évidence une des raisons de la part de sous nutrition malgré les aides alimentaires et la difficultée à résoudre la faim malgré des ressources abondantes.
 
-L'automatisation complète a éliminé la nécessité d'interventions manuelles, libérant les ressources de l'équipe pour des tâches à plus forte valeur ajoutée. La solution s'est avérée extrêmement évolutive, gérant sans difficulté une augmentation de 300% du volume de données sur 6 mois.
+## Compétences acquises
 
-<ProjectImages>
-  <ProjectImage url="https://placehold.co/800x500/png" caption="Architecture du pipeline ETL" />
-  <ProjectImage url="https://placehold.co/800x500/png" caption="Tableau de bord de monitoring des performances" />
-  <ProjectImage url="https://placehold.co/800x500/png" caption="Visualisation du flux de données à travers les différentes étapes" />
-</ProjectImages>
+### Soft skills
 
-## Conclusion
+- Rigueur scientifique
+- Documentation
+- Vulgarisation
+- Présentation de rapport d'étude à un auditoire grand public
+- Analyse & Synthèse
+- Prise d'initiative
+- Recherche d'informations complémentaire à une analyse
 
-Ce projet ETL démontre l'importance d'une infrastructure de données bien conçue dans l'écosystème analytique moderne. En automatisant et en optimisant le processus d'intégration des données, nous avons non seulement amélioré l'efficacité opérationnelle, mais aussi considérablement augmenté la valeur des analyses qui en découlent.
+### Hard skills
 
-Les développements futurs incluront l'intégration du traitement en temps réel et l'utilisation de techniques de ML pour la détection d'anomalies dans le flux de données. 
+- Maîtrise de python dans l'analyse de données (Pandas, NumPy, Matplotlib, Seaborn)
+- Maîtrise des jupyter notebooks
+- Gestion de projet avec un environnement virtuel Python dans Visual Studio Code
+- Analyse exploratoire des données
+- Statistiques descriptives
