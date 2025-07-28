@@ -46,18 +46,39 @@ export async function fetchProjects(): Promise<Project[]> {
       throw new Error('Erreur lors du chargement des projets');
     }
     
-    const projects = await response.json();
+    const data = await response.json();
     
-    return projects.map((project: any) => ({
-      id: project.id,
-      title: project.title,
-      description: project.description,
-      image: project.image,
-      date: project.date,
-      category: project.category,
-      tags: project.tags,
-      link: `/projects/${project.slug}`
-    }));
+    // Vérifie que data est un tableau
+    if (!Array.isArray(data)) {
+      console.error("La réponse de l'API n'est pas un tableau:", data);
+      return fallbackProjects;
+    }
+    
+    // Valide et transforme les projets
+    const validProjects = data
+      .filter(project => 
+        project &&
+        typeof project.id === 'number' &&
+        typeof project.title === 'string' &&
+        typeof project.description === 'string' &&
+        typeof project.image === 'string' &&
+        typeof project.date === 'string' &&
+        typeof project.category === 'string' &&
+        project.slug
+      )
+      .map(project => ({
+        id: project.id,
+        title: project.title,
+        description: project.description,
+        image: project.image,
+        date: project.date,
+        category: project.category,
+        tags: Array.isArray(project.tags) ? project.tags : [],
+        link: `/projects/${project.slug}`
+      }))
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+    return validProjects.length > 0 ? validProjects : fallbackProjects;
   } catch (error) {
     console.error("Erreur lors du chargement des projets:", error);
     return fallbackProjects;

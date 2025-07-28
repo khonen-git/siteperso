@@ -33,10 +33,29 @@ export function RecentProjects(): React.JSX.Element {
     const loadProjects = async () => {
       try {
         const allProjects = await fetchProjects();
-        // Prendre seulement les 3 projets les plus récents (déjà triés par date dans l'API)
-        setProjects(allProjects.slice(0, 3));
+        // Filtrer les projets non valides et prendre les 3 plus récents
+        const validProjects = allProjects
+          .filter(project => 
+            project && 
+            project.id !== undefined && 
+            project.title && 
+            project.description && 
+            project.image
+          )
+          .slice(0, 3);
+
+        if (validProjects.length === 0) {
+          console.error('Aucun projet valide trouvé');
+          setProjects([]);
+        } else if (validProjects.length < 3) {
+          console.warn(`Seulement ${validProjects.length} projets valides trouvés`);
+          setProjects(validProjects);
+        } else {
+          setProjects(validProjects);
+        }
       } catch (error) {
         console.error('Erreur lors du chargement des projets récents:', error);
+        setProjects([]);
       } finally {
         setLoading(false);
       }
@@ -51,6 +70,18 @@ export function RecentProjects(): React.JSX.Element {
         <div className="container relative">
           <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
             <div className="animate-pulse text-lg">Chargement des projets récents...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (projects.length === 0) {
+    return (
+      <section className="relative overflow-hidden bg-secondary/5 py-20">
+        <div className="container relative">
+          <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
+            <div className="text-lg text-muted-foreground">Aucun projet récent disponible</div>
           </div>
         </div>
       </section>
@@ -133,7 +164,7 @@ export function RecentProjects(): React.JSX.Element {
                     </CardHeader>
                     <CardContent>
                       <div className="flex flex-wrap gap-2">
-                        {project.tags.map((tag) => (
+                        {project.tags?.map((tag) => (
                           <Badge
                             key={tag}
                             variant="secondary"
