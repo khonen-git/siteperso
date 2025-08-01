@@ -26,12 +26,18 @@ export async function GET() {
           date: string;
           category: string;
           tags: string[];
-        })
+          visible?: boolean;
+        }),
+        visible: data.visible ?? true // Par défaut visible si non spécifié
       };
     });
     
     // Trier les projets par date décroissante
-    const sortedData = allProjectsData.sort((a, b) => {
+    // Filtrer les projets non visibles
+    const visibleProjects = allProjectsData.filter(project => project.visible);
+
+    // Trier les projets visibles par date décroissante
+    const sortedData = visibleProjects.sort((a, b) => {
       if (a.date < b.date) {
         return 1;
       } else {

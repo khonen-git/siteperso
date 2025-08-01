@@ -6,6 +6,7 @@ export interface ProjectDetail {
   date: string;
   category: string;
   tags: string[];
+  visible?: boolean;
   content: {
     summary: string;
     objectives: string[];
@@ -25,6 +26,7 @@ export interface Project {
   date: string;
   category: string;
   tags: string[];
+  visible?: boolean;
   link: string;
 }
 
