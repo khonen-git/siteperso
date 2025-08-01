@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/select';
 import { Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { fuzzySearch } from '@/lib/search';
 
 // Types d'activités et leurs couleurs
 const activityTypes = {
@@ -91,19 +92,47 @@ export default function ActivityPage(): React.JSX.Element {
   const [selectedType, setSelectedType] = React.useState<string>('all');
   const [selectedSection, setSelectedSection] = React.useState<string>('all');
 
-  // Filtrer les activités
+  // Filtrer et trier les activités
   const filteredActivities = activities
     .filter(activity => {
-      const matchesSearch = 
-        activity.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        activity.description.toLowerCase().includes(searchQuery.toLowerCase());
-      
       const matchesType = selectedType === 'all' || activity.type === selectedType;
       const matchesSection = selectedSection === 'all' || activity.section === selectedSection;
 
-      return matchesSearch && matchesType && matchesSection;
+      return matchesType && matchesSection;
     })
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    .map(activity => {
+      // Si pas de recherche, retourner l'activité telle quelle
+      if (!searchQuery.trim()) {
+        return { ...activity, similarityScore: 1 };
+      }
+
+      // Calculer le score de similarité
+      const searchResults = fuzzySearch(
+        [activity],
+        searchQuery,
+        {
+          threshold: 0.3,
+          keys: ['title', 'description', 'details']
+        }
+      );
+
+      // Si aucun résultat ne dépasse le seuil, on exclut l'activité
+      if (searchResults.length === 0) {
+        return { ...activity, similarityScore: 0 };
+      }
+
+      // Sinon on garde le meilleur score
+      return { ...activity, similarityScore: searchResults[0].similarity };
+    })
+    .filter(activity => !searchQuery.trim() || activity.similarityScore > 0)
+    .sort((a, b) => {
+      // Si une recherche est en cours, on trie d'abord par score de similarité
+      if (searchQuery.trim()) {
+        return b.similarityScore - a.similarityScore;
+      }
+      // Sinon, on trie par date
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
 
   const container = {
     hidden: { opacity: 0 },

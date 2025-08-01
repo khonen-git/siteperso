@@ -21,6 +21,7 @@ import fallbackProjects, { fetchProjects } from '@/data/projectsList';
 import categories from '@/config/categories';
 import themes from '@/config/themes';
 import { Project } from '@/types/project';
+import { fuzzySearch } from '@/lib/search';
 
 export default function ProjectsPage(): React.JSX.Element {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -50,25 +51,50 @@ export default function ProjectsPage(): React.JSX.Element {
   // Récupérer tous les tags uniques
   const allTags = Array.from(new Set(projects.flatMap(project => project.tags)));
 
-  // Filtrer les projets
+  // Filtrer et trier les projets
   const filteredProjects = projects
     .filter(project => {
       if (!project || !project.title || !project.tags) {
         return false;
       }
       
-      const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          (project.description?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-                          project.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-      
       const matchesCategory = selectedCategory === 'all' || project.category === selectedCategory;
-      
       const matchesTags = selectedTags.length === 0 || selectedTags[0] === 'all' || 
                          selectedTags.some(tag => project.tags.includes(tag));
 
-      return matchesSearch && matchesCategory && matchesTags;
+      return matchesCategory && matchesTags;
     })
+    .map(project => {
+      // Si pas de recherche, retourner le projet tel quel
+      if (!searchQuery.trim()) {
+        return { ...project, similarityScore: 1 };
+      }
+
+      // Calculer le score de similarité
+      const searchResults = fuzzySearch(
+        [project],
+        searchQuery,
+        {
+          threshold: 0.3,
+          keys: ['title', 'description', 'tags']
+        }
+      );
+
+      // Si aucun résultat ne dépasse le seuil, on exclut le projet
+      if (searchResults.length === 0) {
+        return { ...project, similarityScore: 0 };
+      }
+
+      // Sinon on garde le meilleur score
+      return { ...project, similarityScore: searchResults[0].similarity };
+    })
+    .filter(project => !searchQuery.trim() || project.similarityScore > 0)
     .sort((a, b) => {
+      // Si une recherche est en cours, on trie d'abord par score de similarité
+      if (searchQuery.trim()) {
+        return b.similarityScore - a.similarityScore;
+      }
+      // Sinon, on utilise le tri standard
       if (sortBy === 'date') {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       }

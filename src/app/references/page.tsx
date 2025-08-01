@@ -24,6 +24,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { fuzzySearch } from '@/lib/search';
 
 // Définition des catégories
 const categories = {
@@ -91,22 +92,46 @@ export default function ReferencesPage(): React.JSX.Element {
   // Récupérer tous les tags uniques
   const allTags = Array.from(new Set(references.flatMap(ref => ref.tags)));
 
-  // Filtrer les références
+  // Filtrer et trier les références
   const filteredReferences = references
     .filter(ref => {
-      const matchesSearch = 
-        ref.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        ref.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        ref.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-      
       const matchesCategory = selectedCategory === 'all' || ref.category === selectedCategory;
-      
       const matchesTags = selectedTags.length === 0 || selectedTags[0] === 'all' || 
                          selectedTags.some(tag => ref.tags.includes(tag));
 
-      return matchesSearch && matchesCategory && matchesTags;
+      return matchesCategory && matchesTags;
     })
+    .map(ref => {
+      // Si pas de recherche, retourner la référence telle quelle
+      if (!searchQuery.trim()) {
+        return { ...ref, similarityScore: 1 };
+      }
+
+      // Calculer le score de similarité
+      const searchResults = fuzzySearch(
+        [ref],
+        searchQuery,
+        {
+          threshold: 0.3,
+          keys: ['name', 'description', 'tags']
+        }
+      );
+
+      // Si aucun résultat ne dépasse le seuil, on exclut la référence
+      if (searchResults.length === 0) {
+        return { ...ref, similarityScore: 0 };
+      }
+
+      // Sinon on garde le meilleur score
+      return { ...ref, similarityScore: searchResults[0].similarity };
+    })
+    .filter(ref => !searchQuery.trim() || ref.similarityScore > 0)
     .sort((a, b) => {
+      // Si une recherche est en cours, on trie d'abord par score de similarité
+      if (searchQuery.trim()) {
+        return b.similarityScore - a.similarityScore;
+      }
+      // Sinon, on utilise le tri standard
       if (sortBy === 'name') {
         return a.name.localeCompare(b.name);
       }
