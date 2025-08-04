@@ -203,7 +203,7 @@ export default function StatisticalTestsPage() {
               <Card>
                 <CardContent className="pt-6">
                   <h3 className="text-xl font-medium mb-4">Arbre de décision</h3>
-                  <CodeBlock language="python" autoRun={true}>
+                  <CodeBlock language="python">
                     {`
 import graphviz
 
