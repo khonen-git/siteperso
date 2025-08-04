@@ -27,8 +27,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   experimental: {
-    appDir: true,
-    serverActions: true,
+    serverActions: true
   }
 };
 
