@@ -3,8 +3,13 @@
 import React from 'react';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
+import { MathBlock, MathInline } from '@/components/knowledge/Math';
+import { CodeBlock } from '@/components/knowledge/CodeBlock';
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { MdxDistributionVisualizer } from '@/components/mdx/MdxDistributionVisualizer';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 
-// Composant pour une section de technologies
+// Composants spécifiques aux projets
 export function TechnologiesSection({ children }: { children: React.ReactNode }) {
   return (
     <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -13,7 +18,6 @@ export function TechnologiesSection({ children }: { children: React.ReactNode })
   );
 }
 
-// Composant pour une technologie individuelle
 export function Technology({ 
   name, 
   description 
@@ -31,7 +35,6 @@ export function Technology({
   );
 }
 
-// Composant pour une section d'images
 export function ProjectImages({ children }: { children: React.ReactNode }) {
   return (
     <div className="mt-6 grid gap-8">
@@ -40,7 +43,6 @@ export function ProjectImages({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Composant pour une image individuelle
 export function ProjectImage({ 
   url, 
   caption 
@@ -65,13 +67,8 @@ export function ProjectImage({
   );
 }
 
-// Mapping des composants pour MDX
-const MDXComponents = {
-  TechnologiesSection,
-  Technology,
-  ProjectImages,
-  ProjectImage,
-  // Styler les éléments HTML standards
+// Composants de base pour le MDX
+const baseComponents = {
   h1: ({ children }: { children: React.ReactNode }) => (
     <h1 className="mt-8 mb-4 text-3xl font-bold">{children}</h1>
   ),
@@ -106,26 +103,50 @@ const MDXComponents = {
   pre: ({ children }: { children: React.ReactNode }) => (
     <pre className="mb-4 p-4 rounded bg-muted/70 font-mono text-sm overflow-x-auto">{children}</pre>
   ),
+  // Composants de table
   table: ({ children }: { children: React.ReactNode }) => (
     <div className="mb-4 overflow-x-auto">
-      <table className="w-full border-collapse">{children}</table>
+      <Table>{children}</Table>
     </div>
   ),
   thead: ({ children }: { children: React.ReactNode }) => (
-    <thead className="bg-muted/50">{children}</thead>
+    <TableHeader>{children}</TableHeader>
   ),
   tbody: ({ children }: { children: React.ReactNode }) => (
-    <tbody>{children}</tbody>
+    <TableBody>{children}</TableBody>
   ),
   tr: ({ children }: { children: React.ReactNode }) => (
-    <tr className="border-b border-gray-200 dark:border-gray-800">{children}</tr>
+    <TableRow>{children}</TableRow>
   ),
   th: ({ children }: { children: React.ReactNode }) => (
-    <th className="p-2 text-left font-bold">{children}</th>
+    <TableHead>{children}</TableHead>
   ),
   td: ({ children }: { children: React.ReactNode }) => (
-    <td className="p-2">{children}</td>
+    <TableCell>{children}</TableCell>
   ),
 };
 
-export default MDXComponents; 
+// Composants spécifiques au MDX
+const MDXComponents = {
+  ...baseComponents,
+  // Composants de projet
+  TechnologiesSection,
+  Technology,
+  ProjectImages,
+  ProjectImage,
+  // Composants de knowledge
+  MathBlock,
+  MathInline,
+  CodeBlock,
+  MdxCard,
+  MdxDistributionVisualizer,
+  // Composants UI
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+};
+
+export default MDXComponents;
