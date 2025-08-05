@@ -11,7 +11,7 @@ export function ProjectContent({ content, className }: ProjectContentProps) {
     <article 
       className={cn(
         "container py-16",
-        "prose prose-slate dark:prose-invert",
+        "prose prose-slate dark:prose-invert max-w-none",
         "prose-headings:scroll-m-20",
         "prose-p:leading-7",
         "prose-li:marker:text-muted-foreground",

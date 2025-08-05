@@ -1,10 +1,12 @@
 import { Project, ProjectDetail } from '@/types/project';
 
+// Types pour les cartes de projet
 export interface ProjectCardProps {
   project: Project;
   className?: string;
 }
 
+// Types pour les détails de projet
 export interface ProjectHeroProps {
   project: ProjectDetail;
   className?: string;
@@ -15,11 +17,19 @@ export interface ProjectContentProps {
   className?: string;
 }
 
+// Types pour le filtrage et les tags
+export interface ProjectTagProps {
+  tag: string;
+  onClick?: () => void;
+  removable?: boolean;
+  className?: string;
+}
+
 export interface ProjectTagsProps {
   tags: string[];
-  className?: string;
-  onClick?: (tag: string) => void;
+  onTagClick?: (tag: string) => void;
   removable?: boolean;
+  className?: string;
 }
 
 export interface ProjectFilterProps {
@@ -30,5 +40,10 @@ export interface ProjectFilterProps {
   selectedCategory: string;
   selectedTags: string[];
   sortBy: 'date' | 'title';
+  className?: string;
+}
+
+// Types pour les états d'erreur
+export interface NotFoundProjectProps {
   className?: string;
 }

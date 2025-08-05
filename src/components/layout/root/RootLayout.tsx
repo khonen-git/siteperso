@@ -1,13 +1,15 @@
 import React from 'react';
-import { Header } from '../header/Header';
-import { Footer } from '../footer/Footer';
-import { ThemeProvider } from '@/components/theme/ThemeProvider';
+import { Header } from '../header';
+import { Footer } from '../footer';
+import { ThemeProvider } from '@/components/ui/theme/provider';
+import { cn } from '@/lib/utils';
+import type { BaseLayoutProps } from '../types';
 
-interface RootLayoutProps {
-  children: React.ReactNode;
-}
-
-export function RootLayout({ children }: RootLayoutProps) {
+/**
+ * RootLayout - Layout principal de l'application
+ * Gère la structure de base avec header, footer et thème
+ */
+export function RootLayout({ children, className }: BaseLayoutProps) {
   return (
     <ThemeProvider
       attribute="class"
@@ -15,7 +17,7 @@ export function RootLayout({ children }: RootLayoutProps) {
       enableSystem
       disableTransitionOnChange
     >
-      <div className="relative flex min-h-screen flex-col">
+      <div className={cn("relative flex min-h-screen flex-col", className)}>
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

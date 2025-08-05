@@ -133,11 +133,77 @@ components/
     - [x] Détection du thème système
     - [x] Gestion des préférences
 
-- [ ] Migration des composants existants
-  - [ ] Identifier les composants à migrer
-  - [ ] Planifier la migration
-  - [ ] Exécuter la migration
-  - [ ] Tests de régression
+- [x] Migration des composants existants
+  - [x] Identification des composants
+    - [x] Analyse de la structure actuelle
+    - [x] Plan de migration détaillé
+  - [x] Migration initiale
+    - [x] Icons → ui/icons
+    - [x] Sections → features/sections
+  - [x] Migration des layouts
+    - [x] Types communs
+    - [x] RootLayout
+    - [x] Header et Footer
+    - [x] KnowledgeLayout
+  - [x] Migration Knowledge
+    - [x] Types communs
+      - [x] Types de visualisation
+      - [x] Types de navigation
+      - [x] Types mathématiques
+    - [x] Visualisation
+      - [x] DistributionVisualizer
+      - [x] DistributionPlot
+      - [x] CurveCalculator
+    - [x] Composants Math
+      - [x] MathBlock/Inline
+      - [x] CodeBlock
+    - [x] Navigation
+      - [x] TableOfContents
+      - [x] KnowledgeSidebar
+  - [x] Migration Project
+    - [x] Types communs
+      - [x] Types de carte
+      - [x] Types de détail
+      - [x] Types de filtrage
+    - [x] Composants de carte
+      - [x] ProjectCard
+    - [x] Composants de détail
+      - [x] ProjectHero
+      - [x] ProjectContent
+    - [x] Composants de feedback
+      - [x] NotFoundProject
+  - [x] Migration MDX
+    - [x] Types communs
+      - [x] Types de base
+      - [x] Types de composants
+    - [x] Composants de base
+      - [x] MdxCard
+      - [x] MdxHeading
+      - [x] MdxCode
+    - [x] Composants enrichis
+      - [x] Éléments de texte
+      - [x] Listes et tableaux
+      - [x] Liens et images
+    - [x] Intégration
+      - [x] Composants mathématiques
+      - [x] Visualisations
+  - [x] Tests et validation
+    - [x] Configuration des tests
+      - [x] Utilitaires de test
+      - [x] Mocks communs
+    - [x] Tests unitaires
+      - [x] Composants UI
+      - [x] Composants Knowledge
+      - [x] Composants Project
+      - [x] Composants MDX
+    - [x] Tests d'intégration
+      - [x] Navigation
+      - [x] Rendu MDX
+      - [x] Visualisations
+    - [x] Validation visuelle
+      - [x] Styles et thèmes
+      - [x] Responsive design
+      - [x] Accessibilité
 
 ### Phase 4 : Layout
 - [ ] Fusionner layout/ et layouts/

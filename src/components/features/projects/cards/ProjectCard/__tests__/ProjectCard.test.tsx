@@ -1,68 +1,68 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { renderWithProviders, mockNextImage, mockNextLink } from '@/components/common/test-utils';
 import { ProjectCard } from '..';
 
-// Mock Next.js components
-jest.mock('next/image', () => ({
-  __esModule: true,
-  default: (props: any) => <img {...props} />
-}));
+// Setup mocks
+mockNextImage();
+mockNextLink();
 
-jest.mock('next/link', () => ({
-  __esModule: true,
-  default: ({ children, href }: any) => <a href={href}>{children}</a>
-}));
+const mockProject = {
+  id: '1',
+  title: 'Test Project',
+  description: 'Test Description',
+  image: '/test.jpg',
+  date: '2024-01-01',
+  tags: ['React', 'TypeScript'],
+  category: 'Web'
+};
 
 describe('ProjectCard', () => {
-  const mockProject = {
-    id: '1',
-    title: 'Test Project',
-    description: 'Test Description',
-    image: '/test.jpg',
-    date: '2024-01-01',
-    tags: ['React', 'TypeScript'],
-    category: 'Web'
-  };
-
   it('renders project information correctly', () => {
-    render(<ProjectCard project={mockProject} />);
-    
-    expect(screen.getByText(mockProject.title)).toBeInTheDocument();
-    expect(screen.getByText(mockProject.description)).toBeInTheDocument();
-    expect(screen.getByAltText(mockProject.title)).toHaveAttribute('src', mockProject.image);
+    const { getByText, getByAltText } = renderWithProviders(
+      <ProjectCard project={mockProject} />
+    );
+
+    expect(getByText(mockProject.title)).toBeInTheDocument();
+    expect(getByText(mockProject.description)).toBeInTheDocument();
+    expect(getByAltText(mockProject.title)).toHaveAttribute('src', mockProject.image);
   });
 
-  it('renders project tags', () => {
-    render(<ProjectCard project={mockProject} />);
-    
+  it('renders tags correctly', () => {
+    const { getByText } = renderWithProviders(
+      <ProjectCard project={mockProject} />
+    );
+
     mockProject.tags.forEach(tag => {
-      expect(screen.getByText(tag)).toBeInTheDocument();
+      expect(getByText(tag)).toBeInTheDocument();
     });
   });
 
   it('formats date correctly', () => {
-    render(<ProjectCard project={mockProject} />);
-    
+    const { getByText } = renderWithProviders(
+      <ProjectCard project={mockProject} />
+    );
+
     const formattedDate = new Date(mockProject.date).toLocaleDateString('fr-FR', {
       year: 'numeric',
       month: 'long'
     });
-    expect(screen.getByText(formattedDate)).toBeInTheDocument();
+    expect(getByText(formattedDate)).toBeInTheDocument();
   });
 
   it('links to project detail page', () => {
-    render(<ProjectCard project={mockProject} />);
-    
-    const link = screen.getByRole('link');
+    const { container } = renderWithProviders(
+      <ProjectCard project={mockProject} />
+    );
+
+    const link = container.querySelector('a');
     expect(link).toHaveAttribute('href', `/projects/${mockProject.id}`);
   });
 
-  it('applies custom className', () => {
-    const className = 'custom-class';
-    const { container } = render(
-      <ProjectCard project={mockProject} className={className} />
+  it('applies hover animation class', () => {
+    const { container } = renderWithProviders(
+      <ProjectCard project={mockProject} />
     );
-    
-    expect(container.firstChild).toHaveClass(className);
+
+    expect(container.firstChild).toHaveClass('hover:scale-[1.02]');
   });
 });

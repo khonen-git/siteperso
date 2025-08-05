@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
-import type { TableOfContentsProps } from '../types';
+import type { TableOfContentsProps } from '../../types';
 
 interface TOCItem {
   id: string;
@@ -10,16 +10,16 @@ interface TOCItem {
 
 /**
  * TableOfContents - Table des matières dynamique
- * Génère automatiquement une table des matières basée sur les titres de la page
+ * Génère automatiquement une navigation basée sur les titres de la page
  */
 export function TableOfContents({ className }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>('');
   const [items, setItems] = useState<TOCItem[]>([]);
 
   useEffect(() => {
-    // Récupérer tous les titres h1, h2, h3
+    // Récupérer tous les titres
     const headings = Array.from(document.querySelectorAll('h1, h2, h3'))
-      .filter(heading => heading.id) // Filtrer les titres sans id
+      .filter(heading => heading.id)
       .map(heading => ({
         id: heading.id,
         text: heading.textContent || '',

@@ -28,6 +28,7 @@ export function ProjectHero({ project, className }: ProjectHeroProps) {
       <div className="container relative z-10 -mt-32 px-4">
         <div className="rounded-lg bg-card p-8 shadow-lg">
           <div className="flex flex-col gap-4">
+            {/* Titre et description */}
             <div className="space-y-2">
               <h1 className="text-4xl font-bold tracking-tight">
                 {project.title}
@@ -37,6 +38,7 @@ export function ProjectHero({ project, className }: ProjectHeroProps) {
               </p>
             </div>
 
+            {/* Métadonnées */}
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               {project.date && (
                 <time dateTime={project.date}>
@@ -54,6 +56,7 @@ export function ProjectHero({ project, className }: ProjectHeroProps) {
               )}
             </div>
 
+            {/* Tags */}
             <ProjectTags tags={project.tags} className="mt-2" />
           </div>
         </div>

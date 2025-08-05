@@ -8,7 +8,7 @@ import type { ProjectCardProps } from '../../types';
 
 /**
  * ProjectCard - Carte de présentation d'un projet
- * Affiche une image, un titre, une description et des tags
+ * Affiche un aperçu du projet avec image, titre, description et tags
  */
 export function ProjectCard({ project, className }: ProjectCardProps) {
   return (
@@ -20,6 +20,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
       )}
     >
       <Card className="overflow-hidden h-full">
+        {/* Image du projet */}
         <div className="relative aspect-[16/9]">
           <Image
             src={project.image}
@@ -29,6 +30,8 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
+
+        {/* Contenu */}
         <CardContent className="p-4 space-y-2">
           <div className="space-y-1">
             <h3 className="font-semibold leading-none tracking-tight">
@@ -38,9 +41,11 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
               {project.description}
             </p>
           </div>
-          
+
+          {/* Tags */}
           <ProjectTags tags={project.tags} />
 
+          {/* Date */}
           {project.date && (
             <p className="text-xs text-muted-foreground">
               {new Date(project.date).toLocaleDateString('fr-FR', {
