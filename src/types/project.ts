@@ -7,6 +7,7 @@ export interface ProjectDetail {
   category: string;
   tags: string[];
   visible?: boolean;
+  slug: string; // Ajout du slug
   content: {
     summary: string;
     objectives: string[];
@@ -28,6 +29,7 @@ export interface Project {
   tags: string[];
   visible?: boolean;
   link: string;
+  slug: string; // Ajout du slug
 }
 
 export interface ThemeColor {
@@ -40,4 +42,4 @@ export interface ProjectsDataType {
 
 export interface CategoryInfo {
   [key: string]: string;
-} 
+}

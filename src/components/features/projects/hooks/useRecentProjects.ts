@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { Project } from '@/types/project';
 
-export function useProjectsData() {
+export function useRecentProjects(limit: number = 3) {
   const [state, setState] = useState<{
     projects: Project[];
     loading: boolean;
@@ -13,7 +13,7 @@ export function useProjectsData() {
   });
 
   useEffect(() => {
-    async function fetchProjects() {
+    async function fetchRecentProjects() {
       try {
         const response = await fetch('/api/projects', {
           cache: 'no-store'
@@ -29,19 +29,28 @@ export function useProjectsData() {
           throw new Error("Format de données invalide");
         }
 
-        // Ajouter le lien pour chaque projet
-        const projectsWithLinks = data.map(project => ({
-          ...project,
-          link: `/projects/${project.slug}` // Construire le lien à partir du slug
-        }));
+        // Filtrer et limiter les projets
+        const validProjects = data
+          .filter(project => 
+            project && 
+            project.id !== undefined && 
+            project.title && 
+            project.description && 
+            project.image
+          )
+          .slice(0, limit)
+          .map(project => ({
+            ...project,
+            link: `/projects/${project.slug}` // Construire le lien à partir du slug
+          }));
 
         setState({
-          projects: projectsWithLinks,
+          projects: validProjects,
           loading: false,
           error: null
         });
       } catch (error) {
-        console.error("Erreur lors du chargement des projets:", error);
+        console.error('Erreur lors du chargement des projets récents:', error);
         setState({
           projects: [],
           loading: false,
@@ -50,8 +59,8 @@ export function useProjectsData() {
       }
     }
 
-    fetchProjects();
-  }, []);
+    fetchRecentProjects();
+  }, [limit]);
 
   return state;
 }

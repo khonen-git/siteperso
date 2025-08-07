@@ -7,8 +7,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ArrowUpRight } from 'lucide-react';
-import { Project } from '@/types/project';
-import { fetchProjects } from '@/data/projectsList';
+import { useRecentProjects } from '@/components/features/projects/hooks/useRecentProjects';
 
 const container = {
   hidden: { opacity: 0 },
@@ -26,43 +25,7 @@ const item = {
 };
 
 export function RecentProjects(): React.JSX.Element {
-  const [projects, setProjects] = React.useState<Project[]>([]);
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    const loadProjects = async () => {
-      try {
-        const allProjects = await fetchProjects();
-        // Filtrer les projets non valides et prendre les 3 plus récents
-        const validProjects = allProjects
-          .filter(project => 
-            project && 
-            project.id !== undefined && 
-            project.title && 
-            project.description && 
-            project.image
-          )
-          .slice(0, 3);
-
-        if (validProjects.length === 0) {
-          console.error('Aucun projet valide trouvé');
-          setProjects([]);
-        } else if (validProjects.length < 3) {
-          console.warn(`Seulement ${validProjects.length} projets valides trouvés`);
-          setProjects(validProjects);
-        } else {
-          setProjects(validProjects);
-        }
-      } catch (error) {
-        console.error('Erreur lors du chargement des projets récents:', error);
-        setProjects([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadProjects();
-  }, []);
+  const { projects, loading } = useRecentProjects(3);
 
   if (loading) {
     return (
@@ -200,4 +163,4 @@ export function RecentProjects(): React.JSX.Element {
       </div>
     </section>
   );
-} 
+}
