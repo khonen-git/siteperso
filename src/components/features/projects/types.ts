@@ -1,49 +1,66 @@
-import { Project, ProjectDetail } from '@/types/project';
+import { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
-// Types pour les cartes de projet
-export interface ProjectCardProps {
-  project: Project;
-  className?: string;
+export interface ProjectTag {
+  name: string;
+  color?: string;
 }
 
-// Types pour les détails de projet
-export interface ProjectHeroProps {
-  project: ProjectDetail;
+export interface ProjectImage {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+}
+
+export interface ProjectMeta {
+  title: string;
+  description: string;
+  category: string;
+  tags: string[];
+  image: string;
+  link: string;
+  date: string;
+  status: 'completed' | 'in-progress' | 'planned';
+}
+
+export interface ProjectContent {
+  meta: ProjectMeta;
+  content: MDXRemoteSerializeResult;
+}
+
+// Types des composants
+export interface ProjectCardProps {
+  project: ProjectMeta;
   className?: string;
 }
 
 export interface ProjectContentProps {
-  content: React.ReactNode;
-  className?: string;
+  content: MDXRemoteSerializeResult;
+  meta: ProjectMeta;
 }
 
-// Types pour le filtrage et les tags
 export interface ProjectTagProps {
   tag: string;
-  onClick?: () => void;
-  removable?: boolean;
   className?: string;
 }
 
-export interface ProjectTagsProps {
-  tags: string[];
-  onTagClick?: (tag: string) => void;
-  removable?: boolean;
+export interface ProjectImageContainerProps {
+  image: ProjectImage;
   className?: string;
 }
 
-export interface ProjectFilterProps {
-  onSearch: (query: string) => void;
-  onCategoryChange: (category: string) => void;
-  onTagSelect: (tag: string) => void;
-  onSortChange: (sort: 'date' | 'title') => void;
-  selectedCategory: string;
-  selectedTags: string[];
-  sortBy: 'date' | 'title';
-  className?: string;
-}
-
-// Types pour les états d'erreur
-export interface NotFoundProjectProps {
-  className?: string;
+// Types pour les animations
+export interface ProjectAnimationConfig {
+  initial: {
+    opacity: number;
+    y: number;
+  };
+  animate: {
+    opacity: number;
+    y: number;
+  };
+  transition: {
+    duration: number;
+    delay?: number;
+  };
 }

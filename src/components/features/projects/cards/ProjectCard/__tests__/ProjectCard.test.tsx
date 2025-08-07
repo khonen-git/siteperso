@@ -1,68 +1,43 @@
-import React from 'react';
-import { renderWithProviders, mockNextImage, mockNextLink } from '@/components/common/test-utils';
+import { render, screen } from '@testing-library/react';
 import { ProjectCard } from '..';
 
-// Setup mocks
-mockNextImage();
-mockNextLink();
-
 const mockProject = {
-  id: '1',
   title: 'Test Project',
-  description: 'Test Description',
-  image: '/test.jpg',
-  date: '2024-01-01',
+  description: 'A test project description',
+  image: '/test-image.jpg',
+  link: '/projects/test-project',
+  category: 'Test Category',
   tags: ['React', 'TypeScript'],
-  category: 'Web'
+  date: '2024-01-01',
+  status: 'completed' as const
 };
 
 describe('ProjectCard', () => {
   it('renders project information correctly', () => {
-    const { getByText, getByAltText } = renderWithProviders(
-      <ProjectCard project={mockProject} />
-    );
-
-    expect(getByText(mockProject.title)).toBeInTheDocument();
-    expect(getByText(mockProject.description)).toBeInTheDocument();
-    expect(getByAltText(mockProject.title)).toHaveAttribute('src', mockProject.image);
-  });
-
-  it('renders tags correctly', () => {
-    const { getByText } = renderWithProviders(
-      <ProjectCard project={mockProject} />
-    );
-
+    render(<ProjectCard project={mockProject} />);
+    
+    expect(screen.getByText(mockProject.title)).toBeInTheDocument();
+    expect(screen.getByText(mockProject.description)).toBeInTheDocument();
+    expect(screen.getByText(mockProject.category)).toBeInTheDocument();
+    
+    // Vérifie que les tags sont rendus
     mockProject.tags.forEach(tag => {
-      expect(getByText(tag)).toBeInTheDocument();
+      expect(screen.getByText(tag)).toBeInTheDocument();
     });
   });
 
-  it('formats date correctly', () => {
-    const { getByText } = renderWithProviders(
-      <ProjectCard project={mockProject} />
-    );
-
-    const formattedDate = new Date(mockProject.date).toLocaleDateString('fr-FR', {
-      year: 'numeric',
-      month: 'long'
-    });
-    expect(getByText(formattedDate)).toBeInTheDocument();
+  it('links to the correct project page', () => {
+    render(<ProjectCard project={mockProject} />);
+    
+    const link = screen.getByRole('link');
+    expect(link).toHaveAttribute('href', mockProject.link);
   });
 
-  it('links to project detail page', () => {
-    const { container } = renderWithProviders(
-      <ProjectCard project={mockProject} />
-    );
-
-    const link = container.querySelector('a');
-    expect(link).toHaveAttribute('href', `/projects/${mockProject.id}`);
-  });
-
-  it('applies hover animation class', () => {
-    const { container } = renderWithProviders(
-      <ProjectCard project={mockProject} />
-    );
-
-    expect(container.firstChild).toHaveClass('hover:scale-[1.02]');
+  it('renders project image with correct attributes', () => {
+    render(<ProjectCard project={mockProject} />);
+    
+    const image = screen.getByRole('img');
+    expect(image).toHaveAttribute('src');
+    expect(image).toHaveAttribute('alt', mockProject.title);
   });
 });

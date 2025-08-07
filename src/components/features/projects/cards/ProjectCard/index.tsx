@@ -1,61 +1,43 @@
-import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { Card, CardContent } from '@/components/ui/data-display/card';
-import { ProjectTags } from '../../filters/ProjectTags';
-import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { useProjectAnimation } from '../../hooks/useProjectAnimation';
+import { ImageContainer } from './components/ImageContainer';
+import { ProjectCardHeader } from './components/CardHeader';
+import { projectCardStyles as styles } from './styles';
 import type { ProjectCardProps } from '../../types';
 
-/**
- * ProjectCard - Carte de présentation d'un projet
- * Affiche un aperçu du projet avec image, titre, description et tags
- */
-export function ProjectCard({ project, className }: ProjectCardProps) {
-  return (
-    <Link 
-      href={`/projects/${project.id}`} 
-      className={cn(
-        "block transition-all hover:scale-[1.02]",
-        className
-      )}
-    >
-      <Card className="overflow-hidden h-full">
-        {/* Image du projet */}
-        <div className="relative aspect-[16/9]">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-        </div>
+export function ProjectCard({ project }: ProjectCardProps) {
+  const animation = useProjectAnimation();
 
-        {/* Contenu */}
-        <CardContent className="p-4 space-y-2">
-          <div className="space-y-1">
-            <h3 className="font-semibold leading-none tracking-tight">
-              {project.title}
-            </h3>
-            <p className="text-sm text-muted-foreground line-clamp-2">
+  return (
+    <motion.div {...animation}>
+      <Link href={project.link} className={styles.container}>
+        <Card className={styles.card}>
+          <ImageContainer 
+            image={{
+              src: project.image,
+              alt: project.title
+            }}
+          />
+          <ProjectCardHeader 
+            title={project.title}
+            tags={project.tags}
+          />
+          <CardContent className={styles.content}>
+            <p className={styles.description}>
               {project.description}
             </p>
-          </div>
-
-          {/* Tags */}
-          <ProjectTags tags={project.tags} />
-
-          {/* Date */}
-          {project.date && (
-            <p className="text-xs text-muted-foreground">
-              {new Date(project.date).toLocaleDateString('fr-FR', {
-                year: 'numeric',
-                month: 'long'
-              })}
-            </p>
-          )}
-        </CardContent>
-      </Card>
-    </Link>
+          </CardContent>
+          <Badge 
+            variant="outline" 
+            className={styles.badge}
+          >
+            {project.category}
+          </Badge>
+        </Card>
+      </Link>
+    </motion.div>
   );
 }
