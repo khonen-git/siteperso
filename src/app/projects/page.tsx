@@ -16,7 +16,6 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import ProjectCard from '@/components/project/ProjectCard';
-import ProjectTag from '@/components/project/ProjectTag';
 import fallbackProjects, { fetchProjects } from '@/data/projectsList';
 import categories from '@/config/categories';
 import themes from '@/config/themes';
