@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'fs/promises'; // Utilisation de la version promise
 import path from 'path';
 import matter from 'gray-matter';
 import { NextResponse } from 'next/server';
@@ -6,48 +6,86 @@ import { NextResponse } from 'next/server';
 // Chemin vers le dossier de contenu
 const projectsDirectory = path.join(process.cwd(), 'src/content/projects');
 
+// Validation des champs requis
+function isValidProject(data: any): boolean {
+  return (
+    data &&
+    typeof data.id === 'number' &&
+    typeof data.title === 'string' &&
+    typeof data.description === 'string' &&
+    typeof data.image === 'string' &&
+    typeof data.date === 'string' &&
+    typeof data.category === 'string' &&
+    Array.isArray(data.tags)
+  );
+}
+
 // Récupère tous les projets avec leurs méta-données
 export async function GET() {
   try {
-    const fileNames = fs.readdirSync(projectsDirectory);
-    const allProjectsData = fileNames.map(fileName => {
-      const slug = fileName.replace(/\.mdx$/, '');
-      const fullPath = path.join(projectsDirectory, fileName);
-      const fileContents = fs.readFileSync(fullPath, 'utf8');
-      const { data } = matter(fileContents);
-      
-      return {
-        slug,
-        ...(data as {
-          id: number;
-          title: string;
-          description: string;
-          image: string;
-          date: string;
-          category: string;
-          tags: string[];
-          visible?: boolean;
-        }),
-        visible: data.visible ?? true // Par défaut visible si non spécifié
-      };
-    });
+    // Lecture asynchrone du répertoire
+    const fileNames = await fs.readdir(projectsDirectory);
     
-    // Trier les projets par date décroissante
-    // Filtrer les projets non visibles
-    const visibleProjects = allProjectsData.filter(project => project.visible);
+    // Lecture asynchrone de tous les fichiers
+    const allProjectsData = await Promise.all(
+      fileNames.map(async (fileName) => {
+        try {
+          const slug = fileName.replace(/\.mdx$/, '');
+          const fullPath = path.join(projectsDirectory, fileName);
+          const fileContents = await fs.readFile(fullPath, 'utf8');
+          const { data } = matter(fileContents);
 
-    // Trier les projets visibles par date décroissante
-    const sortedData = visibleProjects.sort((a, b) => {
-      if (a.date < b.date) {
-        return 1;
-      } else {
-        return -1;
-      }
-    });
-    
+          // Validation des données
+          if (!isValidProject(data)) {
+            console.warn(`Projet invalide ${fileName}: données manquantes ou incorrectes`);
+            return null;
+          }
+
+          return {
+            slug,
+            ...(data as {
+              id: number;
+              title: string;
+              description: string;
+              image: string;
+              date: string;
+              category: string;
+              tags: string[];
+              visible?: boolean;
+            }),
+            visible: data.visible ?? true
+          };
+        } catch (error) {
+          console.error(`Erreur lors de la lecture du projet ${fileName}:`, error);
+          return null;
+        }
+      })
+    );
+
+    // Filtrer les projets null et non visibles
+    const validProjects = allProjectsData
+      .filter((project): project is NonNullable<typeof project> => 
+        project !== null && project.visible
+      );
+
+    // Trier les projets par date
+    const sortedData = validProjects.sort((a, b) => 
+      new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+
+    if (sortedData.length === 0) {
+      return NextResponse.json({ 
+        error: 'Aucun projet valide trouvé',
+        projects: [] 
+      }, { status: 404 });
+    }
+
     return NextResponse.json(sortedData);
   } catch (error) {
     console.error('Erreur lors de la lecture des projets:', error);
-    return NextResponse.json({ error: 'Erreur lors du chargement des projets' }, { status: 500 });
+    return NextResponse.json({ 
+      error: 'Erreur lors du chargement des projets',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    }, { status: 500 });
   }
-} 
+}
