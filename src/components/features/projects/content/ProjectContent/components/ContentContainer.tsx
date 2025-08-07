@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import { useProjectAnimation } from '../../../hooks/useProjectAnimation';
 import { cn } from '@/lib/utils';

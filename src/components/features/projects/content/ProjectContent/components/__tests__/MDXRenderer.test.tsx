@@ -1,9 +1,12 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MDXRenderer } from '../MDXRenderer';
+import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
-const mockContent = {
+const mockContent: MDXRemoteSerializeResult = {
   compiledSource: '',
-  scope: {}
+  scope: {},
+  frontmatter: {}
 };
 
 jest.mock('next-mdx-remote', () => ({

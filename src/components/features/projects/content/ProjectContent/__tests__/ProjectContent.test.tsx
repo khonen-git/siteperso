@@ -1,9 +1,12 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { ProjectContent } from '..';
+import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
-const mockContent = {
+const mockContent: MDXRemoteSerializeResult = {
   compiledSource: '',
-  scope: {}
+  scope: {},
+  frontmatter: {}
 };
 
 const mockMeta = {
@@ -20,6 +23,12 @@ const mockMeta = {
 jest.mock('next-mdx-remote', () => ({
   MDXRemote: () => <div data-testid="mdx-content">MDX Content</div>
 }));
+
+jest.mock('next/link', () => {
+  return ({ children, ...props }: any) => {
+    return <a {...props}>{children}</a>;
+  };
+});
 
 describe('ProjectContent', () => {
   it('renders MDX content', () => {

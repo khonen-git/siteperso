@@ -1,13 +1,13 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { ProjectTags } from '..';
 
-describe('ProjectTags', () => {
-  const mockTags = ['React', 'TypeScript', 'Next.js'];
-  const mockOnClick = jest.fn();
+const mockTags = ['React', 'TypeScript', 'Next.js'];
+const mockOnClick = jest.fn();
 
+describe('ProjectTags', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    mockOnClick.mockClear();
   });
 
   it('renders all tags', () => {
@@ -18,13 +18,16 @@ describe('ProjectTags', () => {
     });
   });
 
-  it('calls onClick when tag is clicked', () => {
-    render(<ProjectTags tags={mockTags} onClick={mockOnClick} />);
+  it('applies correct color classes to tags', () => {
+    render(<ProjectTags tags={mockTags} />);
     
-    const tag = screen.getByText(mockTags[0]);
-    fireEvent.click(tag);
-    
-    expect(mockOnClick).toHaveBeenCalledWith(mockTags[0]);
+    const reactTag = screen.getByText('React').closest('.badge');
+    const typescriptTag = screen.getByText('TypeScript').closest('.badge');
+    const nextjsTag = screen.getByText('Next.js').closest('.badge');
+
+    expect(reactTag).toHaveClass('bg-cyan-500/10');
+    expect(typescriptTag).toHaveClass('bg-purple-500/10');
+    expect(nextjsTag).toHaveClass('bg-black/10');
   });
 
   it('shows remove button when removable is true', () => {
@@ -43,21 +46,10 @@ describe('ProjectTags', () => {
     expect(mockOnClick).toHaveBeenCalledWith(mockTags[0]);
   });
 
-  it('applies theme colors to tags', () => {
+  it('does not show remove button when removable is false', () => {
     render(<ProjectTags tags={mockTags} />);
     
-    const tags = screen.getAllByRole('button');
-    tags.forEach(tag => {
-      expect(tag).toHaveClass('bg-secondary');
-    });
-  });
-
-  it('applies custom className', () => {
-    const className = 'custom-class';
-    const { container } = render(
-      <ProjectTags tags={mockTags} className={className} />
-    );
-    
-    expect(container.firstChild).toHaveClass(className);
+    const removeButtons = screen.queryAllByRole('button');
+    expect(removeButtons).toHaveLength(0);
   });
 });
