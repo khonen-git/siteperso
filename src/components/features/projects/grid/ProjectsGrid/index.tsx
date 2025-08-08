@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { ProjectCard } from '@/components/project/ProjectCard';
+import { ProjectCard } from '@/components/features/projects/cards/ProjectCard';
 import { LoadingState } from '../LoadingState';
 import { EmptyState } from '../EmptyState';
 import type { ProjectsGridProps } from './types';

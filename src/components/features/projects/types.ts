@@ -23,6 +23,16 @@ export interface ProjectMeta {
   status: 'completed' | 'in-progress' | 'planned';
 }
 
+// Données minimales requises par la carte projet
+export interface ProjectCardData {
+  title: string;
+  description: string;
+  category: string;
+  tags: string[];
+  image: string;
+  link: string;
+}
+
 export interface ProjectContent {
   meta: ProjectMeta;
   content: MDXRemoteSerializeResult;
@@ -30,7 +40,7 @@ export interface ProjectContent {
 
 // Types des composants
 export interface ProjectCardProps {
-  project: ProjectMeta;
+  project: ProjectCardData;
   className?: string;
 }
 

@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { ProjectTag } from '../../../types';
+import { ProjectTag } from '@/components/project/ProjectTag';
 
 interface TagListProps {
   tags: string[];
