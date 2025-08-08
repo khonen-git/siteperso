@@ -13,13 +13,11 @@ export function ProjectCardHeader({ title, tags }: ProjectCardHeaderProps) {
 
   return (
     <UICardHeader className="p-4 pb-2">
-      <TagList tags={tags} className="mb-2" />
-      <CardTitle className={titleStyles.className}>
-        <span className="flex items-center justify-between">
-          {title}
-          <ArrowUpRight className={arrowStyles.className} />
-        </span>
-      </CardTitle>
+      <div className="mb-2 flex items-center justify-between">
+        <TagList tags={tags} className="mr-2 flex-1" />
+        <ArrowUpRight className={arrowStyles.className} />
+      </div>
+      <CardTitle className={titleStyles.className}>{title}</CardTitle>
     </UICardHeader>
   );
 }
