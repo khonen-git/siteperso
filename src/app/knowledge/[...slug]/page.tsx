@@ -37,12 +37,22 @@ export default function KnowledgePage(): React.JSX.Element {
           cache: process.env.NODE_ENV === 'development' ? 'no-store' : 'default',
         });
         
+        if (response.status === 404) {
+          setPageData({
+            content: null,
+            metadata: null,
+            loading: false,
+            error: false
+          });
+          return;
+        }
+
         if (!response.ok) {
           throw new Error(`Erreur lors du chargement du contenu: ${response.status}`);
         }
-        
+
         const data: KnowledgeData = await response.json();
-        
+
         setPageData({
           content: data.content,
           metadata: data.frontmatter,
@@ -50,7 +60,9 @@ export default function KnowledgePage(): React.JSX.Element {
           error: false
         });
       } catch (error) {
-        console.error("Erreur lors du chargement du contenu:", error);
+        if (process.env.NODE_ENV === 'development') {
+          console.error("Erreur lors du chargement du contenu:", error);
+        }
         setPageData({
           content: null,
           metadata: null,
