@@ -1,10 +1,14 @@
 import React from 'react';
 import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { LoadingStateProps } from './types';
+
+interface LoadingStateProps {
+  message?: string;
+  className?: string;
+}
 
 export function LoadingState({
-  message = "Chargement des projets...",
+  message = "Chargement...",
   className
 }: LoadingStateProps) {
   return (
@@ -16,3 +20,5 @@ export function LoadingState({
     </div>
   );
 }
+
+

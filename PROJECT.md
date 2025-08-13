@@ -31,7 +31,7 @@ Ce document décrit les simplifications à appliquer pour réduire l’overengin
 #### 2) Hooks et états
 - Supprimer `src/components/features/projects/hooks/useProjectCardAnimation.ts` et son test (le hook ne fournit que des `className` désormais inline).
 - Factoriser les états génériques:
-  - Utiliser `grid/LoadingState` et `grid/EmptyState` aussi pour la page détail en attendant une centralisation globale.
+  - Centraliser dans `components/ui/feedback/{LoadingState,EmptyState}` et réutiliser partout.
 
 #### 3) Types
 - Standardiser sur `src/types/project.ts` pour `Project` et `ProjectDetail`.
@@ -78,19 +78,19 @@ Ce document décrit les simplifications à appliquer pour réduire l’overengin
   - [ ] Vérifier que les tests d’intégration de grid passent
 
 - `features/projects/details/*`
-  - [ ] Supprimer si non utilisé, conserver `components/project/*`
+  - [x] Supprimer si non utilisé, conserver `components/project/*`
 
 - `features/projects/hooks`
-  - [ ] Supprimer `useProjectCardAnimation` + tests
+  - [x] Supprimer `useProjectCardAnimation` + tests
   - [x] Conserver `useProjectAnimation` (Framer Motion)
 
 - `features/projects/types.ts`
-  - [ ] Supprimer `ProjectTag`, `ProjectImage`, `ProjectImageContainerProps`, `ProjectTagProps`
-  - [ ] Utiliser `Project` (ou un `Pick`) pour la carte
+  - [x] Supprimer `ProjectTag`, `ProjectImage`, `ProjectImageContainerProps`, `ProjectTagProps`
+  - [x] Utiliser `Project` (ou un `Pick`) pour la carte
 
 - États (`grid`, `detail/states`)
-  - [x] Remplacer `detail/states/*` par `grid/*` pour la page détail
-  - [ ] (Optionnel) Centraliser dans `ui/feedback` et réutiliser
+  - [x] Centraliser dans `components/ui/feedback` et réutiliser
+  - [x] Suppression des anciens doublons (`grid/*`, `detail/states/*`)
 
 - Données
   - [x] Construction de `link` déplacée côté API

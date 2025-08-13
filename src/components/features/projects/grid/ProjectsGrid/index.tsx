@@ -2,8 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { ProjectCard } from '@/components/features/projects/cards/ProjectCard';
-import { LoadingState } from '../LoadingState';
-import { EmptyState } from '../EmptyState';
+import { LoadingState } from '@/components/ui/feedback/LoadingState';
+import { EmptyState } from '@/components/ui/feedback/EmptyState';
 import type { ProjectsGridProps } from './types';
 
 export function ProjectsGrid({

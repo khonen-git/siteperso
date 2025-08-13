@@ -3,8 +3,8 @@
 import React from 'react';
 import { useParams } from 'next/navigation';
 import { useProjectDetail } from '@/components/features/projects/detail/hooks/useProjectDetail';
-import { LoadingState } from '@/components/features/projects/grid/LoadingState';
-import { EmptyState as ErrorState } from '@/components/features/projects/grid/EmptyState';
+import { LoadingState } from '@/components/ui/feedback/LoadingState';
+import { EmptyState as ErrorState } from '@/components/ui/feedback/EmptyState';
 import ProjectHero from '@/components/project/ProjectHero';
 import ProjectContent from '@/components/project/ProjectContent';
 

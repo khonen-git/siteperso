@@ -1,10 +1,15 @@
 import React from 'react';
 import { FileX } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { EmptyStateProps } from './types';
+
+interface EmptyStateProps {
+  message?: string;
+  className?: string;
+  icon?: React.ComponentType<{ className?: string }> | React.ReactNode;
+}
 
 export function EmptyState({
-  message = "Aucun projet ne correspond à vos critères de recherche.",
+  message = "Aucun élément à afficher.",
   className,
   icon: Icon = FileX
 }: EmptyStateProps) {
@@ -25,3 +30,5 @@ export function EmptyState({
     </div>
   );
 }
+
+
