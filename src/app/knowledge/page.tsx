@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { KnowledgeSidebar } from '@/components/knowledge/KnowledgeSidebar';
+import { KnowledgeSidebar } from '@/components/features/knowledge/navigation/KnowledgeSidebar';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { cn } from '@/lib/utils';
-import { TableOfContents } from '@/components/knowledge/TableOfContents';
-import { KnowledgeSection } from '@/components/knowledge/KnowledgeSection';
+import { TableOfContents } from '@/components/features/knowledge/navigation/TableOfContents';
+import { KnowledgeSection } from '@/components/features/knowledge/navigation/Section';
 
 export default function KnowledgePage(): React.JSX.Element {
   return (

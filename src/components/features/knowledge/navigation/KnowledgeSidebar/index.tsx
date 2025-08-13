@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { ScrollArea } from '@/components/ui/navigation/scroll-area';
 import { TreeView } from '../TreeView';
