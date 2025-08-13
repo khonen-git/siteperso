@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { TableOfContents } from '../knowledge/TableOfContents';
+import { TableOfContents } from '@/components/features/knowledge/navigation/TableOfContents';
 import { ProgressBar } from '../ui/ProgressBar';
 
 interface KnowledgeLayoutProps {
