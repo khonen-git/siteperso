@@ -40,9 +40,7 @@ Ce document décrit les simplifications à appliquer pour réduire l’overengin
   - Pour `ProjectCard`, utiliser directement `Project` ou `Pick<Project, 'title' | 'description' | 'category' | 'tags' | 'image' | 'link'>`.
 
 #### 4) Données et API
-- `useProjectsData` construi(sait) `link` côté client à partir du `slug`:
-  - Option A: construire `link` côté API (`/api/projects`) et renvoyer des objets prêts à l’emploi.
-  - Option B: créer un util partagé `buildProjectLink(slug)` et l’utiliser côté client et serveur.
+- Construire `link` côté API (`/api/projects`) et renvoyer des objets prêts à l’emploi. (fait)
 - Typage explicite du retour (`Project[]`) et validation de schéma côté API (ex: zod) pour fiabiliser.
 
 #### 5) Filtres
@@ -95,7 +93,7 @@ Ce document décrit les simplifications à appliquer pour réduire l’overengin
   - [ ] (Optionnel) Centraliser dans `ui/feedback` et réutiliser
 
 - Données
-  - [ ] Déplacer la construction de `link` (Option A API ou Option B util partagé)
+  - [x] Construction de `link` déplacée côté API
 
 ### Definition of Done
 - Duplications supprimées, imports cohérents.

@@ -53,7 +53,8 @@ export async function GET() {
               tags: string[];
               visible?: boolean;
             }),
-            visible: data.visible ?? true
+            visible: data.visible ?? true,
+            link: `/projects/${slug}`
           };
         } catch (error) {
           console.error(`Erreur lors de la lecture du projet ${fileName}:`, error);
@@ -82,10 +83,11 @@ export async function GET() {
 
     return NextResponse.json(sortedData);
   } catch (error) {
-    console.error('Erreur lors de la lecture des projets:', error);
+    const err = error as Error;
+    console.error('Erreur lors de la lecture des projets:', err);
     return NextResponse.json({ 
       error: 'Erreur lors du chargement des projets',
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      details: process.env.NODE_ENV === 'development' ? err.message : undefined
     }, { status: 500 });
   }
 }

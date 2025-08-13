@@ -29,14 +29,8 @@ export function useProjectsData() {
           throw new Error("Format de données invalide");
         }
 
-        // Ajouter le lien pour chaque projet
-        const projectsWithLinks = data.map(project => ({
-          ...project,
-          link: `/projects/${project.slug}` // Construire le lien à partir du slug
-        }));
-
         setState({
-          projects: projectsWithLinks,
+          projects: data,
           loading: false,
           error: null
         });
