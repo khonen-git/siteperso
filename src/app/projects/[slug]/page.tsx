@@ -3,8 +3,8 @@
 import React from 'react';
 import { useParams } from 'next/navigation';
 import { useProjectDetail } from '@/components/features/projects/detail/hooks/useProjectDetail';
-import { LoadingState } from '@/components/features/projects/detail/states/LoadingState';
-import { ErrorState } from '@/components/features/projects/detail/states/ErrorState';
+import { LoadingState } from '@/components/features/projects/grid/LoadingState';
+import { EmptyState as ErrorState } from '@/components/features/projects/grid/EmptyState';
 import ProjectHero from '@/components/project/ProjectHero';
 import ProjectContent from '@/components/project/ProjectContent';
 
@@ -17,7 +17,7 @@ export default function ProjectPage(): React.JSX.Element {
   }
 
   if (error || isNotFound) {
-    return <ErrorState error={error} />;
+    return <ErrorState message={error?.message || "Le projet que vous recherchez n'existe pas."} />;
   }
 
   return (

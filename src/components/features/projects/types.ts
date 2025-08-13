@@ -1,17 +1,5 @@
 import { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
-export interface ProjectTag {
-  name: string;
-  color?: string;
-}
-
-export interface ProjectImage {
-  src: string;
-  alt: string;
-  width?: number;
-  height?: number;
-}
-
 export interface ProjectMeta {
   title: string;
   description: string;
@@ -49,15 +37,7 @@ export interface ProjectContentProps {
   meta: ProjectMeta;
 }
 
-export interface ProjectTagProps {
-  tag: string;
-  className?: string;
-}
-
-export interface ProjectImageContainerProps {
-  image: ProjectImage;
-  className?: string;
-}
+// Props spécifiques à des composants déplacés/supprimés retirées
 
 // Types pour les animations
 export interface ProjectAnimationConfig {

@@ -31,8 +31,7 @@ Ce document décrit les simplifications à appliquer pour réduire l’overengin
 #### 2) Hooks et états
 - Supprimer `src/components/features/projects/hooks/useProjectCardAnimation.ts` et son test (le hook ne fournit que des `className` désormais inline).
 - Factoriser les états génériques:
-  - `grid/LoadingState`, `grid/EmptyState` et `detail/states/{LoadingState,ErrorState}` → 
-    créer/centraliser des composants génériques dans `src/components/ui/feedback` (ex: `LoadingState`, `EmptyState`, `ErrorState`) et réutiliser partout.
+  - Utiliser `grid/LoadingState` et `grid/EmptyState` aussi pour la page détail en attendant une centralisation globale.
 
 #### 3) Types
 - Standardiser sur `src/types/project.ts` pour `Project` et `ProjectDetail`.
@@ -92,7 +91,8 @@ Ce document décrit les simplifications à appliquer pour réduire l’overengin
   - [ ] Utiliser `Project` (ou un `Pick`) pour la carte
 
 - États (`grid`, `detail/states`)
-  - [ ] Centraliser dans `ui/feedback` et réutiliser
+  - [x] Remplacer `detail/states/*` par `grid/*` pour la page détail
+  - [ ] (Optionnel) Centraliser dans `ui/feedback` et réutiliser
 
 - Données
   - [ ] Déplacer la construction de `link` (Option A API ou Option B util partagé)
