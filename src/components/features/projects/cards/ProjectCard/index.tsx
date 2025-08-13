@@ -34,9 +34,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
               </div>
               <ArrowUpRight className="h-5 w-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
             </div>
-            <h3 className="line-clamp-1 text-xl group-hover:text-primary transition-colors duration-300">
+            <h2 className="line-clamp-1 text-xl group-hover:text-primary transition-colors duration-300">
               {project.title}
-            </h3>
+            </h2>
           </div>
 
           <CardContent className="p-4 pt-0">
