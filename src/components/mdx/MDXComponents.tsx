@@ -3,8 +3,8 @@
 import React from 'react';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
-import { MathBlock, MathInline } from '@/components/knowledge/Math';
-import { CodeBlock } from '@/components/knowledge/CodeBlock';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
 import { MdxCard } from '@/components/mdx/MdxCard';
 import { MdxDistributionVisualizer } from '@/components/mdx/MdxDistributionVisualizer';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';

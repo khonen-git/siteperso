@@ -1,13 +1,13 @@
 'use client';
 
 import * as React from 'react';
-import { KnowledgeSidebar } from '@/components/knowledge/KnowledgeSidebar';
+import { KnowledgeSidebar } from '@/components/features/knowledge/navigation/KnowledgeSidebar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { CodeBlock } from '@/components/knowledge/CodeBlock';
-import { MathBlock, MathInline } from '@/components/knowledge/Math';
-import { TableOfContents } from '@/components/knowledge/TableOfContents';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+import { TableOfContents } from '@/components/features/knowledge/navigation/TableOfContents';
 import { Progress } from '@/components/ui/progress';
 
 export default function StatisticalTestsPage() {

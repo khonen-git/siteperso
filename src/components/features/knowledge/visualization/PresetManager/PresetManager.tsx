@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { useDistributionStore } from '@/store/distributionStore';
 import { Button } from '@/components/ui/button';
@@ -57,4 +59,6 @@ export function PresetManager() {
       )}
     </div>
   );
-} 
+}
+
+

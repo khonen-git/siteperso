@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -17,3 +19,5 @@ export default function NotFoundKnowledge(): React.JSX.Element {
     </div>
   );
 }
+
+

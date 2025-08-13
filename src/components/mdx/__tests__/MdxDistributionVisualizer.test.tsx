@@ -3,11 +3,11 @@ import { MdxDistributionVisualizer } from '../MdxDistributionVisualizer';
 import { normalDistribution } from '@/lib/distributions/normal';
 
 // Mock des composants enfants
-jest.mock('@/components/knowledge/DistributionVisualizer', () => ({
+jest.mock('@/components/features/knowledge/visualization/DistributionVisualizer', () => ({
   DistributionVisualizer: jest.fn(() => <div data-testid="distribution-visualizer" />)
 }));
 
-jest.mock('@/components/knowledge/PresetManager', () => ({
+jest.mock('@/components/features/knowledge/visualization/PresetManager', () => ({
   PresetManager: jest.fn(() => <div data-testid="preset-manager" />)
 }));
 

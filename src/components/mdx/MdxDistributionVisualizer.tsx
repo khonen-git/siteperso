@@ -1,6 +1,6 @@
-import { DistributionVisualizer } from '@/components/knowledge/DistributionVisualizer';
+import { DistributionVisualizer } from '@/components/features/knowledge/visualization/DistributionVisualizer';
 import { DistributionConfig } from '@/types/distributions';
-import { PresetManager } from '@/components/knowledge/PresetManager';
+import { PresetManager } from '@/components/features/knowledge/visualization/PresetManager';
 
 interface MdxDistributionVisualizerProps {
   distribution: DistributionConfig;

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { useParams } from 'next/navigation';
 import { KnowledgeLayout } from '@/components/layouts/KnowledgeLayout';
-import NotFoundKnowledge from '@/components/knowledge/NotFoundKnowledge';
+import NotFoundKnowledge from '@/components/features/knowledge/NotFoundKnowledge';
 import { useState, useEffect } from 'react';
 
 interface KnowledgeData {

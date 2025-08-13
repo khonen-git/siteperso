@@ -1,3 +1,4 @@
-export { PresetManager } from '@/components/knowledge/PresetManager';
+export { PresetManager } from './preset-manager.client';
+
 
 
