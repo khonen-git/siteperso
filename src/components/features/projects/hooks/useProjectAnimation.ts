@@ -36,25 +36,4 @@ export function useProjectAnimation({
   );
 }
 
-/**
- * Hook pour gérer les animations des cartes de projet avec hover
- */
-export function useProjectCardAnimation() {
-  return useMemo(
-    () => ({
-      card: {
-        className: 'transition-all duration-300 hover:shadow-xl'
-      },
-      image: {
-        className: 'object-cover transition-transform duration-300 group-hover:scale-105'
-      },
-      title: {
-        className: 'line-clamp-1 text-xl group-hover:text-primary transition-colors duration-300'
-      },
-      arrow: {
-        className: 'h-5 w-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300'
-      }
-    }),
-    []
-  );
-}
+// useProjectCardAnimation supprimé après consolidation de ProjectCard
