@@ -22,44 +22,64 @@ export default function KnowledgePage(): React.JSX.Element {
             
             <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
               <p>
-                Bienvenue dans mon répertoire de connaissances personnelles, un espace dédié à la synthèse de mon savoir 
-                acquis tout au long de mon parcours. Ici, je partage un condensé de divers domaines qui ont captivé mon 
-                intérêt tout au long de ma vie. Ce répertoire représente une source d'informations riche et diversifiée, 
-                comprenant des sujets aussi variés que les mathématiques, la programmation, la finance ainsi que divers 
-                outils me servant dans mes activités.
+                Bienvenue dans mon répertoire de connaissances personnelles. Ici, je partage un condensé de diverses notions que j'ai pu acquérir tout au long de mon parcours. Ce répertoire est organisé en différentes sections avec chacune leur propre thématique. Vous pouvez y naviguer dans la barre latérale gauche et accédez aux informations de la thématique en cliquant dessus ou allez dans les sous thématiques en cliquant sur la flèche à côté du titre de la thématique. Vous pouvez également naviguer dans la page avec la table des matières à droite de la page.
               </p>
               <p>
-                Il est important de noter que ce répertoire n'est pas conçu comme un cours formel, mais plutôt comme une 
-                collection soigneusement organisée de concepts clés, d'idées fascinantes et d'outils pratiques. Il vise 
-                à offrir un aperçu rapide et informatif pour quiconque souhaite explorer ces domaines ou simplement 
-                enrichir sa compréhension personnelle.
+                Il est important de noter que ce répertoire n'est pas conçu comme un cours classique, mais plutôt comme une synthèse de chaque notion avec les éléments essentiels à connaître. Nombreux sont les cours et les outils qui permettent d'apprendre ces notions, si vous souhaitez mieux apprendre un sujet, je vous invite à faire vos propres recherches sur des cours ou de demander des explications plus détaillées à des LLM comme ChatGPT. Avec tout le flux d'information que nous recevons, nous oublions vite et retenons peu. Ce repertoire permet de revoir rapidement ces notions et des éléments qui auraient été oubliés.
               </p>
             </div>
           </section>
 
-          <div className="mt-12 grid gap-6">
-            {/* Sections avec icônes */}
-            <KnowledgeSection
-              title="Mathématiques"
-              icon="calculator"
-              description="Les mathématiques sont la langue universelle de la science et de la compréhension rationnelle."
-            />
-            <KnowledgeSection
-              title="Programmation"
-              icon="code"
-              description="La programmation informatique est l'art de donner des instructions à un ordinateur."
-            />
-            <KnowledgeSection
-              title="Data Analytics"
-              icon="bar-chart"
-              description="La Data Analytics est le processus d'examen et d'interprétation des données."
-            />
-            <KnowledgeSection
-              title="Data Science"
-              icon="brain"
-              description="La Data Science combine statistiques, analyse de données et apprentissage automatique."
-            />
-          </div>
+          <section id="knowledge__mathematics" className="space-y-6">
+            <h2 className="text-4xl font-bold tracking-tight">Mathématiques</h2>
+            
+            <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
+              <p>
+                Dans la partie mathématiques, je partage des notions théoriques importantes, principalement sur les probabilités et les statistiques. J'y ai aussi mis en place des visuels dynamiques pour visualiser des fonctions comme les distributions de probabilités et des éléments de code liés à ces notions.
+              </p>
+            </div>
+          </section>
+
+          <section id="knowledge__programming" className="space-y-6">
+            <h2 className="text-4xl font-bold tracking-tight">Programmation</h2>
+            
+            <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
+              <p>
+                La partie programmation est un peu différente par rapport à ce qui peut se faire habituellement dans un cours de programmation. Je me focalise plus sur les concepts et les principes algorithmiques que ce soit en général ou dans des langages de programmation spécifiques plutôt que sur le code en lui même. La réelle difficulté d'un programmeur n'est pas dans la rédaction du code ou du langage de programmation, mais dans la compréhension générale d'un système ou d'une application, les différentes problématiques qui peuvent survenir et comment les résoudre
+              </p>
+            </div>
+          </section>
+
+          <section id="knowledge__programming" className="space-y-6">
+            <h2 className="text-4xl font-bold tracking-tight">Data</h2>
+            
+            <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
+              <p>
+                La data est devenu en enjeu majeur dans les entreprises. L'importance des données est de plus en plus conscientisée et les entreprises cherchent à exploiter ces données pour améliorer leurs performances, leur organisation ou leur logistique et avoir des solutions data driven permettant de meilleurs prises de décision sur leurs stratégies. La gouvernance des données n'est pas à mettre en second plan et il est important de guider les entreprises dans la gestion de leurs données.
+              </p>
+            </div>
+          </section>
+
+          <section id="knowledge__programming" className="space-y-6">
+            <h2 className="text-4xl font-bold tracking-tight">Finance</h2>
+            
+            <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
+              <p>
+
+              </p>
+            </div>
+          </section>
+
+          <section id="knowledge__programming" className="space-y-6">
+            <h2 className="text-4xl font-bold tracking-tight">Outils</h2>
+            
+            <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
+              <p>
+
+              </p>
+            </div>
+          </section>
+          
         </div>
       </main>
 
