@@ -51,6 +51,10 @@ export const normalDistribution: DistributionConfig = {
       step: 0.1
     }
   ],
+  range: {
+    min: -5,
+    max: 5
+  },
   functions: {
     pdf,
     cdf

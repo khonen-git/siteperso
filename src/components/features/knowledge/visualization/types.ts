@@ -1,31 +1,23 @@
-export interface Distribution {
-  name: string;
-  range: {
-    min: number;
-    max: number;
-  };
-  parameters: Record<string, number>;
-  pdf: (x: number) => number;
-  cdf: (x: number) => number;
-}
+import { DistributionConfig } from '@/types/distributions';
 
-export interface Calculator {
-  pdf: (x: number) => number;
-  cdf: (x: number) => number;
-  calculate: (params: Record<string, number>) => void;
+export interface CalculationResult {
+  xValues: number[];
+  yValues: number[];
 }
 
 export interface Cache {
-  get: (key: string) => number | null;
+  get: (key: string) => number | undefined;
   set: (key: string, value: number) => void;
 }
 
 export interface VisualizerProps {
-  distribution: Distribution;
+  distribution: DistributionConfig;
 }
 
 export interface PlotProps {
-  distribution: Distribution;
-  calculator: Calculator;
+  distribution: DistributionConfig;
+  calculator: {
+    pdf: (x: number) => number;
+  };
   cache: Cache;
 }
