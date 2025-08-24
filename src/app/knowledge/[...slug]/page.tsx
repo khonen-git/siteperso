@@ -1,97 +1,67 @@
-'use client';
-
 import * as React from 'react';
-import { useParams } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { KnowledgeLayout } from '@/components/layouts/KnowledgeLayout';
 import NotFoundKnowledge from '@/components/features/knowledge/NotFoundKnowledge';
-import { useState, useEffect } from 'react';
+import fs from 'fs';
+import path from 'path';
+import { compileMDX } from 'next-mdx-remote/rsc';
+import { MDXComponents } from '@/components/mdx/MDXComponents';
 
-interface KnowledgeData {
-  content: any;
-  frontmatter: {
-    title: string;
-    description: string;
+interface KnowledgePageProps {
+  params: {
+    slug: string[];
   };
 }
 
-export default function KnowledgePage(): React.JSX.Element {
-  const params = useParams();
-  const slug = Array.isArray(params.slug) ? params.slug.join('/') : params.slug;
-  
-  const [pageData, setPageData] = useState<{
-    content: any | null;
-    metadata: any | null;
-    loading: boolean;
-    error: boolean;
-  }>({
-    content: null,
-    metadata: null,
-    loading: true,
-    error: false
-  });
+interface Frontmatter {
+  title: string;
+  description?: string;
+  date?: string;
+  tags?: string[];
+}
 
-  useEffect(() => {
-    const fetchContent = async () => {
-      try {
-        const response = await fetch(`/api/knowledge/${slug}`, {
-          cache: process.env.NODE_ENV === 'development' ? 'no-store' : 'default',
-        });
-        
-        if (response.status === 404) {
-          setPageData({
-            content: null,
-            metadata: null,
-            loading: false,
-            error: false
-          });
-          return;
-        }
+async function getKnowledgeContent(slug: string[]) {
+  const filePath = path.join(process.cwd(), 'src/content/knowledge', `${slug.join('/')}.mdx`);
 
-        if (!response.ok) {
-          throw new Error(`Erreur lors du chargement du contenu: ${response.status}`);
-        }
+  try {
+    if (!fs.existsSync(filePath)) {
+      return null;
+    }
 
-        const data: KnowledgeData = await response.json();
+    const source = fs.readFileSync(filePath, 'utf8');
+    const { content, frontmatter } = await compileMDX<Frontmatter>({
+      source,
+      components: MDXComponents,
+      options: {
+        parseFrontmatter: true,
+        mdxOptions: {
+          remarkPlugins: [],
+          rehypePlugins: [],
+          format: 'mdx'
+        },
+      },
+    });
 
-        setPageData({
-          content: data.content,
-          metadata: data.frontmatter,
-          loading: false,
-          error: false
-        });
-      } catch (error) {
-        if (process.env.NODE_ENV === 'development') {
-          console.error("Erreur lors du chargement du contenu:", error);
-        }
-        setPageData({
-          content: null,
-          metadata: null,
-          loading: false,
-          error: true
-        });
-      }
-    };
-    
-    fetchContent();
-  }, [slug]);
-
-  // Afficher un message de chargement
-  if (pageData.loading) {
-    return (
-      <div className="container py-16 text-center">
-        <h1 className="text-3xl font-bold">Chargement...</h1>
-      </div>
-    );
+    return { content, frontmatter };
+  } catch (error) {
+    console.error('Erreur lors du chargement du contenu:', error);
+    return null;
   }
+}
 
-  // Afficher un message d'erreur ou "contenu non trouvé"
-  if (pageData.error || !pageData.content) {
+export default async function KnowledgePage({ params }: KnowledgePageProps) {
+  const data = await getKnowledgeContent(params.slug);
+
+  if (!data) {
     return <NotFoundKnowledge />;
   }
 
   return (
     <KnowledgeLayout>
-      {pageData.content}
+      <article className="prose prose-gray dark:prose-invert max-w-none">
+        <h1>{data.frontmatter.title}</h1>
+        {data.content}
+      </article>
     </KnowledgeLayout>
   );
 }

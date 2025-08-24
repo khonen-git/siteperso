@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { TableOfContents } from '@/components/features/knowledge/navigation/TableOfContents';
 import { ProgressBar } from '../ui/ProgressBar';
+import { KnowledgeSidebar } from '@/components/features/knowledge/navigation/KnowledgeSidebar';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface KnowledgeLayoutProps {
   children: React.ReactNode;
@@ -29,19 +31,35 @@ export function KnowledgeLayout({ children, toc = true }: KnowledgeLayoutProps):
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <ProgressBar progress={scrollProgress} />
-      
-      <div className="flex flex-col md:flex-row gap-8">
-        {toc && (
-          <aside className="w-full md:w-1/4 lg:w-1/5 shrink-0 md:sticky md:top-24 md:h-[calc(100vh-6rem)] overflow-auto p-4">
-            <TableOfContents />
-          </aside>
-        )}
+    <div className="flex min-h-screen">
+      {/* Sidebar de navigation */}
+      <aside className="w-64 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <ScrollArea className="h-full">
+          <KnowledgeSidebar />
+        </ScrollArea>
+      </aside>
+
+      {/* Contenu principal */}
+      <div className="flex-1">
+        <ProgressBar progress={scrollProgress} />
         
-        <main className={`w-full ${toc ? 'md:w-3/4 lg:w-4/5' : ''} prose prose-slate dark:prose-invert max-w-none`}>
-          {children}
-        </main>
+        <div className="flex flex-col xl:flex-row">
+          <main className="flex-1 overflow-y-auto px-8 py-6">
+            {children}
+          </main>
+
+          {/* Table des matières flottante */}
+          {toc && (
+            <aside className="hidden xl:block w-64 border-l bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+              <ScrollArea className="h-full py-6 px-4">
+                <div className="space-y-4">
+                  <h3 className="font-semibold text-sm">Table des matières</h3>
+                  <TableOfContents className="text-sm" />
+                </div>
+              </ScrollArea>
+            </aside>
+          )}
+        </div>
       </div>
     </div>
   );
