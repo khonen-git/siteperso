@@ -57,9 +57,9 @@ export function TableOfContents({ className }: TableOfContentsProps) {
           key={id}
           href={`#${id}`}
           className={cn(
-            "block text-sm transition-colors hover:text-foreground/80",
-            activeId === id ? "text-foreground" : "text-foreground/60",
-            level === 1 ? "pl-0" : level === 2 ? "pl-4" : "pl-8"
+            "block text-sm py-1 transition-colors hover:text-foreground/80",
+            activeId === id ? "text-foreground font-medium" : "text-foreground/60",
+            level === 1 ? "text-base font-semibold" : level === 2 ? "pl-4" : "pl-8"
           )}
           onClick={(e) => {
             e.preventDefault();

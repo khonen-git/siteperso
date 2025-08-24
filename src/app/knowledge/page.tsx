@@ -18,7 +18,7 @@ export default function KnowledgePage(): React.JSX.Element {
       <main className="flex-1 overflow-y-auto">
         <div className="mx-8 my-6">
           <section id="knowledge__presentation" className="space-y-6">
-            <h1 className="text-4xl font-bold tracking-tight">Répertoire de Connaissances Personnelles</h1>
+            <h1 id="knowledge-title" className="text-4xl font-bold tracking-tight">Répertoire de Connaissances Personnelles</h1>
             
             <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
               <p>
@@ -31,7 +31,7 @@ export default function KnowledgePage(): React.JSX.Element {
           </section>
 
           <section id="knowledge__mathematics" className="space-y-6">
-            <h2 className="text-4xl font-bold tracking-tight">Mathématiques</h2>
+            <h2 id="mathematics" className="text-4xl font-bold tracking-tight">Mathématiques</h2>
             
             <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
               <p>
@@ -41,7 +41,7 @@ export default function KnowledgePage(): React.JSX.Element {
           </section>
 
           <section id="knowledge__programming" className="space-y-6">
-            <h2 className="text-4xl font-bold tracking-tight">Programmation</h2>
+            <h2 id="programming" className="text-4xl font-bold tracking-tight">Programmation</h2>
             
             <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
               <p>
@@ -51,7 +51,7 @@ export default function KnowledgePage(): React.JSX.Element {
           </section>
 
           <section id="knowledge__data" className="space-y-6">
-            <h2 className="text-4xl font-bold tracking-tight">Data</h2>
+            <h2 id="data" className="text-4xl font-bold tracking-tight">Data</h2>
             
             <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
               <p>
@@ -61,7 +61,7 @@ export default function KnowledgePage(): React.JSX.Element {
           </section>
 
           <section id="knowledge__finance" className="space-y-6">
-            <h2 className="text-4xl font-bold tracking-tight">Finance</h2>
+            <h2 id="finance" className="text-4xl font-bold tracking-tight">Finance</h2>
             
             <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
               <p>
@@ -71,7 +71,7 @@ export default function KnowledgePage(): React.JSX.Element {
           </section>
 
           <section id="knowledge__tools" className="space-y-6">
-            <h2 className="text-4xl font-bold tracking-tight">Outils</h2>
+            <h2 id="tools" className="text-4xl font-bold tracking-tight">Outils</h2>
             
             <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
               <p>
