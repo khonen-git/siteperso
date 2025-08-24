@@ -50,7 +50,7 @@ export default function KnowledgePage(): React.JSX.Element {
             </div>
           </section>
 
-          <section id="knowledge__programming" className="space-y-6">
+          <section id="knowledge__data" className="space-y-6">
             <h2 className="text-4xl font-bold tracking-tight">Data</h2>
             
             <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
@@ -60,7 +60,7 @@ export default function KnowledgePage(): React.JSX.Element {
             </div>
           </section>
 
-          <section id="knowledge__programming" className="space-y-6">
+          <section id="knowledge__finance" className="space-y-6">
             <h2 className="text-4xl font-bold tracking-tight">Finance</h2>
             
             <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
@@ -70,7 +70,7 @@ export default function KnowledgePage(): React.JSX.Element {
             </div>
           </section>
 
-          <section id="knowledge__programming" className="space-y-6">
+          <section id="knowledge__tools" className="space-y-6">
             <h2 className="text-4xl font-bold tracking-tight">Outils</h2>
             
             <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
@@ -85,8 +85,11 @@ export default function KnowledgePage(): React.JSX.Element {
 
       {/* Table des matières flottante */}
       <aside className="hidden xl:block w-64 border-l bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <ScrollArea className="h-full p-4">
-          <TableOfContents />
+        <ScrollArea className="h-full py-6 px-4">
+          <div className="space-y-4">
+            <h3 className="font-semibold text-sm">Table des matières</h3>
+            <TableOfContents className="text-sm" />
+          </div>
         </ScrollArea>
       </aside>
     </div>
