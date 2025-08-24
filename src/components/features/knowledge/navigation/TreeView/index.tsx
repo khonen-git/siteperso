@@ -55,18 +55,17 @@ function TreeNode({ item, level = 0 }: TreeNodeProps) {
           </button>
         )}
       </div>
-      {hasChildren && isExpanded && (
-        <div 
-          className={cn(
-            "border-l ml-2 pl-1"
-          )}
-          role="group"
-        >
-          {item.children?.map((child, index) => (
-            <TreeNode key={index} item={child} level={level + 1} />
-          ))}
-        </div>
-      )}
+      <div 
+        className={cn(
+          "border-l ml-2 pl-1",
+          !hasChildren || !isExpanded && "hidden"
+        )}
+        role="group"
+      >
+        {item.children?.map((child, index) => (
+          <TreeNode key={`${item.href}-${index}`} item={child} level={level + 1} />
+        ))}
+      </div>
     </div>
   );
 }

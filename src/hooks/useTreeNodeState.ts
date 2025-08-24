@@ -1,16 +1,21 @@
 import { useState, useEffect } from 'react';
 
 export function useTreeNodeState(href: string | undefined, isPathActive: boolean) {
-  const [isExpanded, setIsExpanded] = useState(() => {
-    if (typeof window !== 'undefined' && href) {
-      const stored = localStorage.getItem(`toctree-${href}`);
-      return stored === 'expanded' || isPathActive;
-    }
-    return isPathActive;
-  });
+  const [isExpanded, setIsExpanded] = useState(isPathActive);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     if (href) {
+      const stored = localStorage.getItem(`toctree-${href}`);
+      if (stored === 'expanded' || isPathActive) {
+        setIsExpanded(true);
+      }
+    }
+  }, [href, isPathActive]);
+
+  useEffect(() => {
+    if (href && isClient) {
       const key = `toctree-${href}`;
       if (isExpanded) {
         localStorage.setItem(key, 'expanded');
@@ -18,7 +23,7 @@ export function useTreeNodeState(href: string | undefined, isPathActive: boolean
         localStorage.removeItem(key);
       }
     }
-  }, [isExpanded, href]);
+  }, [isExpanded, href, isClient]);
 
   return [isExpanded, setIsExpanded] as const;
 } 
