@@ -21,6 +21,7 @@ export function Introduction(): React.JSX.Element {
       <div className="container relative">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Image */}
+          {/*
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
