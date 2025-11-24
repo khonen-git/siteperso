@@ -14,18 +14,22 @@ const Header = (): React.JSX.Element => {
             <Link href="/about" className="transition-colors hover:text-foreground/80">
               À propos
             </Link>
+            {/*
             <Link href="/knowledge" className="transition-colors hover:text-foreground/80">
               Connaissances
             </Link>
+            */}
             <Link href="/projects" className="transition-colors hover:text-foreground/80">
               Projets
             </Link>
+            {/*
             <Link href="/references" className="transition-colors hover:text-foreground/80">
               Références
             </Link>
             <Link href="/activity" className="transition-colors hover:text-foreground/80">
               Activité du site
             </Link>
+            */}
             <Link href="/contact" className="transition-colors hover:text-foreground/80">
               Contact
             </Link>
