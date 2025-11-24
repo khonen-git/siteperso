@@ -11,7 +11,7 @@ export default function Home(): React.JSX.Element {
         subtitle="Data Analyst"
         description="J'analyse des données pour en tirer des informations clés qui aident à la prise de décision"
       />
-      <LatestUpdates />
+      {/* <LatestUpdates /> */}
       <RecentProjects />
     </>
   );
