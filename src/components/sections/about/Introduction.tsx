@@ -37,7 +37,7 @@ export function Introduction(): React.JSX.Element {
               sizes="(max-width: 768px) 80vw, 40vw"
             />
           </motion.div>
-
+          */}
           {/* Contenu */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
