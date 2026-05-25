@@ -15,7 +15,8 @@ export function TagsSelect({
   value,
   onChange,
   availableTags,
-  className
+  labels,
+  className,
 }: TagsSelectProps) {
   const handleValueChange = (newValue: string) => {
     if (newValue === 'all') {
@@ -32,13 +33,13 @@ export function TagsSelect({
       className={className}
     >
       <SelectTrigger>
-        <SelectValue placeholder="Technologies" />
+        <SelectValue placeholder={labels.placeholder} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Technologies</SelectLabel>
-          <SelectItem value="all">Toutes les technologies</SelectItem>
-          {availableTags.map(tag => (
+          <SelectLabel>{labels.group}</SelectLabel>
+          <SelectItem value="all">{labels.all}</SelectItem>
+          {availableTags.map((tag) => (
             <SelectItem key={tag} value={tag}>
               {tag}
             </SelectItem>

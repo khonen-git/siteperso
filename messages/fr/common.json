@@ -1,0 +1,23 @@
+{
+  "metadata": {
+    "title": "Théo Charron - Data Analyst",
+    "description": "Site personnel de Théo Charron, Data Analyst passionné par la data science, l'analyse de données et la visualisation."
+  },
+  "brand": "Théo Charron",
+  "nav": {
+    "about": "À propos",
+    "knowledge": "Connaissances",
+    "projects": "Projets",
+    "references": "Références",
+    "activity": "Activité du site",
+    "contact": "Contact"
+  },
+  "footer": {
+    "copyright": "© 2024 Théo Charron. Tous droits réservés."
+  },
+  "languageSwitcher": {
+    "label": "Changer de langue",
+    "fr": "Français",
+    "en": "English"
+  }
+}

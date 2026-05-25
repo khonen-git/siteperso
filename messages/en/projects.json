@@ -1,0 +1,53 @@
+{
+  "header": {
+    "title": "My Projects",
+    "description": "Explore my work in data science, data analysis, and development."
+  },
+  "filters": {
+    "searchPlaceholder": "Search for a project...",
+    "category": "Category",
+    "categories": "Categories",
+    "allCategories": "All categories",
+    "technologies": "Technologies",
+    "allTechnologies": "All technologies",
+    "sortBy": "Sort by",
+    "sortDate": "Date",
+    "sortTitle": "Title"
+  },
+  "categories": {
+    "Data": "Data analysis and processing projects",
+    "Mathématiques": "Mathematical applications and studies",
+    "Finance": "Financial analysis and modeling",
+    "Développement Web": "Web applications and websites",
+    "Développement web": "Web applications and websites",
+    "Machine Learning": "Artificial intelligence projects",
+    "Automatisation": "Automation scripts and tools"
+  },
+  "errors": {
+    "loadFailed": "Failed to load projects",
+    "invalidData": "Invalid data format",
+    "unknown": "Unknown error",
+    "notFound": "The project you are looking for does not exist.",
+    "httpError": "HTTP error: {status}"
+  },
+  "detail": {
+    "backToList": "Back to projects",
+    "allProjects": "All projects"
+  },
+  "notFound": {
+    "title": "Project not found",
+    "description": "The project you are looking for does not exist or has been moved.",
+    "backLink": "Back to project list"
+  },
+  "recent": {
+    "badge": "Portfolio",
+    "title": "Recent projects",
+    "description": "Discover my latest data and development projects.",
+    "loading": "Loading recent projects...",
+    "empty": "No recent projects available",
+    "viewAll": "View all projects"
+  },
+  "grid": {
+    "empty": "No projects match your criteria."
+  }
+}

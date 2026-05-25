@@ -1,0 +1,66 @@
+---
+id: 12
+title: "OpenClassrooms Data Analyst - Projet 12 : Détectez des faux billets avec Python"
+description: "Création et optimisation d'une modèle de machine learning supervisé"
+image: "https://placehold.co/1200x600/png"
+date: "2025-07"
+category: "Data"
+tags: ["Python", "Machine learning", "Jupyter Notebook"]
+---
+
+# OpenClassrooms Data Analyst - Projet 12 : Détectez des faux billets avec Python
+
+<i>
+    Nota bene : Cette page présente les grandes lignes du projet réalisé avec OpenClassrooms. Par respect pour la plateforme, je ne mettrai aucun livrable en libre accès. Néanmoins si vous souhaitez consultez les livrables, vous pouvez me contacter en précisant les livrables de projets que vous souhaiteriez prendre connaissance afin que je puisse vous les présenter dans un entretien privée.
+</i>
+
+## Résumé
+
+Ce projet est se porte sur la détection de faux billets via du machine learning supervisé. Les données fournis sont les dimensions des billets et si ces billets sont authentiques ou non. Il est demandé explicitement de tester 4 algorithmes : K-means(non supervisé), régression logistique, KNN et Random Forest. Il est possible cependant d'utiliser des solutions supplémentaires. Certains valeurs dans les dimensions étaient manquantes, il était suggéré dans le projet d'utiliser une régression linéraire simple ou multiple pour remplir les valeurs manquantes. J'ai donc naturellement procédé à cette régression linéraire multiple après avoir vérifié les hypothèses statistiques qui valide ce modèle (colinéarité des variables, homoscédasticité, normalité des résidus) et évaluer son R² mais l'idée d'utiliser deux régressions linéraires en dissociant les vrais billets des faux m'est venu à l'esprit. Cette idée présentait néanmoins de très mauvais résultats et les R² proches de 0 n'ont laissés aucun doute, j'ai donc rejeté cette idée. J'ai testé les algorithmes et tous présentaient de très bons résultats. J'ai pensé à première vue que les résultats étaient liés à de l'overfiting mais en analysant les résultats j'ai observé que ce n'était pas du tout le cas. J'ai par la suite essayé d'améliorer les résultats via de features engineering, mais les résultats n'ont pas vraiments changés voire certains algorithmes étaient moins bons. J'ai donc aussi rejeté cette idée. Je souhaitais tout de même tester deux algorithmes supplémentaires : un XGBoost qui était un choix plutôt subjectif car je souhaitais le tester pour la première fois dans ce projet et un QDA qui lui était complétement objectif car j'avais remarqué que les distributions des valeurs des dimensions semblaient très proches de distributions gaussiennes. Ces deux algorithmes avaient cependant certaines exigences quant à leur utilisation : le XGBoost nécessite une optimisation rigoureuse des hyperparamètres et le QDA a besoin d'hypothèses statistiques supplémentaires. Le XGBoost n'a pas présenté de meilleur résultat mais le QDA a eu les meilleurs résultats à égalité avec la régression logistique. Le choix des deux modèles s'est fait sur l'histogramme des probabilités : le QDA était beaucoup plus sûr de lui là ou la régression logistique était hésitante (probabilités autour de 0.5). Cette différence me permet de jouer sur le seuil de probabilité afin de réduire un maximum les faux positifs (faux billets identifiés comme vrais) en limitant l'augmentation du nombre de faux négatifs (vrais billets identifés comme faux), car dans notre cas les faux positifs sont bien plus problématiques que les faux négatifs. J'ai donc pu augmenter le seuil de probabilité dans l'anticipation où le QDA serait hésitant pour considérer d'office le billet comme faux et limiter les risques.
+
+## Objectifs
+
+- Traiter les valeurs manquantes avec une régression linéraire simple ou multiple
+- Faire une EDA (analyse exploratoire des données)
+- Entraîner et optimiser des modèles de machine learning
+- Évaluer les risques et analyser les résultats
+
+## Langages
+
+- Python
+
+### Librairies d'analyse de données
+
+- Pandas
+- NumPy
+- Matplotlib
+- Seaborn
+
+### Librairies de machine learning
+
+- Scikit-learn
+
+### Librairies d'exportation de modèle de machine learning
+
+- Joblib
+
+## Technologies
+
+- Jupyter Notebook
+- Visual Studio Code
+
+## Compétences acquises
+
+### Soft skills
+
+- Communication des risques (Faux positifs/négatifs)
+- Rigueur expérimental
+- Documentation des modèles
+- Exploration et recherche des nouvelles solutions potentielles
+
+### Hard skills
+
+- Régression linéraire
+- Machine learning supervisé
+- Évaluation & optimisation de modèles de machine learning : K-means, régression logistique, KNN, Random Forest, XGBoost, QDA.
+- Déploiement d'un modèle d'apprentissage supervisé : Joblib

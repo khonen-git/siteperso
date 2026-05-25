@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
 import type { ProjectDetail } from '@/types/project';
 import type { ProjectDetailState, UseProjectDetailReturn } from './types';
 
@@ -6,27 +7,27 @@ const initialState: ProjectDetailState = {
   project: null,
   content: null,
   loading: true,
-  error: null
+  error: null,
 };
 
 export function useProjectDetail(slug: string): UseProjectDetailReturn {
+  const locale = useLocale();
+  const t = useTranslations('projects.errors');
   const [state, setState] = useState<ProjectDetailState>(initialState);
 
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        // Récupérer le contenu du projet via l'API
-        const response = await fetch(`/api/projects/${slug}`, {
+        const response = await fetch(`/api/projects/${slug}?locale=${locale}`, {
           cache: process.env.NODE_ENV === 'development' ? 'no-store' : 'default',
         });
-        
+
         if (!response.ok) {
-          throw new Error(`Erreur HTTP: ${response.status}`);
+          throw new Error(t('httpError', { status: response.status }));
         }
-        
+
         const projectContent = await response.json();
-        
-        // Transformer les métadonnées en objet ProjectDetail
+
         const projectDetail: ProjectDetail = {
           id: projectContent.frontmatter.id,
           title: projectContent.frontmatter.title,
@@ -35,6 +36,7 @@ export function useProjectDetail(slug: string): UseProjectDetailReturn {
           date: projectContent.frontmatter.date,
           category: projectContent.frontmatter.category,
           tags: projectContent.frontmatter.tags,
+          slug,
           content: {
             summary: '',
             objectives: [],
@@ -42,31 +44,31 @@ export function useProjectDetail(slug: string): UseProjectDetailReturn {
             technologies: [],
             results: '',
             images: [],
-            conclusion: ''
-          }
+            conclusion: '',
+          },
         };
-        
+
         setState({
           project: projectDetail,
           content: projectContent.content,
           loading: false,
-          error: null
+          error: null,
         });
       } catch (error) {
         setState({
           project: null,
           content: null,
           loading: false,
-          error: error instanceof Error ? error : new Error('Une erreur est survenue')
+          error: error instanceof Error ? error : new Error(t('unknown')),
         });
       }
     };
-    
+
     fetchProject();
-  }, [slug]);
+  }, [slug, locale]);
 
   return {
     ...state,
-    isNotFound: !state.loading && (!state.project || !state.content)
+    isNotFound: !state.loading && (!state.project || !state.content),
   };
 }

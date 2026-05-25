@@ -1,4 +1,4 @@
-import { TreeItem } from '@/config/navigation';
+import type { TreeItem } from '@/config/knowledge';
 
 // Types pour la visualisation
 export interface DistributionVisualizerProps {

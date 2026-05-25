@@ -1,32 +1,36 @@
 import fs from 'fs';
-import path from 'path';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import remarkGfm from 'remark-gfm';
 import { NextRequest, NextResponse } from 'next/server';
+import { hasLocale } from 'next-intl';
+import { routing } from '@/i18n/routing';
+import { resolveProjectFilePath } from '@/lib/projects/content';
 
-// Chemin vers le dossier de contenu
-const projectsDirectory = path.join(process.cwd(), 'src/content/projects');
+function resolveLocale(searchParams: URLSearchParams): string {
+  const requested = searchParams.get('locale');
+  return requested && hasLocale(routing.locales, requested)
+    ? requested
+    : routing.defaultLocale;
+}
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
+  const { slug } = await params;
+  const locale = resolveLocale(request.nextUrl.searchParams);
+
   try {
-    const slug = params.slug;
-    const fullPath = path.join(projectsDirectory, `${slug}.mdx`);
-    
-    // Vérifier si le fichier existe
-    if (!fs.existsSync(fullPath)) {
-      return NextResponse.json(
-        { error: 'Projet non trouvé' },
-        { status: 404 }
-      );
+    const fullPath = resolveProjectFilePath(locale, slug);
+
+    if (!fullPath) {
+      return NextResponse.json({ error: 'Projet non trouvé' }, { status: 404 });
     }
-    
+
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data, content } = matter(fileContents);
-    
+
     const mdxSource = await serialize(content, {
       mdxOptions: {
         remarkPlugins: [remarkGfm],
@@ -34,17 +38,17 @@ export async function GET(
       },
       scope: data,
     });
-    
+
     return NextResponse.json({
       slug,
       frontmatter: data,
       content: mdxSource,
     });
   } catch (error) {
-    console.error(`Erreur lors du chargement du projet ${params.slug}:`, error);
+    console.error(`Erreur lors du chargement du projet ${slug}:`, error);
     return NextResponse.json(
       { error: 'Erreur lors du chargement du projet' },
       { status: 500 }
     );
   }
-} 
+}

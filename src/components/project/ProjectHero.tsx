@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -15,6 +16,8 @@ interface ProjectHeroProps {
 }
 
 export function ProjectHero({ project }: ProjectHeroProps) {
+  const t = useTranslations('projects.detail');
+
   return (
     <section className="relative h-[50vh] w-full overflow-hidden">
       <Image
@@ -34,7 +37,7 @@ export function ProjectHero({ project }: ProjectHeroProps) {
         >
           <Link href="/projects">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Tous les projets
+            {t('allProjects')}
           </Link>
         </Button>
         <motion.div
@@ -45,23 +48,16 @@ export function ProjectHero({ project }: ProjectHeroProps) {
           <Badge variant="outline" className="mb-2 text-white">
             {project.category}
           </Badge>
-          <h1 className="mb-4 text-4xl font-bold text-white md:text-5xl">
-            {project.title}
-          </h1>
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="flex items-center text-white/90">
-              <Calendar className="mr-2 h-4 w-4" />
-              {project.date}
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <ProjectTag 
-                  key={tag} 
-                  tag={tag} 
-                  className="bg-opacity-70"
-                />
-              ))}
-            </div>
+          <h1 className="text-4xl font-bold text-white md:text-5xl">{project.title}</h1>
+          <p className="mt-4 max-w-2xl text-lg text-white/90">{project.description}</p>
+          <div className="mt-4 flex items-center gap-2 text-white/80">
+            <Calendar className="h-4 w-4" />
+            <span>{project.date}</span>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <ProjectTag key={tag} tag={tag} />
+            ))}
           </div>
         </motion.div>
       </div>
@@ -69,4 +65,4 @@ export function ProjectHero({ project }: ProjectHeroProps) {
   );
 }
 
-export default ProjectHero; 
+export default ProjectHero;

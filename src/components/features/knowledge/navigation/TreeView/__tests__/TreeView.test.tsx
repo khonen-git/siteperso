@@ -12,8 +12,11 @@ const mockItems = [
   }
 ];
 
-jest.mock('next/navigation', () => ({
-  usePathname: () => '/child1'
+jest.mock('@/i18n/navigation', () => ({
+  usePathname: () => '/child1',
+  Link: ({ href, children, ...props }: { href: string; children: React.ReactNode }) => (
+    <a href={href} {...props}>{children}</a>
+  ),
 }));
 
 describe('TreeView', () => {

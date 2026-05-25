@@ -35,6 +35,7 @@
     "katex": "^0.16.22",
     "lucide-react": "^0.294.0",
     "next": "^15.4.5",
+    "next-intl": "^4.12.0",
     "next-mdx-remote": "^5.0.0",
     "next-themes": "^0.2.1",
     "react": "^18.2.0",

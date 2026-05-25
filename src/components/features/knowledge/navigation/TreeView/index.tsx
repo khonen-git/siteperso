@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
 import React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { Link, usePathname } from '@/i18n/navigation';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTreeNodeState } from '@/hooks/useTreeNodeState';
@@ -15,6 +15,7 @@ interface TreeNodeProps {
 
 function TreeNode({ item, level = 0 }: TreeNodeProps) {
   const pathname = usePathname();
+  const t = useTranslations('knowledge.layout');
   const isActive = item.href === pathname;
   const isPathActive = pathname.startsWith(item.href || '');
   const hasChildren = item.children && item.children.length > 0;
@@ -24,12 +25,12 @@ function TreeNode({ item, level = 0 }: TreeNodeProps) {
     <div role="treeitem" aria-expanded={hasChildren ? isExpanded : undefined}>
       <div
         className={cn(
-          "flex items-center justify-between py-2 px-2",
-          level === 0 && "rounded-md",
+          'flex items-center justify-between py-2 px-2',
+          level === 0 && 'rounded-md',
           level > 0,
-          isActive && "bg-accent text-accent-foreground font-medium",
-          !isActive && level === 0 && "hover:bg-accent/50",
-          !isActive && level > 0 && "hover:text-accent-foreground"
+          isActive && 'bg-accent text-accent-foreground font-medium',
+          !isActive && level === 0 && 'hover:bg-accent/50',
+          !isActive && level > 0 && 'hover:text-accent-foreground'
         )}
       >
         {item.href ? (
@@ -44,22 +45,19 @@ function TreeNode({ item, level = 0 }: TreeNodeProps) {
             onClick={() => setIsExpanded(!isExpanded)}
             className="p-1 hover:bg-accent rounded-sm"
             aria-expanded={isExpanded}
-            aria-label={isExpanded ? "Réduire la section" : "Développer la section"}
+            aria-label={isExpanded ? t('collapseSection') : t('expandSection')}
           >
             <ChevronDown
               className={cn(
-                "h-4 w-4 transition-transform",
-                isExpanded && "transform rotate-180"
+                'h-4 w-4 transition-transform',
+                isExpanded && 'transform rotate-180'
               )}
             />
           </button>
         )}
       </div>
-      <div 
-        className={cn(
-          "border-l ml-2 pl-1",
-          !hasChildren || !isExpanded && "hidden"
-        )}
+      <div
+        className={cn('border-l ml-2 pl-1', !hasChildren || (!isExpanded && 'hidden'))}
         role="group"
       >
         {item.children?.map((child, index) => (

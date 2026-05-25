@@ -1,5 +1,5 @@
 "use client";
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
@@ -14,7 +14,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <motion.div {...animation}>
-      <Link href={project.link} className="group block">
+      <Link href={`/projects/${project.slug}`} className="group block">
         <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-xl">
           <div className="aspect-[4/3] relative">
             <Image

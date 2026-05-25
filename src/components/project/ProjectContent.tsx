@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,10 +10,12 @@ import { MDXRemote } from 'next-mdx-remote';
 import MDXComponents from '@/components/mdx/MDXComponents';
 
 interface ProjectContentProps {
-  content: any; // Le contenu MDX sérialisé
+  content: Parameters<typeof MDXRemote>[0];
 }
 
 export function ProjectContent({ content }: ProjectContentProps) {
+  const t = useTranslations('projects.detail');
+
   return (
     <section className="container py-16">
       <div className="mx-auto max-w-4xl">
@@ -34,7 +37,7 @@ export function ProjectContent({ content }: ProjectContentProps) {
           <Button asChild>
             <Link href="/projects">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Retour aux projets
+              {t('backToList')}
             </Link>
           </Button>
         </motion.div>
@@ -43,4 +46,4 @@ export function ProjectContent({ content }: ProjectContentProps) {
   );
 }
 
-export default ProjectContent; 
+export default ProjectContent;

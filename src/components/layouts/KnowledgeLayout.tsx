@@ -1,6 +1,7 @@
-"use client";
+'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { TableOfContents } from '@/components/features/knowledge/navigation/TableOfContents';
 import { ProgressBar } from '../ui/ProgressBar';
 import { KnowledgeSidebar } from '@/components/features/knowledge/navigation/KnowledgeSidebar';
@@ -12,6 +13,7 @@ interface KnowledgeLayoutProps {
 }
 
 export function KnowledgeLayout({ children, toc = true }: KnowledgeLayoutProps): React.JSX.Element {
+  const t = useTranslations('knowledge.layout');
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
@@ -19,7 +21,7 @@ export function KnowledgeLayout({ children, toc = true }: KnowledgeLayoutProps):
       if (typeof window !== 'undefined' && typeof document !== 'undefined') {
         const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
         const scrollTop = window.scrollY;
-        const progress = (scrollTop / scrollHeight) * 100;
+        const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
         setScrollProgress(progress);
       }
     };
@@ -32,28 +34,23 @@ export function KnowledgeLayout({ children, toc = true }: KnowledgeLayoutProps):
 
   return (
     <div className="flex min-h-screen">
-      {/* Sidebar de navigation */}
       <aside className="w-64 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <ScrollArea className="h-full">
           <KnowledgeSidebar />
         </ScrollArea>
       </aside>
 
-      {/* Contenu principal */}
       <div className="flex-1">
         <ProgressBar progress={scrollProgress} />
-        
-        <div className="flex flex-col xl:flex-row">
-          <main className="flex-1 overflow-y-auto px-8 py-6">
-            {children}
-          </main>
 
-          {/* Table des matières flottante */}
+        <div className="flex flex-col xl:flex-row">
+          <main className="flex-1 overflow-y-auto px-8 py-6">{children}</main>
+
           {toc && (
             <aside className="hidden xl:block w-64 border-l bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
               <ScrollArea className="h-full py-6 px-4">
                 <div className="space-y-4">
-                  <h3 className="font-semibold text-sm">Table des matières</h3>
+                  <h3 className="font-semibold text-sm">{t('tocTitle')}</h3>
                   <TableOfContents className="text-sm" />
                 </div>
               </ScrollArea>
@@ -63,4 +60,4 @@ export function KnowledgeLayout({ children, toc = true }: KnowledgeLayoutProps):
       </div>
     </div>
   );
-} 
+}

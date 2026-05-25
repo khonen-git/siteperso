@@ -15,28 +15,21 @@ export function CategorySelect({
   value,
   onChange,
   categories,
-  className
+  labels,
+  className,
 }: CategorySelectProps) {
   return (
-    <Select
-      value={value}
-      onValueChange={onChange}
-      className={className}
-    >
+    <Select value={value} onValueChange={onChange} className={className}>
       <SelectTrigger>
-        <SelectValue placeholder="Catégorie" />
+        <SelectValue placeholder={labels.placeholder} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Catégories</SelectLabel>
-          <SelectItem value="all">Toutes les catégories</SelectItem>
-          {Object.entries(categories).map(([category, description]) => (
-            <SelectItem 
-              key={category} 
-              value={category}
-              title={description}
-            >
-              {category}
+          <SelectLabel>{labels.group}</SelectLabel>
+          <SelectItem value="all">{labels.all}</SelectItem>
+          {Object.entries(categories).map(([category, label]) => (
+            <SelectItem key={category} value={category} title={label}>
+              {label}
             </SelectItem>
           ))}
         </SelectGroup>

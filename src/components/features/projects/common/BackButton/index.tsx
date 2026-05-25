@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
+import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { useProjectAnimation } from '../../hooks/useProjectAnimation';
 

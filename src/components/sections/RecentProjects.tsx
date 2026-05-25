@@ -3,7 +3,8 @@
 import * as React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ArrowUpRight } from 'lucide-react';
@@ -25,6 +26,7 @@ const item = {
 };
 
 export function RecentProjects(): React.JSX.Element {
+  const t = useTranslations('projects.recent');
   const { projects, loading } = useRecentProjects(3);
 
   if (loading) {
@@ -32,7 +34,7 @@ export function RecentProjects(): React.JSX.Element {
       <section className="relative overflow-hidden bg-secondary/5 py-20">
         <div className="container relative">
           <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
-            <div className="animate-pulse text-lg">Chargement des projets récents...</div>
+            <div className="animate-pulse text-lg">{t('loading')}</div>
           </div>
         </div>
       </section>
@@ -44,7 +46,7 @@ export function RecentProjects(): React.JSX.Element {
       <section className="relative overflow-hidden bg-secondary/5 py-20">
         <div className="container relative">
           <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
-            <div className="text-lg text-muted-foreground">Aucun projet récent disponible</div>
+            <div className="text-lg text-muted-foreground">{t('empty')}</div>
           </div>
         </div>
       </section>
@@ -53,7 +55,6 @@ export function RecentProjects(): React.JSX.Element {
 
   return (
     <section className="relative overflow-hidden bg-secondary/5 py-20">
-      {/* Arrière-plan décoratif */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_500px_at_50%_200px,var(--primary-color),transparent)]" />
       </div>
@@ -71,7 +72,7 @@ export function RecentProjects(): React.JSX.Element {
             transition={{ duration: 0.5 }}
             className="mb-8 inline-block rounded-full bg-primary/10 px-6 py-2 text-sm text-primary"
           >
-            Portfolio
+            {t('badge')}
           </motion.div>
 
           <motion.h2
@@ -80,7 +81,7 @@ export function RecentProjects(): React.JSX.Element {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl"
           >
-            Projets Récents
+            {t('title')}
           </motion.h2>
 
           <motion.p
@@ -89,7 +90,7 @@ export function RecentProjects(): React.JSX.Element {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="mt-4 text-lg text-muted-foreground"
           >
-            Découvrez mes derniers projets en data et développement.
+            {t('description')}
           </motion.p>
 
           <motion.div
@@ -100,7 +101,7 @@ export function RecentProjects(): React.JSX.Element {
           >
             {projects.map((project) => (
               <motion.div key={project.id} variants={item}>
-                <Link href={project.link} className="group block">
+                <Link href={`/projects/${project.slug}`} className="group block">
                   <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-xl">
                     <div className="aspect-[4/3] relative">
                       <Image
@@ -144,7 +145,6 @@ export function RecentProjects(): React.JSX.Element {
             ))}
           </motion.div>
 
-          {/* Lien vers tous les projets */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -155,7 +155,7 @@ export function RecentProjects(): React.JSX.Element {
               href="/projects"
               className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             >
-              Voir tous les projets
+              {t('viewAll')}
               <ArrowUpRight size={16} />
             </Link>
           </motion.div>
