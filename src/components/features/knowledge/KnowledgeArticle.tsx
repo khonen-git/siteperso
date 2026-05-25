@@ -42,7 +42,12 @@ export async function KnowledgeArticle({
 
     return (
       <KnowledgeLayout>
-        <KnowledgeMdxRenderer source={mdxSource} title={frontmatter.title} />
+        <KnowledgeMdxRenderer
+          source={mdxSource}
+          title={frontmatter.title}
+          locale={locale}
+          slug={slug}
+        />
       </KnowledgeLayout>
     );
   } catch (error) {
