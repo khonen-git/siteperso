@@ -1,0 +1,50 @@
+---
+title: Abstract Factory
+description: Créer des familles d'objets liés sans nommer leurs classes concrètes.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Abstract Factory
+
+<MdxCard>
+Créer des familles d'objets liés sans nommer leurs classes concrètes.
+</MdxCard>
+
+## Intention
+
+Garantir la cohérence entre produits d'une même famille (UI dark/light, SQL/NoSQL).
+
+## Exemple Python
+
+<CodeBlock language="python">
+{`class DarkButton:
+    def paint(self):
+        return "dark button"
+
+class DarkCheckbox:
+    def paint(self):
+        return "dark checkbox"
+
+class DarkThemeFactory:
+    def create_button(self):
+        return DarkButton()
+    def create_checkbox(self):
+        return DarkCheckbox()
+
+factory = DarkThemeFactory()
+widgets = [factory.create_button(), factory.create_checkbox()]
+for w in widgets:
+    print(w.paint())`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console">
+dark button
+dark checkbox
+</ConsoleOutput>
+
+## Quand l'utiliser
+
+Plusieurs familles de produits et obligation de ne mélanger que des produits compatibles.

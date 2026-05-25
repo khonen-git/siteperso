@@ -1,0 +1,56 @@
+---
+title: Memento
+description: Capturer l'état interne d'un objet pour le restaurer plus tard.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Memento
+
+<MdxCard>
+Capturer l'état interne d'un objet pour le restaurer plus tard.
+</MdxCard>
+
+## Intention
+
+Implémenter undo sans violer l'encapsulation.
+
+## Exemple Python
+
+<CodeBlock language="python">
+{`class EditorMemento:
+    def __init__(self, text):
+        self.text = text
+
+class Editor:
+    def __init__(self):
+        self.text = ""
+
+    def type(self, chars):
+        self.text += chars
+
+    def save(self):
+        return EditorMemento(self.text)
+
+    def restore(self, memento):
+        self.text = memento.text
+
+editor = Editor()
+editor.type("Hello")
+saved = editor.save()
+editor.type(" World")
+print(editor.text)
+editor.restore(saved)
+print(editor.text)`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console">
+Hello World
+Hello
+</ConsoleOutput>
+
+## Quand l'utiliser
+
+Snapshots d'état, historique ou fonctionnalité d'annulation.

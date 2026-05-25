@@ -1,13 +1,14 @@
 import * as React from 'react';
 import fs from 'fs';
-import { compileMDX } from 'next-mdx-remote/rsc';
+import matter from 'gray-matter';
+import { serialize } from 'next-mdx-remote/serialize';
 import { KnowledgeLayout } from '@/components/layouts/KnowledgeLayout';
 import NotFoundKnowledge from '@/components/features/knowledge/NotFoundKnowledge';
-import MDXComponents from '@/components/mdx/MDXComponents';
+import { KnowledgeMdxRenderer } from '@/components/features/knowledge/KnowledgeMdxRenderer';
 import { resolveKnowledgeFilePath } from '@/lib/knowledge/content';
 
 interface Frontmatter {
-  title: string;
+  title?: string;
   description?: string;
 }
 
@@ -27,26 +28,21 @@ export async function KnowledgeArticle({
   }
 
   try {
-    const source = fs.readFileSync(filePath, 'utf8');
-    const { content, frontmatter } = await compileMDX<Frontmatter>({
-      source,
-      components: MDXComponents,
-      options: {
-        parseFrontmatter: true,
-        mdxOptions: {
-          remarkPlugins: [],
-          rehypePlugins: [],
-          format: 'mdx',
-        },
+    const raw = fs.readFileSync(filePath, 'utf8');
+    const { content, data } = matter(raw);
+    const frontmatter = data as Frontmatter;
+
+    const mdxSource = await serialize(content, {
+      mdxOptions: {
+        remarkPlugins: [],
+        rehypePlugins: [],
+        format: 'mdx',
       },
     });
 
     return (
       <KnowledgeLayout>
-        <article className="prose prose-gray dark:prose-invert max-w-none">
-          {frontmatter.title ? <h1>{frontmatter.title}</h1> : null}
-          {content}
-        </article>
+        <KnowledgeMdxRenderer source={mdxSource} title={frontmatter.title} />
       </KnowledgeLayout>
     );
   } catch (error) {

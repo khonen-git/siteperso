@@ -1,0 +1,63 @@
+---
+title: Interpreter
+description: Define a grammar and interpreter for a simple language.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Interpreter
+
+<MdxCard>
+Define a grammar and interpreter for a simple language.
+</MdxCard>
+
+## Intent
+
+Evaluate configurable rules or formulas.
+
+## Python example
+
+<CodeBlock language="python">
+{`class Context:
+    def __init__(self, variables):
+        self.variables = variables
+
+class Expression:
+    def interpret(self, context):
+        raise NotImplementedError
+
+class Number(Expression):
+    def __init__(self, value):
+        self.value = value
+
+    def interpret(self, context):
+        return self.value
+
+class Variable(Expression):
+    def __init__(self, name):
+        self.name = name
+
+    def interpret(self, context):
+        return context.variables[self.name]
+
+class Add(Expression):
+    def __init__(self, left, right):
+        self.left, self.right = left, right
+
+    def interpret(self, context):
+        return self.left.interpret(context) + self.right.interpret(context)
+
+expr = Add(Variable("x"), Number(10))
+ctx = Context({"x": 5})
+print(expr.interpret(ctx))`}
+</CodeBlock>
+
+<ConsoleOutput title="Console output">
+15
+</ConsoleOutput>
+
+## When to use
+
+Simple, stable grammar with few language rules.

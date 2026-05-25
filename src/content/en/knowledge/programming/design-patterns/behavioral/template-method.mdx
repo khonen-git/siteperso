@@ -1,0 +1,63 @@
+---
+title: Template Method
+description: Define an algorithm skeleton and let subclasses override steps.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Template Method
+
+<MdxCard>
+Define an algorithm skeleton and let subclasses override steps.
+</MdxCard>
+
+## Intent
+
+Factor a common workflow and specialize hooks.
+
+## Python example
+
+<CodeBlock language="python">
+{`class DataMiner:
+    def mine(self, path):
+        data = self.open(path)
+        raw = self.extract(data)
+        result = self.parse(raw)
+        self.close(data)
+        return result
+
+    def open(self, path):
+        print(f"Open {path}")
+        return path
+
+    def extract(self, data):
+        raise NotImplementedError
+
+    def parse(self, raw):
+        print(f"Parse {raw}")
+        return raw
+
+    def close(self, data):
+        print(f"Close {data}")
+
+class PDFMiner(DataMiner):
+    def extract(self, data):
+        print("Extract PDF bytes")
+        return "pdf-bytes"
+
+print(PDFMiner().mine("report.pdf"))`}
+</CodeBlock>
+
+<ConsoleOutput title="Console output">
+Open report.pdf
+Extract PDF bytes
+Parse pdf-bytes
+Close report.pdf
+pdf-bytes
+</ConsoleOutput>
+
+## When to use
+
+Same workflow with subtype-specific steps.

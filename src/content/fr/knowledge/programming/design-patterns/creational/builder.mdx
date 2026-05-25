@@ -1,0 +1,140 @@
+---
+title: Builder
+description: Construire un objet complexe étape par étape, sans constructeur géant ni dizaines de paramètres optionnels.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Builder
+
+## L'idée en bref
+
+Le pattern **Builder** sert à fabriquer un objet **composé de plusieurs parties**, en plusieurs étapes, tout en gardant le code lisible.
+
+Au lieu d'appeler un constructeur avec 12 arguments dont la moitié sont `None`, on enchaîne des méthodes explicites (`avec_pate()`, `avec_sauce()`, etc.) puis on finalise avec `build()`.
+
+<MdxCard>
+**À retenir :** on sépare *comment on construit* l'objet de *ce qu'on obtient* à la fin. Le builder accumule les choix ; `build()` produit le résultat final.
+</MdxCard>
+
+C'est utile quand :
+
+- beaucoup d'options sont **optionnelles** ;
+- l'**ordre** des étapes compte ;
+- on veut empêcher un objet **incomplet** d'exister (tant que `build()` n'a pas été appelé).
+
+## Exemple : une pizza en plusieurs étapes
+
+Imaginons une `Pizza` dont la recette se compose au fil de l'eau. Le builder rend chaque choix visible dans le code.
+
+<CodeBlock language="python">
+{`class Pizza:
+    def __init__(self):
+        self.ingredients = []
+
+    def __repr__(self):
+        return f"Pizza({', '.join(self.ingredients)})"
+
+
+class PizzaBuilder:
+    def __init__(self):
+        self._pizza = Pizza()
+
+    def pate(self, type_pate: str):
+        self._pizza.ingredients.append(f"pâte:{type_pate}")
+        return self  # permet d'enchaîner les appels
+
+    def sauce(self, type_sauce: str):
+        self._pizza.ingredients.append(f"sauce:{type_sauce}")
+        return self
+
+    def garniture(self, nom: str):
+        self._pizza.ingredients.append(f"garniture:{nom}")
+        return self
+
+    def build(self):
+        return self._pizza
+
+
+# Construction fluide, lisible de haut en bas
+pizza = (
+    PizzaBuilder()
+    .pate("fine")
+    .sauce("tomate")
+    .garniture("mozzarella")
+    .garniture("basilic")
+    .build()
+)
+
+print(pizza)`}
+</CodeBlock>
+
+<ConsoleOutput>
+Pizza(pâte:fine, sauce:tomate, garniture:mozzarella, garniture:basilic)
+</ConsoleOutput>
+
+Chaque méthode du builder **retourne `self`** : c'est ce qui permet la chaîne `.pate(...).sauce(...).build()`.
+
+## Exemple : filtrer un rapport de données
+
+Même logique côté data : un rapport peut avoir un titre, des filtres, un tri et un format d'export — sans tout passer au constructeur d'un coup.
+
+<CodeBlock language="python">
+{`class Rapport:
+    def __init__(self):
+        self.titre = ""
+        self.filtres = []
+        self.tri = None
+        self.format_export = "csv"
+
+    def resume(self):
+        return (
+            f"{self.titre} | filtres={self.filtres} | "
+            f"tri={self.tri} | export={self.format_export}"
+        )
+
+
+class RapportBuilder:
+    def __init__(self):
+        self._rapport = Rapport()
+
+    def titre(self, valeur):
+        self._rapport.titre = valeur
+        return self
+
+    def filtre(self, colonne, operateur, valeur):
+        self._rapport.filtres.append((colonne, operateur, valeur))
+        return self
+
+    def trier_par(self, colonne):
+        self._rapport.tri = colonne
+        return self
+
+    def exporter_en(self, format_export):
+        self._rapport.format_export = format_export
+        return self
+
+    def build(self):
+        return self._rapport
+
+
+rapport = (
+    RapportBuilder()
+    .titre("Ventes Q1")
+    .filtre("region", "=", "EU")
+    .filtre("montant", ">", 1000)
+    .trier_par("date")
+    .exporter_en("xlsx")
+    .build()
+)
+
+print(rapport.resume())`}
+</CodeBlock>
+
+<ConsoleOutput>
+Ventes Q1 | filtres=[('region', '=', 'EU'), ('montant', '>', 1000)] | tri=date | export=xlsx
+</ConsoleOutput>
+
+Ici le builder évite un appel du type `Rapport(titre, filtres, tri, format, ...)` difficile à lire et à faire évoluer quand on ajoute une nouvelle option.

@@ -1,0 +1,64 @@
+---
+title: Command
+description: Encapsuler une action et ses paramètres dans un objet commande.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Command
+
+<MdxCard>
+Encapsuler une action et ses paramètres dans un objet commande.
+</MdxCard>
+
+## Intention
+
+File d'attente, undo/redo, journalisation des opérations.
+
+## Exemple Python
+
+<CodeBlock language="python">
+{`class Light:
+    def __init__(self):
+        self.on = False
+
+    def toggle(self):
+        self.on = not self.on
+        return "ON" if self.on else "OFF"
+
+class Command:
+    def __init__(self, light):
+        self.light = light
+
+    def execute(self):
+        return self.light.toggle()
+
+class Remote:
+    def __init__(self):
+        self.history = []
+
+    def press(self, cmd):
+        state = cmd.execute()
+        self.history.append(cmd)
+        print(f"Light is {state}")
+
+    def undo(self):
+        if self.history:
+            state = self.history.pop().execute()
+            print(f"Undo -> {state}")
+
+remote = Remote()
+remote.press(Command(Light()))
+remote.undo()`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console">
+Light is ON
+Undo -> OFF
+</ConsoleOutput>
+
+## Quand l'utiliser
+
+Scheduler des tâches, annulation, macros ou API transactionnelles.

@@ -1,0 +1,49 @@
+---
+title: Strategy
+description: Définir une famille d'algorithmes interchangeables encapsulés.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Strategy
+
+<MdxCard>
+Définir une famille d'algorithmes interchangeables encapsulés.
+</MdxCard>
+
+## Intention
+
+Choisir l'algorithme à l'exécution (tri, tarification, export).
+
+## Exemple Python
+
+<CodeBlock language="python">
+{`class CardPayment:
+    def pay(self, amount):
+        return f"Paid {amount} by card"
+
+class PaypalPayment:
+    def pay(self, amount):
+        return f"Paid {amount} by PayPal"
+
+class Checkout:
+    def __init__(self, strategy):
+        self.strategy = strategy
+
+    def process(self, amount):
+        print(self.strategy.pay(amount))
+
+Checkout(CardPayment()).process(49)
+Checkout(PaypalPayment()).process(49)`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console">
+Paid 49 by card
+Paid 49 by PayPal
+</ConsoleOutput>
+
+## Quand l'utiliser
+
+Plusieurs variantes d'un même traitement et sélection dynamique.

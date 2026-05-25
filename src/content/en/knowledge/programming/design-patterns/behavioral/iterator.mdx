@@ -1,0 +1,47 @@
+---
+title: Iterator
+description: Traverse a collection without exposing its internal representation.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Iterator
+
+<MdxCard>
+Traverse a collection without exposing its internal representation.
+</MdxCard>
+
+## Intent
+
+Uniform traversal across different structures.
+
+## Python example
+
+<CodeBlock language="python">
+{`class NumberRange:
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+
+    def __iter__(self):
+        current = self.start
+        while current <= self.end:
+            yield current
+            current += 1
+
+for n in NumberRange(2, 5):
+    print(n)`}
+</CodeBlock>
+
+<ConsoleOutput title="Console output">
+2
+3
+4
+5
+</ConsoleOutput>
+
+## When to use
+
+Hide complex structures behind a simple traversal API.

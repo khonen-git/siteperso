@@ -1,0 +1,53 @@
+---
+title: Flyweight
+description: Partager l'état intrinsèque entre de nombreux objets similaires pour économiser la mémoire.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Flyweight
+
+<MdxCard>
+Partager l'état intrinsèque entre de nombreux objets similaires pour économiser la mémoire.
+</MdxCard>
+
+## Intention
+
+Séparer état intrinsèque (partagé) et extrinsèque (contexte).
+
+## Exemple Python
+
+<CodeBlock language="python">
+{`class TreeType:
+    def __init__(self, name, color):
+        self.name = name
+        self.color = color
+
+class TreeFactory:
+    _cache = {}
+    @classmethod
+    def get(cls, name, color):
+        key = (name, color)
+        if key not in cls._cache:
+            cls._cache[key] = TreeType(name, color)
+        return cls._cache[key]
+
+class Tree:
+    def __init__(self, x, y, tree_type):
+        self.x, self.y, self.type = x, y, tree_type
+
+forest = [Tree(i, i, TreeFactory.get("oak", "green")) for i in range(3)]
+print(len(forest), len(TreeFactory._cache))
+print(forest[0].type is forest[2].type)`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console">
+3 1
+True
+</ConsoleOutput>
+
+## Quand l'utiliser
+
+Des milliers d'objets partagent peu de variantes de données immuables.

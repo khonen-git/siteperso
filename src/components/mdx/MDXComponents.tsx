@@ -7,6 +7,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
 import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
 import { MdxCard } from '@/components/mdx/MdxCard';
 import { MdxDistributionVisualizer } from '@/components/mdx/MdxDistributionVisualizer';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 
 // Composants spécifiques aux projets
@@ -140,6 +141,7 @@ const MDXComponents = {
   CodeBlock,
   MdxCard,
   MdxDistributionVisualizer,
+  ConsoleOutput,
   // Composants UI
   Table,
   TableHeader,

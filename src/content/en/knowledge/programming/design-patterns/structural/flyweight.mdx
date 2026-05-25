@@ -1,0 +1,53 @@
+---
+title: Flyweight
+description: Share intrinsic state among many similar objects to save memory.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Flyweight
+
+<MdxCard>
+Share intrinsic state among many similar objects to save memory.
+</MdxCard>
+
+## Intent
+
+Split intrinsic (shared) and extrinsic (context) state.
+
+## Python example
+
+<CodeBlock language="python">
+{`class TreeType:
+    def __init__(self, name, color):
+        self.name = name
+        self.color = color
+
+class TreeFactory:
+    _cache = {}
+    @classmethod
+    def get(cls, name, color):
+        key = (name, color)
+        if key not in cls._cache:
+            cls._cache[key] = TreeType(name, color)
+        return cls._cache[key]
+
+class Tree:
+    def __init__(self, x, y, tree_type):
+        self.x, self.y, self.type = x, y, tree_type
+
+forest = [Tree(i, i, TreeFactory.get("oak", "green")) for i in range(3)]
+print(len(forest), len(TreeFactory._cache))
+print(forest[0].type is forest[2].type)`}
+</CodeBlock>
+
+<ConsoleOutput title="Console output">
+3 1
+True
+</ConsoleOutput>
+
+## When to use
+
+Thousands of objects share few immutable data variants.

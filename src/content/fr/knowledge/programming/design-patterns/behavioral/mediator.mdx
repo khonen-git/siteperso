@@ -1,0 +1,60 @@
+---
+title: Mediator
+description: Centraliser les communications entre objets via un médiateur.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Mediator
+
+<MdxCard>
+Centraliser les communications entre objets via un médiateur.
+</MdxCard>
+
+## Intention
+
+Réduire les dépendances en étoile entre composants UI ou services.
+
+## Exemple Python
+
+<CodeBlock language="python">
+{`class ChatRoom:
+    def __init__(self):
+        self.users = {}
+
+    def register(self, user):
+        self.users[user.name] = user
+        user.room = self
+
+    def send(self, sender, message):
+        for name, user in self.users.items():
+            if name != sender:
+                user.receive(sender, message)
+
+class User:
+    def __init__(self, name):
+        self.name = name
+        self.room = None
+
+    def say(self, message):
+        self.room.send(self.name, message)
+
+    def receive(self, sender, message):
+        print(f"{self.name} <- {sender}: {message}")
+
+room = ChatRoom()
+alice, bob = User("Alice"), User("Bob")
+room.register(alice)
+room.register(bob)
+alice.say("Hello")`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console">
+Bob <- Alice: Hello
+</ConsoleOutput>
+
+## Quand l'utiliser
+
+Nombreux composants dialoguent et les connexions directes deviennent ingérables.

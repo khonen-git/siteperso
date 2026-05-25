@@ -1,0 +1,56 @@
+---
+title: Proxy
+description: Substitut contrôlant l'accès à un autre objet (lazy load, sécurité, logging).
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Proxy
+
+<MdxCard>
+Substitut contrôlant l'accès à un autre objet (lazy load, sécurité, logging).
+</MdxCard>
+
+## Intention
+
+Reporter ou encadrer l'accès sans que le client change.
+
+## Exemple Python
+
+<CodeBlock language="python">
+{`class RealImage:
+    def __init__(self, path):
+        self.path = path
+        print(f"Loading {path}")
+
+    def display(self):
+        print(f"Display {self.path}")
+
+class ImageProxy:
+    def __init__(self, path):
+        self.path = path
+        self._real = None
+
+    def display(self):
+        if self._real is None:
+            self._real = RealImage(self.path)
+        self._real.display()
+
+img = ImageProxy("photo.png")
+print("Proxy ready")
+img.display()
+img.display()`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console">
+Proxy ready
+Loading photo.png
+Display photo.png
+Display photo.png
+</ConsoleOutput>
+
+## Quand l'utiliser
+
+Chargement coûteux, contrôle d'accès ou instrumentation transparente.

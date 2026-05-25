@@ -1,0 +1,63 @@
+---
+title: Template Method
+description: Définir le squelette d'un algorithme en laissant les sous-classes surcharger des étapes.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Template Method
+
+<MdxCard>
+Définir le squelette d'un algorithme en laissant les sous-classes surcharger des étapes.
+</MdxCard>
+
+## Intention
+
+Factoriser le flux commun et spécialiser des hooks.
+
+## Exemple Python
+
+<CodeBlock language="python">
+{`class DataMiner:
+    def mine(self, path):
+        data = self.open(path)
+        raw = self.extract(data)
+        result = self.parse(raw)
+        self.close(data)
+        return result
+
+    def open(self, path):
+        print(f"Open {path}")
+        return path
+
+    def extract(self, data):
+        raise NotImplementedError
+
+    def parse(self, raw):
+        print(f"Parse {raw}")
+        return raw
+
+    def close(self, data):
+        print(f"Close {data}")
+
+class PDFMiner(DataMiner):
+    def extract(self, data):
+        print("Extract PDF bytes")
+        return "pdf-bytes"
+
+print(PDFMiner().mine("report.pdf"))`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console">
+Open report.pdf
+Extract PDF bytes
+Parse pdf-bytes
+Close report.pdf
+pdf-bytes
+</ConsoleOutput>
+
+## Quand l'utiliser
+
+Workflow identique, étapes spécifiques par sous-type.

@@ -1,0 +1,44 @@
+---
+title: Singleton
+description: Ensure a class has only one instance and provide a global access point.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Singleton
+
+<MdxCard>
+Ensure a class has only one instance and provide a global access point.
+</MdxCard>
+
+## Intent
+
+Control access to a shared resource (config, connection pool, logger).
+
+## Python example
+
+<CodeBlock language="python">
+{`class Singleton:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+a = Singleton()
+b = Singleton()
+print(a is b)
+print(id(a), id(b))`}
+</CodeBlock>
+
+<ConsoleOutput title="Console output">
+True
+140234567890 140234567890
+</ConsoleOutput>
+
+## When to use
+
+Only one instance must exist process-wide. In modern Python, prefer modules or dependency injection over classic Singleton.

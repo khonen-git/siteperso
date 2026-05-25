@@ -1,0 +1,51 @@
+---
+title: Decorator
+description: Ajouter des responsabilités à un objet dynamiquement, en alternative à l'héritage.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Decorator
+
+<MdxCard>
+Ajouter des responsabilités à un objet dynamiquement, en alternative à l'héritage.
+</MdxCard>
+
+## Intention
+
+Empiler des comportements (logging, cache, compression) autour d'un service.
+
+## Exemple Python
+
+<CodeBlock language="python">
+{`class Coffee:
+    def cost(self):
+        return 2
+
+class MilkDecorator:
+    def __init__(self, drink):
+        self.drink = drink
+
+    def cost(self):
+        return self.drink.cost() + 0.5
+
+class SugarDecorator:
+    def __init__(self, drink):
+        self.drink = drink
+
+    def cost(self):
+        return self.drink.cost() + 0.2
+
+drink = SugarDecorator(MilkDecorator(Coffee()))
+print(drink.cost())`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console">
+2.7
+</ConsoleOutput>
+
+## Quand l'utiliser
+
+Extensions combinables à la volée, sans sous-classer pour chaque combinaison.

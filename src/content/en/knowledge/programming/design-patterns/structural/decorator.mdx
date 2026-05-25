@@ -1,0 +1,51 @@
+---
+title: Decorator
+description: Attach new responsibilities to an object dynamically instead of subclassing.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Decorator
+
+<MdxCard>
+Attach new responsibilities to an object dynamically instead of subclassing.
+</MdxCard>
+
+## Intent
+
+Stack behaviors (logging, cache, compression) around a service.
+
+## Python example
+
+<CodeBlock language="python">
+{`class Coffee:
+    def cost(self):
+        return 2
+
+class MilkDecorator:
+    def __init__(self, drink):
+        self.drink = drink
+
+    def cost(self):
+        return self.drink.cost() + 0.5
+
+class SugarDecorator:
+    def __init__(self, drink):
+        self.drink = drink
+
+    def cost(self):
+        return self.drink.cost() + 0.2
+
+drink = SugarDecorator(MilkDecorator(Coffee()))
+print(drink.cost())`}
+</CodeBlock>
+
+<ConsoleOutput title="Console output">
+2.7
+</ConsoleOutput>
+
+## When to use
+
+Mix-and-match extensions at runtime without subclass explosion.

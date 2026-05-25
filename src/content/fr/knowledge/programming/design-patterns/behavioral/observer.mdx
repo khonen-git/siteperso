@@ -1,0 +1,52 @@
+---
+title: Observer
+description: Notifier automatiquement plusieurs observateurs lors d'un changement d'état.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Observer
+
+<MdxCard>
+Notifier automatiquement plusieurs observateurs lors d'un changement d'état.
+</MdxCard>
+
+## Intention
+
+Découpler la source d'événements de ses abonnés (UI, domain events).
+
+## Exemple Python
+
+<CodeBlock language="python">
+{`class Stock:
+    def __init__(self, symbol):
+        self.symbol = symbol
+        self.price = 0
+        self._observers = []
+
+    def attach(self, observer):
+        self._observers.append(observer)
+
+    def set_price(self, price):
+        self.price = price
+        for obs in self._observers:
+            obs.update(self)
+
+class Investor:
+    def update(self, stock):
+        print(f"Alert {stock.symbol} -> {stock.price}")
+
+stock = Stock("ACME")
+stock.attach(Investor())
+stock.set_price(120)`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console">
+Alert ACME -> 120
+</ConsoleOutput>
+
+## Quand l'utiliser
+
+Un changement doit propager vers un nombre variable de listeners.

@@ -1,0 +1,60 @@
+---
+title: Composite
+description: Compose objects into tree structures to treat individual and groups uniformly.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Composite
+
+<MdxCard>
+Compose objects into tree structures to treat individual and groups uniformly.
+</MdxCard>
+
+## Intent
+
+Model part-whole hierarchies (files/folders, UI trees).
+
+## Python example
+
+<CodeBlock language="python">
+{`class Node:
+    def __init__(self, name):
+        self.name = name
+
+    def display(self, indent=0):
+        print("  " * indent + self.name)
+
+class Folder(Node):
+    def __init__(self, name):
+        super().__init__(name)
+        self.children = []
+
+    def add(self, node):
+        self.children.append(node)
+
+    def display(self, indent=0):
+        super().display(indent)
+        for child in self.children:
+            child.display(indent + 1)
+
+root = Folder("project")
+root.add(Node("README.md"))
+src = Folder("src")
+src.add(Node("main.py"))
+root.add(src)
+root.display()`}
+</CodeBlock>
+
+<ConsoleOutput title="Console output">
+project
+  README.md
+  src
+    main.py
+</ConsoleOutput>
+
+## When to use
+
+Tree structures with recursive operations on leaves and containers.

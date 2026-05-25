@@ -1,0 +1,53 @@
+---
+title: Factory Method
+description: Définir une interface de création et laisser les sous-classes choisir l'objet concret.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Factory Method
+
+<MdxCard>
+Définir une interface de création et laisser les sous-classes choisir l'objet concret.
+</MdxCard>
+
+## Intention
+
+Découpler le code client des classes concrètes instanciées.
+
+## Exemple Python
+
+<CodeBlock language="python">
+{`from abc import ABC, abstractmethod
+
+class Dialog(ABC):
+    @abstractmethod
+    def create_button(self):
+        pass
+
+    def render(self):
+        btn = self.create_button()
+        print(f"Rendering {btn}")
+
+class WindowsDialog(Dialog):
+    def create_button(self):
+        return "WindowsButton"
+
+class WebDialog(Dialog):
+    def create_button(self):
+        return "HTMLButton"
+
+for dialog in [WindowsDialog(), WebDialog()]:
+    dialog.render()`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console">
+Rendering WindowsButton
+Rendering HTMLButton
+</ConsoleOutput>
+
+## Quand l'utiliser
+
+La bibliothèque ne connaît pas à l'avance les types concrets à instancier.

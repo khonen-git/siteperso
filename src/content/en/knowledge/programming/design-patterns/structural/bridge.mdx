@@ -1,0 +1,50 @@
+---
+title: Bridge
+description: Split abstraction from implementation so both can vary independently.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Bridge
+
+<MdxCard>
+Split abstraction from implementation so both can vary independently.
+</MdxCard>
+
+## Intent
+
+Avoid subclass explosion (shape × color × renderer).
+
+## Python example
+
+<CodeBlock language="python">
+{`class VectorRenderer:
+    def render(self, shape):
+        print(f"Vector {shape}")
+
+class RasterRenderer:
+    def render(self, shape):
+        print(f"Raster {shape}")
+
+class Circle:
+    def __init__(self, renderer, radius):
+        self.renderer = renderer
+        self.radius = radius
+
+    def draw(self):
+        self.renderer.render(f"circle r={self.radius}")
+
+Circle(RasterRenderer(), 5).draw()
+Circle(VectorRenderer(), 3).draw()`}
+</CodeBlock>
+
+<ConsoleOutput title="Console output">
+Raster circle r=5
+Vector circle r=3
+</ConsoleOutput>
+
+## When to use
+
+Orthogonal implementations to combine (UI, storage, rendering).

@@ -1,0 +1,50 @@
+---
+title: Bridge
+description: Séparer une abstraction de son implémentation pour qu'elles évoluent indépendamment.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Bridge
+
+<MdxCard>
+Séparer une abstraction de son implémentation pour qu'elles évoluent indépendamment.
+</MdxCard>
+
+## Intention
+
+Éviter une explosion de sous-classes (forme × couleur × rendu).
+
+## Exemple Python
+
+<CodeBlock language="python">
+{`class VectorRenderer:
+    def render(self, shape):
+        print(f"Vector {shape}")
+
+class RasterRenderer:
+    def render(self, shape):
+        print(f"Raster {shape}")
+
+class Circle:
+    def __init__(self, renderer, radius):
+        self.renderer = renderer
+        self.radius = radius
+
+    def draw(self):
+        self.renderer.render(f"circle r={self.radius}")
+
+Circle(RasterRenderer(), 5).draw()
+Circle(VectorRenderer(), 3).draw()`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console">
+Raster circle r=5
+Vector circle r=3
+</ConsoleOutput>
+
+## Quand l'utiliser
+
+Plusieurs implémentations orthogonales à combiner (UI, stockage, rendu).

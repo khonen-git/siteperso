@@ -1,0 +1,140 @@
+---
+title: Builder
+description: Build a complex object step by step, without a giant constructor or dozens of optional parameters.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Builder
+
+## The big picture
+
+The **Builder** pattern helps you create an object **made of several parts**, in multiple steps, while keeping the code easy to read.
+
+Instead of calling a constructor with 12 arguments—half of them `None`—you chain explicit methods (`with_dough()`, `with_sauce()`, etc.) and finish with `build()`.
+
+<MdxCard>
+**Key idea:** separate *how you build* the object from *what you get* at the end. The builder collects choices; `build()` returns the final product.
+</MdxCard>
+
+It shines when:
+
+- many options are **optional**;
+- the **order** of steps matters;
+- you want to avoid **half-built** objects (until `build()` runs).
+
+## Example: building a pizza step by step
+
+Imagine a `Pizza` assembled incrementally. The builder makes each choice visible in code.
+
+<CodeBlock language="python">
+{`class Pizza:
+    def __init__(self):
+        self.ingredients = []
+
+    def __repr__(self):
+        return f"Pizza({', '.join(self.ingredients)})"
+
+
+class PizzaBuilder:
+    def __init__(self):
+        self._pizza = Pizza()
+
+    def dough(self, dough_type: str):
+        self._pizza.ingredients.append(f"dough:{dough_type}")
+        return self  # enables method chaining
+
+    def sauce(self, sauce_type: str):
+        self._pizza.ingredients.append(f"sauce:{sauce_type}")
+        return self
+
+    def topping(self, name: str):
+        self._pizza.ingredients.append(f"topping:{name}")
+        return self
+
+    def build(self):
+        return self._pizza
+
+
+# Fluent construction, easy to read top to bottom
+pizza = (
+    PizzaBuilder()
+    .dough("thin")
+    .sauce("tomato")
+    .topping("mozzarella")
+    .topping("basil")
+    .build()
+)
+
+print(pizza)`}
+</CodeBlock>
+
+<ConsoleOutput>
+Pizza(dough:thin, sauce:tomato, topping:mozzarella, topping:basil)
+</ConsoleOutput>
+
+Each builder method **returns `self`**, which powers the `.dough(...).sauce(...).build()` chain.
+
+## Example: configuring a data report
+
+Same idea in data work: a report may have a title, filters, sort order, and export format—without cramming everything into one constructor.
+
+<CodeBlock language="python">
+{`class Report:
+    def __init__(self):
+        self.title = ""
+        self.filters = []
+        self.sort_by = None
+        self.export_format = "csv"
+
+    def summary(self):
+        return (
+            f"{self.title} | filters={self.filters} | "
+            f"sort={self.sort_by} | export={self.export_format}"
+        )
+
+
+class ReportBuilder:
+    def __init__(self):
+        self._report = Report()
+
+    def title(self, value):
+        self._report.title = value
+        return self
+
+    def filter(self, column, operator, value):
+        self._report.filters.append((column, operator, value))
+        return self
+
+    def sort_by(self, column):
+        self._report.sort_by = column
+        return self
+
+    def export_as(self, export_format):
+        self._report.export_format = export_format
+        return self
+
+    def build(self):
+        return self._report
+
+
+report = (
+    ReportBuilder()
+    .title("Q1 Sales")
+    .filter("region", "=", "EU")
+    .filter("amount", ">", 1000)
+    .sort_by("date")
+    .export_as("xlsx")
+    .build()
+)
+
+print(report.summary())`}
+</CodeBlock>
+
+<ConsoleOutput>
+Q1 Sales | filters=[('region', '=', 'EU'), ('amount', '>', 1000)] | sort=date | export=xlsx
+</ConsoleOutput>
+
+Here the builder avoids a call like `Report(title, filters, sort, format, ...)` that is hard to read and painful to extend when you add another option.

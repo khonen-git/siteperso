@@ -1,0 +1,58 @@
+---
+title: Facade
+description: Provide a simple interface to a complex subsystem.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Facade
+
+<MdxCard>
+Provide a simple interface to a complex subsystem.
+</MdxCard>
+
+## Intent
+
+Reduce client coupling to many internal classes.
+
+## Python example
+
+<CodeBlock language="python">
+{`class CPU:
+    def freeze(self):
+        print("CPU freeze")
+    def jump(self, addr):
+        print(f"CPU jump {addr}")
+    def execute(self):
+        print("CPU execute")
+
+class Memory:
+    def load(self, addr, data):
+        print(f"RAM load {addr}={data}")
+
+class ComputerFacade:
+    def __init__(self):
+        self.cpu = CPU()
+        self.memory = Memory()
+
+    def start(self):
+        self.cpu.freeze()
+        self.memory.load(0, "boot")
+        self.cpu.jump(0)
+        self.cpu.execute()
+
+ComputerFacade().start()`}
+</CodeBlock>
+
+<ConsoleOutput title="Console output">
+CPU freeze
+RAM load 0=boot
+CPU jump 0
+CPU execute
+</ConsoleOutput>
+
+## When to use
+
+Simplifying onboarding to a complex library or domain.

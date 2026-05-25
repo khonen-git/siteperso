@@ -1,0 +1,47 @@
+---
+title: Iterator
+description: Parcourir une collection sans exposer sa représentation interne.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Iterator
+
+<MdxCard>
+Parcourir une collection sans exposer sa représentation interne.
+</MdxCard>
+
+## Intention
+
+Uniformiser le parcours de structures différentes.
+
+## Exemple Python
+
+<CodeBlock language="python">
+{`class NumberRange:
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+
+    def __iter__(self):
+        current = self.start
+        while current <= self.end:
+            yield current
+            current += 1
+
+for n in NumberRange(2, 5):
+    print(n)`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console">
+2
+3
+4
+5
+</ConsoleOutput>
+
+## Quand l'utiliser
+
+Masquer une structure complexe (arbre, graphe) derrière un parcours simple.

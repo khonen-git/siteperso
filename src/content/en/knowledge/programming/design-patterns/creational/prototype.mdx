@@ -1,0 +1,46 @@
+---
+title: Prototype
+description: Create new objects by copying an existing prototype.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Prototype
+
+<MdxCard>
+Create new objects by copying an existing prototype.
+</MdxCard>
+
+## Intent
+
+Cloning can be cheaper than rebuilding from scratch.
+
+## Python example
+
+<CodeBlock language="python">
+{`import copy
+
+class Config:
+    def __init__(self, settings):
+        self.settings = settings
+
+original = Config({"theme": "dark", "lang": "fr"})
+clone = copy.deepcopy(original)
+clone.settings["lang"] = "en"
+
+print(original.settings)
+print(clone.settings)
+print(original.settings is clone.settings)`}
+</CodeBlock>
+
+<ConsoleOutput title="Console output">
+{'theme': 'dark', 'lang': 'fr'}
+{'theme': 'dark', 'lang': 'en'}
+False
+</ConsoleOutput>
+
+## When to use
+
+Expensive setup or many similar object states to duplicate.

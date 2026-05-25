@@ -1,0 +1,61 @@
+---
+title: Chain of Responsibility
+description: Pass a request along a chain of handlers until one handles it.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Chain of Responsibility
+
+<MdxCard>
+Pass a request along a chain of handlers until one handles it.
+</MdxCard>
+
+## Intent
+
+Decouple senders from handlers (support tiers, middleware).
+
+## Python example
+
+<CodeBlock language="python">
+{`class Handler:
+    def __init__(self):
+        self.next = None
+
+    def set_next(self, handler):
+        self.next = handler
+        return handler
+
+    def handle(self, amount):
+        if self.next:
+            return self.next.handle(amount)
+        return "Rejected"
+
+class Manager(Handler):
+    def handle(self, amount):
+        if amount <= 1000:
+            return f"Manager approved {amount}"
+        return super().handle(amount)
+
+class Director(Handler):
+    def handle(self, amount):
+        if amount <= 5000:
+            return f"Director approved {amount}"
+        return super().handle(amount)
+
+chain = Manager()
+chain.set_next(Director())
+print(chain.handle(500))
+print(chain.handle(3000))`}
+</CodeBlock>
+
+<ConsoleOutput title="Console output">
+Manager approved 500
+Director approved 3000
+</ConsoleOutput>
+
+## When to use
+
+Multiple handlers may process a request and order matters.

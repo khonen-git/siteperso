@@ -1,0 +1,49 @@
+---
+title: Adapter
+description: Faire collaborer des interfaces incompatibles via un wrapper.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Adapter
+
+<MdxCard>
+Faire collaborer des interfaces incompatibles via un wrapper.
+</MdxCard>
+
+## Intention
+
+Réutiliser une classe legacy sans modifier le code client.
+
+## Exemple Python
+
+<CodeBlock language="python">
+{`class EuropeanSocket:
+    def voltage(self):
+        return 230
+
+class USAppliance:
+    def plug_in(self, volts):
+        print(f"Running on {volts}V")
+
+class Adapter:
+    def __init__(self, socket: EuropeanSocket):
+        self.socket = socket
+
+    def voltage(self):
+        return self.socket.voltage()
+
+socket = EuropeanSocket()
+appliance = USAppliance()
+appliance.plug_in(Adapter(socket).voltage())`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console">
+Running on 230V
+</ConsoleOutput>
+
+## Quand l'utiliser
+
+Intégrer une API tierce ou un module dont l'interface ne correspond pas.

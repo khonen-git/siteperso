@@ -1,0 +1,60 @@
+---
+title: Composite
+description: Composer des objets en arborescences pour traiter individus et groupes uniformément.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Composite
+
+<MdxCard>
+Composer des objets en arborescences pour traiter individus et groupes uniformément.
+</MdxCard>
+
+## Intention
+
+Modéliser une hiérarchie partiel-total (fichiers/dossiers, UI).
+
+## Exemple Python
+
+<CodeBlock language="python">
+{`class Node:
+    def __init__(self, name):
+        self.name = name
+
+    def display(self, indent=0):
+        print("  " * indent + self.name)
+
+class Folder(Node):
+    def __init__(self, name):
+        super().__init__(name)
+        self.children = []
+
+    def add(self, node):
+        self.children.append(node)
+
+    def display(self, indent=0):
+        super().display(indent)
+        for child in self.children:
+            child.display(indent + 1)
+
+root = Folder("project")
+root.add(Node("README.md"))
+src = Folder("src")
+src.add(Node("main.py"))
+root.add(src)
+root.display()`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console">
+project
+  README.md
+  src
+    main.py
+</ConsoleOutput>
+
+## Quand l'utiliser
+
+Structure en arbre et opérations récursives sur feuilles et conteneurs.

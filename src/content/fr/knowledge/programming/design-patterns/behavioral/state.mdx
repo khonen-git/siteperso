@@ -1,0 +1,63 @@
+---
+title: State
+description: Modifier le comportement d'un objet quand son état interne change.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# State
+
+<MdxCard>
+Modifier le comportement d'un objet quand son état interne change.
+</MdxCard>
+
+## Intention
+
+Remplacer de gros if/elif par des classes d'état.
+
+## Exemple Python
+
+<CodeBlock language="python">
+{`class LockedState:
+    def insert_coin(self, machine):
+        print("Coin accepted")
+        machine.state = UnlockedState()
+
+    def eject(self, machine):
+        print("Insert coin first")
+
+class UnlockedState:
+    def insert_coin(self, machine):
+        print("Already unlocked")
+
+    def eject(self, machine):
+        print("Door open")
+        machine.state = LockedState()
+
+class Turnstile:
+    def __init__(self):
+        self.state = LockedState()
+
+    def insert_coin(self):
+        self.state.insert_coin(self)
+
+    def push(self):
+        self.state.eject(self)
+
+t = Turnstile()
+t.insert_coin()
+t.push()
+t.insert_coin()`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console">
+Coin accepted
+Door open
+Coin accepted
+</ConsoleOutput>
+
+## Quand l'utiliser
+
+Comportement fortement dépendant d'un état fini et transitions explicites.

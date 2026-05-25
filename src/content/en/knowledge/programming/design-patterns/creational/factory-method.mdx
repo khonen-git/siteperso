@@ -1,0 +1,53 @@
+---
+title: Factory Method
+description: Define a creation interface and let subclasses choose the concrete type.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Factory Method
+
+<MdxCard>
+Define a creation interface and let subclasses choose the concrete type.
+</MdxCard>
+
+## Intent
+
+Decouple client code from concrete classes being instantiated.
+
+## Python example
+
+<CodeBlock language="python">
+{`from abc import ABC, abstractmethod
+
+class Dialog(ABC):
+    @abstractmethod
+    def create_button(self):
+        pass
+
+    def render(self):
+        btn = self.create_button()
+        print(f"Rendering {btn}")
+
+class WindowsDialog(Dialog):
+    def create_button(self):
+        return "WindowsButton"
+
+class WebDialog(Dialog):
+    def create_button(self):
+        return "HTMLButton"
+
+for dialog in [WindowsDialog(), WebDialog()]:
+    dialog.render()`}
+</CodeBlock>
+
+<ConsoleOutput title="Console output">
+Rendering WindowsButton
+Rendering HTMLButton
+</ConsoleOutput>
+
+## When to use
+
+Framework code cannot know concrete types in advance.

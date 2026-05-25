@@ -141,6 +141,122 @@ export const navigationData: TreeItem[] = [
           },
         ],
       },
+      {
+        title: 'Design patterns',
+        href: '/knowledge/programming/design-patterns',
+        children: [
+          {
+            title: 'Creational',
+            href: '/knowledge/programming/design-patterns/creational',
+            children: [
+              {
+                title: 'Abstract Factory',
+                href: '/knowledge/programming/design-patterns/creational/abstract-factory',
+              },
+              {
+                title: 'Builder',
+                href: '/knowledge/programming/design-patterns/creational/builder',
+              },
+              {
+                title: 'Factory Method',
+                href: '/knowledge/programming/design-patterns/creational/factory-method',
+              },
+              {
+                title: 'Prototype',
+                href: '/knowledge/programming/design-patterns/creational/prototype',
+              },
+              {
+                title: 'Singleton',
+                href: '/knowledge/programming/design-patterns/creational/singleton',
+              },
+            ],
+          },
+          {
+            title: 'Structural',
+            href: '/knowledge/programming/design-patterns/structural',
+            children: [
+              {
+                title: 'Adapter',
+                href: '/knowledge/programming/design-patterns/structural/adapter',
+              },
+              {
+                title: 'Bridge',
+                href: '/knowledge/programming/design-patterns/structural/bridge',
+              },
+              {
+                title: 'Composite',
+                href: '/knowledge/programming/design-patterns/structural/composite',
+              },
+              {
+                title: 'Decorator',
+                href: '/knowledge/programming/design-patterns/structural/decorator',
+              },
+              {
+                title: 'Facade',
+                href: '/knowledge/programming/design-patterns/structural/facade',
+              },
+              {
+                title: 'Flyweight',
+                href: '/knowledge/programming/design-patterns/structural/flyweight',
+              },
+              {
+                title: 'Proxy',
+                href: '/knowledge/programming/design-patterns/structural/proxy',
+              },
+            ],
+          },
+          {
+            title: 'Behavioral',
+            href: '/knowledge/programming/design-patterns/behavioral',
+            children: [
+              {
+                title: 'Chain of Responsibility',
+                href: '/knowledge/programming/design-patterns/behavioral/chain-of-responsibility',
+              },
+              {
+                title: 'Command',
+                href: '/knowledge/programming/design-patterns/behavioral/command',
+              },
+              {
+                title: 'Interpreter',
+                href: '/knowledge/programming/design-patterns/behavioral/interpreter',
+              },
+              {
+                title: 'Iterator',
+                href: '/knowledge/programming/design-patterns/behavioral/iterator',
+              },
+              {
+                title: 'Mediator',
+                href: '/knowledge/programming/design-patterns/behavioral/mediator',
+              },
+              {
+                title: 'Memento',
+                href: '/knowledge/programming/design-patterns/behavioral/memento',
+              },
+              {
+                title: 'Observer',
+                href: '/knowledge/programming/design-patterns/behavioral/observer',
+              },
+              {
+                title: 'State',
+                href: '/knowledge/programming/design-patterns/behavioral/state',
+              },
+              {
+                title: 'Strategy',
+                href: '/knowledge/programming/design-patterns/behavioral/strategy',
+              },
+              {
+                title: 'Template Method',
+                href: '/knowledge/programming/design-patterns/behavioral/template-method',
+              },
+              {
+                title: 'Visitor',
+                href: '/knowledge/programming/design-patterns/behavioral/visitor',
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
   {

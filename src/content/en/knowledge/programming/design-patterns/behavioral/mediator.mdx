@@ -1,0 +1,60 @@
+---
+title: Mediator
+description: Centralize communication between objects through a mediator.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+
+# Mediator
+
+<MdxCard>
+Centralize communication between objects through a mediator.
+</MdxCard>
+
+## Intent
+
+Reduce star-shaped dependencies between UI or service components.
+
+## Python example
+
+<CodeBlock language="python">
+{`class ChatRoom:
+    def __init__(self):
+        self.users = {}
+
+    def register(self, user):
+        self.users[user.name] = user
+        user.room = self
+
+    def send(self, sender, message):
+        for name, user in self.users.items():
+            if name != sender:
+                user.receive(sender, message)
+
+class User:
+    def __init__(self, name):
+        self.name = name
+        self.room = None
+
+    def say(self, message):
+        self.room.send(self.name, message)
+
+    def receive(self, sender, message):
+        print(f"{self.name} <- {sender}: {message}")
+
+room = ChatRoom()
+alice, bob = User("Alice"), User("Bob")
+room.register(alice)
+room.register(bob)
+alice.say("Hello")`}
+</CodeBlock>
+
+<ConsoleOutput title="Console output">
+Bob <- Alice: Hello
+</ConsoleOutput>
+
+## When to use
+
+Many components talk and direct links become unmanageable.
