@@ -146,4 +146,18 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Évite que Tailwind Typography écrase les couleurs des tokens Prism */
+  .prose :where(pre):has(code[class*='language-']) {
+    padding: 0;
+    background-color: transparent;
+  }
+
+  .prose :where(pre):has(code[class*='language-']) code {
+    color: inherit;
+    background-color: transparent;
+    font-weight: inherit;
+    border: 0;
+    padding: 0;
+  }
 } 
