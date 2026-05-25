@@ -6,6 +6,8 @@ description: Patterns for algorithms, responsibilities, and object communication
 import { MdxCard } from '@/components/mdx/MdxCard';
 import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
 import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { Link } from '@/i18n/navigation';
 
 # Behavioral patterns
 
@@ -19,16 +21,79 @@ import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 
 ## List
 
-| Pattern | Key idea |
-|---------|----------|
-| [Chain of Responsibility](/knowledge/programming/design-patterns/behavioral/chain-of-responsibility) | Handler chain |
-| [Command](/knowledge/programming/design-patterns/behavioral/command) | Request as an object |
-| [Interpreter](/knowledge/programming/design-patterns/behavioral/interpreter) | Grammar + interpretation |
-| [Iterator](/knowledge/programming/design-patterns/behavioral/iterator) | Traverse without exposing structure |
-| [Mediator](/knowledge/programming/design-patterns/behavioral/mediator) | Central communication hub |
-| [Memento](/knowledge/programming/design-patterns/behavioral/memento) | Capture and restore state |
-| [Observer](/knowledge/programming/design-patterns/behavioral/observer) | Publish / subscribe |
-| [State](/knowledge/programming/design-patterns/behavioral/state) | Behavior from internal state |
-| [Strategy](/knowledge/programming/design-patterns/behavioral/strategy) | Interchangeable algorithms |
-| [Template Method](/knowledge/programming/design-patterns/behavioral/template-method) | Algorithm skeleton in base class |
-| [Visitor](/knowledge/programming/design-patterns/behavioral/visitor) | External operations on a structure |
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Pattern</TableHead>
+      <TableHead>Key idea</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/behavioral/chain-of-responsibility">Chain of Responsibility</Link>
+      </TableCell>
+      <TableCell>Handler chain</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/behavioral/command">Command</Link>
+      </TableCell>
+      <TableCell>Request as an object</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/behavioral/interpreter">Interpreter</Link>
+      </TableCell>
+      <TableCell>Grammar + interpretation</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/behavioral/iterator">Iterator</Link>
+      </TableCell>
+      <TableCell>Traverse without exposing structure</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/behavioral/mediator">Mediator</Link>
+      </TableCell>
+      <TableCell>Central communication hub</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/behavioral/memento">Memento</Link>
+      </TableCell>
+      <TableCell>Capture and restore state</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/behavioral/observer">Observer</Link>
+      </TableCell>
+      <TableCell>Publish / subscribe</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/behavioral/state">State</Link>
+      </TableCell>
+      <TableCell>Behavior from internal state</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/behavioral/strategy">Strategy</Link>
+      </TableCell>
+      <TableCell>Interchangeable algorithms</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/behavioral/template-method">Template Method</Link>
+      </TableCell>
+      <TableCell>Algorithm skeleton in base class</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/behavioral/visitor">Visitor</Link>
+      </TableCell>
+      <TableCell>External operations on a structure</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>

@@ -6,6 +6,7 @@ description: Catalog of object-oriented design patterns with Python examples and
 import { MdxCard } from '@/components/mdx/MdxCard';
 import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
 import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 
 # Design patterns
 
@@ -19,11 +20,28 @@ import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 
 ## Three families
 
-| Family | Role |
-|--------|------|
-| **Creational** | Flexible object creation |
-| **Structural** | Class and object composition |
-| **Behavioral** | Responsibilities and communication |
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Family</TableHead>
+      <TableHead>Role</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">Creational</TableCell>
+      <TableCell>Flexible object creation</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">Structural</TableCell>
+      <TableCell>Class and object composition</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">Behavioral</TableCell>
+      <TableCell>Responsibilities and communication</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
 
 Examples use **Python 3**. When helpful, the expected **console output** is shown below the code.
 

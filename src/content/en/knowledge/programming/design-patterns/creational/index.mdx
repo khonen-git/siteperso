@@ -6,6 +6,8 @@ description: Patterns that manage object creation without tying code to concrete
 import { MdxCard } from '@/components/mdx/MdxCard';
 import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
 import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { Link } from '@/i18n/navigation';
 
 # Creational patterns
 
@@ -19,10 +21,43 @@ import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 
 ## List
 
-| Pattern | Key idea |
-|---------|----------|
-| [Abstract Factory](/knowledge/programming/design-patterns/creational/abstract-factory) | Compatible product families |
-| [Builder](/knowledge/programming/design-patterns/creational/builder) | Step-by-step construction |
-| [Factory Method](/knowledge/programming/design-patterns/creational/factory-method) | Subclasses choose the product |
-| [Prototype](/knowledge/programming/design-patterns/creational/prototype) | Clone an existing instance |
-| [Singleton](/knowledge/programming/design-patterns/creational/singleton) | Single global instance |
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Pattern</TableHead>
+      <TableHead>Key idea</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/creational/abstract-factory">Abstract Factory</Link>
+      </TableCell>
+      <TableCell>Compatible product families</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/creational/builder">Builder</Link>
+      </TableCell>
+      <TableCell>Step-by-step construction</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/creational/factory-method">Factory Method</Link>
+      </TableCell>
+      <TableCell>Subclasses choose the product</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/creational/prototype">Prototype</Link>
+      </TableCell>
+      <TableCell>Clone an existing instance</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/creational/singleton">Singleton</Link>
+      </TableCell>
+      <TableCell>Single global instance</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>

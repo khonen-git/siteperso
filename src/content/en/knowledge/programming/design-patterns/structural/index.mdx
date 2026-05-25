@@ -6,6 +6,8 @@ description: Patterns that organize class and object composition.
 import { MdxCard } from '@/components/mdx/MdxCard';
 import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
 import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { Link } from '@/i18n/navigation';
 
 # Structural patterns
 
@@ -19,12 +21,55 @@ import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 
 ## List
 
-| Pattern | Key idea |
-|---------|----------|
-| [Adapter](/knowledge/programming/design-patterns/structural/adapter) | Wrap incompatible interfaces |
-| [Bridge](/knowledge/programming/design-patterns/structural/bridge) | Decouple abstraction from implementation |
-| [Composite](/knowledge/programming/design-patterns/structural/composite) | Part-whole tree |
-| [Decorator](/knowledge/programming/design-patterns/structural/decorator) | Add behavior dynamically |
-| [Facade](/knowledge/programming/design-patterns/structural/facade) | Simple API over a subsystem |
-| [Flyweight](/knowledge/programming/design-patterns/structural/flyweight) | Share intrinsic state |
-| [Proxy](/knowledge/programming/design-patterns/structural/proxy) | Controlled access substitute |
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Pattern</TableHead>
+      <TableHead>Key idea</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/structural/adapter">Adapter</Link>
+      </TableCell>
+      <TableCell>Wrap incompatible interfaces</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/structural/bridge">Bridge</Link>
+      </TableCell>
+      <TableCell>Decouple abstraction from implementation</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/structural/composite">Composite</Link>
+      </TableCell>
+      <TableCell>Part-whole tree</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/structural/decorator">Decorator</Link>
+      </TableCell>
+      <TableCell>Add behavior dynamically</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/structural/facade">Facade</Link>
+      </TableCell>
+      <TableCell>Simple API over a subsystem</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/structural/flyweight">Flyweight</Link>
+      </TableCell>
+      <TableCell>Share intrinsic state</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/structural/proxy">Proxy</Link>
+      </TableCell>
+      <TableCell>Controlled access substitute</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>

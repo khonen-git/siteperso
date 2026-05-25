@@ -2,6 +2,7 @@ import * as React from 'react';
 import fs from 'fs';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
+import remarkGfm from 'remark-gfm';
 import { KnowledgeLayout } from '@/components/layouts/KnowledgeLayout';
 import NotFoundKnowledge from '@/components/features/knowledge/NotFoundKnowledge';
 import { KnowledgeMdxRenderer } from '@/components/features/knowledge/KnowledgeMdxRenderer';
@@ -34,7 +35,7 @@ export async function KnowledgeArticle({
 
     const mdxSource = await serialize(content, {
       mdxOptions: {
-        remarkPlugins: [],
+        remarkPlugins: [remarkGfm],
         rehypePlugins: [],
         format: 'mdx',
       },

@@ -6,6 +6,8 @@ description: Patrons qui organisent la composition de classes et d'objets.
 import { MdxCard } from '@/components/mdx/MdxCard';
 import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
 import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { Link } from '@/i18n/navigation';
 
 # Patterns structurels
 
@@ -19,12 +21,55 @@ Les patterns **structurels** expliquent comment assembler objets et classes en s
 
 ## Liste
 
-| Pattern | Idée clé |
-|---------|----------|
-| [Adapter](/knowledge/programming/design-patterns/structural/adapter) | Interface incompatible → interface attendue |
-| [Bridge](/knowledge/programming/design-patterns/structural/bridge) | Décorréler abstraction et implémentation |
-| [Composite](/knowledge/programming/design-patterns/structural/composite) | Arbre partiel-total |
-| [Decorator](/knowledge/programming/design-patterns/structural/decorator) | Ajouter des responsabilités dynamiquement |
-| [Facade](/knowledge/programming/design-patterns/structural/facade) | API simple sur un sous-système |
-| [Flyweight](/knowledge/programming/design-patterns/structural/flyweight) | Partager l'état intrinsèque |
-| [Proxy](/knowledge/programming/design-patterns/structural/proxy) | Substitut contrôlant l'accès |
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Pattern</TableHead>
+      <TableHead>Idée clé</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/structural/adapter">Adapter</Link>
+      </TableCell>
+      <TableCell>Interface incompatible → interface attendue</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/structural/bridge">Bridge</Link>
+      </TableCell>
+      <TableCell>Décorréler abstraction et implémentation</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/structural/composite">Composite</Link>
+      </TableCell>
+      <TableCell>Arbre partiel-total</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/structural/decorator">Decorator</Link>
+      </TableCell>
+      <TableCell>Ajouter des responsabilités dynamiquement</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/structural/facade">Facade</Link>
+      </TableCell>
+      <TableCell>API simple sur un sous-système</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/structural/flyweight">Flyweight</Link>
+      </TableCell>
+      <TableCell>Partager l'état intrinsèque</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/structural/proxy">Proxy</Link>
+      </TableCell>
+      <TableCell>Substitut contrôlant l'accès</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>

@@ -6,6 +6,7 @@ description: Catalogue des design patterns en programmation orientée objet, ave
 import { MdxCard } from '@/components/mdx/MdxCard';
 import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
 import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 
 # Design patterns
 
@@ -19,11 +20,28 @@ Les **design patterns** (patrons de conception) sont des solutions éprouvées �
 
 ## Les trois familles
 
-| Famille | Rôle |
-|--------|------|
-| **Créationnels** | Comment créer des objets de façon flexible |
-| **Structurels** | Comment composer classes et objets |
-| **Comportementaux** | Comment répartir responsabilités et communications |
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Famille</TableHead>
+      <TableHead>Rôle</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">Créationnels</TableCell>
+      <TableCell>Comment créer des objets de façon flexible</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">Structurels</TableCell>
+      <TableCell>Comment composer classes et objets</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">Comportementaux</TableCell>
+      <TableCell>Comment répartir responsabilités et communications</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
 
 Les exemples de ce guide sont en **Python 3**. Lorsque c'est utile, la **sortie console** attendue est affichée sous le code.
 

@@ -6,6 +6,8 @@ description: Patrons qui gèrent la création d'objets sans lier le code à des 
 import { MdxCard } from '@/components/mdx/MdxCard';
 import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
 import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { Link } from '@/i18n/navigation';
 
 # Patterns créationnels
 
@@ -19,10 +21,43 @@ Les patterns **créationnels** abstraient le processus d'instanciation. Ils rend
 
 ## Liste
 
-| Pattern | Idée clé |
-|---------|----------|
-| [Abstract Factory](/knowledge/programming/design-patterns/creational/abstract-factory) | Familles de produits compatibles |
-| [Builder](/knowledge/programming/design-patterns/creational/builder) | Construction étape par étape |
-| [Factory Method](/knowledge/programming/design-patterns/creational/factory-method) | Sous-classes décident de l'objet créé |
-| [Prototype](/knowledge/programming/design-patterns/creational/prototype) | Cloner un exemplaire existant |
-| [Singleton](/knowledge/programming/design-patterns/creational/singleton) | Une seule instance globale |
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Pattern</TableHead>
+      <TableHead>Idée clé</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/creational/abstract-factory">Abstract Factory</Link>
+      </TableCell>
+      <TableCell>Familles de produits compatibles</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/creational/builder">Builder</Link>
+      </TableCell>
+      <TableCell>Construction étape par étape</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/creational/factory-method">Factory Method</Link>
+      </TableCell>
+      <TableCell>Sous-classes décident de l'objet créé</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/creational/prototype">Prototype</Link>
+      </TableCell>
+      <TableCell>Cloner un exemplaire existant</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/programming/design-patterns/creational/singleton">Singleton</Link>
+      </TableCell>
+      <TableCell>Une seule instance globale</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
