@@ -1,0 +1,180 @@
+---
+title: Typing
+description: Dynamic typing, type annotations, and tools to keep large Python codebases safer.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+
+# Typing
+
+<MdxCard>
+In Python, **values carry types**, not variable declarations. You can layer **annotations** and **checkers** (mypy, Pyright) on top without giving up the language’s flexibility.
+</MdxCard>
+
+## Dynamic vs static typing
+
+Python is **dynamically typed**: a name can refer to different types over time. Languages like **C++** or **Rust** are **statically typed**: types are fixed at compile time.
+
+In **Python**:
+
+<CodeBlock language="python">
+{`x = 2
+x = "hello"  # valid: x now refers to a string`}
+</CodeBlock>
+
+In **C++**:
+
+<CodeBlock language="cpp">
+{`int x = 2;
+// x = "hello";  // compile error`}
+</CodeBlock>
+
+It is not just syntax: in Python, the **object** has a type (`int`, `str`, `list`, …). A variable is only a **label** pointing at that object.
+
+## Duck typing
+
+Python often relies on **duck typing**: “if it behaves like a duck, it’s a duck.” You care about **methods and attributes**, not the exact class name.
+
+That keeps APIs flexible. The trade-off is that passing the wrong shape (wrong argument type) may only show up **at runtime**, sometimes far from the buggy call.
+
+## When untyped code hurts
+
+On a tiny isolated function, implicit typing is fine. On a large codebase, you want to avoid “it worked in dev, it breaks in prod” surprises.
+
+<CodeBlock language="python">
+{`class MarketOrder:
+    def __init__(self, symbol: str, qty: int, price: float):
+        self.symbol = symbol
+        self.qty = qty
+        self.price = price
+
+
+def apply_commission(order: MarketOrder, rate: float) -> float:
+    return order.qty * order.price * (1 + rate)
+
+
+apply_commission(MarketOrder("AAPL", 100, 150.0), 0.001)   # OK
+apply_commission(100, 0.001)  # AttributeError: 'int' object has no attribute 'qty'`}
+</CodeBlock>
+
+<ConsoleOutput output={`AttributeError: 'int' object has no attribute 'qty'`} />
+
+Without annotations or a checker, nothing flags the mistake until that code path runs.
+
+## Levels of typing in practice
+
+### 1. Pure dynamic typing
+
+No annotations: everything is resolved at runtime. This is Python’s default.
+
+<CodeBlock language="python">
+{`def add_exposure(a, b):
+    return a + b
+
+add_exposure(0.5, 0.3)        # 0.8 — weight sum
+add_exposure("0.5", "0.3")    # "0.50.3" — concatenation, not a sum!
+add_exposure([0.5], [0.3])    # [0.5, 0.3] — list concatenation
+add_exposure(0.5, "0.3")      # TypeError at runtime`}
+</CodeBlock>
+
+The trap: `+` does different things by type (sum, concatenation, …). Without annotations, a column read as `str` from a CSV can slip through until the backtest runs.
+
+### 2. Gradual typing (annotations)
+
+Since Python 3, you can **annotate** parameters and return types. By default, annotations do **not** change runtime behavior; they help **documentation**, **IDEs** (autocomplete, refactors), and **static checkers**.
+
+<CodeBlock language="python">
+{`from typing import Optional
+
+
+def apply_slippage(price: float, slippage_bps: float) -> float:
+    return price * (1 + slippage_bps / 10_000)
+
+
+def get_reference_price(symbol: str) -> Optional[float]:
+    # None if no quote available
+    ...
+
+
+class TickBuffer[T]:  # generics (PEP 695, Python 3.12+)
+    def __init__(self) -> None:
+        self._ticks: list[T] = []
+
+    def push(self, tick: T) -> None:
+        self._ticks.append(tick)`}
+</CodeBlock>
+
+With **mypy** or **Pyright**, you can check the project before running it:
+
+```bash
+mypy src/
+```
+
+Example of what a checker might report:
+
+<CodeBlock language="python">
+{`def notional(price: float, qty: int) -> float:
+    return price * qty
+
+notional(150.25, "100")  # static error: incompatible type "str"; expected "int"`}
+</CodeBlock>
+
+**Gradual typing** means you can adopt types **incrementally**: start with critical modules, leave the rest untyped at first.
+
+### 3. Runtime validation (Pydantic, dataclasses)
+
+For **incoming data** (HTTP APIs, JSON, config), annotations alone are not enough—you need to **validate and coerce** at runtime. **Pydantic** uses annotations to build models that raise clear errors when the shape is wrong.
+
+<CodeBlock language="python">
+{`from pydantic import BaseModel, ValidationError
+from typing import Literal
+
+
+class MarketOrderPayload(BaseModel):
+    symbol: str
+    side: Literal["buy", "sell"]
+    qty: int
+    limit_price: float | None = None
+
+
+MarketOrderPayload(symbol="EURUSD", side="buy", qty=1000)       # OK
+# MarketOrderPayload(symbol="EURUSD", side="buy", qty="1000")  # often OK: coercion
+# MarketOrderPayload(symbol="EURUSD", side="buy", qty=-10)    # ValidationError`}
+</CodeBlock>
+
+You stay in dynamic Python, but you **reject** inconsistent data early—especially at system boundaries (broker feeds, bar files, backtest config).
+
+## Summary
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Approach</TableHead>
+      <TableHead>When to use it</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">Pure dynamic</TableCell>
+      <TableCell>Short scripts, prototypes, highly polymorphic logic</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">Annotations + mypy/Pyright</TableCell>
+      <TableCell>Internal libraries, evolving business code</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">Pydantic (or similar)</TableCell>
+      <TableCell>Structured inputs/outputs (APIs, config, ETL)</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+Annotations do not replace **tests**; they cut down one class of mistakes before execution and make intent obvious to others (and to future you). I mostly use **gradual typing** on large projects, and I will likely adopt **Pydantic** more widely in my main research lab.
+
+## Resources
+
+- Type system concepts : [https://typing.python.org/en/latest/spec/concepts.html](https://typing.python.org/en/latest/spec/concepts.html)
+- `typing` module documentation : [https://docs.python.org/3/library/typing.html](https://docs.python.org/3/library/typing.html)

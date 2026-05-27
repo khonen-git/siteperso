@@ -139,6 +139,10 @@ export const navigationData: TreeItem[] = [
               },
             ],
           },
+          {
+            title: 'Typage',
+            href: '/knowledge/programming/python/typing',
+          },
         ],
       },
       {
