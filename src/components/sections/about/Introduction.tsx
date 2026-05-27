@@ -21,6 +21,7 @@ export function Introduction(): React.JSX.Element {
       <div className="container relative">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Image */}
+          {/*
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -36,7 +37,7 @@ export function Introduction(): React.JSX.Element {
               sizes="(max-width: 768px) 80vw, 40vw"
             />
           </motion.div>
-
+          */}
           {/* Contenu */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}

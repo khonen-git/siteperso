@@ -29,7 +29,7 @@ export default async function Home({ params }: HomePageProps): Promise<React.JSX
         subtitle={t('hero.subtitle')}
         description={t('hero.description')}
       />
-      <LatestUpdates />
+      {/* <LatestUpdates /> */}
       <RecentProjects />
     </>
   );

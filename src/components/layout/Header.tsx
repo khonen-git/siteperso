@@ -18,18 +18,22 @@ const Header = async (): Promise<React.JSX.Element> => {
             <Link href="/about" className="transition-colors hover:text-foreground/80">
               {t('nav.about')}
             </Link>
+            {/*
             <Link href="/knowledge" className="transition-colors hover:text-foreground/80">
               {t('nav.knowledge')}
             </Link>
+            */}
             <Link href="/projects" className="transition-colors hover:text-foreground/80">
               {t('nav.projects')}
             </Link>
+            {/*
             <Link href="/references" className="transition-colors hover:text-foreground/80">
               {t('nav.references')}
             </Link>
             <Link href="/activity" className="transition-colors hover:text-foreground/80">
               {t('nav.activity')}
             </Link>
+            */}
             <Link href="/contact" className="transition-colors hover:text-foreground/80">
               {t('nav.contact')}
             </Link>
