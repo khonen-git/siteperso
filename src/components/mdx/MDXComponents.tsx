@@ -8,6 +8,7 @@ import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
 import { MdxCard } from '@/components/mdx/MdxCard';
 import { MdxDistributionVisualizer } from '@/components/mdx/MdxDistributionVisualizer';
 import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+import { CommandSwitch } from '@/components/mdx/CommandSwitch';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 
 function textFromNode(node: React.ReactNode): string {
@@ -159,6 +160,7 @@ const MDXComponents = {
   MdxCard,
   MdxDistributionVisualizer,
   ConsoleOutput,
+  CommandSwitch,
   // Composants UI
   Table,
   TableHeader,
