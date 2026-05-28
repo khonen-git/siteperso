@@ -31,7 +31,7 @@ export function KnowledgeMdxRenderer({
 
   if (!mounted) {
     return (
-      <article className="prose prose-gray dark:prose-invert max-w-none">
+      <article className="prose prose-gray prose-h1:mt-2 dark:prose-invert max-w-none">
         {showAiNotice ? <NotaBene>{aiNotice}</NotaBene> : null}
         <p className="text-muted-foreground text-sm">Chargement du contenu…</p>
       </article>
@@ -39,7 +39,7 @@ export function KnowledgeMdxRenderer({
   }
 
   return (
-    <article className="prose prose-gray dark:prose-invert max-w-none">
+    <article className="prose prose-gray prose-h1:mt-2 dark:prose-invert max-w-none">
       {showAiNotice ? <NotaBene>{aiNotice}</NotaBene> : null}
       <MDXRemote {...source} components={MDXComponents} />
     </article>
