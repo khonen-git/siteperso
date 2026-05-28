@@ -1,0 +1,265 @@
+---
+title: Python environments
+description: Environments, dependency files, and project management tools
+---
+
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { CommandSwitch } from '@/components/mdx/CommandSwitch';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+
+# Python environments
+
+## Definition
+
+A **Python environment** is a runtime context that includes a Python interpreter and a set of installed dependencies.
+The idea is to isolate projects so you avoid version conflicts between libraries.
+
+## Running Python code
+
+### Global interpreter
+
+This is the Python installed at the system level (`python`, `python3`). It is very simple—no need to manage environments—but it is really only suited to small one-off scripts and simple exploratory notebooks, because dependency issues show up quickly over time. For my own work, whether scripts or notebooks, I use at least a `.venv` virtual environment, optionally with a minimal `requirements.txt`, especially since creating and managing one is not hard.
+
+### Virtual environment (.venv)
+
+`venv` is a built-in Python module that creates isolated virtual environments for different projects.
+It is a bit like having a separate Python install per project.
+
+<CommandSwitch
+  unixCommand={`# create
+python -m venv .venv
+
+# activate
+source .venv/bin/activate
+
+# verify
+which python
+# console output: .venv/bin/python
+
+# install dependencies with pip
+pip install -r requirements.txt`}
+  windowsCommand={`# create
+py -m venv .venv
+
+# activate (PowerShell)
+.venv\\Scripts\\Activate.ps1
+
+# verify
+where python
+# console output: .venv\\Scripts\\python
+
+# install dependencies with pip
+pip install -r requirements.txt`}
+/>
+
+You can also create a `.venv` directly from **VS Code** or **Cursor** (what I do most often):
+
+1. Open the project folder at the repo root.
+2. `Ctrl+Shift+P` (command palette).
+3. Choose **Python: Create Environment** (sometimes labeled *Create Virtual Environment*).
+4. Select **Venv**, then the Python interpreter you want.
+
+The editor creates the `.venv` folder and usually offers to activate that environment for the workspace.
+
+<NotaBene>
+<strong>Note:</strong> For Jupyter notebooks, the environment alone is not enough. Install `ipykernel` (and often `jupyter`) in the `.venv`, then select that kernel in the notebook (top-right corner, or the <em>Select Kernel</em> command).
+</NotaBene>
+
+<CodeBlock language="bash">
+{`pip install ipykernel jupyter`}
+</CodeBlock>
+
+### Conda / Mamba environment
+
+Conda/Mamba manage both **Python** and non-Python dependencies (C/C++, MKL, CUDA, etc.). Very useful when you want to train a machine learning model such as Random Forest or XGBoost on the GPU rather than the CPU with cuML (CUDA) instead of scikit-learn.
+
+<CommandSwitch
+  unixCommand={`# conda
+conda create -n quantlab python=3.12
+conda activate quantlab
+
+# mamba (faster)
+mamba env create -f environment.yml`}
+  windowsCommand={`# conda
+conda create -n quantlab python=3.12
+conda activate quantlab
+
+# mamba (faster)
+mamba env create -f environment.yml`}
+/>
+
+This is what I recommend for projects you expect to scale.
+
+### Bonus: Micromamba
+
+On my Linux machine I use Micromamba, a minimal Mamba build shipped as a single executable—no Anaconda install required.
+On Windows I stick with `.venv` and pip.
+
+<CommandSwitch
+  unixCommand={`# one-time install — see micromamba docs
+curl -Ls https://micro.mamba.pm/install.sh | bash
+
+# create + activate
+micromamba create -n quantlab python=3.12 -c conda-forge
+micromamba activate quantlab
+
+# from a file
+micromamba create -f environment.yml`}
+  windowsCommand={`# one-time install — see micromamba docs
+Invoke-Expression ((Invoke-WebRequest -Uri https://micro.mamba.pm/install.ps1 -UseBasicParsing).Content)
+
+# create + activate (PowerShell)
+micromamba create -n quantlab python=3.12 -c conda-forge
+micromamba activate quantlab
+
+# from a file
+micromamba create -f environment.yml`}
+/>
+
+## Installing packages
+
+Once the environment is active (or selected in the editor), you install **libraries**: `numpy`, `pandas`, `fastapi`, and so on.
+
+### pip
+
+`pip` downloads packages from an index (often **PyPI**) into the current environment.
+It is the most common installer with `venv`.
+
+<CodeBlock language="bash">
+{`# single package
+pip install pandas
+
+# from a file
+pip install -r requirements.txt
+
+# local project in editable mode (dev)
+pip install -e .`}
+</CodeBlock>
+
+What I usually do on a small project: activate `.venv` → `pip install -r requirements.txt`.
+
+### conda / mamba
+
+In a conda environment, install with `conda install` (conda binaries) or sometimes `pip` for packages missing on conda-forge.
+
+<CodeBlock language="bash">
+{`conda activate quantlab
+conda install numpy pandas
+# or from a file
+mamba env update -f environment.yml`}
+</CodeBlock>
+
+Handy when you need heavy libs (MKL, CUDA, etc.) without compiling everything yourself.
+
+### poetry
+
+Poetry manages dependencies and lock files from `pyproject.toml`.
+
+<CodeBlock language="bash">
+{`poetry add pandas
+poetry install
+poetry run python script.py`}
+</CodeBlock>
+
+Useful when the project is already structured around Poetry (team workflow, packaging, releases).
+
+### uv
+
+A modern, very fast alternative, often used as an accelerated `pip`/`poetry` workflow.
+
+<CodeBlock language="bash">
+{`uv add pandas
+uv sync
+uv run python script.py`}
+</CodeBlock>
+
+## Dependency files
+
+### requirements.txt
+
+The historical format for `pip`.
+
+- easy to read,
+- widely used,
+- often produced with `pip freeze` (watch out: it can include too many transitive dependencies).
+
+<CodeBlock language="txt">
+{`numpy==2.0.2
+pandas==2.2.3
+matplotlib==3.10.0`}
+</CodeBlock>
+
+### environment.yml / environment.yaml
+
+Conda/Mamba format: Python version + conda packages + optional pip packages.
+
+<CodeBlock language="yaml">
+{`name: quantlab
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - numpy
+  - pandas
+  - pip
+  - pip:
+      - yfinance`}
+</CodeBlock>
+
+### pyproject.toml
+
+Modern standard format (PEP 621): project metadata, dependencies, and tool configuration (poetry, hatch, ruff, etc.).
+
+<CodeBlock language="toml">
+{`[project]
+name = "quant-research"
+version = "0.1.0"
+dependencies = [
+  "numpy>=2.0",
+  "pandas>=2.2",
+]`}
+</CodeBlock>
+
+### Lock files
+
+They pin exact versions for reproducible installs.
+
+Examples:
+- `poetry.lock`
+- `pdm.lock`
+- `uv.lock`
+- `conda-lock.yml`
+
+Without a lock file, two machines can end up with different versions.
+
+## Concrete examples
+
+<NotaBene>
+<strong>Work in progress</strong>
+</NotaBene>
+
+## Summary
+
+<NotaBene>
+<strong>Work in progress</strong>
+</NotaBene>
+
+## References
+
+<NotaBene>
+<strong>Work in progress</strong>
+</NotaBene>
+
+- [Python Packaging User Guide](https://packaging.python.org/)
+- [`venv` documentation](https://docs.python.org/3/library/venv.html)
+- [`pip` documentation](https://pip.pypa.io/en/stable/)
+- [Conda docs](https://docs.conda.io/)
+- [Poetry docs](https://python-poetry.org/docs/)
+- [uv docs](https://docs.astral.sh/uv/)
+
+https://docs.python.org/3/library/venv.html
+https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments
+https://packaging.python.org/en/latest/key_projects/#pip
+https://docs.python.org/3/installing/index.html
+https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
+https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html

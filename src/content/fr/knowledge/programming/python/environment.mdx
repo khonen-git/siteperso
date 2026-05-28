@@ -1,0 +1,271 @@
+---
+title: Environnements python
+description: Environnements, fichiers de dépendances et outils de gestion de projet
+---
+
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { CommandSwitch } from '@/components/mdx/CommandSwitch';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+
+# Les environnements python
+
+## Définition
+
+Un **environnement Python** est un contexte d'exécution qui contient un interpréteur Python et un ensemble de dépendances installées. 
+L'idée derrière est d'isoler les projets afin d'éviter les conflits de versions entre bibliothèques.
+
+## Exécuter le code Python
+
+### Interpréteur global
+
+C'est le Python installé au niveau système (`python`, `python3`). C'est très simple, pas besoin de gérer des environnements, 
+mais c'est bien uniquement pour des petits scripts Python en "one shot" et des notebooks simples d'exploration car on peut 
+rapidement avoir des problèmes avec les dépendances sur le long terme. Pour ma part, que ce soit les scripts ou les notebooks,
+j'utilise à minima un environnement virtuel .venv avec optionnellement un petit requirements.txt minimale, d'autant plus que 
+ce n'est pas difficile de le créer et gérer.
+
+### Environnement virtuel .venv
+
+`venv` est un module natif de Python qui permet de créer des environnements virtuels isolés pour différents projets. 
+C'est un peu comme si on avait un Python installé pour chaque projet. 
+
+<CommandSwitch
+  unixCommand={`# création
+python -m venv .venv
+
+# activation
+source .venv/bin/activate
+
+# vérification
+which python
+# sortie console : .venv/bin/python
+
+# installation des dépendances avec pip
+pip install -r requirements.txt`}
+  windowsCommand={`# création
+py -m venv .venv
+
+# activation (PowerShell)
+.venv\\Scripts\\Activate.ps1
+
+# vérification
+where python
+# sortie console : .venv\Scripts\python
+
+# installation des dépendances avec pip
+pip install -r requirements.txt`}
+/>
+
+On peut aussi créer un `.venv` directement depuis **VS Code** ou **Cursor** (c’est ce que je fais le plus souvent) :
+
+1. Ouvrir le dossier du projet à la racine du repo.
+2. `Ctrl+Shift+P` (palette de commandes).
+3. Choisir **Python: Create Environment** (parfois libellé *Create Virtual Environment*).
+4. Sélectionner **Venv** puis l’interpréteur Python souhaité.
+
+L’éditeur crée le dossier `.venv` et propose en général d’activer cet environnement pour le workspace.
+
+<NotaBene>
+<strong>Nota bene :</strong> Pour les jupyter notebooks, l’environnement seul ne suffit pas. Il faut installer `ipykernel` 
+(et souvent `jupyter`) dans le `.venv`, puis sélectionner ce kernel dans le notebook (coin haut à droite, ou commande <em>Select Kernel</em>).
+</NotaBene>
+
+<CodeBlock language="bash">
+{`pip install ipykernel jupyter`}
+</CodeBlock>
+
+### Environnement Conda / Mamba
+
+Conda/Mamba gèrent à la fois **Python** et des dépendances non-Python (C/C++, MKL, CUDA, etc.). Très utile par exemple si on souhaite entrainer 
+un modèle de machine learning comme un RandomForest ou XGBoost sur le GPU plutôt que le CPU avec cuML (CUDA) au lieu de scikit-learn.
+
+<CommandSwitch
+  unixCommand={`# conda
+conda create -n quantlab python=3.12
+conda activate quantlab
+
+# mamba (plus rapide)
+mamba env create -f environment.yml`}
+  windowsCommand={`# conda
+conda create -n quantlab python=3.12
+conda activate quantlab
+
+# mamba (plus rapide)
+mamba env create -f environment.yml`}
+/>
+
+C'est ce que je recommande pour les projets qu'on souhaite scaler.
+
+### Bonus : Micromamba
+
+Sur ma machine Linux, j'utilise Micromamba, une version minimaliste de Mamba, qui est un simple exécutable, pas besoin d'Anaconda. 
+Sur Windows, je reste sur .venv avec pip.
+
+<CommandSwitch
+  unixCommand={`# installation (une fois) — voir doc micromamba
+curl -Ls https://micro.mamba.pm/install.sh | bash
+
+# création + activation
+micromamba create -n quantlab python=3.12 -c conda-forge
+micromamba activate quantlab
+
+# depuis un fichier
+micromamba create -f environment.yml`}
+  windowsCommand={`# installation (une fois) — voir doc micromamba
+Invoke-Expression ((Invoke-WebRequest -Uri https://micro.mamba.pm/install.ps1 -UseBasicParsing).Content)
+
+# création + activation (PowerShell)
+micromamba create -n quantlab python=3.12 -c conda-forge
+micromamba activate quantlab
+
+# depuis un fichier
+micromamba create -f environment.yml`}
+/>
+
+## Installer des paquets
+
+Une fois l’environnement activé (ou sélectionné dans l’éditeur), on installe des **bibliothèques** : `numpy`, `pandas`, `fastapi`, etc.  
+
+### pip
+
+`pip` télécharge des paquets depuis un index (souvent **PyPI**) dans l’environnement courant.
+C’est l’installateur le plus courant avec `venv`.
+
+<CodeBlock language="bash">
+{`# un paquet
+pip install pandas
+
+# depuis un fichier
+pip install -r requirements.txt
+
+# projet local en mode editable (dev)
+pip install -e .`}
+</CodeBlock>
+
+Ce que je fais généralement sur un petit projet : `.venv` activé → `pip install -r requirements.txt`.
+
+### conda / mamba
+
+Dans un environnement conda, on installe via `conda install` (binaires conda) ou parfois `pip` pour ce qui manque sur conda-forge.
+
+<CodeBlock language="bash">
+{`conda activate quantlab
+conda install numpy pandas
+# ou depuis le fichier
+mamba env update -f environment.yml`}
+</CodeBlock>
+
+Pratique quand on a besoin de libs lourdes (MKL, CUDA, etc.) sans tout compiler à la main.
+
+### poetry
+
+Poetry gère dépendances + lock à partir de `pyproject.toml`.
+
+<CodeBlock language="bash">
+{`poetry add pandas
+poetry install
+poetry run python script.py`}
+</CodeBlock>
+
+Utile quand le projet est déjà structuré autour de Poetry (équipe, packaging, releases).
+
+### uv
+
+Alternative moderne, très rapide, souvent utilisée comme `pip`/`poetry` accéléré.
+
+<CodeBlock language="bash">
+{`uv add pandas
+uv sync
+uv run python script.py`}
+</CodeBlock>
+
+## Les fichiers de dépendances
+
+### requirements.txt
+
+Format historique côté `pip`.
+
+- simple à lire,
+- très répandu,
+- souvent utilisé avec `pip freeze` (attention, peut inclure trop de dépendances transitoires).
+
+<CodeBlock language="txt">
+{`numpy==2.0.2
+pandas==2.2.3
+matplotlib==3.10.0`}
+</CodeBlock>
+
+### environment.yml / environment.yaml
+
+Format Conda/Mamba : version Python + paquets conda + paquets pip éventuels.
+
+<CodeBlock language="yaml">
+{`name: quantlab
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - numpy
+  - pandas
+  - pip
+  - pip:
+      - yfinance`}
+</CodeBlock>
+
+### pyproject.toml
+
+Format moderne standard (PEP 621) : métadonnées de projet, dépendances et configuration d'outils (poetry, hatch, ruff, etc.).
+
+<CodeBlock language="toml">
+{`[project]
+name = "quant-research"
+version = "0.1.0"
+dependencies = [
+  "numpy>=2.0",
+  "pandas>=2.2",
+]`}
+</CodeBlock>
+
+### Les fichiers lock
+
+Ils verrouillent les versions exactes pour des installations reproductibles.
+
+Exemples :
+- `poetry.lock`
+- `pdm.lock`
+- `uv.lock`
+- `conda-lock.yml`
+
+Sans lock file, deux machines peuvent installer des versions différentes.
+
+## Exemples concrets
+
+<NotaBene>
+    Rédaction en cours 
+</NotaBene>
+
+## Résumé
+
+<NotaBene>
+    Rédaction en cours 
+</NotaBene>
+
+## Références
+
+<NotaBene>
+    Rédaction en cours 
+</NotaBene>
+
+- [Python Packaging User Guide](https://packaging.python.org/)
+- [Documentation `venv`](https://docs.python.org/3/library/venv.html)
+- [Documentation `pip`](https://pip.pypa.io/en/stable/)
+- [Conda docs](https://docs.conda.io/)
+- [Poetry docs](https://python-poetry.org/docs/)
+- [uv docs](https://docs.astral.sh/uv/)
+
+https://docs.python.org/3/library/venv.html
+https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments
+https://packaging.python.org/en/latest/key_projects/#pip
+https://docs.python.org/fr/dev/installing/index.html
+https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
+https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html
