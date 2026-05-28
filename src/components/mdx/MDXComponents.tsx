@@ -10,6 +10,23 @@ import { MdxDistributionVisualizer } from '@/components/mdx/MdxDistributionVisua
 import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 
+function textFromNode(node: React.ReactNode): string {
+  if (typeof node === 'string' || typeof node === 'number') return String(node);
+  if (Array.isArray(node)) return node.map(textFromNode).join('');
+  if (React.isValidElement(node)) return textFromNode(node.props.children);
+  return '';
+}
+
+function headingId(children: React.ReactNode): string {
+  const raw = textFromNode(children).trim().toLowerCase();
+  return raw
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
 // Composants spécifiques aux projets
 export function TechnologiesSection({ children }: { children: React.ReactNode }) {
   return (
@@ -71,13 +88,13 @@ export function ProjectImage({
 // Composants de base pour le MDX
 const baseComponents = {
   h1: ({ children }: { children: React.ReactNode }) => (
-    <h1 className="mt-8 mb-4 text-3xl font-bold">{children}</h1>
+    <h1 id={headingId(children)} className="mt-8 mb-4 text-3xl font-bold">{children}</h1>
   ),
   h2: ({ children }: { children: React.ReactNode }) => (
-    <h2 className="mt-8 mb-4 text-2xl font-bold">{children}</h2>
+    <h2 id={headingId(children)} className="mt-8 mb-4 text-2xl font-bold">{children}</h2>
   ),
   h3: ({ children }: { children: React.ReactNode }) => (
-    <h3 className="mt-6 mb-3 text-xl font-bold">{children}</h3>
+    <h3 id={headingId(children)} className="mt-6 mb-3 text-xl font-bold">{children}</h3>
   ),
   p: ({ children }: { children: React.ReactNode }) => (
     <p className="mb-4 leading-relaxed">{children}</p>

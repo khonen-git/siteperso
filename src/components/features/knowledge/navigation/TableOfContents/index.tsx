@@ -19,35 +19,64 @@ export function TableOfContents({ className }: TableOfContentsProps) {
   const [items, setItems] = useState<TOCItem[]>([]);
 
   useEffect(() => {
-    // Récupérer tous les titres
-    const headings = Array.from(document.querySelectorAll('h1, h2, h3'))
-      .filter(heading => heading.id)
-      .map(heading => ({
-        id: heading.id,
-        text: heading.textContent || '',
-        level: parseInt(heading.tagName[1]),
-      }));
+    const contentRoot = document.querySelector(
+      '[data-knowledge-content]'
+    ) as HTMLElement | null;
+    if (!contentRoot) return;
 
-    setItems(headings);
+    let observer: IntersectionObserver | null = null;
+    let rafId = 0;
 
-    // Observer l'intersection des titres
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: '0px 0px -80% 0px' }
-    );
+    const collectHeadings = (): TOCItem[] =>
+      Array.from(contentRoot.querySelectorAll('h1, h2, h3'))
+        .filter((heading) => heading.id)
+        .map((heading) => ({
+          id: heading.id,
+          text: heading.textContent || '',
+          level: parseInt(heading.tagName[1]),
+        }));
 
-    headings.forEach(({ id }) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
+    const rebuild = (): void => {
+      const headings = collectHeadings();
+      setItems(headings);
+
+      if (observer) observer.disconnect();
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveId(entry.target.id);
+            }
+          });
+        },
+        { rootMargin: '0px 0px -80% 0px' }
+      );
+
+      headings.forEach(({ id }) => {
+        const element = document.getElementById(id);
+        if (element) observer?.observe(element);
+      });
+    };
+
+    // Première passe
+    rebuild();
+
+    // Rebuild quand le MDX se monte/modifie le DOM
+    const mutationObserver = new MutationObserver(() => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(rebuild);
     });
 
-    return () => observer.disconnect();
+    mutationObserver.observe(contentRoot, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      mutationObserver.disconnect();
+      if (observer) observer.disconnect();
+    };
   }, []);
 
   return (
