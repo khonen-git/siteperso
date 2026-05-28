@@ -12,14 +12,12 @@ import {
 
 interface KnowledgeMdxRendererProps {
   source: MDXRemoteSerializeResult;
-  title?: string;
   locale: string;
   slug: string[];
 }
 
 export function KnowledgeMdxRenderer({
   source,
-  title,
   locale,
   slug,
 }: KnowledgeMdxRendererProps): React.JSX.Element {
@@ -34,7 +32,6 @@ export function KnowledgeMdxRenderer({
   if (!mounted) {
     return (
       <article className="prose prose-gray dark:prose-invert max-w-none">
-        {title ? <h1>{title}</h1> : null}
         {showAiNotice ? <NotaBene>{aiNotice}</NotaBene> : null}
         <p className="text-muted-foreground text-sm">Chargement du contenu…</p>
       </article>
@@ -43,7 +40,6 @@ export function KnowledgeMdxRenderer({
 
   return (
     <article className="prose prose-gray dark:prose-invert max-w-none">
-      {title ? <h1>{title}</h1> : null}
       {showAiNotice ? <NotaBene>{aiNotice}</NotaBene> : null}
       <MDXRemote {...source} components={MDXComponents} />
     </article>

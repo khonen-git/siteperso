@@ -8,11 +8,6 @@ import NotFoundKnowledge from '@/components/features/knowledge/NotFoundKnowledge
 import { KnowledgeMdxRenderer } from '@/components/features/knowledge/KnowledgeMdxRenderer';
 import { resolveKnowledgeFilePath } from '@/lib/knowledge/content';
 
-interface Frontmatter {
-  title?: string;
-  description?: string;
-}
-
 interface KnowledgeArticleProps {
   locale: string;
   slug: string[];
@@ -30,8 +25,7 @@ export async function KnowledgeArticle({
 
   try {
     const raw = fs.readFileSync(filePath, 'utf8');
-    const { content, data } = matter(raw);
-    const frontmatter = data as Frontmatter;
+    const { content } = matter(raw);
 
     const mdxSource = await serialize(content, {
       mdxOptions: {
@@ -43,12 +37,7 @@ export async function KnowledgeArticle({
 
     return (
       <KnowledgeLayout>
-        <KnowledgeMdxRenderer
-          source={mdxSource}
-          title={frontmatter.title}
-          locale={locale}
-          slug={slug}
-        />
+        <KnowledgeMdxRenderer source={mdxSource} locale={locale} slug={slug} />
       </KnowledgeLayout>
     );
   } catch (error) {
