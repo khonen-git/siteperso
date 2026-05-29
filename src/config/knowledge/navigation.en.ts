@@ -115,6 +115,10 @@ export const navigationData: TreeItem[] = [
           },
         ],
       },
+      {
+        title: 'Information theory',
+        href: '/knowledge/mathematics/information-theory',
+      },
     ],
   },
   {
@@ -142,6 +146,28 @@ export const navigationData: TreeItem[] = [
           {
             title: 'Typing',
             href: '/knowledge/programming/python/typing',
+          },
+          {
+            title: 'Environments',
+            href: '/knowledge/programming/python/environment',
+          },
+        ],
+      },
+      {
+        title: 'Data structures',
+        href: '/knowledge/programming/data-structures',
+      },
+      {
+        title: 'Hardware',
+        href: '/knowledge/programming/hardware',
+        children: [
+          {
+            title: 'CPU architecture',
+            href: '/knowledge/programming/hardware/cpu-architecture',
+          },
+          {
+            title: 'GPU architecture',
+            href: '/knowledge/programming/hardware/gpu-architecture',
           },
         ],
       },
@@ -264,26 +290,28 @@ export const navigationData: TreeItem[] = [
     ],
   },
   {
-    title: 'Data Analytics',
-    href: '/knowledge/data-analytics',
+    title: 'Finance',
+    href: '/knowledge/finance',
     children: [
       {
-        title: 'Fundamentals',
-        href: '/knowledge/data-analytics/fundamentals',
-        children: [
-          {
-            title: 'Data collection',
-            href: '/knowledge/data-analytics/fundamentals/data-collection',
-          },
-          {
-            title: 'Data processing',
-            href: '/knowledge/data-analytics/fundamentals/data-processing',
-          },
-          {
-            title: 'Data analysis',
-            href: '/knowledge/data-analytics/fundamentals/data-analysis',
-          },
-        ],
+        title: 'Asset classes',
+        href: '/knowledge/finance/asset-classes',
+      },
+      {
+        title: 'Contract types',
+        href: '/knowledge/finance/contract-types',
+      },
+      {
+        title: 'Options (put/call and strategies)',
+        href: '/knowledge/finance/options',
+      },
+      {
+        title: 'Black-Scholes',
+        href: '/knowledge/finance/black-scholes',
+      },
+      {
+        title: 'Implied and realized volatility',
+        href: '/knowledge/finance/volatility',
       },
     ],
   },
@@ -298,12 +326,32 @@ export const navigationData: TreeItem[] = [
           {
             title: 'Supervised learning',
             href: '/knowledge/data-science/machine-learning/supervised',
+            children: [
+              {
+                title: 'Random Forest',
+                href: '/knowledge/data-science/machine-learning/supervised/random-forest',
+              },
+              {
+                title: 'XGBoost',
+                href: '/knowledge/data-science/machine-learning/supervised/xgboost',
+              },
+            ],
           },
           {
             title: 'Unsupervised learning',
             href: '/knowledge/data-science/machine-learning/unsupervised',
+            children: [
+              {
+                title: 'HMM',
+                href: '/knowledge/data-science/machine-learning/unsupervised/hmm',
+              },
+            ],
           },
         ],
+      },
+      {
+        title: 'Cross-validation',
+        href: '/knowledge/data-science/cross-validation',
       },
     ],
   },

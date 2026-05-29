@@ -10,6 +10,7 @@ import { MdxDistributionVisualizer } from '@/components/mdx/MdxDistributionVisua
 import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 import { CommandSwitch } from '@/components/mdx/CommandSwitch';
 import { NotaBene } from '@/components/mdx/NotaBene';
+import { InfoTooltip, InfoTooltipProvider } from '@/components/mdx/InfoTooltip';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 
 function textFromNode(node: React.ReactNode): string {
@@ -163,6 +164,8 @@ const MDXComponents = {
   ConsoleOutput,
   CommandSwitch,
   NotaBene,
+  InfoTooltip,
+  InfoTooltipProvider,
   // Composants UI
   Table,
   TableHeader,

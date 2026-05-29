@@ -115,6 +115,10 @@ export const navigationData: TreeItem[] = [
           },
         ],
       },
+      {
+        title: 'Théorie de l\'information',
+        href: '/knowledge/mathematics/information-theory',
+      },
     ],
   },
   {
@@ -142,6 +146,28 @@ export const navigationData: TreeItem[] = [
           {
             title: 'Typage',
             href: '/knowledge/programming/python/typing',
+          },
+          {
+            title: 'Environnements',
+            href: '/knowledge/programming/python/environment',
+          },
+        ],
+      },
+      {
+        title: 'Structures de données',
+        href: '/knowledge/programming/data-structures',
+      },
+      {
+        title: 'Hardware',
+        href: '/knowledge/programming/hardware',
+        children: [
+          {
+            title: 'Architecture CPU',
+            href: '/knowledge/programming/hardware/cpu-architecture',
+          },
+          {
+            title: 'Architecture GPU',
+            href: '/knowledge/programming/hardware/gpu-architecture',
           },
         ],
       },
@@ -264,26 +290,28 @@ export const navigationData: TreeItem[] = [
     ],
   },
   {
-    title: 'Data Analytics',
-    href: '/knowledge/data-analytics',
+    title: 'Finance',
+    href: '/knowledge/finance',
     children: [
       {
-        title: 'Fondamentaux',
-        href: '/knowledge/data-analytics/fundamentals',
-        children: [
-          {
-            title: 'Collecte des données',
-            href: '/knowledge/data-analytics/fundamentals/data-collection',
-          },
-          {
-            title: 'Traitement des données',
-            href: '/knowledge/data-analytics/fundamentals/data-processing',
-          },
-          {
-            title: 'Analyse des données',
-            href: '/knowledge/data-analytics/fundamentals/data-analysis',
-          },
-        ],
+        title: 'Classes d\'actifs',
+        href: '/knowledge/finance/asset-classes',
+      },
+      {
+        title: 'Types de contrats',
+        href: '/knowledge/finance/contract-types',
+      },
+      {
+        title: 'Options (put/call et stratégies)',
+        href: '/knowledge/finance/options',
+      },
+      {
+        title: 'Black-Scholes',
+        href: '/knowledge/finance/black-scholes',
+      },
+      {
+        title: 'Volatilité implicite et réalisée',
+        href: '/knowledge/finance/volatility',
       },
     ],
   },
@@ -298,12 +326,32 @@ export const navigationData: TreeItem[] = [
           {
             title: 'Apprentissage supervisé',
             href: '/knowledge/data-science/machine-learning/supervised',
+            children: [
+              {
+                title: 'Random Forest',
+                href: '/knowledge/data-science/machine-learning/supervised/random-forest',
+              },
+              {
+                title: 'XGBoost',
+                href: '/knowledge/data-science/machine-learning/supervised/xgboost',
+              },
+            ],
           },
           {
             title: 'Apprentissage non supervisé',
             href: '/knowledge/data-science/machine-learning/unsupervised',
+            children: [
+              {
+                title: 'HMM',
+                href: '/knowledge/data-science/machine-learning/unsupervised/hmm',
+              },
+            ],
           },
         ],
+      },
+      {
+        title: 'Validation croisée',
+        href: '/knowledge/data-science/cross-validation',
       },
     ],
   },
