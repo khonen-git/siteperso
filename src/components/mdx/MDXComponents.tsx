@@ -11,6 +11,7 @@ import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 import { CommandSwitch } from '@/components/mdx/CommandSwitch';
 import { NotaBene } from '@/components/mdx/NotaBene';
 import { InfoTooltip, InfoTooltipProvider } from '@/components/mdx/InfoTooltip';
+import { OptionPayoffVisualizer } from '@/components/mdx/OptionPayoffVisualizer';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 
 function textFromNode(node: React.ReactNode): string {
@@ -166,6 +167,7 @@ const MDXComponents = {
   NotaBene,
   InfoTooltip,
   InfoTooltipProvider,
+  OptionPayoffVisualizer,
   // Composants UI
   Table,
   TableHeader,

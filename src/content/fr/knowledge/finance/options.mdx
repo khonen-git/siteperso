@@ -4,6 +4,7 @@ description: Put, call et stratégies multi-jambes — synthèse des payoffs, se
 ---
 
 import { MdxCard } from '@/components/mdx/MdxCard';
+import { OptionPayoffVisualizer } from '@/components/mdx/OptionPayoffVisualizer';
 import { InfoTooltip, InfoTooltipProvider } from '@/components/mdx/InfoTooltip';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 
@@ -72,14 +73,7 @@ import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@
 ## Visualisation call / put
 
 <MdxCard>
-  <p className="text-muted-foreground text-sm mb-0">
-    <strong>À venir :</strong> graphique interactif du payoff et de la prime (Black-Scholes) en fonction des paramètres ci-dessous.
-  </p>
-  <ul className="list-disc pl-6 mt-3 space-y-1 text-sm text-muted-foreground">
-    <li>Type : call ou put — position long ou short</li>
-    <li>Spot <em>S</em>, strike <em>K</em>, maturité <em>T</em>, taux <em>r</em>, vol implicite <em>σ</em></li>
-    <li>Courbes : payoff à l'échéance vs <em>S</em> ; valeur de l'option vs <em>S</em> (et optionnellement vs le temps)</li>
-  </ul>
+  <OptionPayoffVisualizer />
 </MdxCard>
 
 ## Sensibilités (greeks)
@@ -242,7 +236,7 @@ import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@
   <div className="space-y-2">
     <ul className="list-disc pl-6 space-y-1">
       <li><strong>ITM / ATM / OTM</strong> : in-the-money, at-the-money, out-of-the-money par rapport au spot vs strike.</li>
-      <li><strong>Américaine vs européenne</strong> : exercice possible avant échéance (US equities souvent) vs seulement à l'échéance (indices européens).</li>
+      <li><strong>Style américain vs européen</strong> (type de contrat d'option, pas la zone géographique) : <em>américaine</em> = exercice possible avant l'échéance ; <em>européenne</em> = exercice uniquement à l'échéance. Ex. : actions US souvent en style américain ; beaucoup d'options sur indices (SPX, Euro Stoxx…) en style européen — y compris sur sous-jacent américain.</li>
       <li><strong>Multiplicateur</strong> : contrat actions US souvent × 100 ; vérifier spécifications par marché.</li>
     </ul>
     <p className="text-muted-foreground text-sm">Note perso : à ajouter — diagrammes payoff, exemple numérique straddle, lien chain options / skew.</p>
