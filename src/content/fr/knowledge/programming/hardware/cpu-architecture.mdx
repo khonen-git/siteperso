@@ -1,0 +1,395 @@
+---
+title: Architecture CPU
+description: Architecture CPU x86-64 — cœurs, caches, mémoire, parallélisme et stack logicielle pour la finance quantitative.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+
+# CPU
+
+<i>
+    Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour proposer un contenu personnel et d'une meilleure qualité.
+</i>
+
+<MdxCard>
+Cette page recense les éléments importants de l'architecture **CPU** pour la **finance quantitative** : ingestion de données, feature engineering, backtesting, modèles classiques (arbres, régression, Monte Carlo) et orchestration des pipelines ML.
+Les détails matériels peuvent différer entre Intel, AMD et ARM (Apple Silicon). L'accent est mis sur l'architecture **x86-64** (Intel/AMD), la plus courante en environnement de trading et de recherche quant.
+</MdxCard>
+
+## Structure
+
+<MdxCard>
+
+```
+CPU x86-64
+│
+├── Compute Core
+│   ├── Physical Cores
+│   ├── Logical Threads (SMT / Hyper-Threading)
+│   ├── ALU / FPU
+│   ├── SIMD Units (SSE, AVX, AVX-512)
+│   ├── Branch Predictor
+│   └── Out-of-Order Execution Engine
+│
+├── Cache Hierarchy
+│   ├── L1 Instruction Cache
+│   ├── L1 Data Cache
+│   ├── L2 Cache (per core)
+│   └── L3 Cache / LLC (shared)
+│
+├── Memory Subsystem
+│   ├── RAM (DDR4 / DDR5)
+│   ├── Memory Controllers
+│   ├── Memory Channels
+│   └── NUMA Nodes
+│
+├── I/O and Interconnect
+│   ├── PCIe Lanes
+│   ├── QPI / UPI / Infinity Fabric
+│   └── Chipset / I/O Hub
+│
+├── Execution Model
+│   ├── Processes
+│   ├── OS Threads
+│   ├── Vectorization (SIMD)
+│   └── Multi-core Parallelism
+│
+├── Multi-Socket
+│   └── NUMA Topology
+│
+└── Software Stack
+    ├── OS Scheduler
+    ├── BLAS (OpenBLAS, MKL)
+    ├── NumPy / Pandas
+    ├── Polars
+    ├── multiprocessing / threading
+    ├── joblib
+    └── scikit-learn / XGBoost (CPU)
+```
+
+</MdxCard>
+
+## Compute Core
+
+Le **cœur de calcul** exécute les instructions du programme. Contrairement au GPU (SIMT, milliers de threads légers), le CPU est optimisé pour la **latence** et les branches conditionnelles complexes — typiques du code Python métier en finance.
+
+### Cœurs physiques et threads logiques
+
+Un **cœur physique** est une unité d'exécution indépendante. Le **SMT** (*Simultaneous Multi-Threading*, Hyper-Threading chez Intel) expose deux **threads logiques** par cœur, partageant les unités d'exécution. En quant, cela aide surtout les workloads mixtes (I/O + calcul), mais pour du calcul pur (NumPy, BLAS), compter les **cœurs physiques** est souvent plus fiable que le nombre de threads logiques.
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Composant</TableHead>
+        <TableHead>Rôle</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">ALU</TableCell>
+        <TableCell>Opérations entières et arithmétique scalaire (additions, comparaisons, indexation)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">FPU</TableCell>
+        <TableCell>Calcul en virgule flottante (prix, rendements, volatilité, greeks)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">SIMD (AVX)</TableCell>
+        <TableCell>Traitement vectoriel : une instruction opère sur 4–16 valeurs en parallèle (crucial pour NumPy/MKL)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Branch Predictor</TableCell>
+        <TableCell>Anticipe les sauts conditionnels pour limiter les stalls du pipeline</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Out-of-Order Execution</TableCell>
+        <TableCell>Réordonne les instructions indépendantes pour maximiser le débit du cœur</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+### SIMD et vectorisation
+
+Les instructions **SSE**, **AVX** et **AVX-512** permettent d'exécuter des opérations sur des registres larges (128, 256 ou 512 bits). En pratique, la plupart des bibliothèques scientifiques Python (NumPy, SciPy, scikit-learn via BLAS) exploitent déjà ces instructions sous le capot — d'où l'importance d'installer une build **MKL** ou **OpenBLAS** optimisée.
+
+## Cache Hierarchy
+
+La **hiérarchie de caches** compense l'écart de latence entre le CPU et la RAM. En finance quantitative, les accès mémoire non contigus (DataFrames, jointures, groupby) pénalisent fortement les performances.
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Niveau</TableHead>
+        <TableHead>Portée</TableHead>
+        <TableHead>Latence typique</TableHead>
+        <TableHead>Usage en quant</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">L1</TableCell>
+        <TableCell>Par cœur (I-cache + D-cache, ~32–64 Ko chacun)</TableCell>
+        <TableCell>~1 ns</TableCell>
+        <TableCell>Boucles courtes sur arrays contigus</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">L2</TableCell>
+        <TableCell>Par cœur (~256 Ko – 1 Mo)</TableCell>
+        <TableCell>~3–4 ns</TableCell>
+        <TableCell>Réutilisation de données dans une fenêtre glissante</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">L3 / LLC</TableCell>
+        <TableCell>Partagé entre cœurs (8–384 Mo)</TableCell>
+        <TableCell>~10–20 ns</TableCell>
+        <TableCell>Partage de données entre threads d'un même processus</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">RAM</TableCell>
+        <TableCell>Système entier</TableCell>
+        <TableCell>~50–100 ns</TableCell>
+        <TableCell>DataFrames entiers, historiques de marché, matrices de covariance</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+**Bonnes pratiques** : préférer les opérations vectorisées (NumPy, Polars) aux boucles Python ; utiliser des dtypes compacts (`float32` vs `float64`) quand la précision le permet ; éviter les copies inutiles de DataFrames.
+
+## Memory Subsystem
+
+La **mémoire vive** est la ressource la plus critique pour les gros backtests et les matrices de covariance.
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Élément</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">RAM (DDR4/DDR5)</TableCell>
+        <TableCell>Mémoire principale. Capacité typique : 32–256 Go en workstation quant. Limite la taille des datasets en mémoire.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Memory Channels</TableCell>
+        <TableCell>Canaux parallèles (dual/quad-channel). Plus de canaux = plus de bande passante mémoire.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">NUMA</TableCell>
+        <TableCell>*Non-Uniform Memory Access* : sur multi-socket, chaque CPU a une RAM locale. Accéder à la RAM d'un autre socket est plus lent.</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+Sur les serveurs multi-socket, le **pinning NUMA** (`numactl`, affinité des processus) peut améliorer significativement les performances des calculs parallèles lourds.
+
+## I/O and Interconnect
+
+Le CPU orchestre les échanges avec le disque, le réseau et le **GPU** via **PCIe**. En pipeline quant typique :
+
+- **Lecture disque** → CPU (pandas/Polars) → feature engineering → entraînement GPU ou CPU
+- Le CPU reste le goulot pour l'ingestion de ticks, le parsing CSV/Parquet et la logique métier Python
+
+Les liaisons **QPI/UPI** (Intel) ou **Infinity Fabric** (AMD) connectent les cœurs entre eux et vers le contrôleur mémoire.
+
+## Execution Model
+
+Le parallélisme CPU en Python repose sur plusieurs niveaux :
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Concept</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Process</TableCell>
+        <TableCell>Instance isolée avec sa propre mémoire. Utilisé par `multiprocessing` pour contourner le GIL.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">OS Thread</TableCell>
+        <TableCell>Thread système partageant la mémoire du processus. Limité par le **GIL** en CPython pour le code Python pur.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Vectorization</TableCell>
+        <TableCell>Parallélisme au sein d'une instruction (SIMD). Activé automatiquement par NumPy/BLAS sur code C/Fortran.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Multi-core</TableCell>
+        <TableCell>Parallélisme entre cœurs via `multiprocessing`, `joblib`, `concurrent.futures`.</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+### Le GIL et ses implications
+
+Le **GIL** (*Global Interpreter Lock*) de CPython empêche l'exécution parallèle de bytecode Python sur plusieurs cœurs. En pratique :
+
+- **Calcul NumPy/BLAS** : le GIL est libéré → parallélisme multi-cœur effectif
+- **Boucles Python pures** : un seul cœur → utiliser `multiprocessing` ou réécrire en NumPy/Cython/Numba
+- **I/O** (lecture fichiers, API) : `threading` suffit car le GIL est libéré pendant l'attente
+
+### Exemple : paralléliser un backtest
+
+<CodeBlock language="python">
+{`from joblib import Parallel, delayed
+import numpy as np
+
+def backtest_strategy(returns: np.ndarray, threshold: float) -> float:
+  signals = returns > threshold
+  return (signals * returns).sum()
+
+returns_matrix = np.random.randn(100, 252)  # 100 stratégies, 252 jours
+
+results = Parallel(n_jobs=-1)(
+    delayed(backtest_strategy)(returns_matrix[i], 0.01)
+    for i in range(100)
+)`}
+</CodeBlock>
+
+`n_jobs=-1` utilise tous les cœurs disponibles via des processus séparés.
+
+## Multi-Socket et NUMA
+
+Sur les serveurs de production (calcul de risque, Monte Carlo massif), on trouve souvent **2–4 sockets** CPU. Chaque socket a sa mémoire locale :
+
+- Placer les workers sur le même socket que leurs données (`numactl --cpunodebind`)
+- Éviter le **false sharing** : deux threads modifiant des variables adjacentes dans le cache
+- Pour Polars/NumPy multi-threadés, limiter `OMP_NUM_THREADS` au nombre de cœurs d'un socket si NUMA
+
+## Software Stack
+
+La pile logicielle CPU pour la finance quantitative :
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Couche</TableHead>
+        <TableHead>Rôle</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">OS Scheduler</TableCell>
+        <TableCell>Répartit les processus/threads sur les cœurs. L'affinité CPU (`taskset`) peut stabiliser les perfs.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">BLAS (MKL, OpenBLAS)</TableCell>
+        <TableCell>Algèbre linéaire vectorisée (GEMM, dot product). Sous-jacent à NumPy et scikit-learn.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">NumPy / Pandas</TableCell>
+        <TableCell>Calcul numérique et manipulation tabulaire. Cœur de la plupart des pipelines quant.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Polars</TableCell>
+        <TableCell>DataFrames multi-threadés en Rust. Souvent plus rapide que pandas sur gros volumes.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">multiprocessing / joblib</TableCell>
+        <TableCell>Parallélisme multi-cœurs au niveau Python pour contourner le GIL.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">scikit-learn / XGBoost (CPU)</TableCell>
+        <TableCell>Modèles classiques (Random Forest, gradient boosting) efficaces sur CPU pour datasets tabulaires.</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+### Vérifier la configuration CPU
+
+<CodeBlock language="python">
+{`import os
+import platform
+
+print(f"Architecture : {platform.machine()}")
+print(f"Processeur : {platform.processor()}")
+print(f"Cœurs physiques : {os.cpu_count()} threads logiques")
+
+# BLAS utilisé par NumPy
+import numpy as np
+np.show_config()`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console (exemple)">
+Architecture : AMD64
+Processeur : Intel64 Family 6 Model 183
+Cœurs physiques : 32 threads logiques
+...
+openblas64__info:
+    libraries = ['openblas64_', 'openblas64_']
+    ...
+</ConsoleOutput>
+
+## CPU vs GPU en finance quantitative
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Workload</TableHead>
+        <TableHead>CPU</TableHead>
+        <TableHead>GPU</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Ingestion / ETL de données</TableCell>
+        <TableCell>Privilégié (I/O, parsing, logique métier)</TableCell>
+        <TableCell>Rarement utile</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Feature engineering tabulaire</TableCell>
+        <TableCell>Pandas, Polars — très efficace</TableCell>
+        <TableCell>cuDF / RAPIDS si dataset énorme</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Modèles arbres (XGBoost, LightGBM)</TableCell>
+        <TableCell>Excellent sur CPU, datasets &lt; quelques Go</TableCell>
+        <TableCell>cuML si disponible et dataset massif</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Deep learning (LSTM, Transformers)</TableCell>
+        <TableCell>Trop lent pour l'entraînement</TableCell>
+        <TableCell>Quasi obligatoire</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Monte Carlo / simulations</TableCell>
+        <TableCell>Parallélisable via multiprocessing</TableCell>
+        <TableCell>GPU si millions de trajectoires indépendantes</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Backtesting vectorisé</TableCell>
+        <TableCell>NumPy/Polars sur CPU, souvent suffisant</TableCell>
+        <TableCell>GPU si matrice très large (milliers d'actifs × années de ticks)</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Points clés pour la finance quantitative
+
+<MdxCard>
+- **Choisir le bon parallélisme** : `threading` pour l'I/O, `multiprocessing`/`joblib` pour le Python pur, BLAS multi-thread pour l'algèbre linéaire.
+- **Limiter OMP_NUM_THREADS** : si vous lancez 8 workers `joblib` et que chaque worker lance 8 threads BLAS, vous saturez le CPU (oversubscription).
+- **Préférer Polars** pour les gros DataFrames et les agrégations complexes.
+- **Profiler avant d'optimiser** : `cProfile`, `py-spy` ou `scalene` pour distinguer temps Python vs temps C/BLAS.
+- **RAM** : un historique tick-by-tick sur 5000 actions peut dépasser 64 Go — planifier le partitionnement (Parquet par date/symbole) dès le départ.
+- **Le CPU reste central** : même dans un pipeline GPU, l'ingestion, le preprocessing et l'orchestration tournent sur CPU.
+</MdxCard>
