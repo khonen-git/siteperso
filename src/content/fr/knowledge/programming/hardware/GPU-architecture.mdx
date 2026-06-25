@@ -1,0 +1,349 @@
+---
+title: GPU Architecture
+description: Architecture du GPU NVIDIA — structure matérielle, modèle d'exécution CUDA et stack logicielle pour le machine learning en finance quantitative.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+
+# GPU
+
+<i>
+    Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour proposer un contenu personnel et d'une meilleure qualité.
+</i>
+
+<MdxCard>
+Cette page recense les éléments importants de l'architecture GPU **NVIDIA** pour le **machine learning** et le **deep learning** en finance quantitative.
+Les détails matériels et logiciels peuvent différer entre un GPU NVIDIA et un autre fabricant (AMD, Intel, Apple).
+Certaines parties liées au rendu graphique (rasterisation, ray tracing, etc.) ne sont pas couvertes ici.
+</MdxCard>
+
+## Structure
+
+<MdxCard>
+
+```
+GPU NVIDIA
+│
+├── Compute Core
+│   ├── GPC / Graphics Processing Cluster
+│   │   └── TPC / Texture Processing Cluster
+│   │       └── SM / Streaming Multiprocessor
+│   │           ├── CUDA Cores
+│   │           ├── Tensor Cores
+│   │           ├── Warp Schedulers
+│   │           ├── Dispatch Units
+│   │           ├── Registers
+│   │           ├── Shared Memory
+│   │           ├── Cache L1
+│   │           ├── Load/Store Units
+│   │           └── Special Function Units / SFU
+│   │
+│   └── Cache L2
+│
+├── Memory Subsystem
+│   ├── VRAM
+│   ├── Memory Controllers
+│   ├── Memory Bus
+│   ├── Memory Bandwidth
+│   └── Memory Compression
+│
+├── Data Transfer
+│   ├── PCIe Interface
+│   ├── Resizable BAR
+│   └── Copy Engines
+│
+├── Execution Model
+│   ├── Threads
+│   ├── Warps
+│   ├── Blocks
+│   ├── Grids
+│   ├── Kernels
+│   └── Streams
+│
+├── Multi-GPU
+│   ├── NVLink
+│   └── NCCL
+│
+└── Software Stack
+    ├── Driver NVIDIA
+    ├── CUDA
+    ├── CUDA Runtime
+    ├── cuDNN
+    ├── cuBLAS
+    ├── PyTorch / TensorFlow
+    ├── RAPIDS / cuDF
+    ├── CuPy
+    └── Numba CUDA
+```
+
+</MdxCard>
+
+## Compute Core
+
+Le **cœur de calcul** regroupe les unités qui exécutent les kernels CUDA. Sur NVIDIA, la hiérarchie descend du chip entier vers les unités élémentaires de traitement.
+
+### GPC et TPC
+
+Un **GPC** (*Graphics Processing Cluster*) est un ensemble de ressources de calcul partiellement indépendantes. Chaque GPC contient plusieurs **TPC** (*Texture Processing Clusters*), qui regroupent à leur tour des **SM**.
+
+Cette organisation permet de paralléliser massivement le travail : un kernel lancé sur le GPU est réparti sur l'ensemble des GPC disponibles.
+
+### SM — Streaming Multiprocessor
+
+Le **SM** est l'unité de calcul fondamentale. C'est là que s'exécutent les warps de threads. Chaque SM dispose de ses propres ressources locales :
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Composant</TableHead>
+        <TableHead>Rôle</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">CUDA Cores</TableCell>
+        <TableCell>Unités arithmétiques FP32/FP64/INT pour les opérations générales (additions, multiplications, FMA)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Tensor Cores</TableCell>
+        <TableCell>Accélérateurs matriciels (GEMM, convolutions) en FP16/BF16/TF32/INT8 — cœur des réseaux de neurones</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Warp Schedulers</TableCell>
+        <TableCell>Planifient l'exécution des warps (32 threads) sur les unités disponibles</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Dispatch Units</TableCell>
+        <TableCell>Distribuent les instructions aux unités d'exécution</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Registers</TableCell>
+        <TableCell>Mémoire la plus rapide, privée à chaque thread ; la consommation limite l'occupancy</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Shared Memory</TableCell>
+        <TableCell>Mémoire partagée entre les threads d'un même block (~48–228 Ko selon l'architecture)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Cache L1</TableCell>
+        <TableCell>Cache local au SM pour réduire la latence d'accès mémoire</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Load/Store Units</TableCell>
+        <TableCell>Gèrent les lectures et écritures en mémoire globale et partagée</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">SFU</TableCell>
+        <TableCell>Unités spécialisées pour sin, cos, sqrt, rcp, etc.</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+### Cache L2
+
+Le **cache L2** est partagé entre tous les SM du GPU. Il sert de tampon entre la VRAM et les caches L1, et joue un rôle clé dans les accès mémoire répétitifs (convolutions, réductions). Sa taille varie selon le modèle (de quelques Mo à plus de 90 Mo sur les GPU datacenter récents).
+
+## Memory Subsystem
+
+La **mémoire** est souvent le goulot d'étranglement principal en deep learning, notamment lors de l'entraînement de grands modèles ou de batches volumineux.
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Élément</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">VRAM</TableCell>
+        <TableCell>Mémoire dédiée du GPU (GDDR6/X, HBM2/e). Capacité typique : 8–80 Go selon le modèle. Limite directe la taille des modèles et des batches.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Memory Controllers</TableCell>
+        <TableCell>Gèrent les transactions entre les SM et la VRAM</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Memory Bus</TableCell>
+        <TableCell>Largeur du bus mémoire (ex. 256-bit, 384-bit, 5120-bit pour HBM). Plus large = plus de débit théorique.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Memory Bandwidth</TableCell>
+        <TableCell>Débit maximal en Go/s. Critique pour les opérations memory-bound (copies, certaines couches de réseau).</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Memory Compression</TableCell>
+        <TableCell>Compression matérielle des données en transit pour augmenter le débit effectif (surtout en rendu, impact limité en ML pur)</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+**Hiérarchie mémoire CUDA** (du plus rapide au plus lent) : registres → shared memory → L1 → L2 → VRAM → mémoire hôte (RAM CPU via PCIe).
+
+## Data Transfer
+
+Les transferts entre CPU et GPU passent par le bus **PCIe** (généralement PCIe 4.0 x16 ou PCIe 5.0 sur les plateformes récentes). Le débit typique est de l'ordre de 25–60 Go/s, bien inférieur à la bande passante interne du GPU.
+
+- **Resizable BAR** (*Base Address Register*) : permet au CPU d'accéder à l'intégralité de la VRAM sans fenêtre mémoire limitée. Utile pour certains workloads, mais l'impact en deep learning est modéré.
+- **Copy Engines** (*DMA*) : moteurs de copie asynchrones dédiés qui transfèrent des données en parallèle du calcul, sans bloquer les SM.
+
+En pratique, on minimise les transferts CPU↔GPU en gardant les tenseurs sur le device (`tensor.cuda()` ou `.to("cuda")`).
+
+## Execution Model
+
+CUDA expose un modèle de programmation **SIMT** (*Single Instruction, Multiple Threads*) organisé en hiérarchie.
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Concept</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Thread</TableCell>
+        <TableCell>Unité d'exécution élémentaire. Chaque thread a son propre identifiant (`threadIdx`) et ses registres.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Warp</TableCell>
+        <TableCell>Groupe de 32 threads exécutés en lockstep sur un SM. C'est l'unité de planification matérielle.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Block</TableCell>
+        <TableCell>Groupe de threads (typiquement 128–1024) partageant la shared memory d'un SM. Identifié par `blockIdx`.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Grid</TableCell>
+        <TableCell>Ensemble de tous les blocks d'un kernel. Définit la taille totale du parallélisme.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Kernel</TableCell>
+        <TableCell>Fonction GPU lancée sur le grid. Exemple : une multiplication matricielle, une couche de convolution.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Stream</TableCell>
+        <TableCell>File d'exécution asynchrone. Permet de chevaucher calcul et transferts mémoire sur plusieurs streams.</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+### Occupancy
+
+L'**occupancy** mesure le ratio de warps actifs par rapport au maximum possible sur un SM. Elle dépend du nombre de registres par thread, de la shared memory utilisée et de la taille des blocks. Une occupancy élevée masque la latence mémoire, mais n'est pas toujours synonyme de performance maximale.
+
+### Exemple minimal CUDA
+
+<CodeBlock language="cuda">
+{`__global__ void saxpy(float *x, float *y, float a, int n) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i < n)
+        y[i] = a * x[i] + y[i];
+}
+
+// Lancement : grid de blocks, chaque block de 256 threads
+saxpy<<<(n + 255) / 256, 256>>>(d_x, d_y, 2.0f, n);`}
+</CodeBlock>
+
+En PyTorch, ce niveau bas n'est en général pas nécessaire : les opérations tensorielles appellent automatiquement cuBLAS/cuDNN.
+
+## Multi-GPU
+
+Pour scaler au-delà d'un seul GPU :
+
+- **NVLink** : interconnexion haute bande passante entre GPU NVIDIA (jusqu'à plusieurs centaines de Go/s). Disponible sur les GPU datacenter (A100, H100), absent sur la plupart des GPU grand public.
+- **NCCL** (*NVIDIA Collective Communications Library*) : bibliothèque de communication collective (all-reduce, broadcast) optimisée pour le multi-GPU. Utilisée en interne par PyTorch Distributed et Horovod.
+
+Stratégies courantes en deep learning :
+- **Data Parallelism** (DDP) : chaque GPU traite un sous-batch, les gradients sont synchronisés via all-reduce.
+- **Model Parallelism** : différentes couches ou shards du modèle sur différents GPU (nécessaire pour les très grands modèles).
+
+## Software Stack
+
+La pile logicielle relie le matériel aux frameworks de haut niveau :
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Couche</TableHead>
+        <TableHead>Rôle</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Driver NVIDIA</TableCell>
+        <TableCell>Pilote noyau et espace utilisateur. Prérequis pour tout calcul GPU.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">CUDA Toolkit</TableCell>
+        <TableCell>Compilateur `nvcc`, bibliothèques runtime, outils de profilage (`nsys`, `nvprof`).</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">CUDA Runtime</TableCell>
+        <TableCell>API de gestion du device, allocation mémoire, lancement de kernels.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">cuDNN</TableCell>
+        <TableCell>Kernels optimisés pour deep learning : convolutions, RNN, normalisation, attention.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">cuBLAS</TableCell>
+        <TableCell>Algèbre linéaire GPU (GEMM, GEMV). Utilisé massivement par les frameworks.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">PyTorch / TensorFlow</TableCell>
+        <TableCell>Frameworks de haut niveau. Abstraient CUDA, cuDNN et cuBLAS.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">RAPIDS / cuDF</TableCell>
+        <TableCell>DataFrames GPU pour l'analyse de données tabulaires (alternative à pandas sur GPU).</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">CuPy</TableCell>
+        <TableCell>API NumPy-compatible exécutée sur GPU.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Numba CUDA</TableCell>
+        <TableCell>Compilation JIT de fonctions Python en kernels CUDA.</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+### Vérifier la configuration GPU
+
+<CodeBlock language="python">
+{`import torch
+
+print(f"CUDA disponible : {torch.cuda.is_available()}")
+print(f"Device : {torch.cuda.get_device_name(0)}")
+print(f"VRAM totale : {torch.cuda.get_device_properties(0).total_mem / 1e9:.1f} Go")
+print(f"CUDA version : {torch.version.cuda}")`}
+</CodeBlock>
+
+<ConsoleOutput title="Sortie console (exemple)">
+CUDA disponible : True
+Device : NVIDIA GeForce RTX 4090
+VRAM totale : 24.0 Go
+CUDA version : 12.4
+</ConsoleOutput>
+
+## Points clés pour la finance quantitative
+
+<MdxCard>
+- **Entraînement de modèles** (LSTM, Transformers, XGBoost GPU via cuML) : les Tensor Cores et cuDNN sont déterminants.
+- **Inférence temps réel** (scoring, signaux) : la latence PCIe et la taille du batch comptent autant que le débit brut.
+- **Backtesting vectorisé** : CuPy ou RAPIDS peuvent accélérer le traitement de grandes séries temporelles.
+- **Profiling** : utiliser `torch.profiler` ou NVIDIA Nsight Systems pour identifier les goulots (compute-bound vs memory-bound).
+- **VRAM** : surveiller `torch.cuda.max_memory_allocated()` — un OOM est souvent le premier signal qu'il faut réduire le batch ou activer le gradient checkpointing.
+</MdxCard>
