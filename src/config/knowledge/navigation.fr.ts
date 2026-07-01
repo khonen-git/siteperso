@@ -27,7 +27,15 @@ export const navigationData: TreeItem[] = [
         title: 'Distributions',
         href: '/knowledge/probability/distributions',
         children: [
-          { title: 'Discrètes', href: '/knowledge/probability/distributions/discrete' },
+          {
+            title: 'Discrètes',
+            href: '/knowledge/probability/distributions/discrete',
+            children: [
+              { title: 'Bernoulli', href: '/knowledge/probability/distributions/discrete/bernoulli' },
+              { title: 'Binomiale', href: '/knowledge/probability/distributions/discrete/binomial' },
+              { title: 'Poisson', href: '/knowledge/probability/distributions/discrete/poisson' },
+            ],
+          },
           { title: 'Continues univariées', href: '/knowledge/probability/distributions/continuous-univariate' },
           { title: 'Loi normale', href: '/knowledge/probability/distributions/normal' },
           { title: 'Multivariées', href: '/knowledge/probability/distributions/multivariate' },

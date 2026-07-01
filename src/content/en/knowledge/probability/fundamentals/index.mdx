@@ -5,7 +5,6 @@ description: Random variables, expectation, variance, and limit theorems.
 
 import { MdxCard } from '@/components/mdx/MdxCard';
 import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
-import { Link } from '@/i18n/navigation';
 
 # Fundamentals
 
@@ -13,7 +12,7 @@ import { Link } from '@/i18n/navigation';
 This page covers core probability concepts: axiomatic framework, random variables, moments, and limit theorems. For concrete laws, see [Distributions](/knowledge/probability/distributions).
 </MdxCard>
 
-## Axiomatic framework {#axiomatic-framework}
+## Axiomatic framework
 
 <MdxCard>
 A probability <MathInline>P</MathInline> on a space <MathInline>{"\\Omega"}</MathInline> satisfies:
@@ -25,7 +24,7 @@ A probability <MathInline>P</MathInline> on a space <MathInline>{"\\Omega"}</Mat
 <MathBlock>{"P\\left(\\bigcup_{i} A_i\\right) = \\sum_{i} P(A_i)"}</MathBlock>
 </MdxCard>
 
-## Probability space {#probability-space}
+## Probability space
 
 <MdxCard>
 A **probability space** is a triple <MathInline>{"(\\Omega, \\mathcal{F}, P)"}</MathInline>:
@@ -37,7 +36,7 @@ A **probability space** is a triple <MathInline>{"(\\Omega, \\mathcal{F}, P)"}</
 The sigma-algebra supports countable limits on events.
 </MdxCard>
 
-## Random variable and distribution {#random-variable}
+## Random variable and distribution
 
 <MdxCard>
 A **random variable** <MathInline>X</MathInline> is a measurable map <MathInline>{"X : \\Omega \\to \\mathbb{R}"}</MathInline> (or <MathInline>{"\\mathbb{R}^d"}</MathInline>).
@@ -50,7 +49,7 @@ Its **law** is the pushforward measure <MathInline>{"P_X(B) = P(X \\in B)"}</Mat
 CDF: <MathInline>{"F_X(x) = P(X \\leq x)"}</MathInline>.
 </MdxCard>
 
-## Expectation {#expectation}
+## Expectation
 
 <MdxCard>
 **Expectation** is the center of mass of a law:

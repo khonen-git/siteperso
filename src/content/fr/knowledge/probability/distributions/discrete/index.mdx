@@ -1,8 +1,56 @@
 ---
 title: Distributions discrètes
-description: Bernoulli, binomiale et Poisson.
+description: Lois de comptage et d'événements rares — Bernoulli, binomiale et Poisson.
 ---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { MathInline } from '@/components/features/knowledge/math/MathBlock';
+import { Link } from '@/i18n/navigation';
 
 # Distributions discrètes
 
-Ce contenu est en cours de rédaction.
+<MdxCard>
+Les **lois discrètes** modélisent des variables à support fini ou dénombrable. Les trois lois fondamentales ci-dessous forment une chaîne : un essai ([Bernoulli](/knowledge/probability/distributions/discrete/bernoulli)), la somme de <MathInline>n</MathInline> essais ([binomiale](/knowledge/probability/distributions/discrete/binomial)), puis la limite de comptage rare ([Poisson](/knowledge/probability/distributions/discrete/poisson)).
+</MdxCard>
+
+## Lois détaillées
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Loi</TableHead>
+      <TableHead>Paramètres</TableHead>
+      <TableHead>Interprétation</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/probability/distributions/discrete/bernoulli">Bernoulli</Link>
+      </TableCell>
+      <TableCell><MathInline>p</MathInline></TableCell>
+      <TableCell>Essai unique succès/échec, indicatrice d'événement</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/probability/distributions/discrete/binomial">Binomiale</Link>
+      </TableCell>
+      <TableCell><MathInline>{"n, p"}</MathInline></TableCell>
+      <TableCell>Nombre de succès sur <MathInline>n</MathInline> essais indépendants</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/probability/distributions/discrete/poisson">Poisson</Link>
+      </TableCell>
+      <TableCell><MathInline>{"\\lambda"}</MathInline></TableCell>
+      <TableCell>Comptage d'événements rares sur un intervalle</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+## Voir aussi
+
+- [Distributions](/knowledge/probability/distributions) — vue d'ensemble
+- [Fondamentaux](/knowledge/probability/fundamentals) — PMF, espérance, variance
+- [Loi normale](/knowledge/probability/distributions/normal) — approximation de la binomiale

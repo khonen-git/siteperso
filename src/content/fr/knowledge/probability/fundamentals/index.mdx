@@ -6,7 +6,6 @@ description: Variables aléatoires, espérance, variance et théorèmes limites.
 import { MdxCard } from '@/components/mdx/MdxCard';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
-import { Link } from '@/i18n/navigation';
 
 # Fondamentaux
 
@@ -14,7 +13,7 @@ import { Link } from '@/i18n/navigation';
 Cette page regroupe les notions de base des probabilités : cadre axiomatique, variables aléatoires, moments et théorèmes limites. Pour les lois concrètes, voir [Distributions](/knowledge/probability/distributions).
 </MdxCard>
 
-## Cadre axiomatique {#cadre-axiomatique}
+## Cadre axiomatique
 
 <MdxCard>
 Une probabilité <MathInline>P</MathInline> sur un espace <MathInline>{"\\Omega"}</MathInline> vérifie :
@@ -26,7 +25,7 @@ Une probabilité <MathInline>P</MathInline> sur un espace <MathInline>{"\\Omega"
 <MathBlock>{"P\\left(\\bigcup_{i} A_i\\right) = \\sum_{i} P(A_i)"}</MathBlock>
 </MdxCard>
 
-## Espace probabilisable {#espace-probabilisable}
+## Espace probabilisable
 
 <MdxCard>
 Un **espace probabilisable** est un triplet <MathInline>{"(\\Omega, \\mathcal{F}, P)"}</MathInline> :
@@ -38,7 +37,7 @@ Un **espace probabilisable** est un triplet <MathInline>{"(\\Omega, \\mathcal{F}
 La tribu permet de définir des opérations dénombrables (limites, sup, etc.) sur les événements.
 </MdxCard>
 
-## Variable aléatoire et distribution {#variable-aleatoire}
+## Variable aléatoire et distribution
 
 <MdxCard>
 Une **variable aléatoire** <MathInline>X</MathInline> est une application mesurable <MathInline>{"X : \\Omega \\to \\mathbb{R}"}</MathInline> (ou <MathInline>{"\\mathbb{R}^d"}</MathInline>).
@@ -51,7 +50,7 @@ Sa **loi** est la mesure image <MathInline>{"P_X(B) = P(X \\in B)"}</MathInline>
 La fonction de répartition : <MathInline>{"F_X(x) = P(X \\leq x)"}</MathInline>.
 </MdxCard>
 
-## Espérance {#esperance}
+## Espérance
 
 <MdxCard>
 L'**espérance** résume le centre de gravité d'une loi :

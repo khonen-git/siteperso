@@ -1,0 +1,353 @@
+---
+title: Bernoulli distribution
+description: Elementary success/failure law, building block of independent trials and default models.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+
+# Bernoulli distribution
+
+<MdxCard title="Definition">
+The **Bernoulli distribution** describes the outcome of a **single trial** with two outcomes: success (coded 1) or failure (coded 0). It is the simplest indicator variable and the building block of [binomial](/knowledge/probability/distributions/discrete/binomial) and counting models.
+</MdxCard>
+
+## Characteristics
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Characteristic</TableHead>
+        <TableHead>Formula</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Notation</TableCell>
+        <TableCell><MathInline>{"X \\sim \\mathrm{Bernoulli}(p)"}</MathInline></TableCell>
+        <TableCell>Sometimes written <MathInline>{"\\mathrm{Bern}(p)"}</MathInline> or <MathInline>{"\\mathrm{Be}(p)"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Parameter</TableCell>
+        <TableCell><MathInline>{"p \\in [0, 1]"}</MathInline></TableCell>
+        <TableCell>Success probability; often <MathInline>{"q = 1 - p"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Support</TableCell>
+        <TableCell><MathInline>{"\\{0, 1\\}"}</MathInline></TableCell>
+        <TableCell>Two mutually exclusive integer values</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Probability mass function</TableCell>
+        <TableCell><MathInline>{"P(X = 1) = p,\\; P(X = 0) = 1 - p"}</MathInline></TableCell>
+        <TableCell>PMF on the binary support</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Cumulative distribution function</TableCell>
+        <TableCell>
+          <MathInline>{"F(x) = 0"}</MathInline> if <MathInline>{"x < 0"}</MathInline>,<br />
+          <MathInline>{"F(x) = 1 - p"}</MathInline> if <MathInline>{"0 \\leq x < 1"}</MathInline>,<br />
+          <MathInline>{"F(x) = 1"}</MathInline> if <MathInline>{"x \\geq 1"}</MathInline>
+        </TableCell>
+        <TableCell>Jump of height <MathInline>p</MathInline> at <MathInline>{"x = 1"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Moment-generating function</TableCell>
+        <TableCell><MathInline>{"M_X(t) = 1 - p + p e^t = q + p e^t"}</MathInline></TableCell>
+        <TableCell>Derivatives at 0 yield moments</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Characteristic function</TableCell>
+        <TableCell><MathInline>{"\\varphi_X(t) = 1 - p + p e^{it}"}</MathInline></TableCell>
+        <TableCell>Fourier transform of the law</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Mean</TableCell>
+        <TableCell><MathInline>p</MathInline></TableCell>
+        <TableCell>Average success probability on one trial</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Variance</TableCell>
+        <TableCell><MathInline>{"p(1-p) = pq"}</MathInline></TableCell>
+        <TableCell>Maximized at <MathInline>{"p = 1/2"}</MathInline> (<MathInline>{"1/4"}</MathInline>)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Median</TableCell>
+        <TableCell><MathInline>{"0"}</MathInline> if <MathInline>{"p < 1/2"}</MathInline>, <MathInline>{"1"}</MathInline> if <MathInline>{"p > 1/2"}</MathInline></TableCell>
+        <TableCell>Not unique if <MathInline>{"p = 1/2"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Mode</TableCell>
+        <TableCell><MathInline>{"1"}</MathInline> if <MathInline>{"p > 1/2"}</MathInline>, <MathInline>{"0"}</MathInline> if <MathInline>{"p < 1/2"}</MathInline></TableCell>
+        <TableCell>Bimodal if <MathInline>{"p = 1/2"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Skewness</TableCell>
+        <TableCell><MathInline>{"\\frac{1 - 2p}{\\sqrt{p(1-p)}}"}</MathInline></TableCell>
+        <TableCell>Positive if <MathInline>{"p < 1/2"}</MathInline>, negative if <MathInline>{"p > 1/2"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Excess kurtosis</TableCell>
+        <TableCell><MathInline>{"\\frac{1 - 6p(1-p)}{p(1-p)}"}</MathInline></TableCell>
+        <TableCell>Lighter tails than the normal at <MathInline>{"p = 1/2"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Shannon entropy</TableCell>
+        <TableCell><MathInline>{"H(X) = -p \\ln p - (1-p) \\ln(1-p)"}</MathInline></TableCell>
+        <TableCell>Convention <MathInline>{"0 \\ln 0 = 0"}</MathInline>; maximized at <MathInline>{"p = 1/2"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Fisher information</TableCell>
+        <TableCell><MathInline>{"\\mathcal{I}(p) = \\frac{1}{p(1-p)}"}</MathInline></TableCell>
+        <TableCell>For one observation; increases as <MathInline>p</MathInline> moves away from <MathInline>{"1/2"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Kullback-Leibler divergence</TableCell>
+        <TableCell><MathInline>{"D_{\\mathrm{KL}}(p \\| q) = p \\ln\\frac{p}{q} + (1-p) \\ln\\frac{1-p}{1-q}"}</MathInline></TableCell>
+        <TableCell>Between two Bernoulli laws with parameters <MathInline>p</MathInline> and <MathInline>q</MathInline></TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Properties and theorems
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Property / theorem</TableHead>
+        <TableHead>Formula</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Indicator variable</TableCell>
+        <TableCell><MathInline>{"X = \\mathbf{1}_A"}</MathInline></TableCell>
+        <TableCell>Every Bernoulli is the indicator of an event <MathInline>A</MathInline> with probability <MathInline>p</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Complement</TableCell>
+        <TableCell><MathInline>{"1 - X \\sim \\mathrm{Bernoulli}(1-p)"}</MathInline></TableCell>
+        <TableCell>Success and failure are symmetric under inversion</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>i.i.d. sum</TableCell>
+        <TableCell><MathInline>{"\\sum_{i=1}^n X_i \\sim \\mathrm{Bin}(n, p)"}</MathInline></TableCell>
+        <TableCell><MathInline>n</MathInline> independent trials → [binomial law](/knowledge/probability/distributions/discrete/binomial)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Integer moments</TableCell>
+        <TableCell><MathInline>{"\\mathbb{E}[X^k] = p"}</MathInline> for <MathInline>{"k \\geq 1"}</MathInline></TableCell>
+        <TableCell>Since <MathInline>{"X^k = X"}</MathInline> on <MathInline>{"\\{0,1\\}"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Maximum variance</TableCell>
+        <TableCell><MathInline>{"\\max_p \\mathrm{Var}(X) = \\frac{1}{4}"}</MathInline></TableCell>
+        <TableCell>Reached at <MathInline>{"p = 1/2"}</MathInline>; bounds single-trial uncertainty</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Zero product</TableCell>
+        <TableCell><MathInline>{"\\mathbb{E}[X(1-X)] = 0"}</MathInline></TableCell>
+        <TableCell><MathInline>{"X"}</MathInline> and <MathInline>{"1-X"}</MathInline> are never simultaneously nonzero</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>MGF of sums</TableCell>
+        <TableCell><MathInline>{"M_{\\sum X_i}(t) = (q + p e^t)^n"}</MathInline></TableCell>
+        <TableCell>For <MathInline>n</MathInline> i.i.d. variables; identifies the binomial</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Degenerate cases</TableCell>
+        <TableCell><MathInline>{"p = 0 \\Rightarrow X = 0"}</MathInline>, <MathInline>{"p = 1 \\Rightarrow X = 1"}</MathInline></TableCell>
+        <TableCell>Point masses at the parameter boundaries</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Bernoulli process</TableCell>
+        <TableCell><MathInline>{"(X_t)_{t \\geq 1}"}</MathInline> i.i.d.</TableCell>
+        <TableCell>Sequence of independent trials; partial sums are binomial</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Applications
+
+<div className="grid gap-4 md:grid-cols-2">
+
+<MdxCard>
+
+### Default modeling
+
+A loan defaulting (yes/no) over a horizon is often modeled as a Bernoulli with parameter PD (probability of default).
+
+</MdxCard>
+
+<MdxCard>
+
+### Binary classification
+
+Classifier output (positive/negative), marketing conversion, binary signal: the target or prediction error is naturally Bernoulli.
+
+</MdxCard>
+
+<MdxCard>
+
+### Independent trials
+
+Coin flips, noisy bit transmission, winning/losing trades under i.i.d. assumptions: each repetition is a Bernoulli trial.
+
+</MdxCard>
+
+<MdxCard>
+
+### Building block for counting laws
+
+Sums of i.i.d. Bernoulli variables yield the binomial; in the rare regime (large <MathInline>n</MathInline>, small <MathInline>p</MathInline>), the [Poisson law](/knowledge/probability/distributions/discrete/poisson) appears as a limit.
+
+</MdxCard>
+
+</div>
+
+## Statistical inference
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Concept</TableHead>
+        <TableHead>Formula</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Sample</TableCell>
+        <TableCell><MathInline>{"X_1, \\ldots, X_n \\stackrel{\\mathrm{i.i.d.}}{\\sim} \\mathrm{Bernoulli}(p)"}</MathInline></TableCell>
+        <TableCell><MathInline>n</MathInline> observed trials; inference targets proportion <MathInline>p</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>MLE estimator</TableCell>
+        <TableCell><MathInline>{"\\hat{p} = \\bar{X}_n = \\frac{1}{n}\\sum_{i=1}^n X_i"}</MathInline></TableCell>
+        <TableCell>Empirical success rate; unbiased, consistent, efficient</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Estimator variance</TableCell>
+        <TableCell><MathInline>{"\\mathrm{Var}(\\hat{p}) = \\frac{p(1-p)}{n}"}</MathInline></TableCell>
+        <TableCell>Decays as <MathInline>{"1/n"}</MathInline>; largest at <MathInline>{"p = 1/2"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Wald interval</TableCell>
+        <TableCell><MathInline>{"\\hat{p} \\pm z_{1-\\alpha/2} \\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}"}</MathInline></TableCell>
+        <TableCell>Normal approximation; acceptable when <MathInline>{"np"}</MathInline> and <MathInline>{"n(1-p)"}</MathInline> are large enough</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Clopper-Pearson interval</TableCell>
+        <TableCell><MathInline>{"\\left[F_{\\mathrm{Beta}}^{-1}\\left(\\frac{\\alpha}{2}; k, n-k+1\\right),\\; F_{\\mathrm{Beta}}^{-1}\\left(1-\\frac{\\alpha}{2}; k+1, n-k\\right)\\right]"}</MathInline></TableCell>
+        <TableCell>Exact proportion interval with <MathInline>{"k = \\sum X_i"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Proportion Z-test</TableCell>
+        <TableCell><MathInline>{"Z = \\frac{\\hat{p} - p_0}{\\sqrt{p_0(1-p_0)/n}} \\approx \\mathcal{N}(0,1)"}</MathInline></TableCell>
+        <TableCell>Under <MathInline>{"H_0 : p = p_0"}</MathInline> and large <MathInline>n</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Conjugate prior (Bayesian)</TableCell>
+        <TableCell><MathInline>{"p \\sim \\mathrm{Beta}(\\alpha, \\beta) \\Rightarrow p \\mid \\mathbf{x} \\sim \\mathrm{Beta}(\\alpha + k, \\beta + n - k)"}</MathInline></TableCell>
+        <TableCell>The beta law is conjugate to Bernoulli</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+<MdxCard>
+  <div className="space-y-4">
+    <h3 className="text-xl font-medium">Important remarks</h3>
+    <ul className="list-disc pl-6 space-y-2">
+      <li>A single trial (<MathInline>{"n = 1"}</MathInline>) cannot estimate <MathInline>p</MathInline> with a margin of error; inference practically concerns an i.i.d. Bernoulli sample.</li>
+      <li>The Wald interval can yield bounds outside <MathInline>{"[0,1]"}</MathInline> for <MathInline>p</MathInline> near 0 or 1 and moderate <MathInline>n</MathInline>.</li>
+      <li>For small samples, prefer Clopper-Pearson or the Wilson interval.</li>
+      <li>The rule of thumb <MathInline>{"np \\geq 5"}</MathInline> and <MathInline>{"n(1-p) \\geq 5"}</MathInline> guides use of the normal approximation.</li>
+    </ul>
+  </div>
+</MdxCard>
+
+## Computational methods
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Method</TableHead>
+        <TableHead>Description</TableHead>
+        <TableHead>Applications</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Pseudo-random generation</TableCell>
+        <TableCell><MathInline>{"U \\sim \\mathcal{U}(0,1)"}</MathInline>, return 1 if <MathInline>{"U < p"}</MathInline></TableCell>
+        <TableCell>Default simulation, Monte Carlo, bootstrap</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>NumPy</TableCell>
+        <TableCell><code>np.random.binomial(1, p)</code> or <code>np.random.default_rng().binomial(1, p)</code></TableCell>
+        <TableCell>Vectorized draws on a portfolio</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>SciPy</TableCell>
+        <TableCell><code>scipy.stats.bernoulli(p)</code> — PMF, CDF, <code>rvs</code>, moments</TableCell>
+        <TableCell>Exact calculations and simulation</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Estimation and CIs</TableCell>
+        <TableCell><code>proportion_confint</code> (statsmodels) — Wilson, Clopper-Pearson</TableCell>
+        <TableCell>Robust confidence intervals for proportions</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+<MdxCard>
+  <CodeBlock language="python">
+    {`
+import numpy as np
+from scipy import stats
+
+p = 0.08
+n = 10_000
+
+# i.i.d. default simulation
+rng = np.random.default_rng(42)
+defaults = rng.binomial(1, p, size=n)
+
+p_hat = defaults.mean()
+se = np.sqrt(p_hat * (1 - p_hat) / n)
+
+# Theoretical law (scipy.stats.bernoulli)
+bernoulli = stats.bernoulli(p)
+print(f"Theoretical E[X]: {bernoulli.mean():.4f}")
+print(f"Theoretical Var(X): {bernoulli.var():.4f}")
+print(f"Empirical p̂: {p_hat:.4f} (SE ≈ {se:.4f})")
+
+# Approximate Wald 95% CI
+z = stats.norm.ppf(0.975)
+ci_low = p_hat - z * se
+ci_high = p_hat + z * se
+print(f"Wald 95% CI: [{ci_low:.4f}, {ci_high:.4f}]")
+`}
+  </CodeBlock>
+</MdxCard>
+
+## References
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• Wikipedia, Bernoulli distribution: https://en.wikipedia.org/wiki/Bernoulli_distribution</p>
+    <p>• Special case of the exponential family; see also [Fundamentals](/knowledge/probability/fundamentals) and [Discrete distributions](/knowledge/probability/distributions/discrete).</p>
+  </div>
+</MdxCard>

@@ -1,8 +1,56 @@
 ---
 title: Discrete distributions
-description: Bernoulli, binomial, and Poisson.
+description: Counting laws and rare events — Bernoulli, binomial, and Poisson.
 ---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { MathInline } from '@/components/features/knowledge/math/MathBlock';
+import { Link } from '@/i18n/navigation';
 
 # Discrete distributions
 
-This content is being written.
+<MdxCard>
+**Discrete laws** model random variables on finite or countable support. The three fundamental laws below form a chain: one trial ([Bernoulli](/knowledge/probability/distributions/discrete/bernoulli)), the sum of <MathInline>n</MathInline> trials ([binomial](/knowledge/probability/distributions/discrete/binomial)), then the rare-counting limit ([Poisson](/knowledge/probability/distributions/discrete/poisson)).
+</MdxCard>
+
+## Detailed laws
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Law</TableHead>
+      <TableHead>Parameters</TableHead>
+      <TableHead>Interpretation</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/probability/distributions/discrete/bernoulli">Bernoulli</Link>
+      </TableCell>
+      <TableCell><MathInline>p</MathInline></TableCell>
+      <TableCell>Single success/failure trial, event indicator</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/probability/distributions/discrete/binomial">Binomial</Link>
+      </TableCell>
+      <TableCell><MathInline>{"n, p"}</MathInline></TableCell>
+      <TableCell>Number of successes in <MathInline>n</MathInline> independent trials</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/probability/distributions/discrete/poisson">Poisson</Link>
+      </TableCell>
+      <TableCell><MathInline>{"\\lambda"}</MathInline></TableCell>
+      <TableCell>Count of rare events over an interval</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+## See also
+
+- [Distributions](/knowledge/probability/distributions) — overview
+- [Fundamentals](/knowledge/probability/fundamentals) — PMF, expectation, variance
+- [Normal distribution](/knowledge/probability/distributions/normal) — binomial approximation
