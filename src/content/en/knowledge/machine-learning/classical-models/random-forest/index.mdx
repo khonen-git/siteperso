@@ -11,13 +11,13 @@ import { MathInline } from '@/components/features/knowledge/math/MathBlock';
 # Random Forest
 
 <MdxCard title="Definition">
-A **random forest** is an ensemble of **decision trees** trained on bootstrap samples of the data, with **random feature subsets** at each split. Final predictions aggregate trees by **majority vote** (classification) or **averaging** (regression).
+A **random forest** is an ensemble of **decision trees** trained on <TermTip term="bootstrap">bootstrap</TermTip> samples of the data, with **random feature subsets** at each split. Final predictions aggregate trees by **majority vote** (classification) or **averaging** (regression).
 </MdxCard>
 
 ## Intuition
 
 <MdxCard>
-A single tree captures nonlinear interactions but **overfits** easily (high variance). Random forest applies **bagging**: train many trees on different subsamples and average them to reduce variance without increasing bias as much.
+A single tree captures nonlinear interactions but <TermTip term="overfitting">overfits</TermTip> easily (high variance). Random forest applies <TermTip term="bagging">bagging</TermTip>: train many trees on different subsamples and average them to reduce variance without increasing bias as much.
 
 Randomizing features at each split **decorrelates** trees — a necessary condition for aggregation to genuinely improve generalization over one deep tree.
 </MdxCard>
@@ -26,15 +26,15 @@ Randomizing features at each split **decorrelates** trees — a necessary condit
 
 <MdxCard>
   <ol className="list-decimal pl-6 space-y-3">
-    <li><strong>Bootstrap</strong>: for each tree <MathInline>b</MathInline>, draw <MathInline>n</MathInline> observations with replacement from <MathInline>n</MathInline> (about 63% unique observations per tree).</li>
+    <li><strong><TermTip term="bootstrap">Bootstrap</TermTip></strong>: for each tree <MathInline>b</MathInline>, draw <MathInline>n</MathInline> observations with replacement from <MathInline>n</MathInline> (about 63% unique observations per tree).</li>
     <li><strong>Unpruned tree</strong>: grow until depth or stopping criteria (<code>max_depth</code>, <code>min_samples_leaf</code>, etc.).</li>
-    <li><strong>Random subspace</strong>: at each node, consider only a subset of <code>max_features</code> variables for the best split.</li>
+    <li><strong><TermTip term="random-subspace">Random subspace</TermTip></strong>: at each node, consider only a subset of <code>max_features</code> variables for the best split.</li>
     <li><strong>Aggregation</strong>: classification → majority class; regression → mean of <MathInline>B</MathInline> tree predictions.</li>
   </ol>
 </MdxCard>
 
 <MdxCard>
-**Out-of-bag (OOB) score**: observations not in a tree's bootstrap sample act as an implicit validation set. With <code>oob_score=True</code>, you get a performance estimate without a dedicated validation set — useful for prototyping, but not a substitute for rigorous [cross-validation](/knowledge/machine-learning/general-concepts/cross-validation).
+**<TermTip term="oob">Out-of-bag (OOB)</TermTip> score**: observations not in a tree's bootstrap sample act as an implicit validation set. With <code>oob_score=True</code>, you get a performance estimate without a dedicated validation set — useful for prototyping, but not a substitute for rigorous [cross-validation](/knowledge/machine-learning/general-concepts/cross-validation).
 </MdxCard>
 
 ## Key hyperparameters
@@ -121,7 +121,7 @@ Randomizing features at each split **decorrelates** trees — a necessary condit
 - Memory and latency grow with <code>n_estimators</code>
 - Regression: poor extrapolation outside the training domain
 - Can be outperformed by [gradient boosting](/knowledge/machine-learning/classical-models/xgboost) on structured tabular data
-- Sensitive to **concept drift** and **non-iid** data without adaptation
+- Sensitive to <TermTip term="concept-drift">concept drift</TermTip> and <TermTip term="non-iid">non-iid</TermTip> data without adaptation
 
 </MdxCard>
 

@@ -11,13 +11,13 @@ import { MathInline } from '@/components/features/knowledge/math/MathBlock';
 # Random Forest
 
 <MdxCard title="Définition">
-La **forêt aléatoire** (Random Forest) est un ensemble d'**arbres de décision** entraînés sur des échantillons bootstrap des données, avec une **sous-sélection aléatoire de variables** à chaque division. Les prédictions finales agrègent les arbres par **vote majoritaire** (classification) ou **moyenne** (régression).
+La **forêt aléatoire** (Random Forest) est un ensemble d'**arbres de décision** entraînés sur des échantillons <TermTip term="bootstrap">bootstrap</TermTip> des données, avec une **sous-sélection aléatoire de variables** à chaque division. Les prédictions finales agrègent les arbres par **vote majoritaire** (classification) ou **moyenne** (régression).
 </MdxCard>
 
 ## Intuition
 
 <MdxCard>
-Un arbre seul capture des interactions non linéaires mais **sur-apprend** facilement (forte variance). La forêt aléatoire applique le **bagging** : entraîner de nombreux arbres sur des sous-échantillons différents puis les moyenner réduit la variance sans augmenter autant le biais.
+Un arbre seul capture des interactions non linéaires mais <TermTip term="overfitting">sur-apprend</TermTip> facilement (forte variance). La forêt aléatoire applique le <TermTip term="bagging">bagging</TermTip> : entraîner de nombreux arbres sur des sous-échantillons différents puis les moyenner réduit la variance sans augmenter autant le biais.
 
 La randomisation des features à chaque split **décorrèle** les arbres entre eux — condition nécessaire pour que l'agrégation améliore réellement la généralisation par rapport à un seul arbre profond.
 </MdxCard>
@@ -26,15 +26,15 @@ La randomisation des features à chaque split **décorrèle** les arbres entre e
 
 <MdxCard>
   <ol className="list-decimal pl-6 space-y-3">
-    <li><strong>Bootstrap</strong> : pour chaque arbre <MathInline>b</MathInline>, tirer <MathInline>n</MathInline> observations avec remise parmi <MathInline>n</MathInline> (environ 63 % d'observations uniques par arbre).</li>
+    <li><strong><TermTip term="bootstrap">Bootstrap</TermTip></strong> : pour chaque arbre <MathInline>b</MathInline>, tirer <MathInline>n</MathInline> observations avec remise parmi <MathInline>n</MathInline> (environ 63 % d'observations uniques par arbre).</li>
     <li><strong>Arbre non élagué</strong> : faire croître l'arbre jusqu'à une profondeur ou des critères d'arrêt fixés (<code>max_depth</code>, <code>min_samples_leaf</code>, etc.).</li>
-    <li><strong>Random subspace</strong> : à chaque nœud, ne considérer qu'un sous-ensemble de <code>max_features</code> variables pour choisir le meilleur split.</li>
+    <li><strong><TermTip term="random-subspace">Random subspace</TermTip></strong> : à chaque nœud, ne considérer qu'un sous-ensemble de <code>max_features</code> variables pour choisir le meilleur split.</li>
     <li><strong>Agrégation</strong> : classification → classe majoritaire ; régression → moyenne des prédictions des <MathInline>B</MathInline> arbres.</li>
   </ol>
 </MdxCard>
 
 <MdxCard>
-**Score out-of-bag (OOB)** : les observations non incluses dans le bootstrap d'un arbre servent d'échantillon de validation implicite. Avec <code>oob_score=True</code>, on obtient une estimation de performance sans jeu de validation dédié — utile en première passe, mais pas un substitut à une [validation croisée](/knowledge/machine-learning/general-concepts/cross-validation) rigoureuse.
+**Score <TermTip term="oob">out-of-bag (OOB)</TermTip>** : les observations non incluses dans le bootstrap d'un arbre servent d'échantillon de validation implicite. Avec <code>oob_score=True</code>, on obtient une estimation de performance sans jeu de validation dédié — utile en première passe, mais pas un substitut à une [validation croisée](/knowledge/machine-learning/general-concepts/cross-validation) rigoureuse.
 </MdxCard>
 
 ## Hyperparamètres clés
@@ -121,7 +121,7 @@ La randomisation des features à chaque split **décorrèle** les arbres entre e
 - Coût mémoire et latence croissants avec <code>n_estimators</code>
 - Régression : mauvaise extrapolation hors du domaine d'entraînement
 - Peut être dominé par le [gradient boosting](/knowledge/machine-learning/classical-models/xgboost) sur données tabulaires structurées
-- Sensible au **concept drift** et au **non-iid** sans adaptation
+- Sensible au <TermTip term="concept-drift">concept drift</TermTip> et au <TermTip term="non-iid">non-iid</TermTip> sans adaptation
 
 </MdxCard>
 

@@ -5,6 +5,8 @@ import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import MDXComponents from '@/components/mdx/MDXComponents';
 import { NotaBene } from '@/components/mdx/NotaBene';
+import { KnowledgeMdxProvider } from '@/components/mdx/KnowledgeMdxContext';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import {
   getAiContentNotice,
   isDesignPatternsArticle,
@@ -41,7 +43,11 @@ export function KnowledgeMdxRenderer({
   return (
     <article className="prose prose-gray prose-h1:mt-2 dark:prose-invert max-w-none">
       {showAiNotice ? <NotaBene>{aiNotice}</NotaBene> : null}
-      <MDXRemote {...source} components={MDXComponents} />
+      <KnowledgeMdxProvider locale={locale}>
+        <TooltipProvider delayDuration={200}>
+          <MDXRemote {...source} components={MDXComponents} />
+        </TooltipProvider>
+      </KnowledgeMdxProvider>
     </article>
   );
 }
