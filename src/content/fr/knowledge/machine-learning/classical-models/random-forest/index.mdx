@@ -1,8 +1,357 @@
 ---
 title: Random Forest
-description: Forêts aléatoires et agrégation d'arbres.
+description: Forêts aléatoires — bagging d'arbres, hyperparamètres et usage en classification tabulaire.
 ---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { MathInline } from '@/components/features/knowledge/math/MathBlock';
 
 # Random Forest
 
-Ce contenu est en cours de rédaction.
+<MdxCard title="Définition">
+La **forêt aléatoire** (Random Forest) est un ensemble d'**arbres de décision** entraînés sur des échantillons bootstrap des données, avec une **sous-sélection aléatoire de variables** à chaque division. Les prédictions finales agrègent les arbres par **vote majoritaire** (classification) ou **moyenne** (régression).
+</MdxCard>
+
+## Intuition
+
+<MdxCard>
+Un arbre seul capture des interactions non linéaires mais **sur-apprend** facilement (forte variance). La forêt aléatoire applique le **bagging** : entraîner de nombreux arbres sur des sous-échantillons différents puis les moyenner réduit la variance sans augmenter autant le biais.
+
+La randomisation des features à chaque split **décorrèle** les arbres entre eux — condition nécessaire pour que l'agrégation améliore réellement la généralisation par rapport à un seul arbre profond.
+</MdxCard>
+
+## Fonctionnement
+
+<MdxCard>
+  <ol className="list-decimal pl-6 space-y-3">
+    <li><strong>Bootstrap</strong> : pour chaque arbre <MathInline>b</MathInline>, tirer <MathInline>n</MathInline> observations avec remise parmi <MathInline>n</MathInline> (environ 63 % d'observations uniques par arbre).</li>
+    <li><strong>Arbre non élagué</strong> : faire croître l'arbre jusqu'à une profondeur ou des critères d'arrêt fixés (<code>max_depth</code>, <code>min_samples_leaf</code>, etc.).</li>
+    <li><strong>Random subspace</strong> : à chaque nœud, ne considérer qu'un sous-ensemble de <code>max_features</code> variables pour choisir le meilleur split.</li>
+    <li><strong>Agrégation</strong> : classification → classe majoritaire ; régression → moyenne des prédictions des <MathInline>B</MathInline> arbres.</li>
+  </ol>
+</MdxCard>
+
+<MdxCard>
+**Score out-of-bag (OOB)** : les observations non incluses dans le bootstrap d'un arbre servent d'échantillon de validation implicite. Avec <code>oob_score=True</code>, on obtient une estimation de performance sans jeu de validation dédié — utile en première passe, mais pas un substitut à une [validation croisée](/knowledge/machine-learning/general-concepts/cross-validation) rigoureuse.
+</MdxCard>
+
+## Hyperparamètres clés
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Paramètre</TableHead>
+        <TableHead>Rôle</TableHead>
+        <TableHead>Valeurs typiques</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium"><code>n_estimators</code></TableCell>
+        <TableCell>Nombre d'arbres dans la forêt</TableCell>
+        <TableCell>100–500 ; rendements décroissants au-delà</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>max_depth</code></TableCell>
+        <TableCell>Profondeur maximale de chaque arbre</TableCell>
+        <TableCell><code>None</code> (illimité) ou 10–30 selon bruit</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>min_samples_leaf</code></TableCell>
+        <TableCell>Taille minimale d'une feuille</TableCell>
+        <TableCell>1–10 ; plus élevé = plus de régularisation</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>min_samples_split</code></TableCell>
+        <TableCell>Échantillons minimum pour diviser un nœud</TableCell>
+        <TableCell>2 (défaut) à 20+ en données bruitées</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>max_features</code></TableCell>
+        <TableCell>Variables candidates par split</TableCell>
+        <TableCell><code>sqrt</code> (classif.), <code>1/3</code> (régression) ; décorrélation des arbres</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>bootstrap</code></TableCell>
+        <TableCell>Échantillonnage avec remise</TableCell>
+        <TableCell><code>True</code> (défaut) ; <code>False</code> → chaque arbre voit toutes les données</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>oob_score</code></TableCell>
+        <TableCell>Évaluation out-of-bag</TableCell>
+        <TableCell><code>True</code> si <code>bootstrap=True</code></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>class_weight</code></TableCell>
+        <TableCell>Pondération des classes déséquilibrées</TableCell>
+        <TableCell><code>balanced</code> ou dictionnaire de poids</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>n_jobs</code></TableCell>
+        <TableCell>Parallélisation de l'entraînement</TableCell>
+        <TableCell><code>-1</code> pour tous les cœurs</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Forces et limites
+
+<div className="grid gap-4 md:grid-cols-2">
+
+<MdxCard>
+
+### Forces
+
+- Robuste aux outliers et aux échelles de variables (pas de normalisation obligatoire)
+- Capture interactions et non-linéarités sans feature engineering explicite
+- Importance des variables intégrée ; score OOB gratuit
+- Parallélisable ; relativement peu d'hyperparamètres critiques
+
+</MdxCard>
+
+<MdxCard>
+
+### Limites
+
+- Moins interprétable qu'un arbre unique
+- Coût mémoire et latence croissants avec <code>n_estimators</code>
+- Régression : mauvaise extrapolation hors du domaine d'entraînement
+- Peut être dominé par le [gradient boosting](/knowledge/machine-learning/classical-models/xgboost) sur données tabulaires structurées
+- Sensible au **concept drift** et au **non-iid** sans adaptation
+
+</MdxCard>
+
+</div>
+
+## Comparaison avec les modèles voisins
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Modèle</TableHead>
+        <TableHead>Principe</TableHead>
+        <TableHead>vs Random Forest</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Arbre de décision</TableCell>
+        <TableCell>Un seul arbre, splits déterministes</TableCell>
+        <TableCell>Plus interprétable, variance beaucoup plus élevée</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Extra Trees</TableCell>
+        <TableCell>Splits aléatoires (seuils aléatoires parmi les candidats)</TableCell>
+        <TableCell>Encore plus de décorrélation, souvent plus rapide, parfois légèrement moins précis</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Gradient Boosting (XGBoost…)</TableCell>
+        <TableCell>Arbres séquentiels corrigeant les résidus</TableCell>
+        <TableCell>Souvent meilleur en compétition tabulaire ; plus sensible au tuning et au sur-apprentissage</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Régression / logistique</TableCell>
+        <TableCell>Modèle linéaire</TableCell>
+        <TableCell>Baseline rapide et interprétable ; ne capture pas les interactions complexes</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">k-NN</TableCell>
+        <TableCell>Voisinage local</TableCell>
+        <TableCell>Sensible à la métrique et à la dimension ; latence en prédiction élevée</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Évaluation et réglage
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Étape</TableHead>
+        <TableHead>Recommandation</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Découpage des données</TableCell>
+        <TableCell>Train / validation / test ; en séries temporelles : walk-forward ou purged CV — voir [validation croisée](/knowledge/machine-learning/general-concepts/cross-validation)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Métriques</TableCell>
+        <TableCell>Classification : accuracy, F1, ROC AUC, log loss selon le coût métier ; régression : RMSE, MAE, <MathInline>{"R^2"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Recherche d'hyperparamètres</TableCell>
+        <TableCell>Commencer par <code>n_estimators</code> et <code>max_depth</code> ; affiner <code>min_samples_leaf</code> et <code>max_features</code> via grid ou random search</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">OOB</TableCell>
+        <TableCell>Indicateur rapide pendant le prototypage ; valider sur un hold-out ou une CV avant déploiement</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Sur-apprentissage</TableCell>
+        <TableCell>Augmenter <code>min_samples_leaf</code>, réduire <code>max_depth</code> ; vérifier l'écart train/validation</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Importance des variables
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Méthode</TableHead>
+        <TableHead>Principe</TableHead>
+        <TableHead>Limites</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Impureté (Gini / MSE)</TableCell>
+        <TableCell>Moyenne de la baisse d'impureté par variable, agrégée sur les arbres (<code>feature_importances_</code>)</TableCell>
+        <TableCell>Biaisée vers variables à haute cardinalité ; corrélations entre features</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Importance par permutation</TableCell>
+        <TableCell>Baisse de performance quand une variable est permutée aléatoirement</TableCell>
+        <TableCell>Plus fiable ; coût de calcul plus élevé</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">SHAP</TableCell>
+        <TableCell>Valeurs de Shapley par observation et par feature</TableCell>
+        <TableCell>Interprétation locale et globale — voir [ML appliqué aux marchés](/knowledge/machine-learning/market-ml)</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Applications
+
+<div className="grid gap-4 md:grid-cols-2">
+
+<MdxCard>
+
+### Classification tabulaire
+
+Scoring crédit, détection de fraude, classification multi-classe sur features hétérogènes — cas d'usage historique des forêts aléatoires.
+
+</MdxCard>
+
+<MdxCard>
+
+### Régression
+
+Prédiction de valeurs continues (prix, volumes) ; attention à l'extrapolation hors du support d'entraînement.
+
+</MdxCard>
+
+<MdxCard>
+
+### Finance et marchés
+
+Modèle de base pour prédire un label (direction, régime) à partir de features techniques ; souvent surpassé par le boosting mais utile comme benchmark robuste et pour l'importance des variables.
+
+</MdxCard>
+
+<MdxCard>
+
+### Feature screening
+
+Identifier rapidement les variables pertinentes avant un modèle plus complexe ou un pipeline de [feature engineering](/knowledge/machine-learning/general-concepts).
+
+</MdxCard>
+
+</div>
+
+## Méthodes computationnelles
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Bibliothèque</TableHead>
+        <TableHead>Classes</TableHead>
+        <TableHead>Notes</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">scikit-learn</TableCell>
+        <TableCell><code>RandomForestClassifier</code>, <code>RandomForestRegressor</code></TableCell>
+        <TableCell>Référence standard ; API uniforme avec le reste du pipeline sklearn</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Extra Trees</TableCell>
+        <TableCell><code>ExtraTreesClassifier</code>, <code>ExtraTreesRegressor</code></TableCell>
+        <TableCell>Variante à splits plus aléatoires ; même API</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Tuning</TableCell>
+        <TableCell><code>GridSearchCV</code>, <code>RandomizedSearchCV</code></TableCell>
+        <TableCell>Combiner avec une stratégie de CV adaptée au problème</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Permutation</TableCell>
+        <TableCell><code>sklearn.inspection.permutation_importance</code></TableCell>
+        <TableCell>Importance plus robuste que <code>feature_importances_</code></TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+<MdxCard>
+  <CodeBlock language="python">
+    {`
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import cross_val_score
+from sklearn.inspection import permutation_importance
+
+X_train, y_train = ...  # features tabulaires, labels
+
+rf = RandomForestClassifier(
+    n_estimators=200,
+    max_depth=12,
+    min_samples_leaf=5,
+    max_features="sqrt",
+    class_weight="balanced",
+    oob_score=True,
+    n_jobs=-1,
+    random_state=42,
+)
+rf.fit(X_train, y_train)
+
+print(f"OOB score : {rf.oob_score_:.3f}")
+cv_scores = cross_val_score(rf, X_train, y_train, cv=5, scoring="f1_macro")
+print(f"CV F1 macro : {cv_scores.mean():.3f} (+/- {cv_scores.std():.3f})")
+
+# Importance par impureté
+for name, imp in sorted(
+    zip(feature_names, rf.feature_importances_),
+    key=lambda x: x[1], reverse=True,
+)[:5]:
+    print(f"{name}: {imp:.4f}")
+
+# Importance par permutation (sur un hold-out)
+perm = permutation_importance(rf, X_val, y_val, n_repeats=10, random_state=42)
+`}
+  </CodeBlock>
+</MdxCard>
+
+## Références
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• Breiman, L. (2001). Random Forests. <em>Machine Learning</em>, 45(1), 5–32.</p>
+    <p>• scikit-learn : https://scikit-learn.org/stable/modules/ensemble.html#forest</p>
+    <p>• Voir aussi [XGBoost](/knowledge/machine-learning/classical-models/xgboost), [validation croisée](/knowledge/machine-learning/general-concepts/cross-validation) et [modèles classiques](/knowledge/machine-learning/classical-models).</p>
+  </div>
+</MdxCard>
