@@ -1,8 +1,376 @@
 ---
 title: Loi binomiale
-description: Nombre de succès sur n essais de Bernoulli indépendants.
+description: Nombre de succès sur n essais de Bernoulli indépendants — comptage et approximation normale.
 ---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
 
 # Loi binomiale
 
-Ce contenu est en cours de rédaction.
+<MdxCard title="Définition">
+La **loi binomiale** compte le **nombre de succès** obtenus en répétant <MathInline>n</MathInline> fois un essai de [Bernoulli](/knowledge/probability/distributions/discrete/bernoulli) de probabilité <MathInline>p</MathInline>, les essais étant **indépendants** et identiquement distribués.
+</MdxCard>
+
+## Caractéristiques
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Caractéristique</TableHead>
+        <TableHead>Formule</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Notation</TableCell>
+        <TableCell><MathInline>{"X \\sim \\mathrm{Bin}(n, p)"}</MathInline></TableCell>
+        <TableCell>Parfois <MathInline>{"\\mathrm{B}(n,p)"}</MathInline> ou <MathInline>{"\\mathrm{Binom}(n,p)"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Paramètres</TableCell>
+        <TableCell><MathInline>{"n \\in \\mathbb{N}^*,\\; p \\in [0,1]"}</MathInline></TableCell>
+        <TableCell><MathInline>n</MathInline> essais ; <MathInline>p</MathInline> probabilité de succès ; <MathInline>{"q = 1-p"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Support</TableCell>
+        <TableCell><MathInline>{"\\{0, 1, \\ldots, n\\}"}</MathInline></TableCell>
+        <TableCell>Tous les entiers entre 0 et <MathInline>n</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Fonction de masse</TableCell>
+        <TableCell><MathInline>{"P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}"}</MathInline></TableCell>
+        <TableCell>Pour <MathInline>{"k = 0, \\ldots, n"}</MathInline> ; coefficient binomial <MathInline>{"\\binom{n}{k}"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Fonction de répartition</TableCell>
+        <TableCell><MathInline>{"F(k) = P(X \\leq k) = \\sum_{j=0}^{k} \\binom{n}{j} p^j (1-p)^{n-j}"}</MathInline></TableCell>
+        <TableCell>Également <MathInline>{"I_{1-p}(n-k, k+1)"}</MathInline> (fonction bêta régularisée)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Fonction génératrice des moments</TableCell>
+        <TableCell><MathInline>{"M_X(t) = (q + p e^t)^n"}</MathInline></TableCell>
+        <TableCell>Produit des FGM de <MathInline>n</MathInline> Bernoulli i.i.d.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Fonction caractéristique</TableCell>
+        <TableCell><MathInline>{"\\varphi_X(t) = (q + p e^{it})^n"}</MathInline></TableCell>
+        <TableCell>Transformée de Fourier de la loi</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Espérance</TableCell>
+        <TableCell><MathInline>{"\\mathbb{E}[X] = np"}</MathInline></TableCell>
+        <TableCell>Nombre moyen de succès sur <MathInline>n</MathInline> essais</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Variance</TableCell>
+        <TableCell><MathInline>{"\\mathrm{Var}(X) = np(1-p) = npq"}</MathInline></TableCell>
+        <TableCell>Croît avec <MathInline>n</MathInline> ; maximale en <MathInline>{"p = 1/2"}</MathInline> pour <MathInline>n</MathInline> fixé</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Écart-type</TableCell>
+        <TableCell><MathInline>{"\\sigma_X = \\sqrt{np(1-p)}"}</MathInline></TableCell>
+        <TableCell>Échelle naturelle de fluctuation autour de <MathInline>{"np"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Mode</TableCell>
+        <TableCell><MathInline>{"\\lfloor (n+1)p \\rfloor"}</MathInline></TableCell>
+        <TableCell>Deux modes adjacents si <MathInline>{"(n+1)p"}</MathInline> est entier</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Médiane</TableCell>
+        <TableCell><MathInline>{"\\lfloor np \\rfloor"}</MathInline> ou <MathInline>{"\\lceil np \\rceil"}</MathInline></TableCell>
+        <TableCell>Toujours comprise entre ces deux valeurs</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Asymétrie</TableCell>
+        <TableCell><MathInline>{"\\gamma_1 = \\frac{1 - 2p}{\\sqrt{np(1-p)}}"}</MathInline></TableCell>
+        <TableCell>Tend vers 0 lorsque <MathInline>{"np \\to \\infty"}</MathInline> (régime gaussien)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Kurtosis (excès)</TableCell>
+        <TableCell><MathInline>{"\\gamma_2 = \\frac{1 - 6p(1-p)}{np(1-p)}"}</MathInline></TableCell>
+        <TableCell>Décroît en <MathInline>{"1/n"}</MathInline> ; queues s'appauvrissent à grande échelle</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Entropie de Shannon</TableCell>
+        <TableCell>—</TableCell>
+        <TableCell>Pas de formule close simple ; calcul numérique via la PMF</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Information de Fisher</TableCell>
+        <TableCell><MathInline>{"\\mathcal{I}(p) = \\frac{n}{p(1-p)}"}</MathInline></TableCell>
+        <TableCell>Pour le paramètre <MathInline>p</MathInline> à partir d'une observation <MathInline>{"X \\sim \\mathrm{Bin}(n,p)"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Divergence de Kullback-Leibler</TableCell>
+        <TableCell><MathInline>{"D_{\\mathrm{KL}}(\\mathrm{Bin}(n,p) \\| \\mathrm{Bin}(n,q)) = n\\, D_{\\mathrm{KL}}(\\mathrm{Bern}(p) \\| \\mathrm{Bern}(q))"}</MathInline></TableCell>
+        <TableCell>Même nombre d'essais <MathInline>n</MathInline> ; se réduit à la divergence Bernoulli</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Propriétés et Théorèmes
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Propriété / Théorème</TableHead>
+        <TableHead>Formule</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Somme de Bernoulli</TableCell>
+        <TableCell><MathInline>{"X = \\sum_{i=1}^n B_i,\\; B_i \\stackrel{\\mathrm{i.i.d.}}{\\sim} \\mathrm{Bernoulli}(p)"}</MathInline></TableCell>
+        <TableCell>Construction canonique à partir de la [Bernoulli](/knowledge/probability/distributions/discrete/bernoulli)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Cas <MathInline>{"n = 1"}</MathInline></TableCell>
+        <TableCell><MathInline>{"\\mathrm{Bin}(1, p) = \\mathrm{Bernoulli}(p)"}</MathInline></TableCell>
+        <TableCell>La Bernoulli est le cas élémentaire</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Additivité (même <MathInline>p</MathInline>)</TableCell>
+        <TableCell><MathInline>{"X \\sim \\mathrm{Bin}(n,p),\\; Y \\sim \\mathrm{Bin}(m,p)"}</MathInline> indép. <MathInline>{"\\Rightarrow X+Y \\sim \\mathrm{Bin}(n+m,p)"}</MathInline></TableCell>
+        <TableCell>Stabilité par somme d'essais indépendants</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Complément de succès</TableCell>
+        <TableCell><MathInline>{"n - X \\sim \\mathrm{Bin}(n, 1-p)"}</MathInline></TableCell>
+        <TableCell>Nombre d'échecs ; symétrie succès/échec</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Moments factoriels</TableCell>
+        <TableCell><MathInline>{"\\mathbb{E}[X(X-1)\\cdots(X-r+1)] = n(n-1)\\cdots(n-r+1)\\, p^r"}</MathInline></TableCell>
+        <TableCell>Pour <MathInline>{"r \\leq n"}</MathInline> ; utile pour variance et covariance</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Approximation normale</TableCell>
+        <TableCell><MathInline>{"\\frac{X - np}{\\sqrt{np(1-p)}} \\xrightarrow{\\mathcal{L}} \\mathcal{N}(0,1)"}</MathInline></TableCell>
+        <TableCell>Théorème de De Moivre-Laplace / TCL ; voir [loi normale](/knowledge/probability/distributions/normal)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Correction de continuité</TableCell>
+        <TableCell><MathInline>{"P(X \\leq k) \\approx \\Phi\\!\\left(\\frac{k + 0.5 - np}{\\sqrt{np(1-p)}}\\right)"}</MathInline></TableCell>
+        <TableCell>Améliore l'approximation gaussienne pour <MathInline>n</MathInline> modéré</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Limite de Poisson</TableCell>
+        <TableCell><MathInline>{"n \\to \\infty,\\; p = \\lambda/n \\Rightarrow X \\to \\mathrm{Poisson}(\\lambda)"}</MathInline></TableCell>
+        <TableCell>Régime d'événements rares ; voir [Poisson](/knowledge/probability/distributions/discrete/poisson)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Inégalité de Chernoff</TableCell>
+        <TableCell><MathInline>{"P(X \\geq (1+\\delta)np) \\leq e^{-\\delta^2 np / 3}"}</MathInline></TableCell>
+        <TableCell>Majoration exponentielle des queues ; utile en ML et finance</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Échantillonnage sans remise</TableCell>
+        <TableCell>—</TableCell>
+        <TableCell>Si les essais ne sont pas indépendants (urne finie), la loi est **hypergéométrique**, pas binomiale</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Applications
+
+<div className="grid gap-4 md:grid-cols-2">
+
+<MdxCard>
+
+### Défauts et risque de crédit
+
+Nombre de défauts sur <MathInline>n</MathInline> crédits homogènes (PD commune) : modèle de base du risque de portefeuille sous indépendance.
+
+</MdxCard>
+
+<MdxCard>
+
+### Contrôle qualité et conformité
+
+Nombre de pièces défectueuses dans un lot de taille <MathInline>n</MathInline>, sous hypothèse de taux de défaut constant.
+
+</MdxCard>
+
+<MdxCard>
+
+### Taux de réussite et A/B testing
+
+Nombre de conversions sur <MathInline>n</MathInline> expositions ; comparaison de deux proportions entre cohortes.
+
+</MdxCard>
+
+<MdxCard>
+
+### Arbres binomiaux en finance
+
+Modélisation multi-périodes de l'évolution d'un sous-jacent (Cox-Ross-Rubinstein) : chaque branche est une Bernoulli, le nombre de hausses suit une binomiale.
+
+</MdxCard>
+
+</div>
+
+## Inférence Statistique
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Concept</TableHead>
+        <TableHead>Formule</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Observation</TableCell>
+        <TableCell><MathInline>{"X \\sim \\mathrm{Bin}(n, p)"}</MathInline>, on observe <MathInline>{"k"}</MathInline> succès</TableCell>
+        <TableCell>Équivalent à <MathInline>n</MathInline> essais Bernoulli avec <MathInline>k</MathInline> succès</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Estimateur du MLE</TableCell>
+        <TableCell><MathInline>{"\\hat{p} = \\frac{k}{n}"}</MathInline></TableCell>
+        <TableCell>Proportion empirique ; sans biais pour <MathInline>p</MathInline>, estimateur naturel</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Variance de l'estimateur</TableCell>
+        <TableCell><MathInline>{"\\mathrm{Var}(\\hat{p}) = \\frac{p(1-p)}{n}"}</MathInline></TableCell>
+        <TableCell>Même formule que pour <MathInline>n</MathInline> Bernoulli observées</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Test exact binomial</TableCell>
+        <TableCell><MathInline>{"P(X = k \\mid p = p_0) = \\binom{n}{k} p_0^k (1-p_0)^{n-k}"}</MathInline></TableCell>
+        <TableCell>p-value exacte sous <MathInline>{"H_0 : p = p_0"}</MathInline> ; pas d'approximation normale requise</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Test de proportion (Z)</TableCell>
+        <TableCell><MathInline>{"Z = \\frac{\\hat{p} - p_0}{\\sqrt{p_0(1-p_0)/n}} \\approx \\mathcal{N}(0,1)"}</MathInline></TableCell>
+        <TableCell>Approximation asymptotique ; valide si <MathInline>{"np_0"}</MathInline> et <MathInline>{"n(1-p_0)"}</MathInline> sont grands</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Intervalle de Clopper-Pearson</TableCell>
+        <TableCell><MathInline>{"\\left[F_{\\mathrm{Beta}}^{-1}\\left(\\frac{\\alpha}{2}; k, n-k+1\\right),\\; F_{\\mathrm{Beta}}^{-1}\\left(1-\\frac{\\alpha}{2}; k+1, n-k\\right)\\right]"}</MathInline></TableCell>
+        <TableCell>IC exact au niveau <MathInline>{"1-\\alpha"}</MathInline> pour <MathInline>p</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Intervalle de Wilson</TableCell>
+        <TableCell><MathInline>{"\\frac{\\hat{p} + \\frac{z^2}{2n} \\pm z\\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n} + \\frac{z^2}{4n^2}}}{1 + z^2/n}"}</MathInline></TableCell>
+        <TableCell>Meilleur comportement que Wald pour <MathInline>p</MathInline> proche de 0 ou 1</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Prior conjugué (bayésien)</TableCell>
+        <TableCell><MathInline>{"p \\sim \\mathrm{Beta}(\\alpha, \\beta) \\Rightarrow p \\mid k \\sim \\mathrm{Beta}(\\alpha + k, \\beta + n - k)"}</MathInline></TableCell>
+        <TableCell>Loi a posteriori après <MathInline>k</MathInline> succès sur <MathInline>n</MathInline> essais</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+<MdxCard>
+  <div className="space-y-4">
+    <h3 className="text-xl font-medium">Remarques importantes</h3>
+    <ul className="list-disc pl-6 space-y-2">
+      <li>L'inférence sur <MathInline>p</MathInline> à partir d'une binomiale <MathInline>{"\\mathrm{Bin}(n,p)"}</MathInline> observée coïncide avec celle de <MathInline>n</MathInline> Bernoulli — voir aussi la page [Bernoulli](/knowledge/probability/distributions/discrete/bernoulli).</li>
+      <li>Le test exact est préférable pour <MathInline>n</MathInline> petit ou <MathInline>p</MathInline> extrême ; l'approximation normale simplifie les grands échantillons.</li>
+      <li>Comparer deux groupes (<MathInline>{"n_1"}</MathInline> vs <MathInline>{"n_2"}</MathInline>) relève du test de différence de proportions ou du <MathInline>{"\\chi^2"}</MathInline> d'indépendance.</li>
+      <li>Règle empirique : <MathInline>{"np \\geq 5"}</MathInline> et <MathInline>{"n(1-p) \\geq 5"}</MathInline> avant d'utiliser l'approximation normale.</li>
+    </ul>
+  </div>
+</MdxCard>
+
+## Méthodes Computationnelles
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Méthode</TableHead>
+        <TableHead>Description</TableHead>
+        <TableHead>Applications</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Génération pseudo-aléatoire</TableCell>
+        <TableCell>Somme de <MathInline>n</MathInline> Bernoulli ou algorithme équivalent (inversion, BTPE)</TableCell>
+        <TableCell>Simulations de portefeuille, stress tests</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>NumPy</TableCell>
+        <TableCell><code>np.random.binomial(n, p)</code> ou <code>rng.binomial(n, p, size=m)</code></TableCell>
+        <TableCell><MathInline>m</MathInline> réalisations indépendantes de <MathInline>{"\\mathrm{Bin}(n,p)"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>SciPy</TableCell>
+        <TableCell><code>scipy.stats.binom(n, p)</code> — PMF, CDF, <code>ppf</code>, <code>rvs</code>, moments</TableCell>
+        <TableCell>Probabilités exactes, quantiles, simulation</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Test exact</TableCell>
+        <TableCell><code>scipy.stats.binomtest(k, n, p)</code></TableCell>
+        <TableCell>p-value exacte pour un test de proportion</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Approximation normale</TableCell>
+        <TableCell><code>scipy.stats.norm.cdf</code> avec correction de continuité <MathInline>{"\\pm 0.5"}</MathInline></TableCell>
+        <TableCell>Probabilités cumulées pour <MathInline>n</MathInline> grand</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Intervalles de confiance</TableCell>
+        <TableCell><code>proportion_confint</code> (statsmodels) — Wilson, Clopper-Pearson</TableCell>
+        <TableCell>Estimation robuste de <MathInline>p</MathInline></TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+<MdxCard>
+  <CodeBlock language="python">
+    {`
+import numpy as np
+from scipy import stats
+from statsmodels.stats.proportion import proportion_confint
+
+n, p = 200, 0.12
+k_obs = 28  # succès observés
+
+# Loi théorique
+binom = stats.binom(n, p)
+print(f"E[X] = {binom.mean():.2f}, Var(X) = {binom.var():.2f}")
+print(f"P(X = {k_obs}) = {binom.pmf(k_obs):.4f}")
+print(f"P(X ≤ {k_obs}) = {binom.cdf(k_obs):.4f}")
+
+# Test exact H0 : p = 0.10
+result = stats.binomtest(k_obs, n, p=0.10, alternative="two-sided")
+print(f"Test exact (p=0.10) : p-value = {result.pvalue:.4f}")
+
+# MLE et IC Wilson
+p_hat = k_obs / n
+ci_low, ci_high = proportion_confint(k_obs, n, alpha=0.05, method="wilson")
+print(f"p̂ = {p_hat:.3f}, IC 95% Wilson : [{ci_low:.3f}, {ci_high:.3f}]")
+
+# Simulation
+rng = np.random.default_rng(42)
+samples = rng.binomial(n, p, size=10_000)
+print(f"Moyenne simulée : {samples.mean():.3f}")
+`}
+  </CodeBlock>
+</MdxCard>
+
+## Références
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• Wikipedia, Binomial distribution : https://en.wikipedia.org/wiki/Binomial_distribution</p>
+    <p>• Voir aussi [Bernoulli](/knowledge/probability/distributions/discrete/bernoulli), [Poisson](/knowledge/probability/distributions/discrete/poisson) et [loi normale](/knowledge/probability/distributions/normal).</p>
+  </div>
+</MdxCard>
