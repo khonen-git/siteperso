@@ -1,8 +1,382 @@
 ---
 title: Loi de Poisson
-description: Comptage d'événements rares et indépendants sur un intervalle.
+description: Comptage d'événements rares et indépendants — intensité λ et limite de la binomiale.
 ---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
 
 # Loi de Poisson
 
-Ce contenu est en cours de rédaction.
+<MdxCard title="Définition">
+La **loi de Poisson** modélise le **nombre d'événements** sur un intervalle (temps, surface, volume) lorsque ces événements sont **rares**, **indépendants** et se produisent à **intensité constante** <MathInline>{"\\lambda"}</MathInline>. Elle apparaît comme limite de la [binomiale](/knowledge/probability/distributions/discrete/binomial) et comme loi des sauts d'un processus de Poisson.
+</MdxCard>
+
+## Caractéristiques
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Caractéristique</TableHead>
+        <TableHead>Formule</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Notation</TableCell>
+        <TableCell><MathInline>{"X \\sim \\mathrm{Poisson}(\\lambda)"}</MathInline></TableCell>
+        <TableCell>Parfois <MathInline>{"\\mathrm{Pois}(\\lambda)"}</MathInline> ou <MathInline>{"\\mathrm{Po}(\\lambda)"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Paramètre</TableCell>
+        <TableCell><MathInline>{"\\lambda > 0"}</MathInline></TableCell>
+        <TableCell>Taux moyen (intensité) : nombre attendu d'événements sur l'intervalle considéré</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Support</TableCell>
+        <TableCell><MathInline>{"\\mathbb{N} = \\{0, 1, 2, \\ldots\\}"}</MathInline></TableCell>
+        <TableCell>Entiers non négatifs, support dénombrable infini</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Fonction de masse</TableCell>
+        <TableCell><MathInline>{"P(X = k) = e^{-\\lambda} \\frac{\\lambda^k}{k!}"}</MathInline></TableCell>
+        <TableCell>Pour <MathInline>{"k = 0, 1, 2, \\ldots"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Fonction de répartition</TableCell>
+        <TableCell><MathInline>{"F(k) = P(X \\leq k) = e^{-\\lambda} \\sum_{j=0}^{k} \\frac{\\lambda^j}{j!}"}</MathInline></TableCell>
+        <TableCell>Également <MathInline>{"1 - \\Gamma(k+1, \\lambda) / k!"}</MathInline> (gamma incomplète supérieure)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Fonction génératrice des moments</TableCell>
+        <TableCell><MathInline>{"M_X(t) = \\exp\\bigl(\\lambda(e^t - 1)\\bigr)"}</MathInline></TableCell>
+        <TableCell>Dérivées en 0 donnent les moments</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Fonction caractéristique</TableCell>
+        <TableCell><MathInline>{"\\varphi_X(t) = \\exp\\bigl(\\lambda(e^{it} - 1)\\bigr)"}</MathInline></TableCell>
+        <TableCell>Transformée de Fourier de la loi</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Espérance</TableCell>
+        <TableCell><MathInline>{"\\mathbb{E}[X] = \\lambda"}</MathInline></TableCell>
+        <TableCell>Égale au paramètre d'intensité</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Variance</TableCell>
+        <TableCell><MathInline>{"\\mathrm{Var}(X) = \\lambda"}</MathInline></TableCell>
+        <TableCell><strong>Équidispersion</strong> : moyenne = variance (propriété diagnostique)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Écart-type</TableCell>
+        <TableCell><MathInline>{"\\sigma_X = \\sqrt{\\lambda}"}</MathInline></TableCell>
+        <TableCell>Fluctuations relatives de l'ordre de <MathInline>{"1/\\sqrt{\\lambda}"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Mode</TableCell>
+        <TableCell><MathInline>{"\\lfloor \\lambda \\rfloor"}</MathInline></TableCell>
+        <TableCell>Deux modes <MathInline>{"\\lambda"}</MathInline> et <MathInline>{"\\lambda - 1"}</MathInline> si <MathInline>{"\\lambda"}</MathInline> est entier et <MathInline>{"\\lambda > 0"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Médiane</TableCell>
+        <TableCell><MathInline>{"\\lfloor \\lambda \\rfloor"}</MathInline> ou <MathInline>{"\\lceil \\lambda \\rceil"}</MathInline></TableCell>
+        <TableCell>Approximation courante : <MathInline>{"\\lambda - \\frac{1}{3}"}</MathInline> pour <MathInline>{"\\lambda"}</MathInline> grand</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Asymétrie</TableCell>
+        <TableCell><MathInline>{"\\gamma_1 = \\frac{1}{\\sqrt{\\lambda}}"}</MathInline></TableCell>
+        <TableCell>Distribution asymétrique à droite ; tend vers 0 si <MathInline>{"\\lambda \\to \\infty"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Kurtosis (excès)</TableCell>
+        <TableCell><MathInline>{"\\gamma_2 = \\frac{1}{\\lambda}"}</MathInline></TableCell>
+        <TableCell>Queues plus lourdes que la normale pour <MathInline>{"\\lambda"}</MathInline> petit</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Entropie de Shannon</TableCell>
+        <TableCell>—</TableCell>
+        <TableCell>Pas de formule close simple ; calcul numérique via la PMF</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Information de Fisher</TableCell>
+        <TableCell><MathInline>{"\\mathcal{I}(\\lambda) = \\frac{1}{\\lambda}"}</MathInline></TableCell>
+        <TableCell>Pour une observation ; décroît avec l'intensité</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Divergence de Kullback-Leibler</TableCell>
+        <TableCell><MathInline>{"D_{\\mathrm{KL}}(\\lambda_1 \\| \\lambda_2) = \\lambda_1 \\ln\\frac{\\lambda_1}{\\lambda_2} + \\lambda_2 - \\lambda_1"}</MathInline></TableCell>
+        <TableCell>Entre deux lois de Poisson de taux <MathInline>{"\\lambda_1"}</MathInline> et <MathInline>{"\\lambda_2"}</MathInline></TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Propriétés et Théorèmes
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Propriété / Théorème</TableHead>
+        <TableHead>Formule</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Limite binomiale</TableCell>
+        <TableCell><MathInline>{"n \\to \\infty,\\; p = \\lambda/n \\Rightarrow \\mathrm{Bin}(n,p) \\to \\mathrm{Poisson}(\\lambda)"}</MathInline></TableCell>
+        <TableCell>Lien avec la [binomiale](/knowledge/probability/distributions/discrete/binomial) en régime rare</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Additivité</TableCell>
+        <TableCell><MathInline>{"X \\sim \\mathrm{Poisson}(\\lambda_1),\\; Y \\sim \\mathrm{Poisson}(\\lambda_2)"}</MathInline> indép. <MathInline>{"\\Rightarrow X+Y \\sim \\mathrm{Poisson}(\\lambda_1+\\lambda_2)"}</MathInline></TableCell>
+        <TableCell>Les intensités s'additionnent sur des intervalles disjoints</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Éclaircissement (thinning)</TableCell>
+        <TableCell><MathInline>{"X \\sim \\mathrm{Poisson}(\\lambda)"}</MathInline>, chaque événement retenu avec prob. <MathInline>p</MathInline> <MathInline>{"\\Rightarrow \\mathrm{Poisson}(\\lambda p)"}</MathInline></TableCell>
+        <TableCell>Filtrage indépendant des événements ; base des modèles de sauts</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Équidispersion</TableCell>
+        <TableCell><MathInline>{"\\mathbb{E}[X] = \\mathrm{Var}(X) = \\lambda"}</MathInline></TableCell>
+        <TableCell>Si <MathInline>{"\\mathrm{Var} \\gg \\mathbb{E}"}</MathInline> empiriquement : **surdispersion** (loi binomiale négative, etc.)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Approximation normale</TableCell>
+        <TableCell><MathInline>{"\\frac{X - \\lambda}{\\sqrt{\\lambda}} \\xrightarrow{\\mathcal{L}} \\mathcal{N}(0,1)"}</MathInline></TableCell>
+        <TableCell>Pour <MathInline>{"\\lambda"}</MathInline> grand ; voir [loi normale](/knowledge/probability/distributions/normal)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Lien avec l'exponentielle</TableCell>
+        <TableCell><MathInline>{"N_t \\sim \\mathrm{Poisson}(\\lambda t)"}</MathInline></TableCell>
+        <TableCell>Nombre d'arrivées en <MathInline>t</MathInline> dans un processus de Poisson de taux <MathInline>{"\\lambda"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Somme aléatoire</TableCell>
+        <TableCell><MathInline>{"N \\sim \\mathrm{Poisson}(\\mu),\\; X_i \\text{ i.i.d.} \\Rightarrow \\sum_{i=1}^N X_i"}</MathInline></TableCell>
+        <TableCell>Poisson composée ; modèle de pertes agrégées en assurance</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Indépendance des comptages disjoints</TableCell>
+        <TableCell>—</TableCell>
+        <TableCell>Les nombres d'événements sur des intervalles disjoints sont des Poisson indépendantes</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Inégalité de Chernoff</TableCell>
+        <TableCell><MathInline>{"P(X \\geq (1+\\delta)\\lambda) \\leq e^{-\\delta^2 \\lambda / 3}"}</MathInline></TableCell>
+        <TableCell>Majoration exponentielle des queues à droite</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Applications
+
+<div className="grid gap-4 md:grid-cols-2">
+
+<MdxCard>
+
+### Arrivées et flux
+
+Nombre d'ordres, de transactions ou de paquets réseau par minute/heure sous hypothèse de taux constant et d'indépendance.
+
+</MdxCard>
+
+<MdxCard>
+
+### Défauts et sinistres
+
+Nombre de défauts sur un portefeuille très granulaire ou de sinistres en assurance non-vie (fréquence de base).
+
+</MdxCard>
+
+<MdxCard>
+
+### Physique et fiabilité
+
+Désintégrations radioactives, pannes d'équipement rares, anomalies de production sur une chaîne.
+
+</MdxCard>
+
+<MdxCard>
+
+### Files d'attente et microstructure
+
+Modélisation élémentaire des arrivées de liquidité ou des ticks ; extension vers processus de Poisson composé pour les sauts de prix.
+
+</MdxCard>
+
+</div>
+
+## Inférence Statistique
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Concept</TableHead>
+        <TableHead>Formule</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Échantillon</TableCell>
+        <TableCell><MathInline>{"X_1, \\ldots, X_n \\stackrel{\\mathrm{i.i.d.}}{\\sim} \\mathrm{Poisson}(\\lambda)"}</MathInline></TableCell>
+        <TableCell><MathInline>n</MathInline> intervalles ou observations indépendantes</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Somme suffisante</TableCell>
+        <TableCell><MathInline>{"S = \\sum_{i=1}^n X_i \\sim \\mathrm{Poisson}(n\\lambda)"}</MathInline></TableCell>
+        <TableCell><MathInline>S</MathInline> résume toute l'information sur <MathInline>{"\\lambda"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Estimateur du MLE</TableCell>
+        <TableCell><MathInline>{"\\hat{\\lambda} = \\bar{X}_n = \\frac{S}{n}"}</MathInline></TableCell>
+        <TableCell>Moyenne empirique ; sans biais, convergent, efficace</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Variance de l'estimateur</TableCell>
+        <TableCell><MathInline>{"\\mathrm{Var}(\\hat{\\lambda}) = \\frac{\\lambda}{n}"}</MathInline></TableCell>
+        <TableCell>Décroît en <MathInline>{"1/n"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Intervalle exact (<MathInline>{"\\chi^2"}</MathInline>)</TableCell>
+        <TableCell><MathInline>{"\\left[\\frac{\\chi^2_{2S,\\,\\alpha/2}}{2n},\\; \\frac{\\chi^2_{2(S+1),\\,1-\\alpha/2}}{2n}\\right]"}</MathInline></TableCell>
+        <TableCell>IC exact pour <MathInline>{"\\lambda"}</MathInline> à partir de la somme <MathInline>S</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Intervalle de Wald</TableCell>
+        <TableCell><MathInline>{"\\hat{\\lambda} \\pm z_{1-\\alpha/2} \\sqrt{\\frac{\\hat{\\lambda}}{n}}"}</MathInline></TableCell>
+        <TableCell>Approximation normale ; acceptable si <MathInline>{"n\\hat{\\lambda}"}</MathInline> est grand</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Test exact</TableCell>
+        <TableCell><MathInline>{"P(S = s \\mid \\lambda = \\lambda_0) = \\frac{(n\\lambda_0)^s e^{-n\\lambda_0}}{s!}"}</MathInline></TableCell>
+        <TableCell>p-value exacte sous <MathInline>{"H_0 : \\lambda = \\lambda_0"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Test asymptotique</TableCell>
+        <TableCell><MathInline>{"Z = \\frac{\\hat{\\lambda} - \\lambda_0}{\\sqrt{\\lambda_0/n}} \\approx \\mathcal{N}(0,1)"}</MathInline></TableCell>
+        <TableCell>Alternative simple pour <MathInline>{"n\\lambda_0"}</MathInline> grand</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Prior conjugué (bayésien)</TableCell>
+        <TableCell><MathInline>{"\\lambda \\sim \\mathrm{Gamma}(\\alpha, \\beta) \\Rightarrow \\lambda \\mid \\mathbf{x} \\sim \\mathrm{Gamma}(\\alpha + S, \\beta + n)"}</MathInline></TableCell>
+        <TableCell>La loi gamma est conjuguée de la Poisson</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+<MdxCard>
+  <div className="space-y-4">
+    <h3 className="text-xl font-medium">Remarques importantes</h3>
+    <ul className="list-disc pl-6 space-y-2">
+      <li>L'<strong>équidispersion</strong> (<MathInline>{"\\bar{X} \\approx s^2"}</MathInline>) est un premier diagnostic : un écart important suggère un modèle alternatif.</li>
+      <li>La surdispersion fréquente en finance et assurance motive la loi binomiale négative ou les modèles à effets aléatoires.</li>
+      <li>L'intervalle basé sur le <MathInline>{"\\chi^2"}</MathInline> est préférable à Wald pour <MathInline>{"\\lambda"}</MathInline> petit ou <MathInline>n</MathInline> modéré.</li>
+      <li>Comparer deux taux <MathInline>{"\\lambda_1"}</MathInline> et <MathInline>{"\\lambda_2"}</MathInline> sur deux échantillons revient à tester l'égalité de deux moyennes de Poisson.</li>
+    </ul>
+  </div>
+</MdxCard>
+
+## Méthodes Computationnelles
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Méthode</TableHead>
+        <TableHead>Description</TableHead>
+        <TableHead>Applications</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Génération pseudo-aléatoire</TableCell>
+        <TableCell>Méthode d'inversion (Knuth) ou transformation à partir d'exponentielles</TableCell>
+        <TableCell>Simulations de flux, Monte Carlo</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>NumPy</TableCell>
+        <TableCell><code>np.random.poisson(lam)</code> ou <code>rng.poisson(lam, size=m)</code></TableCell>
+        <TableCell><MathInline>m</MathInline> réalisations indépendantes</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>SciPy</TableCell>
+        <TableCell><code>scipy.stats.poisson(mu)</code> — PMF, CDF, <code>ppf</code>, <code>rvs</code>, moments</TableCell>
+        <TableCell>Probabilités exactes, quantiles, simulation</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>IC exact</TableCell>
+        <TableCell><code>scipy.stats.chi2.ppf</code> avec la relation gamma-<MathInline>{"\\chi^2"}</MathInline></TableCell>
+        <TableCell>Intervalles de confiance pour <MathInline>{"\\lambda"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Test de rapport de vraisemblance</TableCell>
+        <TableCell>Comparaison de modèles Poisson emboîtés (statsmodels <code>GLM</code> Poisson)</TableCell>
+        <TableCell>Régression de Poisson sur covariables</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Diagnostic surdispersion</TableCell>
+        <TableCell>Déviance / ddl ; quasi-Poisson dans <code>statsmodels</code></TableCell>
+        <TableCell>Détection d'un mauvais ajustement Poisson</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+<MdxCard>
+  <CodeBlock language="python">
+    {`
+import numpy as np
+from scipy import stats
+
+lam = 4.5
+n_periods = 52  # ex. semaines
+counts = np.array([3, 6, 5, 4, 7, 2, 5, 4, 6, 3])  # observations partielles
+n = len(counts)
+
+# Loi théorique
+pois = stats.poisson(lam)
+print(f"E[X] = {pois.mean():.2f}, Var(X) = {pois.var():.2f}")
+print(f"P(X = 5) = {pois.pmf(5):.4f}")
+
+# MLE
+lam_hat = counts.mean()
+S = counts.sum()
+print(f"λ̂ = {lam_hat:.3f}")
+
+# IC exact 95% via chi²
+alpha = 0.05
+ci_low = stats.chi2.ppf(alpha / 2, 2 * S) / (2 * n)
+ci_high = stats.chi2.ppf(1 - alpha / 2, 2 * (S + 1)) / (2 * n)
+print(f"IC 95% exact : [{ci_low:.3f}, {ci_high:.3f}]")
+
+# Test H0 : λ = 4.0
+result = stats.poisson.cdf(S, mu=4.0 * n)  # approche unilatérale sur la somme
+print(f"S = {S}, E[S|λ=4] = {4.0 * n}")
+
+# Simulation
+rng = np.random.default_rng(42)
+samples = rng.poisson(lam, size=10_000)
+print(f"Moyenne simulée : {samples.mean():.3f}")
+`}
+  </CodeBlock>
+</MdxCard>
+
+## Références
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• Wikipedia, Poisson distribution : https://en.wikipedia.org/wiki/Poisson_distribution</p>
+    <p>• Voir aussi [Bernoulli](/knowledge/probability/distributions/discrete/bernoulli), [binomiale](/knowledge/probability/distributions/discrete/binomial) et [processus stochastiques](/knowledge/probability/stochastic-processes).</p>
+  </div>
+</MdxCard>

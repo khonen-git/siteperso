@@ -1,8 +1,382 @@
 ---
 title: Poisson distribution
-description: Counting rare, independent events over an interval.
+description: Counting rare, independent events — rate λ and binomial limit.
 ---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
 
 # Poisson distribution
 
-This content is being written.
+<MdxCard title="Definition">
+The **Poisson distribution** models the **number of events** over an interval (time, area, volume) when events are **rare**, **independent**, and occur at a **constant rate** <MathInline>{"\\lambda"}</MathInline>. It arises as the limit of the [binomial](/knowledge/probability/distributions/discrete/binomial) and as the jump law of a Poisson process.
+</MdxCard>
+
+## Characteristics
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Characteristic</TableHead>
+        <TableHead>Formula</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Notation</TableCell>
+        <TableCell><MathInline>{"X \\sim \\mathrm{Poisson}(\\lambda)"}</MathInline></TableCell>
+        <TableCell>Sometimes <MathInline>{"\\mathrm{Pois}(\\lambda)"}</MathInline> or <MathInline>{"\\mathrm{Po}(\\lambda)"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Parameter</TableCell>
+        <TableCell><MathInline>{"\\lambda > 0"}</MathInline></TableCell>
+        <TableCell>Mean rate (intensity): expected number of events over the interval</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Support</TableCell>
+        <TableCell><MathInline>{"\\mathbb{N} = \\{0, 1, 2, \\ldots\\}"}</MathInline></TableCell>
+        <TableCell>Non-negative integers, countably infinite support</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Probability mass function</TableCell>
+        <TableCell><MathInline>{"P(X = k) = e^{-\\lambda} \\frac{\\lambda^k}{k!}"}</MathInline></TableCell>
+        <TableCell>For <MathInline>{"k = 0, 1, 2, \\ldots"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Cumulative distribution function</TableCell>
+        <TableCell><MathInline>{"F(k) = P(X \\leq k) = e^{-\\lambda} \\sum_{j=0}^{k} \\frac{\\lambda^j}{j!}"}</MathInline></TableCell>
+        <TableCell>Also <MathInline>{"1 - \\Gamma(k+1, \\lambda) / k!"}</MathInline> (upper incomplete gamma)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Moment-generating function</TableCell>
+        <TableCell><MathInline>{"M_X(t) = \\exp\\bigl(\\lambda(e^t - 1)\\bigr)"}</MathInline></TableCell>
+        <TableCell>Derivatives at 0 yield moments</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Characteristic function</TableCell>
+        <TableCell><MathInline>{"\\varphi_X(t) = \\exp\\bigl(\\lambda(e^{it} - 1)\\bigr)"}</MathInline></TableCell>
+        <TableCell>Fourier transform of the law</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Mean</TableCell>
+        <TableCell><MathInline>{"\\mathbb{E}[X] = \\lambda"}</MathInline></TableCell>
+        <TableCell>Equals the intensity parameter</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Variance</TableCell>
+        <TableCell><MathInline>{"\\mathrm{Var}(X) = \\lambda"}</MathInline></TableCell>
+        <TableCell><strong>Equidispersion</strong>: mean = variance (diagnostic property)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Standard deviation</TableCell>
+        <TableCell><MathInline>{"\\sigma_X = \\sqrt{\\lambda}"}</MathInline></TableCell>
+        <TableCell>Relative fluctuations of order <MathInline>{"1/\\sqrt{\\lambda}"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Mode</TableCell>
+        <TableCell><MathInline>{"\\lfloor \\lambda \\rfloor"}</MathInline></TableCell>
+        <TableCell>Two modes <MathInline>{"\\lambda"}</MathInline> and <MathInline>{"\\lambda - 1"}</MathInline> if <MathInline>{"\\lambda"}</MathInline> is a positive integer</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Median</TableCell>
+        <TableCell><MathInline>{"\\lfloor \\lambda \\rfloor"}</MathInline> or <MathInline>{"\\lceil \\lambda \\rceil"}</MathInline></TableCell>
+        <TableCell>Common approximation: <MathInline>{"\\lambda - \\frac{1}{3}"}</MathInline> for large <MathInline>{"\\lambda"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Skewness</TableCell>
+        <TableCell><MathInline>{"\\gamma_1 = \\frac{1}{\\sqrt{\\lambda}}"}</MathInline></TableCell>
+        <TableCell>Right-skewed; tends to 0 as <MathInline>{"\\lambda \\to \\infty"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Excess kurtosis</TableCell>
+        <TableCell><MathInline>{"\\gamma_2 = \\frac{1}{\\lambda}"}</MathInline></TableCell>
+        <TableCell>Heavier tails than the normal for small <MathInline>{"\\lambda"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Shannon entropy</TableCell>
+        <TableCell>—</TableCell>
+        <TableCell>No simple closed form; numerical computation via the PMF</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Fisher information</TableCell>
+        <TableCell><MathInline>{"\\mathcal{I}(\\lambda) = \\frac{1}{\\lambda}"}</MathInline></TableCell>
+        <TableCell>For one observation; decreases with intensity</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Kullback-Leibler divergence</TableCell>
+        <TableCell><MathInline>{"D_{\\mathrm{KL}}(\\lambda_1 \\| \\lambda_2) = \\lambda_1 \\ln\\frac{\\lambda_1}{\\lambda_2} + \\lambda_2 - \\lambda_1"}</MathInline></TableCell>
+        <TableCell>Between two Poisson laws with rates <MathInline>{"\\lambda_1"}</MathInline> and <MathInline>{"\\lambda_2"}</MathInline></TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Properties and theorems
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Property / theorem</TableHead>
+        <TableHead>Formula</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Binomial limit</TableCell>
+        <TableCell><MathInline>{"n \\to \\infty,\\; p = \\lambda/n \\Rightarrow \\mathrm{Bin}(n,p) \\to \\mathrm{Poisson}(\\lambda)"}</MathInline></TableCell>
+        <TableCell>Link to the [binomial](/knowledge/probability/distributions/discrete/binomial) in the rare regime</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Additivity</TableCell>
+        <TableCell><MathInline>{"X \\sim \\mathrm{Poisson}(\\lambda_1),\\; Y \\sim \\mathrm{Poisson}(\\lambda_2)"}</MathInline> indep. <MathInline>{"\\Rightarrow X+Y \\sim \\mathrm{Poisson}(\\lambda_1+\\lambda_2)"}</MathInline></TableCell>
+        <TableCell>Intensities add over disjoint intervals</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Thinning</TableCell>
+        <TableCell><MathInline>{"X \\sim \\mathrm{Poisson}(\\lambda)"}</MathInline>, each event kept with prob. <MathInline>p</MathInline> <MathInline>{"\\Rightarrow \\mathrm{Poisson}(\\lambda p)"}</MathInline></TableCell>
+        <TableCell>Independent filtering of events; basis for jump models</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Equidispersion</TableCell>
+        <TableCell><MathInline>{"\\mathbb{E}[X] = \\mathrm{Var}(X) = \\lambda"}</MathInline></TableCell>
+        <TableCell>If <MathInline>{"\\mathrm{Var} \\gg \\mathbb{E}"}</MathInline> empirically: **overdispersion** (negative binomial, etc.)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Normal approximation</TableCell>
+        <TableCell><MathInline>{"\\frac{X - \\lambda}{\\sqrt{\\lambda}} \\xrightarrow{\\mathcal{L}} \\mathcal{N}(0,1)"}</MathInline></TableCell>
+        <TableCell>For large <MathInline>{"\\lambda"}</MathInline>; see [normal distribution](/knowledge/probability/distributions/normal)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Link to the exponential</TableCell>
+        <TableCell><MathInline>{"N_t \\sim \\mathrm{Poisson}(\\lambda t)"}</MathInline></TableCell>
+        <TableCell>Number of arrivals by time <MathInline>t</MathInline> in a Poisson process of rate <MathInline>{"\\lambda"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Random sum</TableCell>
+        <TableCell><MathInline>{"N \\sim \\mathrm{Poisson}(\\mu),\\; X_i \\text{ i.i.d.} \\Rightarrow \\sum_{i=1}^N X_i"}</MathInline></TableCell>
+        <TableCell>Compound Poisson; aggregate loss models in insurance</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Independent disjoint counts</TableCell>
+        <TableCell>—</TableCell>
+        <TableCell>Event counts on disjoint intervals are independent Poisson variables</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Chernoff bound</TableCell>
+        <TableCell><MathInline>{"P(X \\geq (1+\\delta)\\lambda) \\leq e^{-\\delta^2 \\lambda / 3}"}</MathInline></TableCell>
+        <TableCell>Exponential upper tail bound</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Applications
+
+<div className="grid gap-4 md:grid-cols-2">
+
+<MdxCard>
+
+### Arrivals and flows
+
+Number of orders, trades, or network packets per minute/hour under constant rate and independence assumptions.
+
+</MdxCard>
+
+<MdxCard>
+
+### Defaults and claims
+
+Number of defaults in a very granular portfolio or claims in non-life insurance (baseline frequency model).
+
+</MdxCard>
+
+<MdxCard>
+
+### Physics and reliability
+
+Radioactive decays, rare equipment failures, production anomalies on a line.
+
+</MdxCard>
+
+<MdxCard>
+
+### Queues and microstructure
+
+Elementary modeling of liquidity arrivals or ticks; extension to compound Poisson for price jumps.
+
+</MdxCard>
+
+</div>
+
+## Statistical inference
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Concept</TableHead>
+        <TableHead>Formula</TableHead>
+        <TableHead>Description</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Sample</TableCell>
+        <TableCell><MathInline>{"X_1, \\ldots, X_n \\stackrel{\\mathrm{i.i.d.}}{\\sim} \\mathrm{Poisson}(\\lambda)"}</MathInline></TableCell>
+        <TableCell><MathInline>n</MathInline> independent intervals or observations</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Sufficient statistic</TableCell>
+        <TableCell><MathInline>{"S = \\sum_{i=1}^n X_i \\sim \\mathrm{Poisson}(n\\lambda)"}</MathInline></TableCell>
+        <TableCell><MathInline>S</MathInline> summarizes all information on <MathInline>{"\\lambda"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>MLE estimator</TableCell>
+        <TableCell><MathInline>{"\\hat{\\lambda} = \\bar{X}_n = \\frac{S}{n}"}</MathInline></TableCell>
+        <TableCell>Sample mean; unbiased, consistent, efficient</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Estimator variance</TableCell>
+        <TableCell><MathInline>{"\\mathrm{Var}(\\hat{\\lambda}) = \\frac{\\lambda}{n}"}</MathInline></TableCell>
+        <TableCell>Decays as <MathInline>{"1/n"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Exact interval (<MathInline>{"\\chi^2"}</MathInline>)</TableCell>
+        <TableCell><MathInline>{"\\left[\\frac{\\chi^2_{2S,\\,\\alpha/2}}{2n},\\; \\frac{\\chi^2_{2(S+1),\\,1-\\alpha/2}}{2n}\\right]"}</MathInline></TableCell>
+        <TableCell>Exact CI for <MathInline>{"\\lambda"}</MathInline> from sum <MathInline>S</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Wald interval</TableCell>
+        <TableCell><MathInline>{"\\hat{\\lambda} \\pm z_{1-\\alpha/2} \\sqrt{\\frac{\\hat{\\lambda}}{n}}"}</MathInline></TableCell>
+        <TableCell>Normal approximation; acceptable when <MathInline>{"n\\hat{\\lambda}"}</MathInline> is large</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Exact test</TableCell>
+        <TableCell><MathInline>{"P(S = s \\mid \\lambda = \\lambda_0) = \\frac{(n\\lambda_0)^s e^{-n\\lambda_0}}{s!}"}</MathInline></TableCell>
+        <TableCell>Exact p-value under <MathInline>{"H_0 : \\lambda = \\lambda_0"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Asymptotic test</TableCell>
+        <TableCell><MathInline>{"Z = \\frac{\\hat{\\lambda} - \\lambda_0}{\\sqrt{\\lambda_0/n}} \\approx \\mathcal{N}(0,1)"}</MathInline></TableCell>
+        <TableCell>Simple alternative for large <MathInline>{"n\\lambda_0"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Conjugate prior (Bayesian)</TableCell>
+        <TableCell><MathInline>{"\\lambda \\sim \\mathrm{Gamma}(\\alpha, \\beta) \\Rightarrow \\lambda \\mid \\mathbf{x} \\sim \\mathrm{Gamma}(\\alpha + S, \\beta + n)"}</MathInline></TableCell>
+        <TableCell>The gamma law is conjugate to Poisson</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+<MdxCard>
+  <div className="space-y-4">
+    <h3 className="text-xl font-medium">Important remarks</h3>
+    <ul className="list-disc pl-6 space-y-2">
+      <li><strong>Equidispersion</strong> (<MathInline>{"\\bar{X} \\approx s^2"}</MathInline>) is a first diagnostic: a large gap suggests an alternative model.</li>
+      <li>Overdispersion is common in finance and insurance, motivating negative binomial or random-effects models.</li>
+      <li>The <MathInline>{"\\chi^2"}</MathInline>-based interval is preferable to Wald for small <MathInline>{"\\lambda"}</MathInline> or moderate <MathInline>n</MathInline>.</li>
+      <li>Comparing two rates <MathInline>{"\\lambda_1"}</MathInline> and <MathInline>{"\\lambda_2"}</MathInline> across samples amounts to testing equality of two Poisson means.</li>
+    </ul>
+  </div>
+</MdxCard>
+
+## Computational methods
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Method</TableHead>
+        <TableHead>Description</TableHead>
+        <TableHead>Applications</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Pseudo-random generation</TableCell>
+        <TableCell>Inversion method (Knuth) or transformation from exponentials</TableCell>
+        <TableCell>Flow simulation, Monte Carlo</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>NumPy</TableCell>
+        <TableCell><code>np.random.poisson(lam)</code> or <code>rng.poisson(lam, size=m)</code></TableCell>
+        <TableCell><MathInline>m</MathInline> independent draws</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>SciPy</TableCell>
+        <TableCell><code>scipy.stats.poisson(mu)</code> — PMF, CDF, <code>ppf</code>, <code>rvs</code>, moments</TableCell>
+        <TableCell>Exact probabilities, quantiles, simulation</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Exact CI</TableCell>
+        <TableCell><code>scipy.stats.chi2.ppf</code> via the gamma-<MathInline>{"\\chi^2"}</MathInline> relation</TableCell>
+        <TableCell>Confidence intervals for <MathInline>{"\\lambda"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Likelihood ratio test</TableCell>
+        <TableCell>Nested Poisson models (statsmodels <code>GLM</code> Poisson)</TableCell>
+        <TableCell>Poisson regression on covariates</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Overdispersion diagnostic</TableCell>
+        <TableCell>Deviance / df; quasi-Poisson in <code>statsmodels</code></TableCell>
+        <TableCell>Detecting poor Poisson fit</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+<MdxCard>
+  <CodeBlock language="python">
+    {`
+import numpy as np
+from scipy import stats
+
+lam = 4.5
+n_periods = 52  # e.g. weeks
+counts = np.array([3, 6, 5, 4, 7, 2, 5, 4, 6, 3])  # partial observations
+n = len(counts)
+
+# Theoretical law
+pois = stats.poisson(lam)
+print(f"E[X] = {pois.mean():.2f}, Var(X) = {pois.var():.2f}")
+print(f"P(X = 5) = {pois.pmf(5):.4f}")
+
+# MLE
+lam_hat = counts.mean()
+S = counts.sum()
+print(f"λ̂ = {lam_hat:.3f}")
+
+# Exact 95% CI via chi²
+alpha = 0.05
+ci_low = stats.chi2.ppf(alpha / 2, 2 * S) / (2 * n)
+ci_high = stats.chi2.ppf(1 - alpha / 2, 2 * (S + 1)) / (2 * n)
+print(f"Exact 95% CI: [{ci_low:.3f}, {ci_high:.3f}]")
+
+# Test H0: λ = 4.0
+result = stats.poisson.cdf(S, mu=4.0 * n)  # one-sided approach on the sum
+print(f"S = {S}, E[S|λ=4] = {4.0 * n}")
+
+# Simulation
+rng = np.random.default_rng(42)
+samples = rng.poisson(lam, size=10_000)
+print(f"Simulated mean: {samples.mean():.3f}")
+`}
+  </CodeBlock>
+</MdxCard>
+
+## References
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• Wikipedia, Poisson distribution: https://en.wikipedia.org/wiki/Poisson_distribution</p>
+    <p>• See also [Bernoulli](/knowledge/probability/distributions/discrete/bernoulli), [binomial](/knowledge/probability/distributions/discrete/binomial), and [stochastic processes](/knowledge/probability/stochastic-processes).</p>
+  </div>
+</MdxCard>
