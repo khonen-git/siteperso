@@ -1,0 +1,130 @@
+---
+title: Types de contrats
+description: Synthèse des principaux véhicules de trading — mécanisme, exposition et pièges par type de contrat.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { InfoTooltip, InfoTooltipProvider } from '@/components/mdx/InfoTooltip';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+
+# Types de contrats
+
+<MdxCard>
+  Un **type de contrat** décrit *comment* on s'expose à un sous-jacent (actions, FX, crypto, etc.) : cash, engagement à terme, effet de levier, optionnalité.  
+  La page [Classes d'actifs](/knowledge/quantitative-finance/markets-products/asset-classes) couvre le **quoi** (equities, taux, FX…); celle-ci couvre le **comment**.
+</MdxCard>
+
+## Tableau de synthèse
+
+<MdxCard>
+  <InfoTooltipProvider>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Type</TableHead>
+        <TableHead>Sous-jacents typiques</TableHead>
+        <TableHead>Mécanisme</TableHead>
+        <TableHead>
+          <span className="inline-flex items-center gap-2">
+            Drivers P&amp;L
+            <InfoTooltip label="Drivers P&amp;L">
+              Ce qui fait varier le gain/perte du contrat en lui-même (hors mouvement pur du sous-jacent).
+            </InfoTooltip>
+          </span>
+        </TableHead>
+        <TableHead>
+          <span className="inline-flex items-center gap-2">
+            Notes
+            <InfoTooltip label="Notes">
+              Levier, marge, contrepartie, rollover — pièges pratiques au quotidien.
+            </InfoTooltip>
+          </span>
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Spot (cash)</TableCell>
+        <TableCell>Actions, FX, crypto, matières (physique rare)</TableCell>
+        <TableCell>Achat / vente immédiat ; propriété ou livraison selon marché</TableCell>
+        <TableCell>Prix du sous-jacent, frais, dividende / funding spot crypto</TableCell>
+        <TableCell>Pas de levier natif ; capital immobilisé ; slippage sur gros tickets</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Forward / NDF</TableCell>
+        <TableCell>FX surtout ; parfois commodities</TableCell>
+        <TableCell>Engagement à un prix fixé à l'échéance ; NDF = règlement cash en devise</TableCell>
+        <TableCell>Points forward (taux différentiels), date d'échéance</TableCell>
+        <TableCell>OTC : risque de contrepartie ; pas de mark-to-market quotidien standardisé</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Future (daté)</TableCell>
+        <TableCell>Indices, taux, commodities, parfois crypto (CME…)</TableCell>
+        <TableCell>Contrat standardisé, échéance fixe ; marge initiale + appels de marge</TableCell>
+        <TableCell>Variation du future, **basis** vs spot, **roll** avant expiration</TableCell>
+        <TableCell>Effet de levier via marge ; liquidité concentrée sur le front month</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Perpétuel (perp)</TableCell>
+        <TableCell>Crypto surtout ; certains CFD-like sur autres actifs</TableCell>
+        <TableCell>Pas d'échéance ; position ouverte indéfiniment</TableCell>
+        <TableCell>**Funding rate** (échange long/short), prix vs index spot</TableCell>
+        <TableCell>Levier élevé possible ; liquidation automatique si marge insuffisante</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">CFD</TableCell>
+        <TableCell>Actions, indices, FX, commodities, crypto (selon broker)</TableCell>
+        <TableCell>Contrat avec le broker : différence de prix, pas de livraison du sous-jacent</TableCell>
+        <TableCell>Prix coté broker, spreads, swaps overnight, politique de dividende</TableCell>
+        <TableCell>Contrepartie = broker ; régulation variable ; souvent interdit US residents</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Option (vanilla)</TableCell>
+        <TableCell>Tous sous-jacents liquides</TableCell>
+        <TableCell>Droit (call/put), pas obligation ; prime payée ou reçue</TableCell>
+        <TableCell>Delta, gamma, **theta**, **vega** ; skew et term structure de vol</TableCell>
+        <TableCell>Décroissance temps ; vol implicite ≠ réalisée — voir page Options</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Swap (taux / TRS)</TableCell>
+        <TableCell>Taux, crédit ; parfois actions (total return swap)</TableCell>
+        <TableCell>Échange de flux (fixe vs variable, ou rendement total vs funding)</TableCell>
+        <TableCell>Jambe fixe vs variable, spread, duration ; TRS : dividende + funding</TableCell>
+        <TableCell>OTC institutionnel ; peu de retail pur hors CFD proxy</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">ETF</TableCell>
+        <TableCell>Paniers actions, obligations, commodities, thématiques</TableCell>
+        <TableCell>Titre coté ; fonds détenant (ou répliquant) un indice / une stratégie</TableCell>
+        <TableCell>NAV vs prix marché (**décote/prime**), tracking error, frais TER</TableCell>
+        <TableCell>Liquidité ETF ≠ liquidité sous-jacents ; effet de levier possible (ETF 2x/3x)</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+  </InfoTooltipProvider>
+</MdxCard>
+
+## Spot vs dérivé (rappel)
+
+<MdxCard>
+  <div className="space-y-2">
+    <ul className="list-disc pl-6 space-y-1">
+      <li><strong>Spot</strong> : exposition directe, pas de date de roll implicite.</li>
+      <li><strong>Dérivé linéaire</strong> (future, perp, CFD) : P&amp;L ~ linéaire au sous-jacent + effets de funding, basis, roll.</li>
+      <li><strong>Option</strong> : exposition non linéaire ; asymétrie gain/perte possible.</li>
+    </ul>
+    <p className="text-muted-foreground text-sm">Note perso : à compléter (schémas payoff, exemple chiffré future vs CFD sur même indice).</p>
+  </div>
+</MdxCard>
+
+## Liens entre pages
+
+<MdxCard>
+
+← [Classes d'actifs](/knowledge/quantitative-finance/markets-products/asset-classes) — equities, FX, crypto…
+
+→ [Options](/knowledge/quantitative-finance/options-derivatives/options) — put/call, straddle, iron condor…
+
+→ Volatilité implicite / réalisée — page à rédiger
+
+</MdxCard>

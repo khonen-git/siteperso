@@ -1,0 +1,256 @@
+---
+title: Options
+description: Put, call et stratégies multi-jambes — synthèse des payoffs, sensibilités et usages courants.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { OptionPayoffVisualizer } from '@/components/mdx/OptionPayoffVisualizer';
+import { InfoTooltip, InfoTooltipProvider } from '@/components/mdx/InfoTooltip';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+
+# Options
+
+<MdxCard>
+  Une **option** donne le **droit** (pas l'obligation) d'acheter (**call**) ou de vendre (**put**) un sous-jacent à un **prix d'exercice** (*strike*) avant ou à l'**échéance**.  
+  On paie ou reçoit une **prime** ; le P&amp;L dépend du sous-jacent, du temps et de la **volatilité implicite** — voir [Types de contrats](/knowledge/quantitative-finance/markets-products/contract-types) pour le cadre général, puis [Black-Scholes](/knowledge/quantitative-finance/options-derivatives/black-scholes) et [Volatilité](/knowledge/quantitative-finance/volatility/implied-vs-realized) pour la valorisation.
+</MdxCard>
+
+## Call et put (vanillas)
+
+<MdxCard>
+  <InfoTooltipProvider>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Type</TableHead>
+        <TableHead>Position</TableHead>
+        <TableHead>Conviction</TableHead>
+        <TableHead>Payoff (à l'échéance)</TableHead>
+        <TableHead>
+          <span className="inline-flex items-center gap-2">
+            Notes
+            <InfoTooltip label="Notes">
+              Rappels sur le profil de risque et l'usage typique ; pas une liste exhaustive des greeks.
+            </InfoTooltip>
+          </span>
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Call</TableCell>
+        <TableCell>Long (acheteur)</TableCell>
+        <TableCell>Haussière</TableCell>
+        <TableCell>Gain si S &gt; K ; perte limitée à la prime si S ≤ K</TableCell>
+        <TableCell>Levier directionnel ; theta négatif pour l'acheteur</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Call</TableCell>
+        <TableCell>Short (vendeur)</TableCell>
+        <TableCell>Neutre / légèrement baissière</TableCell>
+        <TableCell>Prime encaissée ; perte potentielle non bornée si S monte fort</TableCell>
+        <TableCell>Couvert si sous-jacent détenu (covered call)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Put</TableCell>
+        <TableCell>Long (acheteur)</TableCell>
+        <TableCell>Baissière / hedge</TableCell>
+        <TableCell>Gain si S &lt; K ; perte limitée à la prime si S ≥ K</TableCell>
+        <TableCell>Assurance sur portefeuille actions (protective put)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Put</TableCell>
+        <TableCell>Short (vendeur)</TableCell>
+        <TableCell>Neutre / légèrement haussière</TableCell>
+        <TableCell>Prime encaissée ; perte importante si S chute fort</TableCell>
+        <TableCell>Risque de queue ; souvent lié à vente à découvert couverte</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+  </InfoTooltipProvider>
+</MdxCard>
+
+## Visualisation call / put
+
+<MdxCard>
+  <OptionPayoffVisualizer />
+</MdxCard>
+
+## Sensibilités (greeks)
+
+<MdxCard>
+  <InfoTooltipProvider>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Greeks</TableHead>
+        <TableHead>Variable</TableHead>
+        <TableHead>Effet (intuition)</TableHead>
+        <TableHead>
+          <span className="inline-flex items-center gap-2">
+            Notes
+            <InfoTooltip label="Notes">
+              Signes typiques pour un long call ; inversés ou nuancés pour puts et positions vendeuses.
+            </InfoTooltip>
+          </span>
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Delta (Δ)</TableCell>
+        <TableCell>Prix du sous-jacent</TableCell>
+        <TableCell>Exposition directionnelle instantanée (~ probabilité ITM en approximation)</TableCell>
+        <TableCell>0 à 1 pour call long ; put long : delta négatif</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Gamma (Γ)</TableCell>
+        <TableCell>Delta</TableCell>
+        <TableCell>Vitesse de changement du delta</TableCell>
+        <TableCell>Max souvent près du strike à l'approche de l'échéance</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Theta (Θ)</TableCell>
+        <TableCell>Temps</TableCell>
+        <TableCell>Décroissance de la valeur temps</TableCell>
+        <TableCell>Négatif pour long option ; positif pour short option</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Vega (ν)</TableCell>
+        <TableCell>Vol implicite</TableCell>
+        <TableCell>Sensibilité à un choc de vol</TableCell>
+        <TableCell>Long vol = long vega ; utile pour straddle/strangle</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+  </InfoTooltipProvider>
+</MdxCard>
+
+## Stratégies courantes
+
+<MdxCard>
+  <InfoTooltipProvider>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Stratégie</TableHead>
+        <TableHead>Jambes</TableHead>
+        <TableHead>
+          <span className="inline-flex items-center gap-2">
+            Exposition (greeks)
+            <InfoTooltip label="Exposition (greeks)">
+              Signes indicatifs au montage, souvent proche du strike ATM ; Δ gamma theta vega peuvent changer avec le spot, le temps et le skew.
+            </InfoTooltip>
+          </span>
+        </TableHead>
+        <TableHead>Profil P&amp;L (schéma)</TableHead>
+        <TableHead>
+          <span className="inline-flex items-center gap-2">
+            Notes
+            <InfoTooltip label="Notes">
+              Idée de risque/rendement ; détail des strikes et échéances à préciser au cas par cas.
+            </InfoTooltip>
+          </span>
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Covered call</TableCell>
+        <TableCell>Long sous-jacent + short call</TableCell>
+        <TableCell>Δ+, Γ−, Θ+, ν−</TableCell>
+        <TableCell>Revenu prime ; plafond au-dessus du strike</TableCell>
+        <TableCell>Rendement en marché latéral ; renoncement à la hausse extrême</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Protective put</TableCell>
+        <TableCell>Long sous-jacent + long put</TableCell>
+        <TableCell>Δ+, Γ+, Θ−, ν+</TableCell>
+        <TableCell>Perte limitée sous le strike (moins prime) ; upside conservé</TableCell>
+        <TableCell>Coût d'assurance récurrent si rolls</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Bull call spread</TableCell>
+        <TableCell>Long call bas strike + short call haut strike</TableCell>
+        <TableCell>Δ+, Γ≈0, Θ−, ν+ (faible)</TableCell>
+        <TableCell>Gain plafonné ; perte limitée à la prime nette</TableCell>
+        <TableCell>Moins cher qu'un call nu</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Bear put spread</TableCell>
+        <TableCell>Long put haut strike + short put bas strike</TableCell>
+        <TableCell>Δ−, Γ≈0, Θ−, ν+ (faible)</TableCell>
+        <TableCell>Gain plafonné ; perte limitée</TableCell>
+        <TableCell>Symétrique logique du bull call spread</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Long straddle</TableCell>
+        <TableCell>Long call + long put (même strike, même échéance)</TableCell>
+        <TableCell>Δ≈0, Γ+, Θ−, ν+</TableCell>
+        <TableCell>Perte si S proche du strike ; gain si move suffisant</TableCell>
+        <TableCell>Long volatilité ; sensible au temps</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Long strangle</TableCell>
+        <TableCell>Long OTM call + long OTM put</TableCell>
+        <TableCell>Δ≈0, Γ+, Θ−, ν+</TableCell>
+        <TableCell>Zone de perte plus large ; besoin de move plus fort</TableCell>
+        <TableCell>Souvent avant earnings / événement binaire</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Short straddle</TableCell>
+        <TableCell>Short call + short put (même strike)</TableCell>
+        <TableCell>Δ≈0, Γ−, Θ+, ν−</TableCell>
+        <TableCell>Prime max si S = strike ; risque illimité si move extrême</TableCell>
+        <TableCell>Réservé aux traders expérimentés ; marge élevée</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Iron condor</TableCell>
+        <TableCell>Put spread + call spread (strikes OTM)</TableCell>
+        <TableCell>Δ≈0, Γ−, Θ+, ν−</TableCell>
+        <TableCell>Gain = prime nette si S entre les ailes ; perte limitée</TableCell>
+        <TableCell>Populaire en vente de vol ; attention aux queues</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Iron butterfly</TableCell>
+        <TableCell>Straddle short + wings (puts/calls OTM)</TableCell>
+        <TableCell>Δ≈0, Γ−, Θ+, ν−</TableCell>
+        <TableCell>Profit max si S = strike central ; pertes limitées aux wings</TableCell>
+        <TableCell>Condor « resserré » autour du strike ATM</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Calendar spread</TableCell>
+        <TableCell>Long option échéance lointaine + short même strike proche</TableCell>
+        <TableCell>Δ≈0, Γ±, Θ±, ν+</TableCell>
+        <TableCell>Sensible à la pente de vol (*term structure*)</TableCell>
+        <TableCell>Exposition très dépendante des maturités ; signes à valider au cas par cas</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+  </InfoTooltipProvider>
+</MdxCard>
+
+## Rappels pratiques
+
+<MdxCard>
+  <div className="space-y-2">
+    <ul className="list-disc pl-6 space-y-1">
+      <li><strong>ITM / ATM / OTM</strong> : in-the-money, at-the-money, out-of-the-money par rapport au spot vs strike.</li>
+      <li><strong>Style américain vs européen</strong> (type de contrat d'option, pas la zone géographique) : <em>américaine</em> = exercice possible avant l'échéance ; <em>européenne</em> = exercice uniquement à l'échéance. Ex. : actions US souvent en style américain ; beaucoup d'options sur indices (SPX, Euro Stoxx…) en style européen — y compris sur sous-jacent américain.</li>
+      <li><strong>Multiplicateur</strong> : contrat actions US souvent × 100 ; vérifier spécifications par marché.</li>
+    </ul>
+    <p className="text-muted-foreground text-sm">Note perso : à ajouter — diagrammes payoff, exemple numérique straddle, lien chain options / skew.</p>
+  </div>
+</MdxCard>
+
+## Liens entre pages
+
+<MdxCard>
+
+← [Types de contrats](/knowledge/quantitative-finance/markets-products/contract-types)
+
+→ [Black-Scholes](/knowledge/quantitative-finance/options-derivatives/black-scholes) — modèle de pricing (brouillon)
+
+→ [Volatilité implicite et réalisée](/knowledge/quantitative-finance/volatility/implied-vs-realized) — brouillon
+
+</MdxCard>

@@ -30,7 +30,7 @@ export interface DesignPatternsLabels {
   visitor: string;
 }
 
-/** Arbre design patterns — chemins legacy `/knowledge/programming/…` jusqu'à PR2. */
+/** Arbre design patterns — base path `/knowledge/engineering`. */
 export function getDesignPatternsNav(
   basePath: string,
   labels: DesignPatternsLabels,

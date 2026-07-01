@@ -1,12 +1,10 @@
 import { getDesignPatternsNav } from './design-patterns-nav';
 import type { TreeItem } from './types';
 
-/** Chemins legacy — contenu MDX inchangé jusqu'à PR2. */
-const LEGACY_PROGRAMMING = '/knowledge/programming';
-const LEGACY_FINANCE = '/knowledge/finance';
-const LEGACY_DATA_SCIENCE = '/knowledge/data-science';
-const LEGACY_PROBABILITY = '/knowledge/mathematics/probability';
-const LEGACY_STATISTICS = '/knowledge/mathematics/statistics';
+const ENGINEERING = '/knowledge/engineering';
+const QF = '/knowledge/quantitative-finance';
+const ML = '/knowledge/machine-learning';
+const STATS = '/knowledge/statistics';
 
 export const navigationData: TreeItem[] = [
   {
@@ -29,10 +27,7 @@ export const navigationData: TreeItem[] = [
         title: 'Distributions',
         href: '/knowledge/probability/distributions',
         children: [
-          {
-            title: 'Loi normale',
-            href: `${LEGACY_PROBABILITY}/distributions/continuous/normal`,
-          },
+          { title: 'Loi normale', href: '/knowledge/probability/distributions/normal' },
         ],
       },
       { title: 'Processus stochastiques', href: '/knowledge/probability/stochastic-processes' },
@@ -46,14 +41,8 @@ export const navigationData: TreeItem[] = [
         title: 'Statistiques descriptives',
         href: '/knowledge/statistics/descriptive',
         children: [
-          {
-            title: 'Fondamentaux',
-            href: `${LEGACY_STATISTICS}/descriptive/fundamentals`,
-          },
-          {
-            title: 'Visualisation',
-            href: `${LEGACY_STATISTICS}/descriptive/visualization`,
-          },
+          { title: 'Fondamentaux', href: `${STATS}/descriptive/fundamentals` },
+          { title: 'Visualisation', href: `${STATS}/descriptive/visualization` },
         ],
       },
       {
@@ -62,34 +51,22 @@ export const navigationData: TreeItem[] = [
         children: [
           {
             title: 'Tests d\'hypothèses',
-            href: `${LEGACY_STATISTICS}/inductive/statistical-tests`,
+            href: `${STATS}/inference/statistical-tests`,
             children: [
               {
                 title: 'Tests paramétriques',
-                href: `${LEGACY_STATISTICS}/inductive/statistical-tests/parametric`,
+                href: `${STATS}/inference/statistical-tests/parametric`,
                 children: [
-                  {
-                    title: 'Test t de Student',
-                    href: `${LEGACY_STATISTICS}/inductive/statistical-tests/parametric/t-test`,
-                  },
-                  {
-                    title: 'Test t de Welch',
-                    href: `${LEGACY_STATISTICS}/inductive/statistical-tests/parametric/t-test-welch`,
-                  },
+                  { title: 'Test t de Student', href: `${STATS}/inference/statistical-tests/parametric/t-test` },
+                  { title: 'Test t de Welch', href: `${STATS}/inference/statistical-tests/parametric/t-test-welch` },
                 ],
               },
               {
                 title: 'Tests non paramétriques',
-                href: `${LEGACY_STATISTICS}/inductive/statistical-tests/non-parametric`,
+                href: `${STATS}/inference/statistical-tests/non-parametric`,
                 children: [
-                  {
-                    title: 'Test de Mann-Whitney',
-                    href: `${LEGACY_STATISTICS}/inductive/statistical-tests/non-parametric/mann-whitney`,
-                  },
-                  {
-                    title: 'Test de Wilcoxon',
-                    href: `${LEGACY_STATISTICS}/inductive/statistical-tests/non-parametric/wilcoxon`,
-                  },
+                  { title: 'Test de Mann-Whitney', href: `${STATS}/inference/statistical-tests/non-parametric/mann-whitney` },
+                  { title: 'Test de Wilcoxon', href: `${STATS}/inference/statistical-tests/non-parametric/wilcoxon` },
                 ],
               },
             ],
@@ -108,24 +85,15 @@ export const navigationData: TreeItem[] = [
         title: 'Concepts généraux',
         href: '/knowledge/machine-learning/general-concepts',
         children: [
-          {
-            title: 'Validation croisée',
-            href: `${LEGACY_DATA_SCIENCE}/cross-validation`,
-          },
+          { title: 'Validation croisée', href: `${ML}/general-concepts/cross-validation` },
         ],
       },
       {
         title: 'Modèles classiques',
         href: '/knowledge/machine-learning/classical-models',
         children: [
-          {
-            title: 'Random Forest',
-            href: `${LEGACY_DATA_SCIENCE}/machine-learning/supervised/random-forest`,
-          },
-          {
-            title: 'XGBoost',
-            href: `${LEGACY_DATA_SCIENCE}/machine-learning/supervised/xgboost`,
-          },
+          { title: 'Random Forest', href: `${ML}/classical-models/random-forest` },
+          { title: 'XGBoost', href: `${ML}/classical-models/xgboost` },
         ],
       },
       { title: 'Deep Learning', href: '/knowledge/machine-learning/deep-learning' },
@@ -141,23 +109,23 @@ export const navigationData: TreeItem[] = [
         title: 'Marchés & produits',
         href: '/knowledge/quantitative-finance/markets-products',
         children: [
-          { title: 'Produits financiers', href: `${LEGACY_FINANCE}/asset-classes` },
-          { title: 'Types de contrats', href: `${LEGACY_FINANCE}/contract-types` },
+          { title: 'Produits financiers', href: `${QF}/markets-products/asset-classes` },
+          { title: 'Types de contrats', href: `${QF}/markets-products/contract-types` },
         ],
       },
       {
         title: 'Options & dérivés',
         href: '/knowledge/quantitative-finance/options-derivatives',
         children: [
-          { title: 'Bases des options', href: `${LEGACY_FINANCE}/options` },
-          { title: 'Black-Scholes', href: `${LEGACY_FINANCE}/black-scholes` },
+          { title: 'Bases des options', href: `${QF}/options-derivatives/options` },
+          { title: 'Black-Scholes', href: `${QF}/options-derivatives/black-scholes` },
         ],
       },
       {
         title: 'Volatilité',
         href: '/knowledge/quantitative-finance/volatility',
         children: [
-          { title: 'Implicite vs réalisée', href: `${LEGACY_FINANCE}/volatility` },
+          { title: 'Implicite vs réalisée', href: `${QF}/volatility/implied-vs-realized` },
         ],
       },
       { title: 'Calcul stochastique', href: '/knowledge/quantitative-finance/stochastic-calculus' },
@@ -169,10 +137,7 @@ export const navigationData: TreeItem[] = [
         title: 'Économétrie financière',
         href: '/knowledge/quantitative-finance/financial-econometrics',
         children: [
-          {
-            title: 'Régimes & HMM',
-            href: `${LEGACY_DATA_SCIENCE}/machine-learning/unsupervised/hmm`,
-          },
+          { title: 'Régimes & HMM', href: `${QF}/financial-econometrics/regimes-hmm` },
         ],
       },
       { title: 'Backtesting & recherche systématique', href: '/knowledge/quantitative-finance/backtesting' },
@@ -184,50 +149,38 @@ export const navigationData: TreeItem[] = [
     children: [
       {
         title: 'Python',
-        href: `${LEGACY_PROGRAMMING}/python`,
+        href: `${ENGINEERING}/python`,
         children: [
           {
             title: 'Fondamentaux',
-            href: `${LEGACY_PROGRAMMING}/python/fundamentals`,
+            href: `${ENGINEERING}/python/fundamentals`,
             children: [
-              {
-                title: 'Variables',
-                href: `${LEGACY_PROGRAMMING}/python/fundamentals/variables`,
-              },
-              {
-                title: 'Fonctions',
-                href: `${LEGACY_PROGRAMMING}/python/fundamentals/functions`,
-              },
+              { title: 'Variables', href: `${ENGINEERING}/python/fundamentals/variables` },
+              { title: 'Fonctions', href: `${ENGINEERING}/python/fundamentals/functions` },
             ],
           },
-          { title: 'Typage', href: `${LEGACY_PROGRAMMING}/python/typing` },
-          { title: 'Environnements', href: `${LEGACY_PROGRAMMING}/python/environment` },
+          { title: 'Typage', href: `${ENGINEERING}/python/typing` },
+          { title: 'Environnements', href: `${ENGINEERING}/python/environment` },
         ],
       },
       { title: 'C++ & performance', href: '/knowledge/engineering/cpp-performance' },
       {
         title: 'CUDA / GPU',
-        href: `${LEGACY_PROGRAMMING}/hardware`,
+        href: `${ENGINEERING}/hardware`,
         children: [
-          {
-            title: 'Architecture GPU',
-            href: `${LEGACY_PROGRAMMING}/hardware/gpu-architecture`,
-          },
+          { title: 'Architecture GPU', href: `${ENGINEERING}/hardware/gpu-architecture` },
           { title: 'Programmation CUDA', href: '/knowledge/engineering/cuda' },
         ],
       },
-      { title: 'Structures de données', href: `${LEGACY_PROGRAMMING}/data-structures` },
+      { title: 'Structures de données', href: `${ENGINEERING}/data-structures` },
       {
         title: 'Hardware',
-        href: `${LEGACY_PROGRAMMING}/hardware`,
+        href: `${ENGINEERING}/hardware`,
         children: [
-          {
-            title: 'Architecture CPU',
-            href: `${LEGACY_PROGRAMMING}/hardware/cpu-architecture`,
-          },
+          { title: 'Architecture CPU', href: `${ENGINEERING}/hardware/cpu-architecture` },
         ],
       },
-      getDesignPatternsNav(LEGACY_PROGRAMMING, {
+      getDesignPatternsNav(ENGINEERING, {
         title: 'Design patterns',
         creational: 'Créationnels',
         structural: 'Structurels',

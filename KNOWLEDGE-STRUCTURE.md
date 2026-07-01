@@ -457,11 +457,21 @@ Outils
 - [x] Redirect legacy `statistical-hypothesis-test` → `statistical-tests`
 - [x] Suppression des `page.tsx` dédiés (normal, statistical-hypothesis-test)
 - [x] Mise à jour `KnowledgeHome` et i18n (`messages/*/knowledge.json`)
-- [ ] Chemins legacy conservés pour le contenu MDX existant
+- [x] Chemins legacy conservés pour le contenu MDX existant
 
-### PR2 — Migration des chemins (à venir)
+### PR2 — Migration des chemins ✅
 
----
+- [x] Déplacer `programming/*` → `engineering/*`
+- [x] Déplacer `finance/*` → `quantitative-finance/*` (sous-chapitres)
+- [x] Déplacer `data-science/*` → `machine-learning/*` et HMM → économétrie
+- [x] Déplacer `mathematics/probability/*` → `probability/*`
+- [x] Déplacer `mathematics/statistics/*` → `statistics/*`
+- [x] Redirects actifs dans `next.config.js`
+- [x] Navigation et liens MDX mis à jour
+
+### PR3 — Restructuration contenu (à venir)
+
+- Aplatir l'arbre Probabilités (fusion `fundamentals`)
 
 ## Priorisation de rédaction
 

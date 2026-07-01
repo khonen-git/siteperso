@@ -1,0 +1,75 @@
+---
+title: Patterns structurels
+description: Patrons qui organisent la composition de classes et d'objets.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
+import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { Link } from '@/i18n/navigation';
+
+# Patterns structurels
+
+<i>
+    Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour proposer un contenu personnel et d'une meilleure qualité.
+</i>
+
+<MdxCard>
+Les patterns **structurels** expliquent comment assembler objets et classes en structures plus larges, tout en gardant le système flexible et efficace.
+</MdxCard>
+
+## Liste
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Pattern</TableHead>
+      <TableHead>Idée clé</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/engineering/design-patterns/structural/adapter">Adapter</Link>
+      </TableCell>
+      <TableCell>Interface incompatible → interface attendue</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/engineering/design-patterns/structural/bridge">Bridge</Link>
+      </TableCell>
+      <TableCell>Décorréler abstraction et implémentation</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/engineering/design-patterns/structural/composite">Composite</Link>
+      </TableCell>
+      <TableCell>Arbre partiel-total</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/engineering/design-patterns/structural/decorator">Decorator</Link>
+      </TableCell>
+      <TableCell>Ajouter des responsabilités dynamiquement</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/engineering/design-patterns/structural/facade">Facade</Link>
+      </TableCell>
+      <TableCell>API simple sur un sous-système</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/engineering/design-patterns/structural/flyweight">Flyweight</Link>
+      </TableCell>
+      <TableCell>Partager l'état intrinsèque</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/engineering/design-patterns/structural/proxy">Proxy</Link>
+      </TableCell>
+      <TableCell>Substitut contrôlant l'accès</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>

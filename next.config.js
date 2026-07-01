@@ -14,17 +14,95 @@ const withMDX = createMDX({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async redirects() {
+    const locale = ':locale';
+    const permanent = true;
+
     return [
-      // Legacy page → contenu MDX équivalent
       {
-        source: '/:locale/knowledge/mathematics/statistics/statistical-hypothesis-test',
-        destination: '/:locale/knowledge/mathematics/statistics/inductive/statistical-tests',
-        permanent: true,
+        source: `/${locale}/knowledge/mathematics/statistics/statistical-hypothesis-test`,
+        destination: `/${locale}/knowledge/statistics/inference/statistical-tests`,
+        permanent,
       },
-      // PR2 — décommenter lors de la migration des chemins MDX
-      // { source: '/:locale/knowledge/programming/:path*', destination: '/:locale/knowledge/engineering/:path*', permanent: true },
-      // { source: '/:locale/knowledge/finance/:path*', destination: '/:locale/knowledge/quantitative-finance/:path*', permanent: true },
-      // { source: '/:locale/knowledge/data-science/:path*', destination: '/:locale/knowledge/machine-learning/:path*', permanent: true },
+      {
+        source: `/${locale}/knowledge/mathematics/statistics/inductive/statistical-tests`,
+        destination: `/${locale}/knowledge/statistics/inference/statistical-tests`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/mathematics/statistics/inductive/statistical-tests/:path*`,
+        destination: `/${locale}/knowledge/statistics/inference/statistical-tests/:path*`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/mathematics/statistics/descriptive/:path*`,
+        destination: `/${locale}/knowledge/statistics/descriptive/:path*`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/mathematics/statistics/inductive/fundamentals`,
+        destination: `/${locale}/knowledge/statistics/inference/fundamentals`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/mathematics/probability/distributions/continuous/normal`,
+        destination: `/${locale}/knowledge/probability/distributions/normal`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/programming/:path*`,
+        destination: `/${locale}/knowledge/engineering/:path*`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/finance/asset-classes`,
+        destination: `/${locale}/knowledge/quantitative-finance/markets-products/asset-classes`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/finance/contract-types`,
+        destination: `/${locale}/knowledge/quantitative-finance/markets-products/contract-types`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/finance/options`,
+        destination: `/${locale}/knowledge/quantitative-finance/options-derivatives/options`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/finance/black-scholes`,
+        destination: `/${locale}/knowledge/quantitative-finance/options-derivatives/black-scholes`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/finance/volatility`,
+        destination: `/${locale}/knowledge/quantitative-finance/volatility/implied-vs-realized`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/data-science/cross-validation`,
+        destination: `/${locale}/knowledge/machine-learning/general-concepts/cross-validation`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/data-science/machine-learning/supervised/random-forest`,
+        destination: `/${locale}/knowledge/machine-learning/classical-models/random-forest`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/data-science/machine-learning/supervised/xgboost`,
+        destination: `/${locale}/knowledge/machine-learning/classical-models/xgboost`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/data-science/machine-learning/unsupervised/hmm`,
+        destination: `/${locale}/knowledge/quantitative-finance/financial-econometrics/regimes-hmm`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/data-science/:path*`,
+        destination: `/${locale}/knowledge/machine-learning/:path*`,
+        permanent,
+      },
     ];
   },
   output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
