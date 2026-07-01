@@ -469,9 +469,12 @@ Outils
 - [x] Redirects actifs dans `next.config.js`
 - [x] Navigation et liens MDX mis à jour
 
-### PR3 — Restructuration contenu (à venir)
+### PR3 — Restructuration contenu ✅
 
-- Aplatir l'arbre Probabilités (fusion `fundamentals`)
+- [x] Page unique **Fondamentaux** (axiomes, espace, espérance, TCL…)
+- [x] Hub **Distributions** avec familles (discrètes, continues, multivariées)
+- [x] Aplatissement inférence statistique (tests listés directement, sans niveau paramétrique/non paramétrique)
+- [x] Redirects anciens chemins probabilités et inférence
 
 ## Priorisation de rédaction
 

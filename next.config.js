@@ -103,6 +103,48 @@ const nextConfig = {
         destination: `/${locale}/knowledge/machine-learning/:path*`,
         permanent,
       },
+      // PR3 — probabilités : ancien arbre profond
+      {
+        source: `/${locale}/knowledge/mathematics/probability/fundamentals/principles/axioms`,
+        destination: `/${locale}/knowledge/probability/fundamentals#cadre-axiomatique`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/mathematics/probability/fundamentals/principles/space`,
+        destination: `/${locale}/knowledge/probability/fundamentals#espace-probabilisable`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/mathematics/probability/fundamentals/principles/expectation`,
+        destination: `/${locale}/knowledge/probability/fundamentals#esperance`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/mathematics/probability/fundamentals/:path*`,
+        destination: `/${locale}/knowledge/probability/fundamentals`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/mathematics/probability/distributions/continuous/:path*`,
+        destination: `/${locale}/knowledge/probability/distributions/continuous-univariate`,
+        permanent,
+      },
+      // PR3 — statistiques : aplatissement inférence
+      {
+        source: `/${locale}/knowledge/statistics/inference/fundamentals`,
+        destination: `/${locale}/knowledge/statistics/inference`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/statistics/inference/statistical-tests/parametric`,
+        destination: `/${locale}/knowledge/statistics/inference/statistical-tests`,
+        permanent,
+      },
+      {
+        source: `/${locale}/knowledge/statistics/inference/statistical-tests/non-parametric`,
+        destination: `/${locale}/knowledge/statistics/inference/statistical-tests`,
+        permanent,
+      },
     ];
   },
   output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,

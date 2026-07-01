@@ -9,6 +9,9 @@
   { "slug": "probability", "fr": { "title": "Probabilités", "description": "Fondements probabilistes et processus stochastiques." }, "en": { "title": "Probability", "description": "Probability foundations and stochastic processes." } },
   { "slug": "probability/fundamentals", "fr": { "title": "Fondamentaux", "description": "Variables aléatoires, espérance, variance et théorèmes limites." }, "en": { "title": "Fundamentals", "description": "Random variables, expectation, variance, and limit theorems." } },
   { "slug": "probability/distributions", "fr": { "title": "Distributions", "description": "Lois de probabilité discrètes et continues." }, "en": { "title": "Distributions", "description": "Discrete and continuous probability distributions." } },
+  { "slug": "probability/distributions/discrete", "fr": { "title": "Distributions discrètes", "description": "Bernoulli, binomiale et Poisson." }, "en": { "title": "Discrete distributions", "description": "Bernoulli, binomial, and Poisson." } },
+  { "slug": "probability/distributions/continuous-univariate", "fr": { "title": "Continues univariées", "description": "Uniforme, normale, log-normale, Student." }, "en": { "title": "Continuous univariate", "description": "Uniform, normal, log-normal, Student." } },
+  { "slug": "probability/distributions/multivariate", "fr": { "title": "Multivariées", "description": "Normale multivariée et lois jointes." }, "en": { "title": "Multivariate", "description": "Multivariate normal and joint laws." } },
   { "slug": "probability/stochastic-processes", "fr": { "title": "Processus stochastiques", "description": "Brownien, martingales et chaînes de Markov." }, "en": { "title": "Stochastic processes", "description": "Brownian motion, martingales, and Markov chains." } },
 
   { "slug": "statistics", "fr": { "title": "Statistiques", "description": "Inférence, régression et séries temporelles." }, "en": { "title": "Statistics", "description": "Inference, regression, and time series." } },
@@ -63,7 +66,6 @@
 
   { "slug": "statistics/descriptive/fundamentals", "fr": { "title": "Fondamentaux", "description": "Moyenne, médiane, variance et quantiles." }, "en": { "title": "Fundamentals", "description": "Mean, median, variance, and quantiles." } },
   { "slug": "statistics/descriptive/visualization", "fr": { "title": "Visualisation", "description": "Histogrammes, boxplots et graphiques exploratoires." }, "en": { "title": "Visualization", "description": "Histograms, boxplots, and exploratory charts." } },
-  { "slug": "statistics/inference/fundamentals", "fr": { "title": "Fondamentaux", "description": "Cadre de l'inférence statistique." }, "en": { "title": "Fundamentals", "description": "Framework for statistical inference." } },
   { "slug": "statistics/inference/statistical-tests/parametric", "fr": { "title": "Tests paramétriques", "description": "Tests basés sur des hypothèses de distribution." }, "en": { "title": "Parametric tests", "description": "Tests based on distributional assumptions." } },
   { "slug": "statistics/inference/statistical-tests/parametric/t-test", "fr": { "title": "Test t de Student", "description": "Comparaison de moyennes." }, "en": { "title": "Student's t-test", "description": "Comparing means." } },
   { "slug": "statistics/inference/statistical-tests/parametric/t-test-welch", "fr": { "title": "Test t de Welch", "description": "Test t avec variances inégales." }, "en": { "title": "Welch's t-test", "description": "t-test with unequal variances." } },

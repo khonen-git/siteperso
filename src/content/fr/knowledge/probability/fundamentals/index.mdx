@@ -3,6 +3,117 @@ title: Fondamentaux
 description: Variables aléatoires, espérance, variance et théorèmes limites.
 ---
 
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+import { Link } from '@/i18n/navigation';
+
 # Fondamentaux
 
-Ce contenu est en cours de rédaction.
+<MdxCard>
+Cette page regroupe les notions de base des probabilités : cadre axiomatique, variables aléatoires, moments et théorèmes limites. Pour les lois concrètes, voir [Distributions](/knowledge/probability/distributions).
+</MdxCard>
+
+## Cadre axiomatique {#cadre-axiomatique}
+
+<MdxCard>
+Une probabilité <MathInline>P</MathInline> sur un espace <MathInline>{"\\Omega"}</MathInline> vérifie :
+
+1. <MathInline>{"P(A) \\geq 0"}</MathInline> pour tout événement <MathInline>A</MathInline>
+2. <MathInline>{"P(\\Omega) = 1"}</MathInline>
+3. <MathInline>{"\\sigma"}</MathInline>-additivité : pour des événements disjoints <MathInline>{"A_i"}</MathInline>,
+
+<MathBlock>{"P\\left(\\bigcup_{i} A_i\\right) = \\sum_{i} P(A_i)"}</MathBlock>
+</MdxCard>
+
+## Espace probabilisable {#espace-probabilisable}
+
+<MdxCard>
+Un **espace probabilisable** est un triplet <MathInline>{"(\\Omega, \\mathcal{F}, P)"}</MathInline> :
+
+- <MathInline>{"\\Omega"}</MathInline> : univers des issues
+- <MathInline>{"\\mathcal{F}"}</MathInline> : tribu d'événements mesurables
+- <MathInline>P</MathInline> : mesure de probabilité
+
+La tribu permet de définir des opérations dénombrables (limites, sup, etc.) sur les événements.
+</MdxCard>
+
+## Variable aléatoire et distribution {#variable-aleatoire}
+
+<MdxCard>
+Une **variable aléatoire** <MathInline>X</MathInline> est une application mesurable <MathInline>{"X : \\Omega \\to \\mathbb{R}"}</MathInline> (ou <MathInline>{"\\mathbb{R}^d"}</MathInline>).
+
+Sa **loi** est la mesure image <MathInline>{"P_X(B) = P(X \\in B)"}</MathInline>.
+
+- **Discrète** : masse <MathInline>{"p_X(x) = P(X = x)"}</MathInline>
+- **Continue** : densité <MathInline>{"f_X"}</MathInline> telle que <MathInline>{"P(X \\in B) = \\int_B f_X(x)\\,dx"}</MathInline>
+
+La fonction de répartition : <MathInline>{"F_X(x) = P(X \\leq x)"}</MathInline>.
+</MdxCard>
+
+## Espérance {#esperance}
+
+<MdxCard>
+L'**espérance** résume le centre de gravité d'une loi :
+
+<MathBlock>{"\\mathbb{E}[X] = \\sum_x x\\,p_X(x) \\quad \\text{ou} \\quad \\int_{\\mathbb{R}} x f_X(x)\\,dx"}</MathBlock>
+
+**Linéarité** : <MathInline>{"\\mathbb{E}[aX + bY] = a\\mathbb{E}[X] + b\\mathbb{E}[Y]"}</MathInline> (sans hypothèse d'indépendance).
+
+**Transfert** : <MathInline>{"\\mathbb{E}[g(X)] = \\int g(x)\\,dP_X(x)"}</MathInline>.
+</MdxCard>
+
+## Variance, covariance et corrélation
+
+<MdxCard>
+<MathBlock>{"\\mathrm{Var}(X) = \\mathbb{E}[(X - \\mathbb{E}[X])^2] = \\mathbb{E}[X^2] - (\\mathbb{E}[X])^2"}</MathBlock>
+
+<MathBlock>{"\\mathrm{Cov}(X,Y) = \\mathbb{E}[(X-\\mathbb{E}[X])(Y-\\mathbb{E}[Y])]"}</MathBlock>
+
+<MathBlock>{"\\rho_{X,Y} = \\frac{\\mathrm{Cov}(X,Y)}{\\sigma_X \\sigma_Y} \\in [-1, 1]"}</MathBlock>
+
+La variance d'une somme : <MathInline>{"\\mathrm{Var}(X+Y) = \\mathrm{Var}(X) + \\mathrm{Var}(Y) + 2\\mathrm{Cov}(X,Y)"}</MathInline> ; si <MathInline>X</MathInline> et <MathInline>Y</MathInline> sont indépendants, le terme croisé s'annule.
+</MdxCard>
+
+## Moments, skewness et kurtosis
+
+<MdxCard>
+Le moment d'ordre <MathInline>k</MathInline> : <MathInline>{"\\mathbb{E}[X^k]"}</MathInline>. Le moment centré d'ordre 3 et 4 alimentent :
+
+- **Skewness** (asymétrie) : queue plus lourde à gauche ou à droite
+- **Kurtosis** (aplatissement) : queues plus ou moins épaisses que la normale
+
+En finance, des kurtosis élevés signalent un risque de **événements extrêmes**.
+</MdxCard>
+
+## Loi conditionnelle et indépendance
+
+<MdxCard>
+La loi conditionnelle de <MathInline>X</MathInline> sachant <MathInline>Y</MathInline> :
+
+<MathBlock>{"P(X \\in A \\mid Y = y) = \\frac{P(X \\in A, Y = y)}{P(Y = y)}"}</MathBlock>
+
+**Indépendance** : <MathInline>{"P(X \\in A, Y \\in B) = P(X \\in A)\\,P(Y \\in B)"}</MathInline> pour tous événements, ou équivalent <MathInline>{"f_{X,Y}(x,y) = f_X(x) f_Y(y)"}</MathInline>.
+
+Indépendance <MathInline>{"\\neq"}</MathInline> non-corrélation (sauf cas gaussien).
+</MdxCard>
+
+## Loi des grands nombres
+
+<MdxCard>
+Pour <MathInline>{"X_1, \\ldots, X_n"}</MathInline> i.i.d. avec <MathInline>{"\\mathbb{E}[|X_1|] < \\infty"}</MathInline> :
+
+<MathBlock>{"\\bar{X}_n = \\frac{1}{n}\\sum_{i=1}^n X_i \\xrightarrow[n\\to\\infty]{} \\mathbb{E}[X_1]"}</MathBlock>
+
+Interprétation : la moyenne empirique stabilise la vraie moyenne — base de l'estimation Monte Carlo et des backtests longs.
+</MdxCard>
+
+## Théorème central limite
+
+<MdxCard>
+Si <MathInline>{"\\mathbb{E}[X_1]=\\mu"}</MathInline> et <MathInline>{"\\mathrm{Var}(X_1)=\\sigma^2 < \\infty"}</MathInline> :
+
+<MathBlock>{"\\frac{\\bar{X}_n - \\mu}{\\sigma / \\sqrt{n}} \\xrightarrow[n\\to\\infty]{\\mathcal{L}} \\mathcal{N}(0,1)"}</MathBlock>
+
+Justifie l'usage massif de la [loi normale](/knowledge/probability/distributions/normal) en statistique et l'approximation des erreurs d'estimation.
+</MdxCard>

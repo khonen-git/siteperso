@@ -3,6 +3,51 @@ title: Distributions
 description: Discrete and continuous probability distributions.
 ---
 
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { Link } from '@/i18n/navigation';
+
 # Distributions
 
-This content is being written.
+<MdxCard>
+**Probability distributions** describe how a random variable is spread. They are grouped by support type and dimensionality.
+</MdxCard>
+
+## Families
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Family</TableHead>
+      <TableHead>Examples</TableHead>
+      <TableHead>Typical use</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/probability/distributions/discrete">Discrete</Link>
+      </TableCell>
+      <TableCell>Bernoulli, Binomial, Poisson</TableCell>
+      <TableCell>Counts, defaults, rare events</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/probability/distributions/continuous-univariate">Continuous univariate</Link>
+      </TableCell>
+      <TableCell>Uniform, Normal, Log-normal, Student…</TableCell>
+      <TableCell>Returns, errors, continuous modeling</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/probability/distributions/multivariate">Multivariate</Link>
+      </TableCell>
+      <TableCell>Multivariate normal</TableCell>
+      <TableCell>Portfolios, cross-asset correlations</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+## Detailed page
+
+- [Normal distribution](/knowledge/probability/distributions/normal) — interactive visualization and properties

@@ -3,6 +3,51 @@ title: Distributions
 description: Lois de probabilité discrètes et continues.
 ---
 
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { Link } from '@/i18n/navigation';
+
 # Distributions
 
-Ce contenu est en cours de rédaction.
+<MdxCard>
+Les **lois de probabilité** décrivent comment une variable aléatoire se répartit. On les regroupe par famille selon le type de support et le nombre de dimensions.
+</MdxCard>
+
+## Familles
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Famille</TableHead>
+      <TableHead>Exemples</TableHead>
+      <TableHead>Usage typique</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/probability/distributions/discrete">Discrètes</Link>
+      </TableCell>
+      <TableCell>Bernoulli, Binomiale, Poisson</TableCell>
+      <TableCell>Comptages, défauts, événements rares</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/probability/distributions/continuous-univariate">Continues univariées</Link>
+      </TableCell>
+      <TableCell>Uniforme, Normale, Log-normale, Student…</TableCell>
+      <TableCell>Rendements, erreurs, modélisation continue</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/probability/distributions/multivariate">Multivariées</Link>
+      </TableCell>
+      <TableCell>Normale multivariée</TableCell>
+      <TableCell>Portefeuilles, corrélations entre actifs</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+## Page détaillée
+
+- [Loi normale](/knowledge/probability/distributions/normal) — visualisation interactive et propriétés

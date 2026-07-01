@@ -27,7 +27,10 @@ export const navigationData: TreeItem[] = [
         title: 'Distributions',
         href: '/knowledge/probability/distributions',
         children: [
+          { title: 'Discrete', href: '/knowledge/probability/distributions/discrete' },
+          { title: 'Continuous univariate', href: '/knowledge/probability/distributions/continuous-univariate' },
           { title: 'Normal distribution', href: '/knowledge/probability/distributions/normal' },
+          { title: 'Multivariate', href: '/knowledge/probability/distributions/multivariate' },
         ],
       },
       { title: 'Stochastic processes', href: '/knowledge/probability/stochastic-processes' },
@@ -53,22 +56,10 @@ export const navigationData: TreeItem[] = [
             title: 'Hypothesis tests',
             href: `${STATS}/inference/statistical-tests`,
             children: [
-              {
-                title: 'Parametric tests',
-                href: `${STATS}/inference/statistical-tests/parametric`,
-                children: [
-                  { title: "Student's t-test", href: `${STATS}/inference/statistical-tests/parametric/t-test` },
-                  { title: "Welch's t-test", href: `${STATS}/inference/statistical-tests/parametric/t-test-welch` },
-                ],
-              },
-              {
-                title: 'Non-parametric tests',
-                href: `${STATS}/inference/statistical-tests/non-parametric`,
-                children: [
-                  { title: 'Mann-Whitney test', href: `${STATS}/inference/statistical-tests/non-parametric/mann-whitney` },
-                  { title: 'Wilcoxon test', href: `${STATS}/inference/statistical-tests/non-parametric/wilcoxon` },
-                ],
-              },
+              { title: "Student's t-test", href: `${STATS}/inference/statistical-tests/parametric/t-test` },
+              { title: "Welch's t-test", href: `${STATS}/inference/statistical-tests/parametric/t-test-welch` },
+              { title: 'Mann-Whitney test', href: `${STATS}/inference/statistical-tests/non-parametric/mann-whitney` },
+              { title: 'Wilcoxon test', href: `${STATS}/inference/statistical-tests/non-parametric/wilcoxon` },
             ],
           },
         ],
