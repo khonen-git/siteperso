@@ -7,6 +7,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
 import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
 import { MdxCard } from '@/components/mdx/MdxCard';
 import { MdxDistributionVisualizer } from '@/components/mdx/MdxDistributionVisualizer';
+import { MdxNormalDistributionVisualizer } from '@/components/mdx/MdxNormalDistributionVisualizer';
 import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 import { CommandSwitch } from '@/components/mdx/CommandSwitch';
 import { NotaBene } from '@/components/mdx/NotaBene';
@@ -162,6 +163,7 @@ const MDXComponents = {
   CodeBlock,
   MdxCard,
   MdxDistributionVisualizer,
+  MdxNormalDistributionVisualizer,
   ConsoleOutput,
   CommandSwitch,
   NotaBene,
