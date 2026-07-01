@@ -6,6 +6,16 @@ import { KnowledgeSidebar } from '@/components/features/knowledge/navigation/Kno
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { TableOfContents } from '@/components/features/knowledge/navigation/TableOfContents';
 
+const PILLAR_SECTIONS = [
+  { id: 'mathematics', titleKey: 'mathematicsTitle', textKey: 'mathematicsText' },
+  { id: 'probability', titleKey: 'probabilityTitle', textKey: 'probabilityText' },
+  { id: 'statistics', titleKey: 'statisticsTitle', textKey: 'statisticsText' },
+  { id: 'machine-learning', titleKey: 'machineLearningTitle', textKey: 'machineLearningText' },
+  { id: 'quantitative-finance', titleKey: 'quantitativeFinanceTitle', textKey: 'quantitativeFinanceText' },
+  { id: 'engineering', titleKey: 'engineeringTitle', textKey: 'engineeringText' },
+  { id: 'tools', titleKey: 'toolsTitle', textKey: 'toolsText' },
+] as const;
+
 export function KnowledgeHome(): React.JSX.Element {
   const t = useTranslations('knowledge.home');
   const tLayout = useTranslations('knowledge.layout');
@@ -31,44 +41,16 @@ export function KnowledgeHome(): React.JSX.Element {
             </div>
           </section>
 
-          <section id="knowledge__mathematics" className="space-y-6">
-            <h2 id="mathematics" className="text-4xl font-bold tracking-tight">
-              {t('mathematicsTitle')}
-            </h2>
-            <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
-              <p>{t('mathematicsText')}</p>
-            </div>
-          </section>
-
-          <section id="knowledge__programming" className="space-y-6">
-            <h2 id="programming" className="text-4xl font-bold tracking-tight">
-              {t('programmingTitle')}
-            </h2>
-            <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
-              <p>{t('programmingText')}</p>
-            </div>
-          </section>
-
-          <section id="knowledge__data" className="space-y-6">
-            <h2 id="data" className="text-4xl font-bold tracking-tight">
-              {t('dataTitle')}
-            </h2>
-            <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
-              <p>{t('dataText')}</p>
-            </div>
-          </section>
-
-          <section id="knowledge__finance" className="space-y-6">
-            <h2 id="finance" className="text-4xl font-bold tracking-tight">
-              {t('financeTitle')}
-            </h2>
-          </section>
-
-          <section id="knowledge__tools" className="space-y-6">
-            <h2 id="tools" className="text-4xl font-bold tracking-tight">
-              {t('toolsTitle')}
-            </h2>
-          </section>
+          {PILLAR_SECTIONS.map(({ id, titleKey, textKey }) => (
+            <section key={id} id={`knowledge__${id}`} className="space-y-6 mt-12">
+              <h2 id={id} className="text-4xl font-bold tracking-tight">
+                {t(titleKey)}
+              </h2>
+              <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
+                <p>{t(textKey)}</p>
+              </div>
+            </section>
+          ))}
         </div>
       </main>
 

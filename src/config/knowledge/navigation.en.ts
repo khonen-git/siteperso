@@ -1,358 +1,262 @@
+import { getDesignPatternsNav } from './design-patterns-nav';
 import type { TreeItem } from './types';
+
+/** Legacy paths — MDX content unchanged until PR2. */
+const LEGACY_PROGRAMMING = '/knowledge/programming';
+const LEGACY_FINANCE = '/knowledge/finance';
+const LEGACY_DATA_SCIENCE = '/knowledge/data-science';
+const LEGACY_PROBABILITY = '/knowledge/mathematics/probability';
+const LEGACY_STATISTICS = '/knowledge/mathematics/statistics';
 
 export const navigationData: TreeItem[] = [
   {
     title: 'Mathematics',
     href: '/knowledge/mathematics',
     children: [
-      {
-        title: 'Probability',
-        href: '/knowledge/mathematics/probability',
-        children: [
-          {
-            title: 'Fundamentals',
-            href: '/knowledge/mathematics/probability/fundamentals',
-            children: [
-              {
-                title: 'General principles',
-                href: '/knowledge/mathematics/probability/fundamentals/principles',
-                children: [
-                  {
-                    title: 'Probability axioms',
-                    href: '/knowledge/mathematics/probability/fundamentals/principles/axioms',
-                  },
-                  {
-                    title: 'Probability space',
-                    href: '/knowledge/mathematics/probability/fundamentals/principles/space',
-                  },
-                  {
-                    title: 'Expectation',
-                    href: '/knowledge/mathematics/probability/fundamentals/principles/expectation',
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            title: 'Distributions',
-            href: '/knowledge/mathematics/probability/distributions',
-            children: [
-              {
-                title: 'Continuous distributions',
-                href: '/knowledge/mathematics/probability/distributions/continuous',
-                children: [
-                  {
-                    title: 'Normal distribution',
-                    href: '/knowledge/mathematics/probability/distributions/continuous/normal',
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        title: 'Statistics',
-        href: '/knowledge/mathematics/statistics',
-        children: [
-          {
-            title: 'Descriptive statistics',
-            href: '/knowledge/mathematics/statistics/descriptive',
-            children: [
-              {
-                title: 'Fundamentals',
-                href: '/knowledge/mathematics/statistics/descriptive/fundamentals',
-              },
-              {
-                title: 'Visualization',
-                href: '/knowledge/mathematics/statistics/descriptive/visualization',
-              },
-            ],
-          },
-          {
-            title: 'Inferential statistics',
-            href: '/knowledge/mathematics/statistics/inductive',
-            children: [
-              {
-                title: 'Fundamentals',
-                href: '/knowledge/mathematics/statistics/inductive/fundamentals',
-              },
-              {
-                title: 'Statistical tests',
-                href: '/knowledge/mathematics/statistics/inductive/statistical-tests',
-                children: [
-                  {
-                    title: 'Parametric tests',
-                    href: '/knowledge/mathematics/statistics/inductive/statistical-tests/parametric',
-                    children: [
-                      {
-                        title: "Student's t-test",
-                        href: '/knowledge/mathematics/statistics/inductive/statistical-tests/parametric/t-test',
-                      },
-                      {
-                        title: "Welch's t-test",
-                        href: '/knowledge/mathematics/statistics/inductive/statistical-tests/parametric/t-test-welch',
-                      },
-                    ],
-                  },
-                  {
-                    title: 'Non-parametric tests',
-                    href: '/knowledge/mathematics/statistics/inductive/statistical-tests/non-parametric',
-                    children: [
-                      {
-                        title: 'Mann-Whitney test',
-                        href: '/knowledge/mathematics/statistics/inductive/statistical-tests/non-parametric/mann-whitney',
-                      },
-                      {
-                        title: 'Wilcoxon test',
-                        href: '/knowledge/mathematics/statistics/inductive/statistical-tests/non-parametric/wilcoxon',
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        title: 'Information theory',
-        href: '/knowledge/mathematics/information-theory',
-      },
+      { title: 'Linear algebra', href: '/knowledge/mathematics/linear-algebra' },
+      { title: 'Analysis', href: '/knowledge/mathematics/analysis' },
+      { title: 'Optimization', href: '/knowledge/mathematics/optimization' },
+      { title: 'Numerical methods', href: '/knowledge/mathematics/numerical-methods' },
+      { title: 'Information theory', href: '/knowledge/mathematics/information-theory' },
     ],
   },
   {
-    title: 'Programming',
-    href: '/knowledge/programming',
+    title: 'Probability',
+    href: '/knowledge/probability',
+    children: [
+      { title: 'Fundamentals', href: '/knowledge/probability/fundamentals' },
+      {
+        title: 'Distributions',
+        href: '/knowledge/probability/distributions',
+        children: [
+          {
+            title: 'Normal distribution',
+            href: `${LEGACY_PROBABILITY}/distributions/continuous/normal`,
+          },
+        ],
+      },
+      { title: 'Stochastic processes', href: '/knowledge/probability/stochastic-processes' },
+    ],
+  },
+  {
+    title: 'Statistics',
+    href: '/knowledge/statistics',
+    children: [
+      {
+        title: 'Descriptive statistics',
+        href: '/knowledge/statistics/descriptive',
+        children: [
+          {
+            title: 'Fundamentals',
+            href: `${LEGACY_STATISTICS}/descriptive/fundamentals`,
+          },
+          {
+            title: 'Visualization',
+            href: `${LEGACY_STATISTICS}/descriptive/visualization`,
+          },
+        ],
+      },
+      {
+        title: 'Statistical inference',
+        href: '/knowledge/statistics/inference',
+        children: [
+          {
+            title: 'Hypothesis tests',
+            href: `${LEGACY_STATISTICS}/inductive/statistical-tests`,
+            children: [
+              {
+                title: 'Parametric tests',
+                href: `${LEGACY_STATISTICS}/inductive/statistical-tests/parametric`,
+                children: [
+                  {
+                    title: "Student's t-test",
+                    href: `${LEGACY_STATISTICS}/inductive/statistical-tests/parametric/t-test`,
+                  },
+                  {
+                    title: "Welch's t-test",
+                    href: `${LEGACY_STATISTICS}/inductive/statistical-tests/parametric/t-test-welch`,
+                  },
+                ],
+              },
+              {
+                title: 'Non-parametric tests',
+                href: `${LEGACY_STATISTICS}/inductive/statistical-tests/non-parametric`,
+                children: [
+                  {
+                    title: 'Mann-Whitney test',
+                    href: `${LEGACY_STATISTICS}/inductive/statistical-tests/non-parametric/mann-whitney`,
+                  },
+                  {
+                    title: 'Wilcoxon test',
+                    href: `${LEGACY_STATISTICS}/inductive/statistical-tests/non-parametric/wilcoxon`,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      { title: 'Regression', href: '/knowledge/statistics/regression' },
+      { title: 'Time series', href: '/knowledge/statistics/time-series' },
+    ],
+  },
+  {
+    title: 'Machine Learning',
+    href: '/knowledge/machine-learning',
+    children: [
+      {
+        title: 'General concepts',
+        href: '/knowledge/machine-learning/general-concepts',
+        children: [
+          {
+            title: 'Cross-validation',
+            href: `${LEGACY_DATA_SCIENCE}/cross-validation`,
+          },
+        ],
+      },
+      {
+        title: 'Classical models',
+        href: '/knowledge/machine-learning/classical-models',
+        children: [
+          {
+            title: 'Random Forest',
+            href: `${LEGACY_DATA_SCIENCE}/machine-learning/supervised/random-forest`,
+          },
+          {
+            title: 'XGBoost',
+            href: `${LEGACY_DATA_SCIENCE}/machine-learning/supervised/xgboost`,
+          },
+        ],
+      },
+      { title: 'Deep Learning', href: '/knowledge/machine-learning/deep-learning' },
+      { title: 'Reinforcement Learning', href: '/knowledge/machine-learning/reinforcement-learning' },
+      { title: 'ML for markets', href: '/knowledge/machine-learning/market-ml' },
+    ],
+  },
+  {
+    title: 'Quantitative finance',
+    href: '/knowledge/quantitative-finance',
+    children: [
+      {
+        title: 'Markets & products',
+        href: '/knowledge/quantitative-finance/markets-products',
+        children: [
+          { title: 'Financial products', href: `${LEGACY_FINANCE}/asset-classes` },
+          { title: 'Contract types', href: `${LEGACY_FINANCE}/contract-types` },
+        ],
+      },
+      {
+        title: 'Options & derivatives',
+        href: '/knowledge/quantitative-finance/options-derivatives',
+        children: [
+          { title: 'Options basics', href: `${LEGACY_FINANCE}/options` },
+          { title: 'Black-Scholes', href: `${LEGACY_FINANCE}/black-scholes` },
+        ],
+      },
+      {
+        title: 'Volatility',
+        href: '/knowledge/quantitative-finance/volatility',
+        children: [
+          { title: 'Implied vs realized', href: `${LEGACY_FINANCE}/volatility` },
+        ],
+      },
+      { title: 'Stochastic calculus', href: '/knowledge/quantitative-finance/stochastic-calculus' },
+      { title: 'Risk management', href: '/knowledge/quantitative-finance/risk-management' },
+      { title: 'Portfolio management', href: '/knowledge/quantitative-finance/portfolio-management' },
+      { title: 'Factor models', href: '/knowledge/quantitative-finance/factor-models' },
+      { title: 'Market microstructure', href: '/knowledge/quantitative-finance/market-microstructure' },
+      {
+        title: 'Financial econometrics',
+        href: '/knowledge/quantitative-finance/financial-econometrics',
+        children: [
+          {
+            title: 'Regimes & HMM',
+            href: `${LEGACY_DATA_SCIENCE}/machine-learning/unsupervised/hmm`,
+          },
+        ],
+      },
+      { title: 'Backtesting & systematic research', href: '/knowledge/quantitative-finance/backtesting' },
+    ],
+  },
+  {
+    title: 'Engineering & Programming',
+    href: '/knowledge/engineering',
     children: [
       {
         title: 'Python',
-        href: '/knowledge/programming/python',
+        href: `${LEGACY_PROGRAMMING}/python`,
         children: [
           {
             title: 'Fundamentals',
-            href: '/knowledge/programming/python/fundamentals',
+            href: `${LEGACY_PROGRAMMING}/python/fundamentals`,
             children: [
               {
                 title: 'Variables',
-                href: '/knowledge/programming/python/fundamentals/variables',
+                href: `${LEGACY_PROGRAMMING}/python/fundamentals/variables`,
               },
               {
                 title: 'Functions',
-                href: '/knowledge/programming/python/fundamentals/functions',
+                href: `${LEGACY_PROGRAMMING}/python/fundamentals/functions`,
               },
             ],
           },
-          {
-            title: 'Typing',
-            href: '/knowledge/programming/python/typing',
-          },
-          {
-            title: 'Environments',
-            href: '/knowledge/programming/python/environment',
-          },
+          { title: 'Typing', href: `${LEGACY_PROGRAMMING}/python/typing` },
+          { title: 'Environments', href: `${LEGACY_PROGRAMMING}/python/environment` },
         ],
       },
+      { title: 'C++ & performance', href: '/knowledge/engineering/cpp-performance' },
       {
-        title: 'Data structures',
-        href: '/knowledge/programming/data-structures',
+        title: 'CUDA / GPU',
+        href: `${LEGACY_PROGRAMMING}/hardware`,
+        children: [
+          {
+            title: 'GPU architecture',
+            href: `${LEGACY_PROGRAMMING}/hardware/gpu-architecture`,
+          },
+          { title: 'CUDA programming', href: '/knowledge/engineering/cuda' },
+        ],
       },
+      { title: 'Data structures', href: `${LEGACY_PROGRAMMING}/data-structures` },
       {
         title: 'Hardware',
-        href: '/knowledge/programming/hardware',
+        href: `${LEGACY_PROGRAMMING}/hardware`,
         children: [
           {
             title: 'CPU architecture',
-            href: '/knowledge/programming/hardware/cpu-architecture',
-          },
-          {
-            title: 'GPU architecture',
-            href: '/knowledge/programming/hardware/gpu-architecture',
+            href: `${LEGACY_PROGRAMMING}/hardware/cpu-architecture`,
           },
         ],
       },
-      {
+      getDesignPatternsNav(LEGACY_PROGRAMMING, {
         title: 'Design patterns',
-        href: '/knowledge/programming/design-patterns',
-        children: [
-          {
-            title: 'Creational',
-            href: '/knowledge/programming/design-patterns/creational',
-            children: [
-              {
-                title: 'Abstract Factory',
-                href: '/knowledge/programming/design-patterns/creational/abstract-factory',
-              },
-              {
-                title: 'Builder',
-                href: '/knowledge/programming/design-patterns/creational/builder',
-              },
-              {
-                title: 'Factory Method',
-                href: '/knowledge/programming/design-patterns/creational/factory-method',
-              },
-              {
-                title: 'Prototype',
-                href: '/knowledge/programming/design-patterns/creational/prototype',
-              },
-              {
-                title: 'Singleton',
-                href: '/knowledge/programming/design-patterns/creational/singleton',
-              },
-            ],
-          },
-          {
-            title: 'Structural',
-            href: '/knowledge/programming/design-patterns/structural',
-            children: [
-              {
-                title: 'Adapter',
-                href: '/knowledge/programming/design-patterns/structural/adapter',
-              },
-              {
-                title: 'Bridge',
-                href: '/knowledge/programming/design-patterns/structural/bridge',
-              },
-              {
-                title: 'Composite',
-                href: '/knowledge/programming/design-patterns/structural/composite',
-              },
-              {
-                title: 'Decorator',
-                href: '/knowledge/programming/design-patterns/structural/decorator',
-              },
-              {
-                title: 'Facade',
-                href: '/knowledge/programming/design-patterns/structural/facade',
-              },
-              {
-                title: 'Flyweight',
-                href: '/knowledge/programming/design-patterns/structural/flyweight',
-              },
-              {
-                title: 'Proxy',
-                href: '/knowledge/programming/design-patterns/structural/proxy',
-              },
-            ],
-          },
-          {
-            title: 'Behavioral',
-            href: '/knowledge/programming/design-patterns/behavioral',
-            children: [
-              {
-                title: 'Chain of Responsibility',
-                href: '/knowledge/programming/design-patterns/behavioral/chain-of-responsibility',
-              },
-              {
-                title: 'Command',
-                href: '/knowledge/programming/design-patterns/behavioral/command',
-              },
-              {
-                title: 'Interpreter',
-                href: '/knowledge/programming/design-patterns/behavioral/interpreter',
-              },
-              {
-                title: 'Iterator',
-                href: '/knowledge/programming/design-patterns/behavioral/iterator',
-              },
-              {
-                title: 'Mediator',
-                href: '/knowledge/programming/design-patterns/behavioral/mediator',
-              },
-              {
-                title: 'Memento',
-                href: '/knowledge/programming/design-patterns/behavioral/memento',
-              },
-              {
-                title: 'Observer',
-                href: '/knowledge/programming/design-patterns/behavioral/observer',
-              },
-              {
-                title: 'State',
-                href: '/knowledge/programming/design-patterns/behavioral/state',
-              },
-              {
-                title: 'Strategy',
-                href: '/knowledge/programming/design-patterns/behavioral/strategy',
-              },
-              {
-                title: 'Template Method',
-                href: '/knowledge/programming/design-patterns/behavioral/template-method',
-              },
-              {
-                title: 'Visitor',
-                href: '/knowledge/programming/design-patterns/behavioral/visitor',
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    title: 'Finance',
-    href: '/knowledge/finance',
-    children: [
-      {
-        title: 'Asset classes',
-        href: '/knowledge/finance/asset-classes',
-      },
-      {
-        title: 'Contract types',
-        href: '/knowledge/finance/contract-types',
-      },
-      {
-        title: 'Options (put/call and strategies)',
-        href: '/knowledge/finance/options',
-      },
-      {
-        title: 'Black-Scholes',
-        href: '/knowledge/finance/black-scholes',
-      },
-      {
-        title: 'Implied and realized volatility',
-        href: '/knowledge/finance/volatility',
-      },
-    ],
-  },
-  {
-    title: 'Data Science',
-    href: '/knowledge/data-science',
-    children: [
-      {
-        title: 'Machine Learning',
-        href: '/knowledge/data-science/machine-learning',
-        children: [
-          {
-            title: 'Supervised learning',
-            href: '/knowledge/data-science/machine-learning/supervised',
-            children: [
-              {
-                title: 'Random Forest',
-                href: '/knowledge/data-science/machine-learning/supervised/random-forest',
-              },
-              {
-                title: 'XGBoost',
-                href: '/knowledge/data-science/machine-learning/supervised/xgboost',
-              },
-            ],
-          },
-          {
-            title: 'Unsupervised learning',
-            href: '/knowledge/data-science/machine-learning/unsupervised',
-            children: [
-              {
-                title: 'HMM',
-                href: '/knowledge/data-science/machine-learning/unsupervised/hmm',
-              },
-            ],
-          },
-        ],
-      },
-      {
-        title: 'Cross-validation',
-        href: '/knowledge/data-science/cross-validation',
-      },
+        creational: 'Creational',
+        structural: 'Structural',
+        behavioral: 'Behavioral',
+        abstractFactory: 'Abstract Factory',
+        builder: 'Builder',
+        factoryMethod: 'Factory Method',
+        prototype: 'Prototype',
+        singleton: 'Singleton',
+        adapter: 'Adapter',
+        bridge: 'Bridge',
+        composite: 'Composite',
+        decorator: 'Decorator',
+        facade: 'Facade',
+        flyweight: 'Flyweight',
+        proxy: 'Proxy',
+        chainOfResponsibility: 'Chain of Responsibility',
+        command: 'Command',
+        interpreter: 'Interpreter',
+        iterator: 'Iterator',
+        mediator: 'Mediator',
+        memento: 'Memento',
+        observer: 'Observer',
+        state: 'State',
+        strategy: 'Strategy',
+        templateMethod: 'Template Method',
+        visitor: 'Visitor',
+      }),
+      { title: 'Data engineering', href: '/knowledge/engineering/data-engineering' },
     ],
   },
   {

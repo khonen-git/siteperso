@@ -11,7 +11,8 @@
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "knowledge:stubs": "node scripts/generate-knowledge-stubs.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.0.0",

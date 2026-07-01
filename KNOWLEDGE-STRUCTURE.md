@@ -450,16 +450,16 @@ Outils
 
 ## Plan de migration (code)
 
-À exécuter lors de l'implémentation :
+### PR1 — Fondations ✅
 
-1. Créer les nouveaux piliers top-level dans `navigation.fr.ts` / `navigation.en.ts`.
-2. Aplatir l'arbre Probabilités (supprimer le niveau `principles/`).
-3. Renommer `data-science` → `machine-learning` (+ redirects).
-4. Déplacer `finance/*` sous `quantitative-finance/*` (+ redirects).
-5. Renommer `programming` → `engineering` (+ redirects).
-6. Ajouter les entrées de chapitres vides (pages stub « à venir ») pour stabiliser l'arbre tôt.
-7. Mettre à jour `KnowledgeHome` et les textes i18n (`messages/*/knowledge.json`).
-8. Mettre à jour les chemins de contenu MDX (`src/content/{fr,en}/knowledge/…`).
+- [x] Nouveaux piliers top-level dans `navigation.fr.ts` / `navigation.en.ts`
+- [x] Pages hub stub (`index.mdx`) via `npm run knowledge:stubs`
+- [x] Redirect legacy `statistical-hypothesis-test` → `statistical-tests`
+- [x] Suppression des `page.tsx` dédiés (normal, statistical-hypothesis-test)
+- [x] Mise à jour `KnowledgeHome` et i18n (`messages/*/knowledge.json`)
+- [ ] Chemins legacy conservés pour le contenu MDX existant
+
+### PR2 — Migration des chemins (à venir)
 
 ---
 
