@@ -1,8 +1,263 @@
 ---
 title: XGBoost
-description: Gradient boosting extrême.
+description: Gradient boosting d'arbres, régularisation et référence tabulaire moderne.
 ---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { NotaBene } from '@/components/mdx/NotaBene';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { MathInline } from '@/components/features/knowledge/math/MathBlock';
 
 # XGBoost
 
-Ce contenu est en cours de rédaction.
+<MdxCard title="Définition">
+**XGBoost** (Extreme Gradient Boosting) est une méthode de **gradient boosting** sur arbres de décision. Contrairement au bagging de [Random Forest](/knowledge/machine-learning/classical-models/random-forest), les arbres sont entraînés **séquentiellement** : chaque nouvel arbre corrige une partie des erreurs du modèle courant.
+</MdxCard>
+
+## Intuition
+
+<MdxCard>
+L'idée n'est pas de moyenner des arbres indépendants, mais de construire un ensemble **additif** :
+
+- un premier arbre capture un signal grossier ;
+- les arbres suivants apprennent les erreurs résiduelles ;
+- la somme des arbres produit une fonction plus expressive qu'un arbre seul.
+
+XGBoost ajoute à ce schéma une **régularisation explicite**, une gestion efficace des données tabulaires et des optimisations d'entraînement qui en font une référence pratique sur beaucoup de problèmes supervisés structurés.
+</MdxCard>
+
+## Fonctionnement
+
+<MdxCard>
+  <ol className="list-decimal pl-6 space-y-3">
+    <li><strong>Initialisation</strong> : partir d'une prédiction constante (moyenne en régression, log-odds en classification).</li>
+    <li><strong>Calcul du gradient</strong> : à chaque itération, mesurer dans quelle direction la loss doit être corrigée.</li>
+    <li><strong>Arbre faible</strong> : entraîner un petit arbre sur ces gradients / pseudo-résidus.</li>
+    <li><strong>Mise à jour additive</strong> : ajouter cet arbre à l'ensemble avec un poids contrôlé par <code>learning_rate</code>.</li>
+    <li><strong>Répétition</strong> : continuer jusqu'à atteindre <code>n_estimators</code> ou un critère d'arrêt, idéalement avec <code>early_stopping</code>.</li>
+  </ol>
+</MdxCard>
+
+<MdxCard>
+En pratique, XGBoost optimise une objective de la forme :
+
+- **loss d'ajustement** (erreur de prédiction),
+- **complexité des arbres** (profondeur, nombre de feuilles),
+- **shrinkage** via <code>learning_rate</code>.
+
+Cette combinaison explique pourquoi XGBoost peut atteindre de très bonnes performances, mais aussi pourquoi il demande plus de tuning qu'une forêt aléatoire.
+</MdxCard>
+
+## Hyperparamètres clés
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Paramètre</TableHead>
+        <TableHead>Rôle</TableHead>
+        <TableHead>Effet principal</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium"><code>n_estimators</code></TableCell>
+        <TableCell>Nombre d'arbres ajoutés</TableCell>
+        <TableCell>Plus grand = plus expressif, mais plus lent et plus risqué sans early stopping</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>learning_rate</code></TableCell>
+        <TableCell>Poids de chaque arbre</TableCell>
+        <TableCell>Plus petit = apprentissage plus stable, souvent besoin de plus d'arbres</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>max_depth</code></TableCell>
+        <TableCell>Profondeur maximale</TableCell>
+        <TableCell>Contrôle la complexité locale et le sur-apprentissage</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>min_child_weight</code></TableCell>
+        <TableCell>Taille / poids minimum d'un nœud enfant</TableCell>
+        <TableCell>Freine les splits trop spécifiques</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>subsample</code></TableCell>
+        <TableCell>Sous-échantillonnage des lignes</TableCell>
+        <TableCell>Réduit variance et coût ; trop bas peut introduire du bruit</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>colsample_bytree</code></TableCell>
+        <TableCell>Sous-échantillonnage des variables</TableCell>
+        <TableCell>Décorrèle partiellement les arbres et régularise</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>reg_alpha</code></TableCell>
+        <TableCell>Pénalisation <MathInline>{"L_1"}</MathInline></TableCell>
+        <TableCell>Favorise des contributions plus parcimonieuses</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>reg_lambda</code></TableCell>
+        <TableCell>Pénalisation <MathInline>{"L_2"}</MathInline></TableCell>
+        <TableCell>Stabilise les poids et limite les extrêmes</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>gamma</code></TableCell>
+        <TableCell>Gain minimal requis pour splitter</TableCell>
+        <TableCell>Empêche les divisions peu utiles</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Forces et limites
+
+<div className="grid gap-4 md:grid-cols-2">
+
+<MdxCard>
+
+### Forces
+
+- Très performant sur données tabulaires structurées
+- Capture non-linéarités et interactions complexes
+- Régularisation riche et contrôle fin du compromis biais-variance
+- Gère bien les features hétérogènes et les relations peu spécifiées
+- Souvent meilleur que [Random Forest](/knowledge/machine-learning/classical-models/random-forest) en performance brute
+
+</MdxCard>
+
+<MdxCard>
+
+### Limites
+
+- Plus sensible au tuning et au sur-apprentissage
+- Moins simple à expliquer et à stabiliser qu'une baseline linéaire ou une forêt
+- Peut mal se comporter si la validation est mal construite
+- Temps d'entraînement plus élevé, surtout avec recherche d'hyperparamètres
+- Comme les autres modèles tabulaires, ne corrige pas à lui seul le <TermTip term="concept-drift">concept drift</TermTip> ou le <TermTip term="non-iid">non-iid</TermTip>
+
+</MdxCard>
+
+</div>
+
+## Comparaison avec les modèles voisins
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Modèle</TableHead>
+        <TableHead>Principe</TableHead>
+        <TableHead>vs XGBoost</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Random Forest</TableCell>
+        <TableCell>Bagging d'arbres indépendants</TableCell>
+        <TableCell>Plus robuste et plus simple ; souvent moins performant mais moins exigeant en tuning</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">LightGBM</TableCell>
+        <TableCell>Boosting histogram-based orienté vitesse</TableCell>
+        <TableCell>Souvent plus rapide sur gros jeux tabulaires ; comportement différent sur petites données</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">CatBoost</TableCell>
+        <TableCell>Boosting optimisé pour variables catégorielles</TableCell>
+        <TableCell>Souvent plus naturel si beaucoup de catégories et moins d'encodage manuel</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Régression / logistique</TableCell>
+        <TableCell>Baseline linéaire</TableCell>
+        <TableCell>Moins expressive, mais plus interprétable et plus stable</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Évaluation et réglage
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Étape</TableHead>
+        <TableHead>Recommandation</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Découpage des données</TableCell>
+        <TableCell>Train / validation / test ; en temporel : validation walk-forward ou purged CV — voir [validation croisée](/knowledge/machine-learning/general-concepts/cross-validation)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Point de départ</TableCell>
+        <TableCell>Commencer par <code>learning_rate</code>, <code>n_estimators</code>, <code>max_depth</code>, puis affiner <code>subsample</code> et <code>colsample_bytree</code></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Early stopping</TableCell>
+        <TableCell>Pratiquement indispensable pour éviter d'ajouter trop d'arbres</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Métriques</TableCell>
+        <TableCell>Classification : log loss, ROC AUC, PR AUC, F1 selon le problème ; régression : RMSE, MAE</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Risque principal</TableCell>
+        <TableCell>Sur-réglage sur le set de validation ou fuite d'information si les splits sont mal conçus</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Importance des variables
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Méthode</TableHead>
+        <TableHead>Principe</TableHead>
+        <TableHead>Limites</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Gain</TableCell>
+        <TableCell>Contribution moyenne d'une variable à la réduction de la loss</TableCell>
+        <TableCell>Peut survaloriser certaines variables corrélées</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Cover / weight</TableCell>
+        <TableCell>Fréquence ou couverture des splits impliquant la variable</TableCell>
+        <TableCell>Moins informatif sur l'impact réel sur la performance</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Permutation</TableCell>
+        <TableCell>Baisse de performance après permutation aléatoire</TableCell>
+        <TableCell>Plus coûteux, mais souvent plus robuste</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">SHAP</TableCell>
+        <TableCell>Décomposition locale des contributions de chaque feature</TableCell>
+        <TableCell>Lecture plus riche ; voir [ML appliqué aux marchés](/knowledge/machine-learning/market-ml)</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Applications
+
+<NotaBene>
+Je mettrai des exemples concrets et précis à l'avenir.
+</NotaBene>
+
+## Références
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• XGBoost documentation — <a href="https://xgboost.readthedocs.io/en/stable/">documentation générale</a></p>
+    <p>• XGBoost Python API — <a href="https://xgboost.readthedocs.io/en/stable/python/python_api.html#xgboost.XGBClassifier">XGBClassifier</a>, <a href="https://xgboost.readthedocs.io/en/stable/python/python_api.html#xgboost.XGBRegressor">XGBRegressor</a></p>
+    <p>• cuML FIL — <a href="https://docs.rapids.ai/api/cuml/stable/fil/">Forest Inference Library</a> pour l'inférence GPU de modèles entraînés avec XGBoost</p>
+  </div>
+</MdxCard>
