@@ -5,7 +5,6 @@ description: Random forests — tree bagging, hyperparameters, and tabular class
 
 import { MdxCard } from '@/components/mdx/MdxCard';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
-import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
 import { MathInline } from '@/components/features/knowledge/math/MathBlock';
 
 # Random Forest
@@ -236,122 +235,15 @@ Randomizing features at each split **decorrelates** trees — a necessary condit
 
 ## Applications
 
-<div className="grid gap-4 md:grid-cols-2">
-
-<MdxCard>
-
-### Tabular classification
-
-Credit scoring, fraud detection, multiclass classification on heterogeneous features — a historical sweet spot for random forests.
-
-</MdxCard>
-
-<MdxCard>
-
-### Regression
-
-Predicting continuous values (prices, volumes); watch for extrapolation outside the training support.
-
-</MdxCard>
-
-<MdxCard>
-
-### Finance and markets
-
-Baseline model for predicting a label (direction, regime) from technical features; often beaten by boosting but useful as a robust benchmark and for feature importance.
-
-</MdxCard>
-
-<MdxCard>
-
-### Feature screening
-
-Quickly identify relevant variables before a more complex model or [feature engineering](/knowledge/machine-learning/general-concepts) pipeline.
-
-</MdxCard>
-
-</div>
-
-## Computational methods
-
-<MdxCard>
-  <Table>
-    <TableHeader>
-      <TableRow>
-        <TableHead>Library</TableHead>
-        <TableHead>Classes</TableHead>
-        <TableHead>Notes</TableHead>
-      </TableRow>
-    </TableHeader>
-    <TableBody>
-      <TableRow>
-        <TableCell className="font-medium">scikit-learn</TableCell>
-        <TableCell><code>RandomForestClassifier</code>, <code>RandomForestRegressor</code></TableCell>
-        <TableCell>Standard reference; uniform API with the rest of sklearn pipelines</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell className="font-medium">Extra Trees</TableCell>
-        <TableCell><code>ExtraTreesClassifier</code>, <code>ExtraTreesRegressor</code></TableCell>
-        <TableCell>More random splits variant; same API</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell className="font-medium">Tuning</TableCell>
-        <TableCell><code>GridSearchCV</code>, <code>RandomizedSearchCV</code></TableCell>
-        <TableCell>Combine with a CV strategy suited to the problem</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell className="font-medium">Permutation</TableCell>
-        <TableCell><code>sklearn.inspection.permutation_importance</code></TableCell>
-        <TableCell>More robust importance than <code>feature_importances_</code></TableCell>
-      </TableRow>
-    </TableBody>
-  </Table>
-</MdxCard>
-
-<MdxCard>
-  <CodeBlock language="python">
-    {`
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import cross_val_score
-from sklearn.inspection import permutation_importance
-
-X_train, y_train = ...  # tabular features, labels
-
-rf = RandomForestClassifier(
-    n_estimators=200,
-    max_depth=12,
-    min_samples_leaf=5,
-    max_features="sqrt",
-    class_weight="balanced",
-    oob_score=True,
-    n_jobs=-1,
-    random_state=42,
-)
-rf.fit(X_train, y_train)
-
-print(f"OOB score: {rf.oob_score_:.3f}")
-cv_scores = cross_val_score(rf, X_train, y_train, cv=5, scoring="f1_macro")
-print(f"CV F1 macro: {cv_scores.mean():.3f} (+/- {cv_scores.std():.3f})")
-
-# Impurity-based importance
-for name, imp in sorted(
-    zip(feature_names, rf.feature_importances_),
-    key=lambda x: x[1], reverse=True,
-)[:5]:
-    print(f"{name}: {imp:.4f}")
-
-# Permutation importance (on a hold-out)
-perm = permutation_importance(rf, X_val, y_val, n_repeats=10, random_state=42)
-`}
-  </CodeBlock>
-</MdxCard>
+<NotaBene>
+I will add concrete, precise examples in the future.
+</NotaBene>
 
 ## References
 
 <MdxCard>
   <div className="space-y-2">
-    <p>• Breiman, L. (2001). Random Forests. <em>Machine Learning</em>, 45(1), 5–32.</p>
-    <p>• scikit-learn: https://scikit-learn.org/stable/modules/ensemble.html#forest</p>
-    <p>• See also [XGBoost](/knowledge/machine-learning/classical-models/xgboost), [cross-validation](/knowledge/machine-learning/general-concepts/cross-validation), and [classical models](/knowledge/machine-learning/classical-models).</p>
+    <p>• scikit-learn — <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html">RandomForestClassifier</a>, <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html">RandomForestRegressor</a></p>
+    <p>• cuML — <a href="https://docs.rapids.ai/api/cuml/stable/api/#cuml.ensemble.RandomForestClassifier">RandomForestClassifier</a>, <a href="https://docs.rapids.ai/api/cuml/stable/api/#cuml.ensemble.RandomForestRegressor">RandomForestRegressor</a></p>
   </div>
 </MdxCard>
