@@ -1,8 +1,336 @@
 ---
 title: Régression
-description: Modèles linéaires, diagnostics et régularisation.
+description: Régression linéaire, diagnostics, inférence et extensions régulières.
 ---
 
-# Régression
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
 
-Ce contenu est en cours de rédaction.
+# Régression linéaire
+
+<MdxCard title="Définition">
+La **régression linéaire** modélise la relation entre une variable cible <MathInline>{"y"}</MathInline> et un ensemble de variables explicatives <MathInline>{"x_1, \\ldots, x_p"}</MathInline> via une combinaison linéaire des coefficients.
+
+Dans le cas multiple :
+
+<MathBlock>{"y = X\\beta + \\varepsilon"}</MathBlock>
+
+où <MathInline>{"X"}</MathInline> contient les features, <MathInline>{"\\beta"}</MathInline> les coefficients et <MathInline>{"\\varepsilon"}</MathInline> le terme d'erreur.
+</MdxCard>
+
+## Intuition
+
+<MdxCard>
+La régression linéaire cherche le **meilleur hyperplan** pour approximer une cible continue à partir des variables d'entrée. Le critère standard consiste à minimiser la somme des carrés des résidus.
+
+Dans le cas simple :
+
+<MathBlock>{"y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i"}</MathBlock>
+
+Le coefficient <MathInline>{"\\beta_1"}</MathInline> mesure la variation moyenne de <MathInline>{"y"}</MathInline> associée à une hausse d'une unité de <MathInline>{"x"}</MathInline>, toutes choses égales par ailleurs dans le cas multiple.
+</MdxCard>
+
+## Estimation par moindres carrés ordinaires
+
+<MdxCard>
+L'estimateur OLS minimise :
+
+<MathBlock>{"\\min_{\\beta} \\sum_{i=1}^n (y_i - x_i^\\top \\beta)^2"}</MathBlock>
+
+En notation matricielle, si <MathInline>{"X^\\top X"}</MathInline> est inversible :
+
+<MathBlock>{"\\hat{\\beta} = (X^\\top X)^{-1} X^\\top y"}</MathBlock>
+
+Cette formule montre immédiatement pourquoi la colinéarité pose problème : si les colonnes de <MathInline>{"X"}</MathInline> sont linéairement dépendantes, l'inverse n'existe pas.
+</MdxCard>
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Objet</TableHead>
+        <TableHead>Formule</TableHead>
+        <TableHead>Rôle</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Prédiction</TableCell>
+        <TableCell><MathInline>{"\\hat{y} = X\\hat{\\beta}"}</MathInline></TableCell>
+        <TableCell>Valeurs ajustées par le modèle</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Résidus</TableCell>
+        <TableCell><MathInline>{"e = y - \\hat{y}"}</MathInline></TableCell>
+        <TableCell>Erreur observée sur l'échantillon</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">RSS</TableCell>
+        <TableCell><MathInline>{"\\sum_i e_i^2"}</MathInline></TableCell>
+        <TableCell>Somme des carrés des résidus</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Estimateur de variance</TableCell>
+        <TableCell><MathInline>{"\\hat{\\sigma}^2 = \\frac{RSS}{n-p-1}"}</MathInline></TableCell>
+        <TableCell>Variance résiduelle estimée</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Hypothèses du modèle
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Hypothèse</TableHead>
+        <TableHead>Idée</TableHead>
+        <TableHead>Pourquoi elle compte</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Linéarité</TableCell>
+        <TableCell><MathInline>{"\\mathbb{E}[y \\mid X] = X\\beta"}</MathInline></TableCell>
+        <TableCell>Le modèle doit être bien spécifié en moyenne</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Exogénéité</TableCell>
+        <TableCell><MathInline>{"\\mathbb{E}[\\varepsilon \\mid X] = 0"}</MathInline></TableCell>
+        <TableCell>Condition clé pour l'absence de biais</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Indépendance</TableCell>
+        <TableCell>Erreurs non corrélées entre observations</TableCell>
+        <TableCell>Important pour l'inférence classique</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Homoscédasticité</TableCell>
+        <TableCell><MathInline>{"\\mathrm{Var}(\\varepsilon \\mid X) = \\sigma^2"}</MathInline></TableCell>
+        <TableCell>Sinon les erreurs standards OLS sont invalides</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Pas de colinéarité parfaite</TableCell>
+        <TableCell><MathInline>{"X^\\top X"}</MathInline> inversible</TableCell>
+        <TableCell>Condition d'existence de <MathInline>{"\\hat{\\beta}"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Normalité des erreurs</TableCell>
+        <TableCell><MathInline>{"\\varepsilon \\sim \\mathcal{N}(0, \\sigma^2 I)"}</MathInline></TableCell>
+        <TableCell>Utile pour les tests exacts à petit échantillon, pas pour calculer OLS</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Propriétés théoriques
+
+<MdxCard>
+Sous les hypothèses usuelles, l'estimateur OLS est :
+
+- **sans biais** : <MathInline>{"\\mathbb{E}[\\hat{\\beta} \\mid X] = \\beta"}</MathInline>
+- **consistant** si la taille d'échantillon augmente dans un cadre régulier
+- **BLUE** (Best Linear Unbiased Estimator) via le théorème de Gauss-Markov
+
+Sa variance conditionnelle vaut :
+
+<MathBlock>{"\\mathrm{Var}(\\hat{\\beta} \\mid X) = \\sigma^2 (X^\\top X)^{-1}"}</MathBlock>
+
+Sous normalité des erreurs, OLS coïncide aussi avec l'estimateur du maximum de vraisemblance.
+</MdxCard>
+
+## Inférence statistique
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Concept</TableHead>
+        <TableHead>Formule</TableHead>
+        <TableHead>Interprétation</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Erreur standard</TableCell>
+        <TableCell><MathInline>{"SE(\\hat{\\beta}_j)"}</MathInline></TableCell>
+        <TableCell>Incertitude estimée sur un coefficient</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Statistique t</TableCell>
+        <TableCell><MathInline>{"t_j = \\frac{\\hat{\\beta}_j - \\beta_{j,0}}{SE(\\hat{\\beta}_j)}"}</MathInline></TableCell>
+        <TableCell>Test de nullité ou de valeur cible d'un coefficient</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">IC à 95 %</TableCell>
+        <TableCell><MathInline>{"\\hat{\\beta}_j \\pm t_{n-p-1, 0.975} SE(\\hat{\\beta}_j)"}</MathInline></TableCell>
+        <TableCell>Intervalle plausible pour le vrai coefficient</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Test F global</TableCell>
+        <TableCell>Comparaison du modèle complet à un modèle restreint</TableCell>
+        <TableCell>Teste la significativité conjointe de plusieurs coefficients</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">p-value</TableCell>
+        <TableCell>Probabilité sous <MathInline>{"H_0"}</MathInline> d'observer aussi extrême ou plus</TableCell>
+        <TableCell>Mesure de compatibilité avec l'hypothèse nulle, pas taille d'effet</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+<MdxCard>
+Les p-values ne suffisent pas à juger un modèle. Il faut aussi regarder :
+
+- la taille et le signe des coefficients
+- la stabilité hors échantillon
+- la cohérence métier ou économique
+- la sensibilité aux variables ajoutées ou retirées
+</MdxCard>
+
+## Qualité d'ajustement
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Métrique</TableHead>
+        <TableHead>Formule / idée</TableHead>
+        <TableHead>Limite</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"R^2"}</MathInline></TableCell>
+        <TableCell>Part de variance expliquée</TableCell>
+        <TableCell>Augmente mécaniquement quand on ajoute des variables</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"R^2"}</MathInline> ajusté</TableCell>
+        <TableCell>Pénalise les variables inutiles</TableCell>
+        <TableCell>Reste une mesure intra-échantillon</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">RMSE</TableCell>
+        <TableCell>Erreur quadratique moyenne racine</TableCell>
+        <TableCell>Sensible aux grosses erreurs</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">MAE</TableCell>
+        <TableCell>Erreur absolue moyenne</TableCell>
+        <TableCell>Moins sensible aux outliers, mais moins lisse</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Diagnostics
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Diagnostic</TableHead>
+        <TableHead>Signal d'alerte</TableHead>
+        <TableHead>Conséquence</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Résidus vs fitted</TableCell>
+        <TableCell>Structure systématique, courbure</TableCell>
+        <TableCell>Non-linéarité ou mauvaise spécification</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Hétéroscédasticité</TableCell>
+        <TableCell>Dispersion croissante des résidus</TableCell>
+        <TableCell>Erreurs standards biaisées ; préférer HC-robust</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Multicolinéarité</TableCell>
+        <TableCell>VIF élevé, coefficients instables</TableCell>
+        <TableCell>Interprétation difficile, variance gonflée</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Points influents</TableCell>
+        <TableCell>Leverage, distance de Cook élevée</TableCell>
+        <TableCell>Le modèle dépend excessivement de quelques observations</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Autocorrélation</TableCell>
+        <TableCell>Résidus corrélés dans le temps</TableCell>
+        <TableCell>Problème fréquent en séries temporelles</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Limites
+
+<MdxCard>
+- La causalité ne découle pas d'une corrélation linéaire significative.
+- Les outliers peuvent fortement déplacer les coefficients.
+- La relation réelle peut être non linéaire ou dépendre d'interactions omises.
+- En présence de fuite d'information ou de mauvaise temporalité, l'inférence devient trompeuse.
+- La régression linéaire extrapole selon une droite ou un hyperplan, ce qui peut être économiquement absurde hors zone observée.
+</MdxCard>
+
+## Extensions proches
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Extension</TableHead>
+        <TableHead>Idée</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Régression polynomiale</TableCell>
+        <TableCell>Ajouter des puissances des variables pour capturer des courbures</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Interactions</TableCell>
+        <TableCell>Permettre à l'effet d'une variable de dépendre d'une autre</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Ridge / Lasso / Elastic Net</TableCell>
+        <TableCell>Régularisation pour réduire variance et sélectionner les variables</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">WLS / GLS</TableCell>
+        <TableCell>Traiter hétéroscédasticité ou corrélation des erreurs</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Régression logistique</TableCell>
+        <TableCell>Version classification binaire, lien logit au lieu d'une cible continue</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Régression linéaire comme baseline ML
+
+<MdxCard>
+En machine learning tabulaire, la régression linéaire reste une **baseline essentielle** :
+
+- rapide à entraîner
+- très interprétable
+- bon point de comparaison avant des modèles non linéaires
+- utile pour détecter si la complexité supplémentaire (arbres, boosting, réseaux) apporte réellement quelque chose
+
+Elle devient particulièrement pertinente quand les données sont peu nombreuses, le bruit modéré et l'interprétation des coefficients importante.
+</MdxCard>
+
+## Références
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• statsmodels — <a href="https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLS.html">OLS</a></p>
+    <p>• scikit-learn — <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">LinearRegression</a></p>
+  </div>
+</MdxCard>
