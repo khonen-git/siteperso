@@ -1,0 +1,210 @@
+---
+title: Équations différentielles ordinaires
+description: EDO, problèmes de Cauchy, méthodes de résolution et liens avec les processus stochastiques.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+
+# Équations différentielles ordinaires
+
+<MdxCard title="Définition">
+Une **équation différentielle ordinaire** (EDO) relie une fonction inconnue <MathInline>{"y(t)"}</MathInline> à ses dérivées par rapport à une **seule** variable (souvent le temps) :
+
+<MathBlock>{"y' = f(t, y), \\quad y(t_0) = y_0"}</MathBlock>
+
+L'**ordre** est celui de la dérivée la plus élevée. Un **problème de Cauchy** (ou problème aux valeurs initiales) fixe <MathInline>{"y(t_0)"}</MathInline> — et éventuellement les dérivées jusqu'à l'ordre <MathInline>{"n-1"}</MathInline> pour une EDO d'ordre <MathInline>{"n"}</MathInline>.
+</MdxCard>
+
+## Intuition
+
+<MdxCard>
+Une EDO décrit une **évolution dynamique** : à chaque instant, la vitesse de changement de <MathInline>{"y"}</MathInline> dépend de l'état courant (et éventuellement du temps). Connaître <MathInline>{"y_0"}</MathInline>, c'est connaître le point de départ ; résoudre l'EDO, c'est tracer la trajectoire.
+
+Exemples familiers en finance et en probabilités :
+
+- décroissance exponentielle (actualisation continue) ;
+- retour à la moyenne (Ornstein-Uhlenbeck) ;
+- croissance logistique (saturation).
+</MdxCard>
+
+## Classification
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Type</TableHead>
+        <TableHead>Forme</TableHead>
+        <TableHead>Commentaire</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Linéaire</TableCell>
+        <TableCell><MathInline>{"y' + p(t)y = q(t)"}</MathInline></TableCell>
+        <TableCell>Méthodes analytiques standard (facteur intégrant)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Homogène</TableCell>
+        <TableCell><MathInline>{"y' = f(t, y)"}</MathInline> avec <MathInline>{"f"}</MathInline> linéaire en <MathInline>{"y"}</MathInline></TableCell>
+        <TableCell>Superposition des solutions</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Autonome</TableCell>
+        <TableCell><MathInline>{"y' = f(y)"}</MathInline> (pas de <MathInline>{"t"}</MathInline> explicite)</TableCell>
+        <TableCell>Champ de vecteurs stationnaire</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Séparable</TableCell>
+        <TableCell><MathInline>{"y' = g(t)h(y)"}</MathInline></TableCell>
+        <TableCell>Intégration directe après séparation</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Non linéaire</TableCell>
+        <TableCell>Ex. logistique, Lotka-Volterra</TableCell>
+        <TableCell>Souvent pas de solution fermée ; numérique</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Système</TableCell>
+        <TableCell><MathInline>{"\\mathbf{y}' = \\mathbf{f}(t, \\mathbf{y})"}</MathInline></TableCell>
+        <TableCell>Couplage entre plusieurs variables d'état</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Exemples classiques
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>EDO</TableHead>
+        <TableHead>Solution</TableHead>
+        <TableHead>Interprétation</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"y' = \\lambda y"}</MathInline></TableCell>
+        <TableCell><MathInline>{"y(t) = y_0 e^{\\lambda t}"}</MathInline></TableCell>
+        <TableCell>Croissance/décroissance exponentielle</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"y' = -\\kappa y + \\mu"}</MathInline></TableCell>
+        <TableCell><MathInline>{"y(t) = \\mu + (y_0 - \\mu)e^{-\\kappa t}"}</MathInline></TableCell>
+        <TableCell>Mean reversion vers <MathInline>{"\\mu"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"y' = r y (1 - y/K)"}</MathInline></TableCell>
+        <TableCell>Solution implicite ; <MathInline>{"y \\to K"}</MathInline></TableCell>
+        <TableCell>Logistique, saturation à <MathInline>{"K"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"y'' + \\omega^2 y = 0"}</MathInline></TableCell>
+        <TableCell><MathInline>{"A\\cos(\\omega t) + B\\sin(\\omega t)"}</MathInline></TableCell>
+        <TableCell>Oscillateur harmonique</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"y' = \\mu y + \\sigma"}</MathInline> (sans bruit)</TableCell>
+        <TableCell>Dynamique déterministe de base du GBM</TableCell>
+        <TableCell>Prélude aux [processus stochastiques](/knowledge/probability/stochastic-processes)</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Méthodes de résolution
+
+<MdxCard title="Analytiques">
+- **Séparation des variables** quand <MathInline>{"f(t,y) = g(t)h(y)"}</MathInline>.
+- **Facteur intégrant** pour EDO linéaires du 1er ordre.
+- **Équation caractéristique** pour EDO linéaires à coefficients constants d'ordre <MathInline>{"n"}</MathInline>.
+- **Séries de Taylor / séries de puissances** pour solutions formelles — voir [Séries de Taylor](/knowledge/mathematics/analysis/taylor-series).
+</MdxCard>
+
+<MdxCard title="Numériques">
+Quand aucune formule fermée n'existe :
+
+<MathBlock>{"y_{n+1} = y_n + h \\, f(t_n, y_n) \\quad \\text{(Euler explicite)}"}</MathBlock>
+
+Runge-Kutta (RK4) et schémas implicites améliorent stabilité et précision. Voir [Calcul numérique](/knowledge/mathematics/numerical-methods) pour différences finies et stabilité des schémas.
+</MdxCard>
+
+## Théorèmes clés
+
+<MdxCard>
+**Existence et unicité (Cauchy-Lipschitz)** : si <MathInline>{"f"}</MathInline> est continue et lipschitzienne en <MathInline>{"y"}</MathInline>, le problème de Cauchy admet une **unique** solution locale.
+
+Conséquences :
+
+- pas d'ambiguïté sur la trajectoire pour une condition initiale donnée ;
+- la sensibilité aux paramètres est contrôlable (équations en variations) ;
+- les simulateurs numériques ont un comportement prévisible si <MathInline>{"h"}</MathInline> est assez petit.
+</MdxCard>
+
+## Applications
+
+<MdxCard>
+- **Finance** : modèles de taux (Vasicek, CIR en dynamique moyenne), actualisation continue, dynamique de fonds sans bruit.
+- **Probabilités** : EDO déterministes associées aux moments de processus ; pont vers les **EDS** (équations différentielles stochastiques) quand on ajoute un terme de diffusion.
+- **Physique / ingénierie** : circuits, mécanique, contrôle optimal (principe du maximum de Pontryagin).
+- **Machine learning** : Neural ODEs (réseaux définis comme EDO) — même formalisme, résolution numérique par backprop à travers le solveur.
+
+Les [EDP](/knowledge/mathematics/analysis/partial-differential-equations) généralisent le formalisme à plusieurs variables indépendantes (temps + espace, ou temps + facteurs de marché).
+</MdxCard>
+
+## Limites et pièges
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Situation</TableHead>
+        <TableHead>Problème</TableHead>
+        <TableHead>Conséquence</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Non-lipschitz</TableCell>
+        <TableCell>Ex. <MathInline>{"y' = \\sqrt{|y|}"}</MathInline></TableCell>
+        <TableCell>Unicité peut échouer (plusieurs trajectoires depuis 0)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Stiffness</TableCell>
+        <TableCell>Échelles de temps très différentes</TableCell>
+        <TableCell>Euler explicite instable ; schémas implicites nécessaires</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Chaos</TableCell>
+        <TableCell>Sensibilité extrême aux C.I.</TableCell>
+        <TableCell>Prévision long terme impossible malgré déterminisme</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Confondre EDO et EDS</TableCell>
+        <TableCell>GBM n'est pas une EDO</TableCell>
+        <TableCell>Il faut le calcul stochastique (Itô)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Pas <MathInline>{"h"}</MathInline> trop grand</TableCell>
+        <TableCell>Erreur de discrétisation</TableCell>
+        <TableCell>Solution numérique fausse ou divergente</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Voir aussi
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• [Équations aux dérivées partielles](/knowledge/mathematics/analysis/partial-differential-equations) — généralisation à plusieurs variables</p>
+    <p>• [Séries de Taylor](/knowledge/mathematics/analysis/taylor-series) — approximations locales des solutions</p>
+    <p>• [Processus stochastiques](/knowledge/probability/stochastic-processes) — EDS et GBM</p>
+    <p>• [Calcul numérique](/knowledge/mathematics/numerical-methods) — schémas d'intégration et stabilité</p>
+    <p>• [Black-Scholes](/knowledge/quantitative-finance/options-derivatives/black-scholes) — EDP de pricing (lien finance)</p>
+  </div>
+</MdxCard>

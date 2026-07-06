@@ -1,0 +1,244 @@
+---
+title: Équations aux dérivées partielles
+description: EDP, classification elliptique/parabolique/hyperbolique et lien avec le pricing.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+
+# Équations aux dérivées partielles
+
+<MdxCard title="Définition">
+Une **équation aux dérivées partielles** (EDP) relie une fonction inconnue <MathInline>{"u(x_1, \\ldots, x_n)"}</MathInline> à ses **dérivées partielles** :
+
+<MathBlock>{"F\\left(x, u, \\frac{\\partial u}{\\partial x_i}, \\frac{\\partial^2 u}{\\partial x_i \\partial x_j}, \\ldots\\right) = 0"}</MathBlock>
+
+Contrairement aux [EDO](/knowledge/mathematics/analysis/ordinary-differential-equations), plusieurs variables **indépendantes** coexistent — typiquement le **temps** <MathInline>{"t"}</MathInline> et des variables **d'espace** ou de **marché** (prix du sous-jacent, taux, etc.).
+
+Une solution est en général déterminée par des **conditions aux limites** (sur le bord du domaine) et/ou des **conditions initiales** (en <MathInline>{"t = 0"}</MathInline>).
+</MdxCard>
+
+## Intuition
+
+<MdxCard>
+Une EDP décrit un phénomène qui varie **simultanément** dans le temps et dans l'espace (ou entre plusieurs facteurs). La solution <MathInline>{"u"}</MathInline> n'est plus une courbe mais une **surface** ou un champ.
+
+- **Elliptique** : état d'équilibre, pas de direction privilégiée de propagation (Laplace).
+- **Parabolique** : diffusion / dissipation dans le temps (chaleur, Black-Scholes).
+- **Hyperbolique** : propagation d'ondes à vitesse finie (équation des ondes).
+</MdxCard>
+
+## Classification (ordre 2, linéaire)
+
+<MdxCard>
+Pour une EDP linéaire du 2e ordre à deux variables <MathInline>{"(x, t)"}</MathInline> :
+
+<MathBlock>{"A u_{xx} + B u_{xt} + C u_{tt} + \\ldots = 0"}</MathBlock>
+
+on examine le discriminant <MathInline>{"\\Delta = B^2 - 4AC"}</MathInline> :
+
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Classe</TableHead>
+        <TableHead>Condition</TableHead>
+        <TableHead>Exemple canonique</TableHead>
+        <TableHead>Comportement</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Elliptique</TableCell>
+        <TableCell><MathInline>{"\\Delta < 0"}</MathInline></TableCell>
+        <TableCell><MathInline>{"\\Delta u = 0"}</MathInline> (Laplace)</TableCell>
+        <TableCell>Équilibre, pas de temps privilégié</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Parabolique</TableCell>
+        <TableCell><MathInline>{"\\Delta = 0"}</MathInline></TableCell>
+        <TableCell><MathInline>{"u_t = u_{xx}"}</MathInline> (chaleur)</TableCell>
+        <TableCell>Diffusion, lissage dans le temps</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Hyperbolique</TableCell>
+        <TableCell><MathInline>{"\\Delta > 0"}</MathInline></TableCell>
+        <TableCell><MathInline>{"u_{tt} = c^2 u_{xx}"}</MathInline> (ondes)</TableCell>
+        <TableCell>Propagation, cônes de dépendance</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Exemples fondamentaux
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>EDP</TableHead>
+        <TableHead>Forme</TableHead>
+        <TableHead>Rôle</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Laplace</TableCell>
+        <TableCell><MathInline>{"\\Delta u = u_{xx} + u_{yy} = 0"}</MathInline></TableCell>
+        <TableCell>Potentiel d'équilibre, problèmes de frontière</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Chaleur</TableCell>
+        <TableCell><MathInline>{"u_t = \\kappa u_{xx}"}</MathInline></TableCell>
+        <TableCell>Diffusion, lissage gaussien</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Ondes</TableCell>
+        <TableCell><MathInline>{"u_{tt} = c^2 u_{xx}"}</MathInline></TableCell>
+        <TableCell>Propagation sans dissipation</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Black-Scholes</TableCell>
+        <TableCell><MathInline>{"\\frac{\\partial V}{\\partial t} + \\frac{1}{2}\\sigma^2 S^2 \\frac{\\partial^2 V}{\\partial S^2} + rS\\frac{\\partial V}{\\partial S} - rV = 0"}</MathInline></TableCell>
+        <TableCell>Pricing d'options — voir [Black-Scholes](/knowledge/quantitative-finance/options-derivatives/black-scholes)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Transport</TableCell>
+        <TableCell><MathInline>{"u_t + v u_x = 0"}</MathInline></TableCell>
+        <TableCell>Advection, déplacement sans diffusion</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Conditions aux limites et initiales
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Type</TableHead>
+        <TableHead>Exemple</TableHead>
+        <TableHead>Signification</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Dirichlet</TableCell>
+        <TableCell><MathInline>{"u = g"}</MathInline> sur le bord</TableCell>
+        <TableCell>Valeur fixée (ex. payoff à maturité pour une option)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Neumann</TableCell>
+        <TableCell><MathInline>{"\\frac{\\partial u}{\\partial n} = h"}</MathInline> sur le bord</TableCell>
+        <TableCell>Flux ou dérivée normale imposée</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Initiale (Cauchy)</TableCell>
+        <TableCell><MathInline>{"u(x, 0) = u_0(x)"}</MathInline></TableCell>
+        <TableCell>État de départ pour EDP d'évolution</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Terminale (finance)</TableCell>
+        <TableCell><MathInline>{"V(S, T) = \\Phi(S)"}</MathInline></TableCell>
+        <TableCell>Payoff à maturité ; résolution **backward** en temps</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Méthodes de résolution
+
+<MdxCard title="Analytiques">
+- **Séparation des variables** (Fourier, Sturm-Liouville).
+- **Transformée de Fourier / Laplace** pour équations linéaires sur domaines simples.
+- **Fonctions fondamentales (Green)** : solution pour une source ponctuelle.
+- **Black-Scholes** : transformation en équation de la chaleur via changement de variables.
+</MdxCard>
+
+<MdxCard title="Numériques">
+- **Différences finies** : discrétisation de <MathInline>{"u_t"}</MathInline>, <MathInline>{"u_{xx}"}</MathInline> sur une grille — voir [Calcul numérique](/knowledge/mathematics/numerical-methods).
+- **Éléments finis** : base variée sur domaines complexes.
+- **Monte Carlo** : alternative probabiliste via Feynman-Kac (espérance sous mesure risque-neutre).
+
+Le choix dépend du domaine, de la dimension et des conditions aux limites.
+</MdxCard>
+
+## Lien probabilités : Feynman-Kac
+
+<MdxCard>
+Pour certaines EDP paraboliques, la solution s'écrit comme une **espérance** :
+
+<MathBlock>{"u(x, t) = \\mathbb{E}\\left[ e^{-\\int_t^T r(s)\\,ds} \\, g(X_T) \\, \\middle| \\, X_t = x \\right]"}</MathBlock>
+
+où <MathInline>{"X"}</MathInline> suit une EDS liée aux coefficients de l'EDP. C'est le pont entre :
+
+- **pricing PDE** (Black-Scholes backward) ;
+- **pricing Monte Carlo** (simulation risque-neutre).
+
+Les deux approches doivent donner le même prix sous les mêmes hypothèses — utile pour validation croisée.
+</MdxCard>
+
+## Applications
+
+<MdxCard>
+- **Finance quantitative** : pricing d'options ([Black-Scholes](/knowledge/quantitative-finance/options-derivatives/black-scholes)), modèles de vol locale, calibration de surfaces.
+- **Physique** : diffusion, mécanique des fluides, électromagnétisme.
+- **Ingénierie** : transfert thermique, optimisation de forme.
+- **Image / ML** : diffusion comme modèle de bruit (score-based models) — même formalisme parabolique.
+
+Les [EDO](/knowledge/mathematics/analysis/ordinary-differential-equations) sont le cas à une seule variable indépendante ; les EDP ajoutent la dimension spatiale ou multi-facteurs.
+</MdxCard>
+
+## Limites et pièges
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Situation</TableHead>
+        <TableHead>Problème</TableHead>
+        <TableHead>Conséquence</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Mal posé (Hadamard)</TableCell>
+        <TableCell>Solution instable aux données initiales</TableCell>
+        <TableCell>Petit bruit sur C.I. → explosion (ex. chaleur backward mal posée)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Dimension élevée</TableCell>
+        <TableCell>Grille 2D/3D+ coûteuse</TableCell>
+        <TableCell>Malédiction de la dimension ; Monte Carlo préférable</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Conditions incompatibles</TableCell>
+        <TableCell>Dirichlet + Neumann contradictoires</TableCell>
+        <TableCell>Pas de solution ou non-unicité</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Stabilité numérique</TableCell>
+        <TableCell>Schéma explicite mal choisi</TableCell>
+        <TableCell>Solution numérique diverge (CFL pour paraboliques/hyperboliques)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Frontières complexes</TableCell>
+        <TableCell>Options exotiques, barrières</TableCell>
+        <TableCell>Grilles adaptées ou méthodes spécialisées nécessaires</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Voir aussi
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• [Équations différentielles ordinaires](/knowledge/mathematics/analysis/ordinary-differential-equations) — cas à une variable</p>
+    <p>• [Dérivées, gradient et Hessienne](/knowledge/mathematics/analysis/derivatives-gradient-hessian) — dérivées partielles</p>
+    <p>• [Black-Scholes](/knowledge/quantitative-finance/options-derivatives/black-scholes) — EDP de pricing en finance</p>
+    <p>• [Calcul numérique](/knowledge/mathematics/numerical-methods) — différences finies et Monte Carlo</p>
+    <p>• [Processus stochastiques](/knowledge/probability/stochastic-processes) — EDS et lien Feynman-Kac</p>
+  </div>
+</MdxCard>

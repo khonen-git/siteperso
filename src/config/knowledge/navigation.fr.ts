@@ -19,6 +19,8 @@ export const navigationData: TreeItem[] = [
           { title: 'Dérivées, gradient et Hessienne', href: '/knowledge/mathematics/analysis/derivatives-gradient-hessian' },
           { title: 'Convexité', href: '/knowledge/mathematics/analysis/convexity' },
           { title: 'Séries de Taylor', href: '/knowledge/mathematics/analysis/taylor-series' },
+          { title: 'Équations différentielles ordinaires', href: '/knowledge/mathematics/analysis/ordinary-differential-equations' },
+          { title: 'Équations aux dérivées partielles', href: '/knowledge/mathematics/analysis/partial-differential-equations' },
         ],
       },
       {

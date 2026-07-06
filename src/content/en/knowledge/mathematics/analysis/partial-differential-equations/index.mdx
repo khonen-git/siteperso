@@ -1,0 +1,244 @@
+---
+title: Partial differential equations
+description: PDEs, elliptic/parabolic/hyperbolic classification, and pricing links.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+
+# Partial differential equations
+
+<MdxCard title="Definition">
+A **partial differential equation** (PDE) relates an unknown function <MathInline>{"u(x_1, \\ldots, x_n)"}</MathInline> to its **partial derivatives**:
+
+<MathBlock>{"F\\left(x, u, \\frac{\\partial u}{\\partial x_i}, \\frac{\\partial^2 u}{\\partial x_i \\partial x_j}, \\ldots\\right) = 0"}</MathBlock>
+
+Unlike [ODEs](/knowledge/mathematics/analysis/ordinary-differential-equations), several **independent** variables coexist — typically **time** <MathInline>{"t"}</MathInline> and **space** or **market** variables (underlying price, rates, etc.).
+
+A solution is generally fixed by **boundary conditions** (on the domain boundary) and/or **initial conditions** (at <MathInline>{"t = 0"}</MathInline>).
+</MdxCard>
+
+## Intuition
+
+<MdxCard>
+A PDE describes a phenomenon varying **simultaneously** in time and space (or across several factors). The solution <MathInline>{"u"}</MathInline> is no longer a curve but a **surface** or field.
+
+- **Elliptic**: equilibrium state, no preferred propagation direction (Laplace).
+- **Parabolic**: diffusion / dissipation over time (heat, Black-Scholes).
+- **Hyperbolic**: wave propagation at finite speed (wave equation).
+</MdxCard>
+
+## Classification (linear, order 2)
+
+<MdxCard>
+For a linear second-order PDE in two variables <MathInline>{"(x, t)"}</MathInline>:
+
+<MathBlock>{"A u_{xx} + B u_{xt} + C u_{tt} + \\ldots = 0"}</MathBlock>
+
+examine the discriminant <MathInline>{"\\Delta = B^2 - 4AC"}</MathInline>:
+
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Class</TableHead>
+        <TableHead>Condition</TableHead>
+        <TableHead>Canonical example</TableHead>
+        <TableHead>Behavior</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Elliptic</TableCell>
+        <TableCell><MathInline>{"\\Delta < 0"}</MathInline></TableCell>
+        <TableCell><MathInline>{"\\Delta u = 0"}</MathInline> (Laplace)</TableCell>
+        <TableCell>Equilibrium, no privileged time</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Parabolic</TableCell>
+        <TableCell><MathInline>{"\\Delta = 0"}</MathInline></TableCell>
+        <TableCell><MathInline>{"u_t = u_{xx}"}</MathInline> (heat)</TableCell>
+        <TableCell>Diffusion, smoothing over time</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Hyperbolic</TableCell>
+        <TableCell><MathInline>{"\\Delta > 0"}</MathInline></TableCell>
+        <TableCell><MathInline>{"u_{tt} = c^2 u_{xx}"}</MathInline> (waves)</TableCell>
+        <TableCell>Propagation, domains of dependence</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Fundamental examples
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>PDE</TableHead>
+        <TableHead>Form</TableHead>
+        <TableHead>Role</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Laplace</TableCell>
+        <TableCell><MathInline>{"\\Delta u = u_{xx} + u_{yy} = 0"}</MathInline></TableCell>
+        <TableCell>Equilibrium potential, boundary problems</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Heat</TableCell>
+        <TableCell><MathInline>{"u_t = \\kappa u_{xx}"}</MathInline></TableCell>
+        <TableCell>Diffusion, Gaussian smoothing</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Wave</TableCell>
+        <TableCell><MathInline>{"u_{tt} = c^2 u_{xx}"}</MathInline></TableCell>
+        <TableCell>Propagation without dissipation</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Black-Scholes</TableCell>
+        <TableCell><MathInline>{"\\frac{\\partial V}{\\partial t} + \\frac{1}{2}\\sigma^2 S^2 \\frac{\\partial^2 V}{\\partial S^2} + rS\\frac{\\partial V}{\\partial S} - rV = 0"}</MathInline></TableCell>
+        <TableCell>Option pricing — see [Black-Scholes](/knowledge/quantitative-finance/options-derivatives/black-scholes)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Transport</TableCell>
+        <TableCell><MathInline>{"u_t + v u_x = 0"}</MathInline></TableCell>
+        <TableCell>Advection, displacement without diffusion</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Boundary and initial conditions
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Type</TableHead>
+        <TableHead>Example</TableHead>
+        <TableHead>Meaning</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Dirichlet</TableCell>
+        <TableCell><MathInline>{"u = g"}</MathInline> on the boundary</TableCell>
+        <TableCell>Fixed value (e.g. payoff at maturity for an option)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Neumann</TableCell>
+        <TableCell><MathInline>{"\\frac{\\partial u}{\\partial n} = h"}</MathInline> on the boundary</TableCell>
+        <TableCell>Imposed flux or normal derivative</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Initial (Cauchy)</TableCell>
+        <TableCell><MathInline>{"u(x, 0) = u_0(x)"}</MathInline></TableCell>
+        <TableCell>Starting state for evolution PDEs</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Terminal (finance)</TableCell>
+        <TableCell><MathInline>{"V(S, T) = \\Phi(S)"}</MathInline></TableCell>
+        <TableCell>Payoff at maturity; **backward** time resolution</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Solution methods
+
+<MdxCard title="Analytical">
+- **Separation of variables** (Fourier, Sturm-Liouville).
+- **Fourier / Laplace transform** for linear equations on simple domains.
+- **Green's functions**: solution for a point source.
+- **Black-Scholes**: transform to heat equation via change of variables.
+</MdxCard>
+
+<MdxCard title="Numerical">
+- **Finite differences**: discretize <MathInline>{"u_t"}</MathInline>, <MathInline>{"u_{xx}"}</MathInline> on a grid — see [Numerical methods](/knowledge/mathematics/numerical-methods).
+- **Finite elements**: variational basis on complex domains.
+- **Monte Carlo**: probabilistic alternative via Feynman-Kac (risk-neutral expectation).
+
+Choice depends on domain, dimension, and boundary conditions.
+</MdxCard>
+
+## Probability link: Feynman-Kac
+
+<MdxCard>
+For certain parabolic PDEs, the solution is an **expectation**:
+
+<MathBlock>{"u(x, t) = \\mathbb{E}\\left[ e^{-\\int_t^T r(s)\\,ds} \\, g(X_T) \\, \\middle| \\, X_t = x \\right]"}</MathBlock>
+
+where <MathInline>{"X"}</MathInline> follows an SDE tied to the PDE coefficients. This bridges:
+
+- **PDE pricing** (Black-Scholes backward);
+- **Monte Carlo pricing** (risk-neutral simulation).
+
+Both approaches should yield the same price under the same assumptions — useful for cross-validation.
+</MdxCard>
+
+## Applications
+
+<MdxCard>
+- **Quantitative finance**: option pricing ([Black-Scholes](/knowledge/quantitative-finance/options-derivatives/black-scholes)), local vol models, surface calibration.
+- **Physics**: diffusion, fluid mechanics, electromagnetism.
+- **Engineering**: heat transfer, shape optimization.
+- **Image / ML**: diffusion as noise models (score-based models) — same parabolic formalism.
+
+[ODEs](/knowledge/mathematics/analysis/ordinary-differential-equations) are the single independent variable case; PDEs add spatial or multi-factor dimension.
+</MdxCard>
+
+## Limits and pitfalls
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Situation</TableHead>
+        <TableHead>Issue</TableHead>
+        <TableHead>Consequence</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Ill-posed (Hadamard)</TableCell>
+        <TableCell>Solution unstable to initial data</TableCell>
+        <TableCell>Small I.C. noise → blow-up (e.g. ill-posed backward heat)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">High dimension</TableCell>
+        <TableCell>2D/3D+ grid costly</TableCell>
+        <TableCell>Curse of dimensionality; Monte Carlo often preferable</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Incompatible conditions</TableCell>
+        <TableCell>Contradictory Dirichlet + Neumann</TableCell>
+        <TableCell>No solution or non-uniqueness</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Numerical stability</TableCell>
+        <TableCell>Poor explicit scheme</TableCell>
+        <TableCell>Divergent numerical solution (CFL for parabolic/hyperbolic)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Complex boundaries</TableCell>
+        <TableCell>Exotic options, barriers</TableCell>
+        <TableCell>Adapted grids or specialized methods needed</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## See also
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• [Ordinary differential equations](/knowledge/mathematics/analysis/ordinary-differential-equations) — single-variable case</p>
+    <p>• [Derivatives, gradient, and Hessian](/knowledge/mathematics/analysis/derivatives-gradient-hessian) — partial derivatives</p>
+    <p>• [Black-Scholes](/knowledge/quantitative-finance/options-derivatives/black-scholes) — pricing PDE in finance</p>
+    <p>• [Numerical methods](/knowledge/mathematics/numerical-methods) — finite differences and Monte Carlo</p>
+    <p>• [Stochastic processes](/knowledge/probability/stochastic-processes) — SDEs and Feynman-Kac link</p>
+  </div>
+</MdxCard>

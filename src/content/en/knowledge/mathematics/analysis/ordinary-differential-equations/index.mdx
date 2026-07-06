@@ -1,0 +1,210 @@
+---
+title: Ordinary differential equations
+description: ODEs, Cauchy problems, solution methods, and links to stochastic processes.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+
+# Ordinary differential equations
+
+<MdxCard title="Definition">
+An **ordinary differential equation** (ODE) relates an unknown function <MathInline>{"y(t)"}</MathInline> to its derivatives with respect to a **single** variable (often time):
+
+<MathBlock>{"y' = f(t, y), \\quad y(t_0) = y_0"}</MathBlock>
+
+The **order** is that of the highest derivative. A **Cauchy problem** (initial value problem) fixes <MathInline>{"y(t_0)"}</MathInline> — and possibly derivatives up to order <MathInline>{"n-1"}</MathInline> for an ODE of order <MathInline>{"n"}</MathInline>.
+</MdxCard>
+
+## Intuition
+
+<MdxCard>
+An ODE describes **dynamic evolution**: at each instant, the rate of change of <MathInline>{"y"}</MathInline> depends on the current state (and possibly time). Knowing <MathInline>{"y_0"}</MathInline> is the starting point; solving the ODE traces the trajectory.
+
+Familiar examples in finance and probability:
+
+- exponential decay (continuous discounting);
+- mean reversion (Ornstein-Uhlenbeck);
+- logistic growth (saturation).
+</MdxCard>
+
+## Classification
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Type</TableHead>
+        <TableHead>Form</TableHead>
+        <TableHead>Comment</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Linear</TableCell>
+        <TableCell><MathInline>{"y' + p(t)y = q(t)"}</MathInline></TableCell>
+        <TableCell>Standard analytical methods (integrating factor)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Homogeneous</TableCell>
+        <TableCell><MathInline>{"y' = f(t, y)"}</MathInline> with <MathInline>{"f"}</MathInline> linear in <MathInline>{"y"}</MathInline></TableCell>
+        <TableCell>Superposition of solutions</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Autonomous</TableCell>
+        <TableCell><MathInline>{"y' = f(y)"}</MathInline> (no explicit <MathInline>{"t"}</MathInline>)</TableCell>
+        <TableCell>Stationary vector field</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Separable</TableCell>
+        <TableCell><MathInline>{"y' = g(t)h(y)"}</MathInline></TableCell>
+        <TableCell>Direct integration after separation</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Nonlinear</TableCell>
+        <TableCell>E.g. logistic, Lotka-Volterra</TableCell>
+        <TableCell>Often no closed form; numerical solution</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">System</TableCell>
+        <TableCell><MathInline>{"\\mathbf{y}' = \\mathbf{f}(t, \\mathbf{y})"}</MathInline></TableCell>
+        <TableCell>Coupling between several state variables</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Classic examples
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>ODE</TableHead>
+        <TableHead>Solution</TableHead>
+        <TableHead>Interpretation</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"y' = \\lambda y"}</MathInline></TableCell>
+        <TableCell><MathInline>{"y(t) = y_0 e^{\\lambda t}"}</MathInline></TableCell>
+        <TableCell>Exponential growth/decay</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"y' = -\\kappa y + \\mu"}</MathInline></TableCell>
+        <TableCell><MathInline>{"y(t) = \\mu + (y_0 - \\mu)e^{-\\kappa t}"}</MathInline></TableCell>
+        <TableCell>Mean reversion toward <MathInline>{"\\mu"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"y' = r y (1 - y/K)"}</MathInline></TableCell>
+        <TableCell>Implicit solution; <MathInline>{"y \\to K"}</MathInline></TableCell>
+        <TableCell>Logistic, saturation at <MathInline>{"K"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"y'' + \\omega^2 y = 0"}</MathInline></TableCell>
+        <TableCell><MathInline>{"A\\cos(\\omega t) + B\\sin(\\omega t)"}</MathInline></TableCell>
+        <TableCell>Harmonic oscillator</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"y' = \\mu y + \\sigma"}</MathInline> (no noise)</TableCell>
+        <TableCell>Deterministic backbone of GBM</TableCell>
+        <TableCell>Prelude to [stochastic processes](/knowledge/probability/stochastic-processes)</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Solution methods
+
+<MdxCard title="Analytical">
+- **Separation of variables** when <MathInline>{"f(t,y) = g(t)h(y)"}</MathInline>.
+- **Integrating factor** for first-order linear ODEs.
+- **Characteristic equation** for constant-coefficient linear ODEs of order <MathInline>{"n"}</MathInline>.
+- **Taylor / power series** for formal solutions — see [Taylor series](/knowledge/mathematics/analysis/taylor-series).
+</MdxCard>
+
+<MdxCard title="Numerical">
+When no closed formula exists:
+
+<MathBlock>{"y_{n+1} = y_n + h \\, f(t_n, y_n) \\quad \\text{(explicit Euler)}"}</MathBlock>
+
+Runge-Kutta (RK4) and implicit schemes improve stability and accuracy. See [Numerical methods](/knowledge/mathematics/numerical-methods) for finite differences and scheme stability.
+</MdxCard>
+
+## Key theorems
+
+<MdxCard>
+**Existence and uniqueness (Cauchy-Lipschitz)**: if <MathInline>{"f"}</MathInline> is continuous and Lipschitz in <MathInline>{"y"}</MathInline>, the Cauchy problem has a **unique** local solution.
+
+Consequences:
+
+- no ambiguity in the trajectory for a given initial condition;
+- sensitivity to parameters is controlled (variational equations);
+- numerical simulators behave predictably if <MathInline>{"h"}</MathInline> is small enough.
+</MdxCard>
+
+## Applications
+
+<MdxCard>
+- **Finance**: rate models (Vasicek, CIR mean dynamics), continuous discounting, noise-free fund dynamics.
+- **Probability**: deterministic ODEs for process moments; bridge to **SDEs** when a diffusion term is added.
+- **Physics / engineering**: circuits, mechanics, optimal control (Pontryagin's maximum principle).
+- **Machine learning**: Neural ODEs (networks defined as ODEs) — same formalism, numerical backprop through the solver.
+
+[PDEs](/knowledge/mathematics/analysis/partial-differential-equations) generalize the formalism to several independent variables (time + space, or time + market factors).
+</MdxCard>
+
+## Limits and pitfalls
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Situation</TableHead>
+        <TableHead>Issue</TableHead>
+        <TableHead>Consequence</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Non-Lipschitz</TableCell>
+        <TableCell>E.g. <MathInline>{"y' = \\sqrt{|y|}"}</MathInline></TableCell>
+        <TableCell>Uniqueness may fail (multiple trajectories from 0)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Stiffness</TableCell>
+        <TableCell>Very different time scales</TableCell>
+        <TableCell>Explicit Euler unstable; implicit schemes needed</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Chaos</TableCell>
+        <TableCell>Extreme sensitivity to I.C.</TableCell>
+        <TableCell>Long-term prediction impossible despite determinism</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Confusing ODE and SDE</TableCell>
+        <TableCell>GBM is not an ODE</TableCell>
+        <TableCell>Stochastic calculus (Itô) required</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Step <MathInline>{"h"}</MathInline> too large</TableCell>
+        <TableCell>Discretization error</TableCell>
+        <TableCell>Wrong or divergent numerical solution</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## See also
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• [Partial differential equations](/knowledge/mathematics/analysis/partial-differential-equations) — generalization to several variables</p>
+    <p>• [Taylor series](/knowledge/mathematics/analysis/taylor-series) — local approximations of solutions</p>
+    <p>• [Stochastic processes](/knowledge/probability/stochastic-processes) — SDEs and GBM</p>
+    <p>• [Numerical methods](/knowledge/mathematics/numerical-methods) — integration schemes and stability</p>
+    <p>• [Black-Scholes](/knowledge/quantitative-finance/options-derivatives/black-scholes) — pricing PDE (finance link)</p>
+  </div>
+</MdxCard>
