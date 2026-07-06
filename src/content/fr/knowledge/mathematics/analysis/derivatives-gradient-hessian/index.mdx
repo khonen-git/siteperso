@@ -1,0 +1,245 @@
+---
+title: Dérivées, gradient et Hessienne
+description: Différentiation, gradient vectoriel, matrice Hessienne et liens avec l'optimisation.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+
+# Dérivées, gradient et Hessienne
+
+<MdxCard title="Définition">
+Pour une fonction <MathInline>{"f : \\mathbb{R}^n \\to \\mathbb{R}"}</MathInline> différentiable, le **gradient** est le vecteur des dérivées partielles :
+
+<MathBlock>{"\\nabla f(x) = \\left(\\frac{\\partial f}{\\partial x_1}, \\ldots, \\frac{\\partial f}{\\partial x_n}\\right)^\\top"}</MathBlock>
+
+La **Hessienne** est la matrice des dérivées secondes :
+
+<MathBlock>{"\\nabla^2 f(x) = \\left[ \\frac{\\partial^2 f}{\\partial x_i \\partial x_j} \\right]_{i,j}"}</MathBlock>
+
+En dimension 1, la dérivée <MathInline>{"f'(x)"}</MathInline> généralise le taux de variation instantané ; le gradient et la Hessienne étendent cette idée aux fonctions multivariées.
+</MdxCard>
+
+## Intuition
+
+<MdxCard>
+- **Dérivée / gradient** : direction et vitesse de variation locale. <MathInline>{"\\nabla f(x)"}</MathInline> pointe vers la plus forte **augmentation** de <MathInline>{"f"}</MathInline> ; <MathInline>{"-\\nabla f(x)"}</MathInline> indique la direction de plus forte **descente**.
+- **Hessienne** : courbure locale. Ses valeurs propres décrivent si la fonction est plus concave ou convexe selon la direction.
+- **Approximation linéaire** : autour de <MathInline>{"x_0"}</MathInline>,
+
+<MathBlock>{"f(x) \\approx f(x_0) + \\nabla f(x_0)^\\top (x - x_0)"}</MathBlock>
+
+- **Approximation quadratique** : en ajoutant la courbure,
+
+<MathBlock>{"f(x) \\approx f(x_0) + \\nabla f(x_0)^\\top (x - x_0) + \\frac{1}{2}(x - x_0)^\\top \\nabla^2 f(x_0)(x - x_0)"}</MathBlock>
+
+C'est la base du gradient descent, de Newton et des séries de Taylor.
+</MdxCard>
+
+## Notations et dimensions
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Objet</TableHead>
+        <TableHead>Dimension</TableHead>
+        <TableHead>Rôle</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Dérivée partielle <MathInline>{"\\partial f / \\partial x_i"}</MathInline></TableCell>
+        <TableCell>Scalaire</TableCell>
+        <TableCell>Variation de <MathInline>{"f"}</MathInline> quand seule <MathInline>{"x_i"}</MathInline> bouge</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Gradient <MathInline>{"\\nabla f(x)"}</MathInline></TableCell>
+        <TableCell>Vecteur <MathInline>{"n \\times 1"}</MathInline></TableCell>
+        <TableCell>Direction de montée la plus raide</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Jacobienne <MathInline>{"J_f(x)"}</MathInline></TableCell>
+        <TableCell>Matrice <MathInline>{"m \\times n"}</MathInline></TableCell>
+        <TableCell>Gradient d'une fonction vectorielle <MathInline>{"f : \\mathbb{R}^n \\to \\mathbb{R}^m"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Hessienne <MathInline>{"\\nabla^2 f(x)"}</MathInline></TableCell>
+        <TableCell>Matrice <MathInline>{"n \\times n"}</MathInline></TableCell>
+        <TableCell>Courbure locale ; symétrique si <MathInline>{"f"}</MathInline> est <MathInline>{"C^2"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Dérivée directionnelle</TableCell>
+        <TableCell>Scalaire</TableCell>
+        <TableCell><MathInline>{"D_v f(x) = \\nabla f(x)^\\top v"}</MathInline> pour un vecteur unitaire <MathInline>{"v"}</MathInline></TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Règles de calcul
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Règle</TableHead>
+        <TableHead>Gradient</TableHead>
+        <TableHead>Commentaire</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Linéaire</TableCell>
+        <TableCell><MathInline>{"\\nabla(a f + b g) = a\\nabla f + b\\nabla g"}</MathInline></TableCell>
+        <TableCell>Base de tout calcul symbolique</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Produit</TableCell>
+        <TableCell><MathInline>{"\\nabla(fg) = f\\nabla g + g\\nabla f"}</MathInline></TableCell>
+        <TableCell>Utile pour les losses composées</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Chaîne</TableCell>
+        <TableCell><MathInline>{"\\nabla (g \\circ h)(x) = J_h(x)^\\top \\nabla g(h(x))"}</MathInline></TableCell>
+        <TableCell>Fondement du **backpropagation** en deep learning</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Quadratique</TableCell>
+        <TableCell><MathInline>{"\\nabla \\left(\\frac{1}{2} x^\\top A x\\right) = A x"}</MathInline> si <MathInline>{"A"}</MathInline> symétrique</TableCell>
+        <TableCell>Apparaît dans OLS, ridge et Markowitz</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Symétrie de la Hessienne</TableCell>
+        <TableCell><MathInline>{"\\frac{\\partial^2 f}{\\partial x_i \\partial x_j} = \\frac{\\partial^2 f}{\\partial x_j \\partial x_i}"}</MathInline></TableCell>
+        <TableCell>Sous régularité <MathInline>{"C^2"}</MathInline> ; simplifie les calculs matriciels</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Exemples
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Fonction</TableHead>
+        <TableHead>Gradient</TableHead>
+        <TableHead>Hessienne</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"f(x) = x^2"}</MathInline></TableCell>
+        <TableCell><MathInline>{"2x"}</MathInline></TableCell>
+        <TableCell><MathInline>{"2"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"f(x,y) = x^2 + y^2"}</MathInline></TableCell>
+        <TableCell><MathInline>{"(2x, 2y)^\\top"}</MathInline></TableCell>
+        <TableCell><MathInline>{"2I"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"f(x) = \\|x\\|_2^2"}</MathInline></TableCell>
+        <TableCell><MathInline>{"2x"}</MathInline></TableCell>
+        <TableCell><MathInline>{"2I"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"f(x) = \\log(1+e^x)"}</MathInline> (softplus)</TableCell>
+        <TableCell><MathInline>{"\\sigma(x)"}</MathInline></TableCell>
+        <TableCell><MathInline>{"\\sigma(x)(1-\\sigma(x))"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Moindres carrés <MathInline>{"\\frac{1}{2}\\|y - X\\beta\\|^2"}</MathInline></TableCell>
+        <TableCell><MathInline>{"X^\\top(X\\beta - y)"}</MathInline></TableCell>
+        <TableCell><MathInline>{"X^\\top X"}</MathInline></TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Lien avec la convexité
+
+<MdxCard>
+Pour une fonction deux fois différentiable :
+
+- <MathInline>{"\\nabla^2 f(x) \\succ 0"}</MathInline> (définie positive) ⟹ <MathInline>{"f"}</MathInline> strictement convexe localement ;
+- <MathInline>{"\\nabla^2 f(x) \\succeq 0"}</MathInline> partout ⟹ <MathInline>{"f"}</MathInline> convexe ;
+- un point où <MathInline>{"\\nabla f(x) = 0"}</MathInline> et <MathInline>{"\\nabla^2 f(x) \\succ 0"}</MathInline> est un **minimum local** ; s'il est global sur un domaine convexe, c'est le minimum global.
+
+Voir la page [Convexité](/knowledge/mathematics/analysis/convexity) pour les caractérisations complètes (Jensen, critère du gradient).
+</MdxCard>
+
+## Applications
+
+<MdxCard>
+**Optimisation**
+
+- **Gradient descent** : mise à jour <MathInline>{"x_{k+1} = x_k - \\eta \\nabla f(x_k)"}</MathInline>.
+- **Newton** : utilise <MathInline>{"\\nabla^2 f"}</MathInline> pour corriger la direction et converger plus vite près du minimum.
+- **Conditions d'optimalité** : en l'absence de contraintes, un intérieur optimal vérifie <MathInline>{"\\nabla f(x^\\star) = 0"}</MathInline>.
+
+**Statistiques et ML**
+
+- **[Régression linéaire](/knowledge/statistics/regression)** : annuler le gradient de la loss quadratique donne l'estimateur OLS.
+- **Régularisation L2** : ajoute <MathInline>{"\\lambda I"}</MathInline> à la Hessienne, améliore le conditionnement.
+- **Backpropagation** : propagation des gradients via la règle de la chaîne sur un graphe de calcul.
+
+**Finance**
+
+- Les **Greeks** (delta, gamma) sont des dérivées du prix d'un dérivé par rapport aux facteurs de risque — même logique différentielle, appliquée au pricing.
+</MdxCard>
+
+## Limites et pièges
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Situation</TableHead>
+        <TableHead>Problème</TableHead>
+        <TableHead>Conséquence</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Non-différentiabilité</TableCell>
+        <TableCell>Ex. <MathInline>{"|x|"}</MathInline> en 0</TableCell>
+        <TableCell>Le gradient classique n'existe pas ; on utilise des sous-gradients</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Hessienne mal conditionnée</TableCell>
+        <TableCell>Valeurs propres très dispersées</TableCell>
+        <TableCell>Newton instable ; gradient descent lent dans certaines directions</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Minimum saddle</TableCell>
+        <TableCell><MathInline>{"\\nabla f = 0"}</MathInline> mais Hessienne indéfinie</TableCell>
+        <TableCell>Point critique qui n'est ni min ni max ; piège pour Newton naïf</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Différences finies</TableCell>
+        <TableCell>Approximation numérique bruitée</TableCell>
+        <TableCell>Erreurs d'arrondi ; préférer l'AD (autodiff) quand possible</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Grande dimension</TableCell>
+        <TableCell>Stocker <MathInline>{"\\nabla^2 f"}</MathInline> coûte <MathInline>{"O(n^2)"}</MathInline></TableCell>
+        <TableCell>Quasi-Newton (BFGS, L-BFGS) approxime la courbure sans Hessienne explicite</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Voir aussi
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• [Convexité](/knowledge/mathematics/analysis/convexity) — critères via gradient et Hessienne</p>
+    <p>• [Optimisation](/knowledge/mathematics/optimization) — gradient descent, Newton, contraintes</p>
+    <p>• [Régression](/knowledge/statistics/regression) — cas quadratique concret</p>
+    <p>• [Algèbre linéaire](/knowledge/mathematics/linear-algebra) — vecteurs, matrices, valeurs propres</p>
+  </div>
+</MdxCard>

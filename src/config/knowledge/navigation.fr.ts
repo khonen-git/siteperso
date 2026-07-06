@@ -16,6 +16,7 @@ export const navigationData: TreeItem[] = [
         title: 'Analyse',
         href: '/knowledge/mathematics/analysis',
         children: [
+          { title: 'Dérivées, gradient et Hessienne', href: '/knowledge/mathematics/analysis/derivatives-gradient-hessian' },
           { title: 'Convexité', href: '/knowledge/mathematics/analysis/convexity' },
         ],
       },
