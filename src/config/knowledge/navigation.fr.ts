@@ -12,7 +12,13 @@ export const navigationData: TreeItem[] = [
     href: '/knowledge/mathematics',
     children: [
       { title: 'Algèbre linéaire', href: '/knowledge/mathematics/linear-algebra' },
-      { title: 'Analyse', href: '/knowledge/mathematics/analysis' },
+      {
+        title: 'Analyse',
+        href: '/knowledge/mathematics/analysis',
+        children: [
+          { title: 'Convexité', href: '/knowledge/mathematics/analysis/convexity' },
+        ],
+      },
       { title: 'Optimisation', href: '/knowledge/mathematics/optimization' },
       { title: 'Calcul numérique', href: '/knowledge/mathematics/numerical-methods' },
       { title: 'Théorie de l\'information', href: '/knowledge/mathematics/information-theory' },

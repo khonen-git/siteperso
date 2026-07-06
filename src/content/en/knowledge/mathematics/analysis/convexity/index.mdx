@@ -1,0 +1,251 @@
+---
+title: Convexity
+description: Convex sets and functions, characterizations, and links to optimization.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+
+# Convexity
+
+<MdxCard title="Definition">
+A set <MathInline>{"C \\subseteq \\mathbb{R}^n"}</MathInline> is **convex** if, for all <MathInline>{"x, y \\in C"}</MathInline> and all <MathInline>{"\\lambda \\in [0,1]"}</MathInline>:
+
+<MathBlock>{"\\lambda x + (1-\\lambda)y \\in C"}</MathBlock>
+
+A function <MathInline>{"f : C \\to \\mathbb{R}"}</MathInline> is **convex** if its graph lies above every chord joining two points:
+
+<MathBlock>{"f(\\lambda x + (1-\\lambda)y) \\leq \\lambda f(x) + (1-\\lambda)f(y)"}</MathBlock>
+
+Convexity is **strict** if the inequality is strict whenever <MathInline>{"x \\neq y"}</MathInline> and <MathInline>{"\\lambda \\in (0,1)"}</MathInline>.
+</MdxCard>
+
+## Intuition
+
+<MdxCard>
+Geometrically, a convex set has no holes or indentations: the segment between any two points stays inside. A convex function curves upward: every chord between two graph points dominates the function.
+
+This property is central in optimization: on a convex domain, any local minimum of a convex function is **global**. There are no local traps.
+</MdxCard>
+
+## Characterizations
+
+<MdxCard title="Jensen's inequality">
+If <MathInline>{"f"}</MathInline> is convex and <MathInline>{"X"}</MathInline> is a random variable with well-defined quantities:
+
+<MathBlock>{"f(\\mathbb{E}[X]) \\leq \\mathbb{E}[f(X)]"}</MathBlock>
+
+This is the standard tool linking averages and nonlinear transformations — useful in probability, finance, and risk analysis.
+</MdxCard>
+
+<MdxCard title="Gradient criterion (differentiable functions)">
+<MathInline>{"f"}</MathInline> is convex if and only if, for all <MathInline>{"x, y"}</MathInline>:
+
+<MathBlock>{"f(y) \\geq f(x) + \\nabla f(x)^\\top (y - x)"}</MathBlock>
+
+The graph dominates its tangents: the linearization always underestimates the function.
+</MdxCard>
+
+<MdxCard title="Hessian criterion (twice differentiable)">
+If <MathInline>{"f"}</MathInline> is <MathInline>{"C^2"}</MathInline>, it is convex on a convex open set if and only if:
+
+<MathBlock>{"\\nabla^2 f(x) \\succeq 0 \\quad \\text{(positive semidefinite)}"}</MathBlock>
+
+for every <MathInline>{"x"}</MathInline> in the domain. This is the most practical test for verifying convexity of a loss or objective function.
+</MdxCard>
+
+## Properties
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Property</TableHead>
+        <TableHead>Statement</TableHead>
+        <TableHead>Consequence</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Minima</TableCell>
+        <TableCell>Every local minimum is global</TableCell>
+        <TableCell>Optimization is well posed without local traps</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Combinations</TableCell>
+        <TableCell>Nonnegative weighted sum of convex functions</TableCell>
+        <TableCell>Multi-objective goals remain convex</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Composition</TableCell>
+        <TableCell><MathInline>{"g \\circ f"}</MathInline> convex if <MathInline>{"g"}</MathInline> is convex increasing and <MathInline>{"f"}</MathInline> is convex</TableCell>
+        <TableCell>Practical rule for checking compositions</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Pointwise maximum</TableCell>
+        <TableCell><MathInline>{"\\max_i f_i(x)"}</MathInline> convex if each <MathInline>{"f_i"}</MathInline> is</TableCell>
+        <TableCell>Worst-case constraints preserve convexity</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Epigraph</TableCell>
+        <TableCell><MathInline>{"f"}</MathInline> convex ⟺ its epigraph is a convex set</TableCell>
+        <TableCell>Geometric link between functions and sets</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Examples
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Function / set</TableHead>
+        <TableHead>Convexity</TableHead>
+        <TableHead>Comment</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"x^2"}</MathInline></TableCell>
+        <TableCell>Convex</TableCell>
+        <TableCell>Constant Hessian <MathInline>{"2"}</MathInline></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"|x|"}</MathInline></TableCell>
+        <TableCell>Convex</TableCell>
+        <TableCell>Not differentiable at 0, but convex in the broad sense</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"\\|\\cdot\\|_p"}</MathInline> norms</TableCell>
+        <TableCell>Convex</TableCell>
+        <TableCell>Unit balls are convex; basis for regularization constraints</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"e^x"}</MathInline></TableCell>
+        <TableCell>Convex</TableCell>
+        <TableCell>Strictly positive second derivative</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"-\\log x"}</MathInline> on <MathInline>{"\\mathbb{R}_{++}"}</MathInline></TableCell>
+        <TableCell>Convex</TableCell>
+        <TableCell>Appears in log-likelihoods and entropy</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"\\log x"}</MathInline></TableCell>
+        <TableCell>Concave</TableCell>
+        <TableCell>Negative of a convex function</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">MSE</TableCell>
+        <TableCell>Convex in parameters</TableCell>
+        <TableCell>Foundation of [linear regression](/knowledge/statistics/regression)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Hinge loss</TableCell>
+        <TableCell>Convex</TableCell>
+        <TableCell>Maximum-margin SVM</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Half-space <MathInline>{"\\{x : a^\\top x \\leq b\\}"}</MathInline></TableCell>
+        <TableCell>Convex set</TableCell>
+        <TableCell>Building block of linear constraints</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Applications
+
+<MdxCard>
+Convexity is the foundation of **convex optimization**: problems where the objective and feasible set are convex. Classical algorithms (gradient, interior-point methods) then converge to the global optimum under moderate assumptions.
+
+**Direct links on this site:**
+
+- **[Linear regression](/knowledge/statistics/regression)** — least squares minimizes a strictly convex quadratic function (when <MathInline>{"X^\\top X"}</MathInline> is positive definite).
+- **[Optimization](/knowledge/mathematics/optimization)** — gradient descent, constraints, Lagrange multipliers; convexity ensures these methods target the right optimum.
+- **Portfolio allocation** — Markowitz formulates a convex quadratic program under linear constraints.
+- **Machine learning** — MSE, hinge loss, and cross-entropy (via the log) rely on convex structure in the parameters; this is what makes training linear models and SVMs reliable.
+
+**Finance link (distinct):** **bond convexity** measures the curvature of a bond price with respect to yields (second derivative of price). It uses the language of convexity but is not the same topic as mathematical convexity — see [asset classes](/knowledge/quantitative-finance/markets-products/asset-classes).
+</MdxCard>
+
+## Limits and pitfalls
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Situation</TableHead>
+        <TableHead>Issue</TableHead>
+        <TableHead>Consequence</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Non-convex function</TableCell>
+        <TableCell>E.g. sigmoid, deep network losses</TableCell>
+        <TableCell>Local minima; convergence depends on initialization</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Quasi-convexity</TableCell>
+        <TableCell>Convex level sets, but function not necessarily convex</TableCell>
+        <TableCell>Easier than general optimization, but without Jensen's tools</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Non-convex constraints</TableCell>
+        <TableCell>E.g. cardinality constraint <MathInline>{"\\|w\\|_0 \\leq k"}</MathInline></TableCell>
+        <TableCell>The global problem becomes NP-hard in general</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Convexity in parameters only</TableCell>
+        <TableCell>Loss may be convex in <MathInline>{"\\beta"}</MathInline> while the model stays linear</TableCell>
+        <TableCell>Do not confuse loss convexity with predictor expressiveness</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Related notions
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Notion</TableHead>
+        <TableHead>Idea</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Concavity</TableCell>
+        <TableCell><MathInline>{"f"}</MathInline> concave ⟺ <MathInline>{"-f"}</MathInline> convex; maximize rather than minimize</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Strongly convex function</TableCell>
+        <TableCell>Hessian bounded below by <MathInline>{"\\mu I"}</MathInline> with <MathInline>{"\\mu > 0"}</MathInline>; faster convergence</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Convex set vs convex problem</TableCell>
+        <TableCell>A convex domain is not enough: the objective must also be convex</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Convex optimization</TableCell>
+        <TableCell>Algorithmic study of convex problems — see [Optimization](/knowledge/mathematics/optimization)</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## See also
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• [Analysis](/knowledge/mathematics/analysis) — derivatives, gradient, and Hessian</p>
+    <p>• [Optimization](/knowledge/mathematics/optimization) — numerical methods and constraints</p>
+    <p>• [Regression](/knowledge/statistics/regression) — concrete case of convex quadratic minimization</p>
+    <p>• [Asset classes](/knowledge/quantitative-finance/markets-products/asset-classes) — bond convexity (finance)</p>
+  </div>
+</MdxCard>

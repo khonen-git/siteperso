@@ -3,6 +3,38 @@ title: Analysis
 description: Derivatives, convexity, and differential equations.
 ---
 
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { Link } from '@/i18n/navigation';
+
 # Analysis
 
-This content is being written.
+<MdxCard>
+**Analysis** provides the differential and variational tools used in optimization, probability, and quantitative finance.
+</MdxCard>
+
+## Detailed pages
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Topic</TableHead>
+      <TableHead>Content</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/mathematics/analysis/convexity">Convexity</Link>
+      </TableCell>
+      <TableCell>Convex sets and functions, Jensen, Hessian, applications</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+## Coming soon
+
+- Derivatives, gradient, and Hessian
+- Taylor series
+- Ordinary differential equations (ODEs)
+- Partial differential equations (PDEs)

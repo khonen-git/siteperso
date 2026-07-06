@@ -3,6 +3,38 @@ title: Analyse
 description: Dérivées, convexité et équations différentielles.
 ---
 
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { Link } from '@/i18n/navigation';
+
 # Analyse
 
-Ce contenu est en cours de rédaction.
+<MdxCard>
+L'**analyse** fournit les outils différentiels et variationnels utilisés en optimisation, en probabilités et en finance quantitative.
+</MdxCard>
+
+## Pages détaillées
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Sujet</TableHead>
+      <TableHead>Contenu</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/mathematics/analysis/convexity">Convexité</Link>
+      </TableCell>
+      <TableCell>Ensembles et fonctions convexes, Jensen, Hessienne, applications</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+## À venir
+
+- Dérivées, gradient et Hessienne
+- Séries de Taylor
+- Équations différentielles ordinaires (EDO)
+- Équations aux dérivées partielles (EDP)
