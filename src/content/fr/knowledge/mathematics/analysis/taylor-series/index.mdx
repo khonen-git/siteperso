@@ -1,0 +1,193 @@
+---
+title: Séries de Taylor
+description: Approximation polynomiale locale, développement en série et reste.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+
+# Séries de Taylor
+
+<MdxCard title="Définition">
+Soit <MathInline>{"f"}</MathInline> une fonction <MathInline>{"n"}</MathInline> fois dérivable au voisinage de <MathInline>{"a"}</MathInline>. Le **polynôme de Taylor d'ordre <MathInline>n</MathInline>** est :
+
+<MathBlock>{"T_n(x) = \\sum_{k=0}^{n} \\frac{f^{(k)}(a)}{k!}(x-a)^k"}</MathBlock>
+
+En <MathInline>{"a = 0"}</MathInline>, on parle de **développement de Maclaurin**. Si la série converge vers <MathInline>{"f(x)"}</MathInline> :
+
+<MathBlock>{"f(x) = \\sum_{k=0}^{\\infty} \\frac{f^{(k)}(a)}{k!}(x-a)^k"}</MathBlock>
+
+c'est la **série de Taylor** de <MathInline>{"f"}</MathInline> autour de <MathInline>{"a"}</MathInline>.
+</MdxCard>
+
+## Intuition
+
+<MdxCard>
+Une série de Taylor remplace une fonction compliée, **localement**, par un polynôme dont les coefficients sont fixés par les dérivées en un point.
+
+- Ordre 0 : valeur constante <MathInline>{"f(a)"}</MathInline>.
+- Ordre 1 : approximation **linéaire** (tangente) — voir [Dérivées, gradient et Hessienne](/knowledge/mathematics/analysis/derivatives-gradient-hessian).
+- Ordre 2 : approximation **quadratique** (courbure via la Hessienne).
+- Ordre plus élevé : meilleure précision **près de <MathInline>{"a"}</MathInline>**, mais souvent inutile ou instable loin de <MathInline>{"a"}</MathInline>.
+
+L'idée centrale : toute fonction suffisamment régulière se comporte presque comme un polynôme à petite échelle.
+</MdxCard>
+
+## Cas univarié et multivarié
+
+<MdxCard title="Dimension 1">
+Développement autour de <MathInline>{"a"}</MathInline> jusqu'à l'ordre 2 :
+
+<MathBlock>{"f(x) \\approx f(a) + f'(a)(x-a) + \\frac{f''(a)}{2}(x-a)^2"}</MathBlock>
+
+Le terme linéaire domine pour <MathInline>{"|x-a|"}</MathInline> petit ; le terme quadratique capture la courbure.
+</MdxCard>
+
+<MdxCard title="Plusieurs variables">
+Pour <MathInline>{"f : \\mathbb{R}^n \\to \\mathbb{R}"}</MathInline> autour de <MathInline>{"x_0"}</MathInline> :
+
+<MathBlock>{"f(x) \\approx f(x_0) + \\nabla f(x_0)^\\top (x - x_0) + \\frac{1}{2}(x - x_0)^\\top \\nabla^2 f(x_0)(x - x_0)"}</MathBlock>
+
+C'est le développement de Taylor d'ordre 2 — base de la méthode de Newton et des approximations delta-gamma en finance.
+</MdxCard>
+
+## Développements classiques
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Fonction</TableHead>
+        <TableHead>Développement (Maclaurin, <MathInline>{"|x|"}</MathInline> petit)</TableHead>
+        <TableHead>Usage</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"e^x"}</MathInline></TableCell>
+        <TableCell><MathInline>{"1 + x + \\frac{x^2}{2!} + \\cdots"}</MathInline></TableCell>
+        <TableCell>Log-vraisemblance, processus stochastiques</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"\\log(1+x)"}</MathInline></TableCell>
+        <TableCell><MathInline>{"x - \\frac{x^2}{2} + \\frac{x^3}{3} - \\cdots"}</MathInline></TableCell>
+        <TableCell>Rendements logarithmiques, entropie</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"\\sin x, \\cos x"}</MathInline></TableCell>
+        <TableCell>Séries alternées en puissances paires/impaires</TableCell>
+        <TableCell>Signaux, Fourier (hors scope ici)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"(1+x)^\\alpha"}</MathInline></TableCell>
+        <TableCell><MathInline>{"1 + \\alpha x + \\frac{\\alpha(\\alpha-1)}{2}x^2 + \\cdots"}</MathInline></TableCell>
+        <TableCell>Approximations de rendement, binôme généralisé</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"\\frac{1}{1-x}"}</MathInline></TableCell>
+        <TableCell><MathInline>{"1 + x + x^2 + x^3 + \\cdots"}</MathInline></TableCell>
+        <TableCell>Séries géométriques, actualisation discrète</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><MathInline>{"\\Phi(x)"}</MathInline> (normale)</TableCell>
+        <TableCell>Expansion autour de 0 ou asymptotique pour queues</TableCell>
+        <TableCell>VaR, probabilités de défaut (approx.)</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Reste et précision
+
+<MdxCard title="Forme de Lagrange (ordre n)">
+Entre <MathInline>{"a"}</MathInline> et <MathInline>{"x"}</MathInline>, il existe <MathInline>{"\\xi"}</MathInline> tel que :
+
+<MathBlock>{"f(x) = T_n(x) + \\frac{f^{(n+1)}(\\xi)}{(n+1)!}(x-a)^{n+1}"}</MathBlock>
+
+Le reste dépend de la dérivée d'ordre <MathInline>{"n+1"}</MathInline> sur l'intervalle — d'où l'importance de la régularité de <MathInline>{"f"}</MathInline>.
+</MdxCard>
+
+<MdxCard title="Notation asymptotique">
+On écrit souvent :
+
+<MathBlock>{"f(x) = T_n(x) + o\\left((x-a)^n\\right) \\quad \\text{quand } x \\to a"}</MathBlock>
+
+En pratique : tronquer à l'ordre 1 ou 2 suffit pour l'optimisation et les sensibilités ; des ordres plus hauts servent surtout en calcul numérique ou en asymptotique statistique.
+</MdxCard>
+
+## Applications
+
+<MdxCard>
+**Optimisation**
+
+- **Newton** : résoudre <MathInline>{"\\nabla f(x) = 0"}</MathInline> en linéarisant le gradient (Taylor d'ordre 1 sur <MathInline>{"\\nabla f"}</MathInline>).
+- **Analyse de convergence** : taux quadratique de Newton près d'une racine simple.
+
+**Finance**
+
+- **Delta-gamma** : approximation du P&amp;L d'un portefeuille d'options :
+  <MathInline>{"\\Delta P \\approx \\Delta \\cdot \\Delta S + \\frac{1}{2}\\Gamma \\cdot (\\Delta S)^2"}</MathInline> — Taylor d'ordre 2 du prix.
+- **Duration-convexité** (obligataires) : même logique pour le prix vs taux.
+
+**Statistiques**
+
+- Expansion de Taylor autour du MLE pour approximer la vraisemblance et dériver des tests (asymptotique normale).
+- Approximation <MathInline>{"\\log(1+x) \\approx x"}</MathInline> pour petits rendements.
+
+**Calcul numérique**
+
+- Intégration, résolution d'équations, différences finies — voir [Calcul numérique](/knowledge/mathematics/numerical-methods) (à venir).
+</MdxCard>
+
+## Limites et pièges
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Situation</TableHead>
+        <TableHead>Problème</TableHead>
+        <TableHead>Conséquence</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Rayon de convergence</TableCell>
+        <TableCell>Série diverge au-delà d'un certain <MathInline>{"|x-a|"}</MathInline></TableCell>
+        <TableCell>Approximation valide seulement localement</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Fonction non <MathInline>{"C^\\infty"}</MathInline></TableCell>
+        <TableCell>Ex. <MathInline>{"|x|"}</MathInline>, ReLU</TableCell>
+        <TableCell>Pas de série de Taylor classique ; sous-gradient ou morceaux</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Truncature prématurée</TableCell>
+        <TableCell>Ordre 1 sur une fonction très courbée</TableCell>
+        <TableCell>Erreur systématique (gamma négligé en finance)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Grands chocs</TableCell>
+        <TableCell><MathInline>{"\\Delta S"}</MathInline> ou <MathInline>{"\\Delta y"}</MathInline> important</TableCell>
+        <TableCell>Delta-gamma ou duration-convexité sous-estiment le risque</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Conditionnement</TableCell>
+        <TableCell>Hessienne mal conditionnée</TableCell>
+        <TableCell>Approximation quadratique peu fiable loin de <MathInline>{"x_0"}</MathInline></TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Voir aussi
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• [Dérivées, gradient et Hessienne](/knowledge/mathematics/analysis/derivatives-gradient-hessian) — approximations linéaire et quadratique</p>
+    <p>• [Convexité](/knowledge/mathematics/analysis/convexity) — signe de la Hessienne et courbure</p>
+    <p>• [Descente de gradient](/knowledge/mathematics/optimization/gradient-descent) — ordre 1 ; Newton utilise l'ordre 2</p>
+    <p>• [Analyse](/knowledge/mathematics/analysis) — EDO et EDP (à venir)</p>
+  </div>
+</MdxCard>
