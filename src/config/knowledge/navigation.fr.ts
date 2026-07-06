@@ -20,7 +20,14 @@ export const navigationData: TreeItem[] = [
           { title: 'Convexité', href: '/knowledge/mathematics/analysis/convexity' },
         ],
       },
-      { title: 'Optimisation', href: '/knowledge/mathematics/optimization' },
+      {
+        title: 'Optimisation',
+        href: '/knowledge/mathematics/optimization',
+        children: [
+          { title: 'Optimisation convexe', href: '/knowledge/mathematics/optimization/convex-optimization' },
+          { title: 'Descente de gradient', href: '/knowledge/mathematics/optimization/gradient-descent' },
+        ],
+      },
       { title: 'Calcul numérique', href: '/knowledge/mathematics/numerical-methods' },
       { title: 'Théorie de l\'information', href: '/knowledge/mathematics/information-theory' },
     ],

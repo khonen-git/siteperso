@@ -1,0 +1,258 @@
+---
+title: Convex optimization
+description: Convex problems, constraints, KKT conditions, and duality.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+
+# Convex optimization
+
+<MdxCard title="Definition">
+A **convex optimization problem** minimizes a convex objective over a **convex set**, possibly with convex constraints:
+
+<MathBlock>{"\\min_{x \\in \\mathcal{C}} f(x) \\quad \\text{subject to} \\quad g_i(x) \\leq 0,\\; h_j(x) = 0"}</MathBlock>
+
+where <MathInline>{"f"}</MathInline> and the <MathInline>{"g_i"}</MathInline> are convex, the <MathInline>{"h_j"}</MathInline> are **affine**, and <MathInline>{"\\mathcal{C}"}</MathInline> is a convex set (often <MathInline>{"\\mathbb{R}^n"}</MathInline> or a subspace).
+
+The most common practical form:
+
+<MathBlock>{"\\min_x f(x) \\quad \\text{subject to} \\quad Ax = b,\\; Gx \\preceq h"}</MathBlock>
+
+with <MathInline>{"f"}</MathInline> convex and linear constraints.
+</MdxCard>
+
+## Intuition
+
+<MdxCard>
+Convex optimization is the "well-posed" case of optimization: there are no trapped local minima. If you find a point where the gradient vanishes (unconstrained) or KKT conditions hold (constrained), you have the **global minimum**.
+
+This is why problems as diverse as least squares, ridge regularization, mean-variance allocation, and SVMs rely on this structure: reliable, often unique solutions with proven algorithms.
+</MdxCard>
+
+## Why convexity is enough
+
+<MdxCard>
+Prerequisites (see [Convexity](/knowledge/mathematics/analysis/convexity) and [Derivatives, gradient, and Hessian](/knowledge/mathematics/analysis/derivatives-gradient-hessian)):
+
+- intersection of convex constraints = convex domain;
+- sum of convex functions = convex objective;
+- every local minimum of a convex function on a convex domain is **global**.
+
+Practical consequence: no aggressive multi-start or escape heuristics needed to avoid local minima — difficulty comes mainly from **scale**, **conditioning**, and **computational cost**.
+</MdxCard>
+
+## Standard forms
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Type</TableHead>
+        <TableHead>Form</TableHead>
+        <TableHead>Comment</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Linear program (LP)</TableCell>
+        <TableCell><MathInline>{"\\min c^\\top x"}</MathInline> s.t. <MathInline>{"Ax \\leq b"}</MathInline></TableCell>
+        <TableCell>Linear objective and constraints; convex special case</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Quadratic program (QP)</TableCell>
+        <TableCell><MathInline>{"\\min \\frac{1}{2} x^\\top P x + q^\\top x"}</MathInline> s.t. linear constraints, <MathInline>{"P \\succeq 0"}</MathInline></TableCell>
+        <TableCell>OLS, ridge, Markowitz</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Conic program (SOCP, SDP)</TableCell>
+        <TableCell>Constraints on norms or matrices</TableCell>
+        <TableCell>Robustness, risk constraints, advanced finance</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Unconstrained minimization</TableCell>
+        <TableCell><MathInline>{"\\min_x f(x)"}</MathInline> with <MathInline>{"f"}</MathInline> convex</TableCell>
+        <TableCell>Gradient descent, Newton</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Optimality conditions
+
+<MdxCard title="Unconstrained case">
+If <MathInline>{"f"}</MathInline> is convex and differentiable, a point <MathInline>{"x^\\star"}</MathInline> is optimal if and only if:
+
+<MathBlock>{"\\nabla f(x^\\star) = 0"}</MathBlock>
+</MdxCard>
+
+<MdxCard title="KKT conditions (constrained)">
+For a convex problem with qualified constraints, Karush-Kuhn-Tucker conditions are **necessary and sufficient**:
+
+<MathBlock>{"\\nabla f(x^\\star) + \\sum_i \\lambda_i \\nabla g_i(x^\\star) + \\sum_j \\mu_j \\nabla h_j(x^\\star) = 0"}</MathBlock>
+
+<MathBlock>{"g_i(x^\\star) \\leq 0,\\; h_j(x^\\star) = 0,\\; \\lambda_i \\geq 0,\\; \\lambda_i g_i(x^\\star) = 0"}</MathBlock>
+
+Multipliers <MathInline>{"\\lambda_i"}</MathInline> measure the **marginal cost** of a constraint: slightly relaxing an active constraint shifts the optimum by roughly <MathInline>{"\\lambda_i"}</MathInline>.
+</MdxCard>
+
+<MdxCard title="Lagrange multipliers">
+With equality constraints only (<MathInline>{"h(x)=0"}</MathInline>), form the Lagrangian:
+
+<MathBlock>{"\\mathcal{L}(x, \\mu) = f(x) + \\mu^\\top h(x)"}</MathBlock>
+
+The optimum satisfies <MathInline>{"\\nabla_x \\mathcal{L} = 0"}</MathInline> and <MathInline>{"h(x)=0"}</MathInline>. With inequalities, Lagrange multipliers generalize via KKT.
+</MdxCard>
+
+## Duality
+
+<MdxCard>
+Every convex problem (primal) has an associated **dual problem**, often simpler to optimize or interpret:
+
+- the dual provides a **lower bound** on the primal optimum (weak duality always holds);
+- under **strong duality** (Slater, constraint qualification), primal optimum = dual optimum;
+- dual multipliers are the dual problem's variables.
+
+Classic example: in SVM, the dual turns a constrained problem into maximization over multipliers <MathInline>{"\\alpha_i"}</MathInline>, with a sparse solution (support vectors).
+</MdxCard>
+
+## Examples
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Problem</TableHead>
+        <TableHead>Convex formulation</TableHead>
+        <TableHead>Link</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Least squares (OLS)</TableCell>
+        <TableCell><MathInline>{"\\min_\\beta \\|y - X\\beta\\|_2^2"}</MathInline></TableCell>
+        <TableCell>[Linear regression](/knowledge/statistics/regression)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Ridge</TableCell>
+        <TableCell><MathInline>{"\\min_\\beta \\|y - X\\beta\\|_2^2 + \\lambda\\|\\beta\\|_2^2"}</MathInline></TableCell>
+        <TableCell>Strictly convex QP; regularized Hessian</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Lasso</TableCell>
+        <TableCell><MathInline>{"\\min_\\beta \\|y - X\\beta\\|_2^2 + \\lambda\\|\\beta\\|_1"}</MathInline></TableCell>
+        <TableCell>Convex but non-smooth; subgradient or prox</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Markowitz</TableCell>
+        <TableCell><MathInline>{"\\min_w w^\\top \\Sigma w"}</MathInline> s.t. <MathInline>{"\\mathbf{1}^\\top w = 1"}</MathInline></TableCell>
+        <TableCell>QP; mean-variance allocation</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Soft-margin SVM</TableCell>
+        <TableCell>Hinge minimization + margin violation penalty</TableCell>
+        <TableCell>Convex; duality and support vectors</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Algorithms (overview)
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Method</TableHead>
+        <TableHead>Idea</TableHead>
+        <TableHead>When to use</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Gradient descent</TableCell>
+        <TableCell><MathInline>{"x_{k+1} = x_k - \\eta \\nabla f(x_k)"}</MathInline></TableCell>
+        <TableCell>High dimension, smooth objective; see [Gradient descent](/knowledge/mathematics/optimization/gradient-descent)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Newton / quasi-Newton</TableCell>
+        <TableCell>Uses curvature (<MathInline>{"\\nabla^2 f"}</MathInline> or BFGS approximation)</TableCell>
+        <TableCell>Fast convergence near optimum; costly in high dimension</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Interior-point methods</TableCell>
+        <TableCell>Stay inside domain, barrier on constraints</TableCell>
+        <TableCell>Large-scale LP, QP, SDP</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Proximal / ADMM</TableCell>
+        <TableCell>Split smooth objective and non-smooth term or constraints</TableCell>
+        <TableCell>Lasso, structured constraints, distributed problems</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Applications
+
+<MdxCard>
+- **Statistics**: MLE with convex constraints, ridge/lasso, quantile regression (via LP reformulation).
+- **Machine learning**: SVM, logistic regression (convex in <MathInline>{"\\beta"}</MathInline>), regularization.
+- **Finance**: efficient frontier, risk parity under linear constraints, robust optimization.
+- **Engineering**: resource allocation, convex discrete control, constrained calibration.
+
+See [Gradient descent](/knowledge/mathematics/optimization/gradient-descent) for algorithm details; Newton and quasi-Newton remain on the [Optimization](/knowledge/mathematics/optimization) hub.
+</MdxCard>
+
+## Limits and pitfalls
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Situation</TableHead>
+        <TableHead>Issue</TableHead>
+        <TableHead>Consequence</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Non-convex objective</TableCell>
+        <TableCell>Neural networks, clustering</TableCell>
+        <TableCell>Local minima; no global guarantee</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Non-convex constraints</TableCell>
+        <TableCell>Cardinality, binary variables</TableCell>
+        <TableCell>NP-hard in general; convex relaxation needed</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Ill-conditioned data</TableCell>
+        <TableCell><MathInline>{"X^\\top X"}</MathInline> nearly singular</TableCell>
+        <TableCell>Unstable solution; regularization or constraints</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Confusing convex and smooth</TableCell>
+        <TableCell><MathInline>{"\\|\\beta\\|_1"}</MathInline> is convex but not differentiable</TableCell>
+        <TableCell>Classical gradient insufficient; subgradient or prox</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Weak duality only</TableCell>
+        <TableCell>Nonzero primal-dual gap</TableCell>
+        <TableCell>Dual underestimates optimum; check Slater / qualification</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## See also
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• [Convexity](/knowledge/mathematics/analysis/convexity) — definitions and characterizations</p>
+    <p>• [Derivatives, gradient, and Hessian](/knowledge/mathematics/analysis/derivatives-gradient-hessian) — differential tools and first-order conditions</p>
+    <p>• [Regression](/knowledge/statistics/regression) — OLS as a convex QP</p>
+    <p>• [Gradient descent](/knowledge/mathematics/optimization/gradient-descent) — baseline algorithm and variants</p>
+  </div>
+</MdxCard>

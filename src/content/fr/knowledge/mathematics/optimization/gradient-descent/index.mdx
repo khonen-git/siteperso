@@ -1,0 +1,234 @@
+---
+title: Descente de gradient
+description: Minimisation itérative par le gradient, pas d'apprentissage et variantes (SGD, momentum).
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+
+# Descente de gradient
+
+<MdxCard title="Définition">
+La **descente de gradient** (gradient descent) minimise une fonction différentiable <MathInline>{"f : \\mathbb{R}^n \\to \\mathbb{R}"}</MathInline> par itérations successives dans la direction opposée au gradient :
+
+<MathBlock>{"x_{k+1} = x_k - \\eta_k \\nabla f(x_k)"}</MathBlock>
+
+où <MathInline>{"\\eta_k > 0"}</MathInline> est le **pas d'apprentissage** (learning rate) à l'itération <MathInline>{"k"}</MathInline>.
+
+L'idée : le gradient pointe vers la plus forte montée ; en soustrayant <MathInline>{"\\nabla f"}</MathInline>, on descend localement vers un minimum.
+</MdxCard>
+
+## Intuition
+
+<MdxCard>
+On imagine une bille roulant le long d'une surface : à chaque pas, on regarde la pente locale (<MathInline>{"\\nabla f"}</MathInline>) et on avance dans la direction la plus descendante.
+
+- Pas **trop grand** : on peut overshoot et diverger.
+- Pas **trop petit** : convergence très lente.
+- Sur une fonction **convexe** lisse, un bon choix de <MathInline>{"\\eta"}</MathInline> garantit la convergence vers le minimum global (voir [Optimisation convexe](/knowledge/mathematics/optimization/convex-optimization)).
+- Sur une fonction **non convexe** (réseaux de neurones), on converge souvent vers un minimum local ou un point selle — d'où l'importance de l'initialisation et des variantes (momentum, Adam).
+</MdxCard>
+
+## Pas d'apprentissage
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Stratégie</TableHead>
+        <TableHead>Formule / idée</TableHead>
+        <TableHead>Usage</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Pas fixe</TableCell>
+        <TableCell><MathInline>{"\\eta_k = \\eta"}</MathInline> constant</TableCell>
+        <TableCell>Simple ; nécessite un tuning manuel</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Décroissance</TableCell>
+        <TableCell><MathInline>{"\\eta_k = \\eta_0 / \\sqrt{k}"}</MathInline> ou <MathInline>{"\\eta_0 / k"}</MathInline></TableCell>
+        <TableCell>Garanties de convergence en SGD sous hypothèses</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Line search</TableCell>
+        <TableCell>Choisir <MathInline>{"\\eta"}</MathInline> minimisant <MathInline>{"f(x_k - \\eta \\nabla f(x_k))"}</MathInline></TableCell>
+        <TableCell>Coûteux mais adaptatif ; Newton utilise une logique proche</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Schedule (warmup, cosine)</TableCell>
+        <TableCell><MathInline>{"\\eta_k"}</MathInline> planifié sur les epochs</TableCell>
+        <TableCell>Standard en deep learning</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+<MdxCard>
+Pour une fonction <MathInline>{"L"}</MathInline>-lisse et convexe, un pas constant <MathInline>{"\\eta \\leq 1/L"}</MathInline> suffit à garantir la convergence. En pratique, <MathInline>{"L"}</MathInline> est rarement connu : on teste des valeurs (log-scale : <MathInline>{"10^{-4}"}</MathInline>, <MathInline>{"10^{-3}"}</MathInline>, …) ou on utilise un optimiseur adaptatif.
+</MdxCard>
+
+## Variantes
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Méthode</TableHead>
+        <TableHead>Idée</TableHead>
+        <TableHead>Intérêt</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Batch (GD)</TableCell>
+        <TableCell>Gradient sur **tout** l'échantillon</TableCell>
+        <TableCell>Stable mais lent sur grands jeux de données</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">SGD</TableCell>
+        <TableCell>Gradient sur **un** exemple (ou mini-batch)</TableCell>
+        <TableCell>Rapide, bruit utile pour échapper aux minima locaux</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Mini-batch</TableCell>
+        <TableCell>Gradient sur un sous-ensemble de taille <MathInline>{"B"}</MathInline></TableCell>
+        <TableCell>Compromis standard ; parallélisable sur GPU</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Momentum</TableCell>
+        <TableCell><MathInline>{"v_{k+1} = \\beta v_k + \\nabla f(x_k)"}</MathInline>, puis <MathInline>{"x_{k+1} = x_k - \\eta v_{k+1}"}</MathInline></TableCell>
+        <TableCell>Accélère dans les directions consistantes ; atténue l'oscillation</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Adam / RMSProp</TableCell>
+        <TableCell>Pas adaptatif par coordonnée (moyennes mobiles du gradient et de sa variance)</TableCell>
+        <TableCell>Peu de tuning ; défaut en deep learning tabulaire et réseaux</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Convergence
+
+<MdxCard title="Cas convexe lisse">
+Si <MathInline>{"f"}</MathInline> est convexe et <MathInline>{"L"}</MathInline>-lisse, la descente de gradient avec <MathInline>{"\\eta = 1/L"}</MathInline> vérifie :
+
+<MathBlock>{"f(x_k) - f(x^\\star) \\leq \\frac{L \\|x_0 - x^\\star\\|^2}{2k}"}</MathBlock>
+
+Convergence en <MathInline>{"O(1/k)"}</MathInline> — linéaire en nombre d'itérations pour la **précision**, pas exponentielle. Pour une convergence plus rapide près de l'optimum, voir Newton et quasi-Newton (à venir).
+</MdxCard>
+
+<MdxCard title="Cas fortement convexe">
+Si <MathInline>{"f"}</MathInline> est <MathInline>{"\\mu"}</MathInline>-fortement convexe (<MathInline>{"\\nabla^2 f \\succeq \\mu I"}</MathInline>), le taux devient **linéaire** (géométrique) :
+
+<MathBlock>{"f(x_k) - f(x^\\star) \\leq \\left(1 - \\frac{\\mu}{L}\\right)^k (f(x_0) - f(x^\\star))"}</MathBlock>
+
+La condition number <MathInline>{"L/\\mu"}</MathInline> gouverne la vitesse : plus elle est grande, plus la convergence est lente.
+</MdxCard>
+
+## Hyperparamètres clés
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Paramètre</TableHead>
+        <TableHead>Rôle</TableHead>
+        <TableHead>Effet principal</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium"><code>learning_rate</code> (<MathInline>{"\\eta"}</MathInline>)</TableCell>
+        <TableCell>Taille du pas</TableCell>
+        <TableCell>Trop grand → divergence ; trop petit → lenteur</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>batch_size</code></TableCell>
+        <TableCell>Taille du mini-batch</TableCell>
+        <TableCell>Grand → gradient stable ; petit → bruit et généralisation</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>momentum</code> (<MathInline>{"\\beta"}</MathInline>)</TableCell>
+        <TableCell>Inertie du gradient</TableCell>
+        <TableCell>Typiquement 0.9 ; accélère dans les vallées étroites</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>max_iter</code> / epochs</TableCell>
+        <TableCell>Nombre d'itérations</TableCell>
+        <TableCell>Coupler avec early stopping pour éviter le sur-apprentissage</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium"><code>tolerance</code></TableCell>
+        <TableCell>Seuil d'arrêt sur <MathInline>{"\\|\\nabla f\\|"}</MathInline> ou gain de loss</TableCell>
+        <TableCell>Utile quand la loss plateaute</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Applications
+
+<MdxCard>
+- **[Régression linéaire](/knowledge/statistics/regression)** : OLS a une solution fermée, mais la descente de gradient reste utile pour grands <MathInline>{"n"}</MathInline> ou streaming.
+- **Régularisation ridge / lasso** : minimisation itérative quand <MathInline>{"n"}</MathInline> ou <MathInline>{"p"}</MathInline> est très grand.
+- **Machine learning** : entraînement de modèles linéaires, réseaux de neurones (via backprop + SGD/Adam).
+- **Calibration** : ajuster des paramètres de modèle pour minimiser une loss sur données historiques.
+
+La descente de gradient est l'algorithme de base référencé dans [Dérivées, gradient et Hessienne](/knowledge/mathematics/analysis/derivatives-gradient-hessian) ; [Optimisation convexe](/knowledge/mathematics/optimization/convex-optimization) explique pourquoi, sur un problème convexe, cette procédure cible le bon optimum.
+</MdxCard>
+
+## Limites et pièges
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Situation</TableHead>
+        <TableHead>Problème</TableHead>
+        <TableHead>Piste</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Fonction non convexe</TableCell>
+        <TableCell>Minima locaux, points selles</TableCell>
+        <TableCell>Multi-start, momentum, learning rate schedule</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Mauvais conditionnement</TableCell>
+        <TableCell>Vallées étroites et allongées</TableCell>
+        <TableCell>Normalisation des features, Adam, preconditioning</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Plateaux</TableCell>
+        <TableCell><MathInline>{"\\|\\nabla f\\| \\approx 0"}</MathInline> loin de l'optimum</TableCell>
+        <TableCell>ReLU/sigmoid en DL ; momentum ou Adam</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Objectif non lisse</TableCell>
+        <TableCell><MathInline>{"\\|\\beta\\|_1"}</MathInline> (lasso)</TableCell>
+        <TableCell>Sous-gradient, proximal gradient (ISTA)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Coût par itération</TableCell>
+        <TableCell>Batch complet trop lent</TableCell>
+        <TableCell>Mini-batch SGD ; parfois solution fermée préférable (OLS)</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Voir aussi
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• [Dérivées, gradient et Hessienne](/knowledge/mathematics/analysis/derivatives-gradient-hessian) — gradient et interprétation différentielle</p>
+    <p>• [Optimisation convexe](/knowledge/mathematics/optimization/convex-optimization) — garanties de convergence sur problèmes convexes</p>
+    <p>• [Convexité](/knowledge/mathematics/analysis/convexity) — pourquoi un minimum local est global</p>
+    <p>• [Régression](/knowledge/statistics/regression) — cas quadratique et alternative fermée (OLS)</p>
+  </div>
+</MdxCard>

@@ -3,6 +3,45 @@ title: Optimization
 description: Numerical optimization methods and constraints.
 ---
 
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { Link } from '@/i18n/navigation';
+
 # Optimization
 
-This content is being written.
+<MdxCard>
+**Optimization** covers methods to minimize (or maximize) an objective function, with or without constraints — the foundation of regression, machine learning, and portfolio allocation.
+</MdxCard>
+
+## Detailed pages
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Topic</TableHead>
+      <TableHead>Content</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/mathematics/optimization/convex-optimization">Convex optimization</Link>
+      </TableCell>
+      <TableCell>Convex problems, KKT, Lagrange, duality, LP/QP</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/mathematics/optimization/gradient-descent">Gradient descent</Link>
+      </TableCell>
+      <TableCell>GD, SGD, momentum, learning rate, convergence</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+## Coming soon
+
+- Newton and quasi-Newton
+- Regularization
+- Quadratic optimization
+- Portfolio optimization
+- Ill-conditioned problems

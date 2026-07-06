@@ -1,0 +1,258 @@
+---
+title: Optimisation convexe
+description: Problèmes convexes, contraintes, conditions KKT et dualité.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+
+# Optimisation convexe
+
+<MdxCard title="Définition">
+Un **problème d'optimisation convexe** consiste à minimiser une fonction objectif convexe sur un **ensemble convexe**, éventuellement avec des contraintes convexes :
+
+<MathBlock>{"\\min_{x \\in \\mathcal{C}} f(x) \\quad \\text{sous} \\quad g_i(x) \\leq 0,\\; h_j(x) = 0"}</MathBlock>
+
+où <MathInline>{"f"}</MathInline> et les <MathInline>{"g_i"}</MathInline> sont convexes, les <MathInline>{"h_j"}</MathInline> sont **affines**, et <MathInline>{"\\mathcal{C}"}</MathInline> est un ensemble convexe (souvent <MathInline>{"\\mathbb{R}^n"}</MathInline> ou un sous-espace).
+
+La forme la plus courante en pratique :
+
+<MathBlock>{"\\min_x f(x) \\quad \\text{sous} \\quad Ax = b,\\; Gx \\preceq h"}</MathBlock>
+
+avec <MathInline>{"f"}</MathInline> convexe et contraintes linéaires.
+</MdxCard>
+
+## Intuition
+
+<MdxCard>
+L'optimisation convexe est le cas « bien posé » de l'optimisation : il n'existe pas de minimum local piégé. Si vous trouvez un point où le gradient s'annule (sans contrainte) ou où les conditions KKT sont satisfaites (avec contraintes), vous avez le **minimum global**.
+
+C'est pourquoi des problèmes aussi variés que les moindres carrés, la régularisation ridge, l'allocation mean-variance ou les SVMs reposent sur cette structure : on obtient des solutions fiables, souvent uniques, avec des algorithmes éprouvés.
+</MdxCard>
+
+## Pourquoi la convexité suffit
+
+<MdxCard>
+Rappel des prérequis (voir [Convexité](/knowledge/mathematics/analysis/convexity) et [Dérivées, gradient et Hessienne](/knowledge/mathematics/analysis/derivatives-gradient-hessian)) :
+
+- intersection de contraintes convexes = domaine convexe ;
+- somme de fonctions convexes = objectif convexe ;
+- tout minimum local d'une fonction convexe sur un domaine convexe est **global**.
+
+Conséquence pratique : pas besoin de multi-start agressif ni de heuristiques d'échappement pour éviter les minima locaux — la difficulté vient surtout de l'**échelle**, du **conditionnement** et du **coût de calcul**.
+</MdxCard>
+
+## Formes standard
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Type</TableHead>
+        <TableHead>Forme</TableHead>
+        <TableHead>Commentaire</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Programme linéaire (LP)</TableCell>
+        <TableCell><MathInline>{"\\min c^\\top x"}</MathInline> s.c. <MathInline>{"Ax \\leq b"}</MathInline></TableCell>
+        <TableCell>Objectif et contraintes linéaires ; cas particulier convexe</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Programme quadratique (QP)</TableCell>
+        <TableCell><MathInline>{"\\min \\frac{1}{2} x^\\top P x + q^\\top x"}</MathInline> s.c. contraintes linéaires, <MathInline>{"P \\succeq 0"}</MathInline></TableCell>
+        <TableCell>OLS, ridge, Markowitz</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Programme conique (SOCP, SDP)</TableCell>
+        <TableCell>Contraintes sur normes ou matrices</TableCell>
+        <TableCell>Robustesse, contraintes de risque, finance avancée</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Minimisation sans contrainte</TableCell>
+        <TableCell><MathInline>{"\\min_x f(x)"}</MathInline> avec <MathInline>{"f"}</MathInline> convexe</TableCell>
+        <TableCell>Gradient descent, Newton</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Conditions d'optimalité
+
+<MdxCard title="Cas sans contrainte">
+Si <MathInline>{"f"}</MathInline> est convexe et différentiable, un point <MathInline>{"x^\\star"}</MathInline> est optimal si et seulement si :
+
+<MathBlock>{"\\nabla f(x^\\star) = 0"}</MathBlock>
+</MdxCard>
+
+<MdxCard title="Conditions KKT (contraintes)">
+Pour un problème convexe avec contraintes qualifiées, les conditions de Karush-Kuhn-Tucker sont **nécessaires et suffisantes** :
+
+<MathBlock>{"\\nabla f(x^\\star) + \\sum_i \\lambda_i \\nabla g_i(x^\\star) + \\sum_j \\mu_j \\nabla h_j(x^\\star) = 0"}</MathBlock>
+
+<MathBlock>{"g_i(x^\\star) \\leq 0,\\; h_j(x^\\star) = 0,\\; \\lambda_i \\geq 0,\\; \\lambda_i g_i(x^\\star) = 0"}</MathBlock>
+
+Les multiplicateurs <MathInline>{"\\lambda_i"}</MathInline> mesurent le **coût marginal** d'une contrainte : augmenter légèrement la marge d'une contrainte active déplace l'optimum d'environ <MathInline>{"\\lambda_i"}</MathInline>.
+</MdxCard>
+
+<MdxCard title="Multiplicateurs de Lagrange">
+Dans le cas égalité seule (<MathInline>{"h(x)=0"}</MathInline>), on forme le Lagrangien :
+
+<MathBlock>{"\\mathcal{L}(x, \\mu) = f(x) + \\mu^\\top h(x)"}</MathBlock>
+
+L'optimum vérifie <MathInline>{"\\nabla_x \\mathcal{L} = 0"}</MathInline> et <MathInline>{"h(x)=0"}</MathInline>. Avec des inégalités, les multiplicateurs de Lagrange généralisent cette idée via les KKT.
+</MdxCard>
+
+## Dualité
+
+<MdxCard>
+À tout problème convexe (primal) est associé un **problème dual**, souvent plus simple à optimiser ou à interpréter :
+
+- le dual fournit une **borne inférieure** sur l'optimum primal (faible dualité toujours vraie) ;
+- sous **dualité forte** (Slater, contraintes qualifiées), optimum primal = optimum dual ;
+- les multiplicateurs du dual sont les variables du problème dual.
+
+Exemple classique : en SVM, le dual transforme un problème contraint en maximisation sur des multiplicateurs <MathInline>{"\\alpha_i"}</MathInline>, avec une solution creuse (support vectors).
+</MdxCard>
+
+## Exemples
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Problème</TableHead>
+        <TableHead>Formulation convexe</TableHead>
+        <TableHead>Lien</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Moindres carrés (OLS)</TableCell>
+        <TableCell><MathInline>{"\\min_\\beta \\|y - X\\beta\\|_2^2"}</MathInline></TableCell>
+        <TableCell>[Régression linéaire](/knowledge/statistics/regression)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Ridge</TableCell>
+        <TableCell><MathInline>{"\\min_\\beta \\|y - X\\beta\\|_2^2 + \\lambda\\|\\beta\\|_2^2"}</MathInline></TableCell>
+        <TableCell>QP strictement convexe ; Hessienne régularisée</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Lasso</TableCell>
+        <TableCell><MathInline>{"\\min_\\beta \\|y - X\\beta\\|_2^2 + \\lambda\\|\\beta\\|_1"}</MathInline></TableCell>
+        <TableCell>Convexe mais non lisse ; sous-gradient ou prox</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Markowitz</TableCell>
+        <TableCell><MathInline>{"\\min_w w^\\top \\Sigma w"}</MathInline> s.c. <MathInline>{"\\mathbf{1}^\\top w = 1"}</MathInline></TableCell>
+        <TableCell>QP ; allocation mean-variance</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">SVM (marge soft)</TableCell>
+        <TableCell>Minimisation de hinge + pénalité sur les violations de marge</TableCell>
+        <TableCell>Convexe ; dualité et support vectors</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Algorithmes (aperçu)
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Méthode</TableHead>
+        <TableHead>Idée</TableHead>
+        <TableHead>Quand l'utiliser</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Gradient descent</TableCell>
+        <TableCell><MathInline>{"x_{k+1} = x_k - \\eta \\nabla f(x_k)"}</MathInline></TableCell>
+        <TableCell>Grande dimension, objectif lisse ; voir [Descente de gradient](/knowledge/mathematics/optimization/gradient-descent)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Newton / quasi-Newton</TableCell>
+        <TableCell>Utilise la courbure (<MathInline>{"\\nabla^2 f"}</MathInline> ou approximation BFGS)</TableCell>
+        <TableCell>Convergence rapide près de l'optimum ; coûteux en grande dimension</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Points intérieurs</TableCell>
+        <TableCell>Reste à l'intérieur du domaine, barrière sur les contraintes</TableCell>
+        <TableCell>LP, QP, SDP à grande échelle</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Proximal / ADMM</TableCell>
+        <TableCell>Sépare objectif lisse et terme non lisse ou contraintes</TableCell>
+        <TableCell>Lasso, contraintes structurées, problèmes distribués</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Applications
+
+<MdxCard>
+- **Statistiques** : MLE avec contraintes convexes, ridge/lasso, quantile regression (via reformulation LP).
+- **Machine learning** : SVM, régression logistique (convexe en <MathInline>{"\\beta"}</MathInline>), régularisation.
+- **Finance** : frontière efficiente, risk parity sous contraintes linéaires, optimisation robuste.
+- **Ingénierie** : allocation de ressources, contrôle optimal discret convexe, calibration sous contraintes.
+
+La page [Descente de gradient](/knowledge/mathematics/optimization/gradient-descent) détaille l'algorithme ; Newton et quasi-Newton restent à venir sur le hub [Optimisation](/knowledge/mathematics/optimization).
+</MdxCard>
+
+## Limites et pièges
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Situation</TableHead>
+        <TableHead>Problème</TableHead>
+        <TableHead>Conséquence</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Objectif non convexe</TableCell>
+        <TableCell>Réseaux de neurones, clustering</TableCell>
+        <TableCell>Minima locaux ; pas de garantie globale</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Contraintes non convexes</TableCell>
+        <TableCell>Cardinalité, variables binaires</TableCell>
+        <TableCell>NP-difficile en général ; relaxation convexe nécessaire</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Données mal conditionnées</TableCell>
+        <TableCell><MathInline>{"X^\\top X"}</MathInline> quasi singulier</TableCell>
+        <TableCell>Solution instable ; régularisation ou contraintes</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Confondre convexe et lisse</TableCell>
+        <TableCell><MathInline>{"\\|\\beta\\|_1"}</MathInline> est convexe mais non différentiable</TableCell>
+        <TableCell>Gradient classique insuffisant ; sous-gradient ou prox</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Dualité faible seulement</TableCell>
+        <TableCell>Gap primal-dual non nul</TableCell>
+        <TableCell>Le dual sous-estime l'optimum ; vérifier Slater / qualification</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Voir aussi
+
+<MdxCard>
+  <div className="space-y-2">
+    <p>• [Convexité](/knowledge/mathematics/analysis/convexity) — définitions et caractérisations</p>
+    <p>• [Dérivées, gradient et Hessienne](/knowledge/mathematics/analysis/derivatives-gradient-hessian) — outils différentiels et conditions du 1er ordre</p>
+    <p>• [Régression](/knowledge/statistics/regression) — OLS comme QP convexe</p>
+    <p>• [Descente de gradient](/knowledge/mathematics/optimization/gradient-descent) — algorithme de base et variantes</p>
+  </div>
+</MdxCard>

@@ -3,6 +3,45 @@ title: Optimisation
 description: Méthodes d'optimisation numérique et contraintes.
 ---
 
+import { MdxCard } from '@/components/mdx/MdxCard';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { Link } from '@/i18n/navigation';
+
 # Optimisation
 
-Ce contenu est en cours de rédaction.
+<MdxCard>
+L'**optimisation** regroupe les méthodes pour minimiser (ou maximiser) une fonction objectif, avec ou sans contraintes — fondement de la régression, du machine learning et de l'allocation de portefeuille.
+</MdxCard>
+
+## Pages détaillées
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Sujet</TableHead>
+      <TableHead>Contenu</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/mathematics/optimization/convex-optimization">Optimisation convexe</Link>
+      </TableCell>
+      <TableCell>Problèmes convexes, KKT, Lagrange, dualité, LP/QP</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link href="/knowledge/mathematics/optimization/gradient-descent">Descente de gradient</Link>
+      </TableCell>
+      <TableCell>GD, SGD, momentum, pas d'apprentissage, convergence</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+## À venir
+
+- Newton et quasi-Newton
+- Régularisation
+- Optimisation quadratique
+- Optimisation de portefeuille
+- Problèmes mal conditionnés
