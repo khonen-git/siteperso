@@ -25,8 +25,8 @@ npm test
 ## Known issues / debt
 
 1. **`next lint` is deprecated** — Next.js 16 will remove it. Prefer `npm run lint` (`eslint .`).
-2. **Prettier noise on Windows** — many historical files mix CRLF/LF; `endOfLine: auto` reduces false positives. Prefer saving as LF (EditorConfig). A full `eslint --fix` / format pass is needed before turning `eslint.ignoreDuringBuilds` off.
-3. **Major upgrades deferred** — ESLint 9 flat config, typescript-eslint 8, React 19, Next 16: do as a dedicated migration, not piecemeal.
+2. **Prettier / ESLint au build** — reporté : procédure dans [todo-later.md](./todo-later.md).
+3. **Major upgrades deferred** — idem [todo-later.md](./todo-later.md) (ESLint 9, React 19, Next 16).
 
 ## Unexpected runtime errors (content)
 

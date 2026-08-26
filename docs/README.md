@@ -9,6 +9,7 @@ Documentation technique du site (architecture, rendu, contenu).
 | [rendering-content-ssg.md](./rendering-content-ssg.md) | Rendu SSG Knowledge + Projects (HTML crawlable) |
 | [testing.md](./testing.md) | Suite Jest : organisation, pyramide, commandes |
 | [tooling.md](./tooling.md) | Lint, Prettier, ESLint, dette technique outils |
+| [todo-later.md](./todo-later.md) | Backlog reporté (ESLint au build, migrations, tests visualiseurs) |
 
 ## Conventions
 
