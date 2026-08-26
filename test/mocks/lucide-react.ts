@@ -19,3 +19,4 @@ export const ChevronDown = createIcon('chevron-down');
 export const ChevronRight = createIcon('chevron-right');
 export const Search = createIcon('search');
 export const X = createIcon('x');
+export const Menu = createIcon('menu');

@@ -10,7 +10,10 @@
     "projects": "Projets",
     "references": "Références",
     "activity": "Activité du site",
-    "contact": "Contact"
+    "contact": "Contact",
+    "menuTitle": "Menu",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
   },
   "footer": {
     "copyright": "© 2024 Théo Charron. Tous droits réservés."

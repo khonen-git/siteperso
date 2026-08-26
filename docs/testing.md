@@ -83,6 +83,8 @@ Config : [`jest.config.js`](../jest.config.js)
 - Rewrite `integration/layout`
 - Co-localisation complète de tous les tests hors `src/__tests__`
 - Menu mobile Header + drawer sidebar Knowledge (navigation sous `md` / `lg`)
+  - Header : `MobileNav` (sheet) — fait
+  - Knowledge sidebar drawer sous `lg` — reste à faire
 
 ## Rules
 

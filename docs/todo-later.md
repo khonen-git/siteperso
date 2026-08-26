@@ -58,10 +58,8 @@ Ne pas tenter de simuler tout ça en Jest/jsdom.
 
 ## 5. Navigation mobile (UI)
 
-Correctifs CSS partiels déjà faits (brand Header visible ; sidebars Knowledge masquées sous `lg`). Reste à faire :
-
-- menu / sheet pour la nav Header sous `md`
-- accès à la sidebar Knowledge sous `lg` (drawer ou équivalent)
+- ~~menu / sheet pour la nav Header sous `md`~~ (fait : `MobileNav`)
+- accès à la sidebar Knowledge sous `lg` (drawer ou équivalent) — reste à faire
 
 ## Références
 
