@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
@@ -15,6 +13,7 @@ import { InfoTooltip, InfoTooltipProvider } from '@/components/mdx/InfoTooltip';
 import { TermTip } from '@/components/mdx/TermTip';
 import { OptionPayoffVisualizer } from '@/components/mdx/OptionPayoffVisualizer';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { Link } from '@/i18n/navigation';
 
 function textFromNode(node: React.ReactNode): string {
   if (typeof node === 'string' || typeof node === 'number') return String(node);
@@ -33,20 +32,15 @@ function headingId(children: React.ReactNode): string {
     .replace(/-+/g, '-');
 }
 
-// Composants spécifiques aux projets
 export function TechnologiesSection({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="mt-6 grid gap-4 md:grid-cols-2">
-      {children}
-    </div>
-  );
+  return <div className="mt-6 grid gap-4 md:grid-cols-2">{children}</div>;
 }
 
-export function Technology({ 
-  name, 
-  description 
-}: { 
-  name: string; 
+export function Technology({
+  name,
+  description,
+}: {
+  name: string;
   description: string;
 }) {
   return (
@@ -60,74 +54,70 @@ export function Technology({
 }
 
 export function ProjectImages({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="mt-6 grid gap-8">
-      {children}
-    </div>
-  );
+  return <div className="mt-6 grid gap-8">{children}</div>;
 }
 
-export function ProjectImage({ 
-  url, 
-  caption 
-}: { 
-  url: string; 
-  caption: string;
-}) {
+export function ProjectImage({ url, caption }: { url: string; caption: string }) {
   return (
     <div className="space-y-2">
       <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg">
-        <Image
-          src={url}
-          alt={caption}
-          fill
-          className="object-cover"
-        />
+        <Image src={url} alt={caption} fill className="object-cover" />
       </div>
-      <p className="text-center text-sm text-muted-foreground">
-        {caption}
-      </p>
+      <p className="text-center text-sm text-muted-foreground">{caption}</p>
     </div>
   );
 }
 
-// Composants de base pour le MDX
 const baseComponents = {
   h1: ({ children }: { children: React.ReactNode }) => (
-    <h1 id={headingId(children)} className="mt-8 mb-4 text-3xl font-bold">{children}</h1>
+    <h1 id={headingId(children)} className="mt-8 mb-4 text-3xl font-bold">
+      {children}
+    </h1>
   ),
   h2: ({ children }: { children: React.ReactNode }) => (
-    <h2 id={headingId(children)} className="mt-8 mb-4 text-2xl font-bold">{children}</h2>
+    <h2 id={headingId(children)} className="mt-8 mb-4 text-2xl font-bold">
+      {children}
+    </h2>
   ),
   h3: ({ children }: { children: React.ReactNode }) => (
-    <h3 id={headingId(children)} className="mt-6 mb-3 text-xl font-bold">{children}</h3>
+    <h3 id={headingId(children)} className="mt-6 mb-3 text-xl font-bold">
+      {children}
+    </h3>
   ),
   p: ({ children }: { children: React.ReactNode }) => (
     <p className="mb-4 leading-relaxed">{children}</p>
   ),
   ul: ({ children }: { children: React.ReactNode }) => (
-    <ul className="mb-4 list-disc pl-5 space-y-2">{children}</ul>
+    <ul className="mb-4 list-disc space-y-2 pl-5">{children}</ul>
   ),
   ol: ({ children }: { children: React.ReactNode }) => (
-    <ol className="mb-4 list-decimal pl-5 space-y-2">{children}</ol>
+    <ol className="mb-4 list-decimal space-y-2 pl-5">{children}</ol>
   ),
   li: ({ children }: { children: React.ReactNode }) => (
     <li className="leading-relaxed">{children}</li>
   ),
   blockquote: ({ children }: { children: React.ReactNode }) => (
-    <blockquote className="mb-4 pl-4 border-l-4 border-primary/50 italic">{children}</blockquote>
+    <blockquote className="mb-4 border-l-4 border-primary/50 pl-4 italic">
+      {children}
+    </blockquote>
   ),
   a: ({ href, children }: { href?: string; children: React.ReactNode }) => (
-    <a href={href} className="text-primary underline hover:text-primary/80 transition-colors">{children}</a>
+    <a
+      href={href}
+      className="text-primary underline transition-colors hover:text-primary/80"
+    >
+      {children}
+    </a>
   ),
   hr: () => <hr className="my-6 border-gray-300 dark:border-gray-700" />,
   code: ({ children }: { children: React.ReactNode }) => (
-    <code className="px-1.5 py-0.5 rounded bg-muted font-mono text-sm">{children}</code>
+    <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-sm">{children}</code>
   ),
   pre: ({ children }: { children: React.ReactNode }) => (
-    <pre className="mb-4 p-4 rounded bg-muted/70 font-mono text-sm overflow-x-auto">{children}</pre>
+    <pre className="mb-4 overflow-x-auto rounded bg-muted/70 p-4 font-mono text-sm">
+      {children}
+    </pre>
   ),
-  // Composants de table
   table: ({ children }: { children: React.ReactNode }) => (
     <div className="mb-4 overflow-x-auto">
       <Table>{children}</Table>
@@ -150,15 +140,13 @@ const baseComponents = {
   ),
 };
 
-// Composants spécifiques au MDX
 const MDXComponents = {
   ...baseComponents,
-  // Composants de projet
+  Link,
   TechnologiesSection,
   Technology,
   ProjectImages,
   ProjectImage,
-  // Composants de knowledge
   MathBlock,
   MathInline,
   CodeBlock,
@@ -172,7 +160,6 @@ const MDXComponents = {
   InfoTooltipProvider,
   TermTip,
   OptionPayoffVisualizer,
-  // Composants UI
   Table,
   TableHeader,
   TableBody,

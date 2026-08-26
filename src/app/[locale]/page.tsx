@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { HeroSection } from '@/components/sections/HeroSection';
-import { LatestUpdates } from '@/components/sections/LatestUpdates';
 import { RecentProjects } from '@/components/sections/RecentProjects';
+import { getProjects } from '@/lib/projects/content';
 import { routing } from '@/i18n/routing';
 import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
@@ -21,6 +21,7 @@ export default async function Home({ params }: HomePageProps): Promise<React.JSX
   setRequestLocale(locale);
 
   const t = await getTranslations('home');
+  const recentProjects = getProjects(locale).slice(0, 3);
 
   return (
     <>
@@ -29,8 +30,7 @@ export default async function Home({ params }: HomePageProps): Promise<React.JSX
         subtitle={t('hero.subtitle')}
         description={t('hero.description')}
       />
-      {/* <LatestUpdates /> */}
-      <RecentProjects />
+      <RecentProjects projects={recentProjects} />
     </>
   );
 }

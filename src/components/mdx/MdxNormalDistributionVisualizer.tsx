@@ -1,3 +1,5 @@
+'use client';
+
 import type { JSX } from 'react';
 import { MdxDistributionVisualizer } from '@/components/mdx/MdxDistributionVisualizer';
 import { normalDistribution } from '@/lib/distributions/normal';

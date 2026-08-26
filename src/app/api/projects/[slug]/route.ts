@@ -1,11 +1,7 @@
-import fs from 'fs';
-import matter from 'gray-matter';
-import { serialize } from 'next-mdx-remote/serialize';
-import remarkGfm from 'remark-gfm';
 import { NextRequest, NextResponse } from 'next/server';
 import { hasLocale } from 'next-intl';
 import { routing } from '@/i18n/routing';
-import { resolveProjectFilePath } from '@/lib/projects/content';
+import { getProject, serializeProjectSource } from '@/lib/projects/content';
 
 function resolveLocale(searchParams: URLSearchParams): string {
   const requested = searchParams.get('locale');
@@ -22,27 +18,29 @@ export async function GET(
   const locale = resolveLocale(request.nextUrl.searchParams);
 
   try {
-    const fullPath = resolveProjectFilePath(locale, slug);
+    const projectData = getProject(locale, slug);
 
-    if (!fullPath) {
+    if (!projectData) {
       return NextResponse.json({ error: 'Projet non trouvé' }, { status: 404 });
     }
 
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const { data, content } = matter(fileContents);
+    const frontmatter = {
+      id: projectData.project.id,
+      title: projectData.project.title,
+      description: projectData.project.description,
+      image: projectData.project.image,
+      date: projectData.project.date,
+      category: projectData.project.category,
+      tags: projectData.project.tags,
+      visible: projectData.project.visible,
+    };
 
-    const mdxSource = await serialize(content, {
-      mdxOptions: {
-        remarkPlugins: [remarkGfm],
-        rehypePlugins: [],
-      },
-      scope: data,
-    });
+    const content = await serializeProjectSource(projectData.source, frontmatter);
 
     return NextResponse.json({
       slug,
-      frontmatter: data,
-      content: mdxSource,
+      frontmatter,
+      content,
     });
   } catch (error) {
     console.error(`Erreur lors du chargement du projet ${slug}:`, error);

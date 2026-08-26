@@ -1,9 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import { MDXRemote } from 'next-mdx-remote';
-import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
-import MDXComponents from '@/components/mdx/MDXComponents';
 import { NotaBene } from '@/components/mdx/NotaBene';
 import { KnowledgeMdxProvider } from '@/components/mdx/KnowledgeMdxContext';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -13,40 +10,24 @@ import {
 } from '@/lib/knowledge/ai-content-notice';
 
 interface KnowledgeMdxRendererProps {
-  source: MDXRemoteSerializeResult;
   locale: string;
   slug: string[];
+  children: React.ReactNode;
 }
 
 export function KnowledgeMdxRenderer({
-  source,
   locale,
   slug,
+  children,
 }: KnowledgeMdxRendererProps): React.JSX.Element {
   const showAiNotice = isDesignPatternsArticle(slug);
   const aiNotice = getAiContentNotice(locale);
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <article className="prose prose-gray prose-h1:mt-2 dark:prose-invert max-w-none">
-        {showAiNotice ? <NotaBene>{aiNotice}</NotaBene> : null}
-        <p className="text-muted-foreground text-sm">Chargement du contenu…</p>
-      </article>
-    );
-  }
 
   return (
     <article className="prose prose-gray prose-h1:mt-2 dark:prose-invert max-w-none">
       {showAiNotice ? <NotaBene>{aiNotice}</NotaBene> : null}
       <KnowledgeMdxProvider locale={locale}>
-        <TooltipProvider delayDuration={200}>
-          <MDXRemote {...source} components={MDXComponents} />
-        </TooltipProvider>
+        <TooltipProvider delayDuration={200}>{children}</TooltipProvider>
       </KnowledgeMdxProvider>
     </article>
   );

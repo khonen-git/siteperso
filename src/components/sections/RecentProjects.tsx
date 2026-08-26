@@ -8,7 +8,7 @@ import { Link } from '@/i18n/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ArrowUpRight } from 'lucide-react';
-import { useRecentProjects } from '@/components/features/projects/hooks/useRecentProjects';
+import type { Project } from '@/types/project';
 
 const container = {
   hidden: { opacity: 0 },
@@ -25,21 +25,12 @@ const item = {
   show: { opacity: 1, y: 0 },
 };
 
-export function RecentProjects(): React.JSX.Element {
-  const t = useTranslations('projects.recent');
-  const { projects, loading } = useRecentProjects(3);
+interface RecentProjectsProps {
+  projects: Project[];
+}
 
-  if (loading) {
-    return (
-      <section className="relative overflow-hidden bg-secondary/5 py-20">
-        <div className="container relative">
-          <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
-            <div className="animate-pulse text-lg">{t('loading')}</div>
-          </div>
-        </div>
-      </section>
-    );
-  }
+export function RecentProjects({ projects }: RecentProjectsProps): React.JSX.Element {
+  const t = useTranslations('projects.recent');
 
   if (projects.length === 0) {
     return (

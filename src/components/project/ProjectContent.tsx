@@ -6,14 +6,12 @@ import { Link } from '@/i18n/navigation';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { MDXRemote } from 'next-mdx-remote';
-import MDXComponents from '@/components/mdx/MDXComponents';
 
 interface ProjectContentProps {
-  content: Parameters<typeof MDXRemote>[0];
+  children: React.ReactNode;
 }
 
-export function ProjectContent({ content }: ProjectContentProps) {
+export function ProjectContent({ children }: ProjectContentProps) {
   const t = useTranslations('projects.detail');
 
   return (
@@ -25,7 +23,7 @@ export function ProjectContent({ content }: ProjectContentProps) {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="prose prose-lg dark:prose-invert"
         >
-          <MDXRemote {...content} components={MDXComponents} />
+          {children}
         </motion.div>
 
         <motion.div

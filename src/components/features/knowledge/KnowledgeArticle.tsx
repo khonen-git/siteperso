@@ -1,11 +1,12 @@
 import * as React from 'react';
 import fs from 'fs';
 import matter from 'gray-matter';
-import { serialize } from 'next-mdx-remote/serialize';
+import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import { KnowledgeLayout } from '@/components/layouts/KnowledgeLayout';
 import NotFoundKnowledge from '@/components/features/knowledge/NotFoundKnowledge';
 import { KnowledgeMdxRenderer } from '@/components/features/knowledge/KnowledgeMdxRenderer';
+import MDXComponents from '@/components/mdx/MDXComponents';
 import { resolveKnowledgeFilePath } from '@/lib/knowledge/content';
 
 interface KnowledgeArticleProps {
@@ -27,17 +28,20 @@ export async function KnowledgeArticle({
     const raw = fs.readFileSync(filePath, 'utf8');
     const { content } = matter(raw);
 
-    const mdxSource = await serialize(content, {
-      mdxOptions: {
-        remarkPlugins: [remarkGfm],
-        rehypePlugins: [],
-        format: 'mdx',
-      },
-    });
-
     return (
       <KnowledgeLayout>
-        <KnowledgeMdxRenderer source={mdxSource} locale={locale} slug={slug} />
+        <KnowledgeMdxRenderer locale={locale} slug={slug}>
+          <MDXRemote
+            source={content}
+            components={MDXComponents}
+            options={{
+              mdxOptions: {
+                remarkPlugins: [remarkGfm],
+                format: 'mdx',
+              },
+            }}
+          />
+        </KnowledgeMdxRenderer>
       </KnowledgeLayout>
     );
   } catch (error) {

@@ -2,12 +2,20 @@ import { setRequestLocale } from 'next-intl/server';
 import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { KnowledgeArticle } from '@/components/features/knowledge/KnowledgeArticle';
+import { listKnowledgeSlugs } from '@/lib/knowledge/content';
 import { routing } from '@/i18n/routing';
-
-export const dynamic = 'force-dynamic';
 
 interface KnowledgePageProps {
   params: Promise<{ locale: string; slug: string[] }>;
+}
+
+export function generateStaticParams() {
+  return routing.locales.flatMap((locale) =>
+    listKnowledgeSlugs(locale).map((slug) => ({
+      locale,
+      slug,
+    }))
+  );
 }
 
 export default async function KnowledgePage({ params }: KnowledgePageProps) {

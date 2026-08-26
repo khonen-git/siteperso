@@ -1,33 +1,58 @@
-'use client';
-
-import React from 'react';
-import { useParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { useProjectDetail } from '@/components/features/projects/detail/hooks/useProjectDetail';
-import { LoadingState } from '@/components/ui/feedback/LoadingState';
-import { EmptyState as ErrorState } from '@/components/ui/feedback/EmptyState';
+import { setRequestLocale } from 'next-intl/server';
+import { hasLocale } from 'next-intl';
+import { notFound } from 'next/navigation';
+import { MDXRemote } from 'next-mdx-remote/rsc';
+import remarkGfm from 'remark-gfm';
 import ProjectHero from '@/components/project/ProjectHero';
 import ProjectContent from '@/components/project/ProjectContent';
+import MDXComponents from '@/components/mdx/MDXComponents';
+import { getProject, listProjectFileNames } from '@/lib/projects/content';
+import { routing } from '@/i18n/routing';
 
-export default function ProjectPage(): React.JSX.Element {
-  const { slug } = useParams() as { slug: string };
-  const t = useTranslations('projects.errors');
-  const { project, content, loading, error, isNotFound } = useProjectDetail(slug);
+interface ProjectPageProps {
+  params: Promise<{ locale: string; slug: string }>;
+}
 
-  if (loading) {
-    return <LoadingState />;
+export function generateStaticParams() {
+  return routing.locales.flatMap((locale) =>
+    listProjectFileNames(locale).map((fileName) => ({
+      locale,
+      slug: fileName.replace(/\.mdx$/, ''),
+    }))
+  );
+}
+
+export default async function ProjectPage({
+  params,
+}: ProjectPageProps): Promise<React.JSX.Element> {
+  const { locale, slug } = await params;
+
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
   }
 
-  if (error || isNotFound) {
-    return (
-      <ErrorState message={error?.message || t('notFound')} />
-    );
+  setRequestLocale(locale);
+
+  const projectData = getProject(locale, slug);
+
+  if (!projectData) {
+    notFound();
   }
 
   return (
     <div className="min-h-screen bg-background">
-      <ProjectHero project={project!} />
-      <ProjectContent content={content!} />
+      <ProjectHero project={projectData.project} />
+      <ProjectContent>
+        <MDXRemote
+          source={projectData.source}
+          components={MDXComponents}
+          options={{
+            mdxOptions: {
+              remarkPlugins: [remarkGfm],
+            },
+          }}
+        />
+      </ProjectContent>
     </div>
   );
 }
