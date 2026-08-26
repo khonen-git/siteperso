@@ -1,9 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { serialize } from 'next-mdx-remote/serialize';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
-import remarkGfm from 'remark-gfm';
 import { routing } from '@/i18n/routing';
 import { isValidProjectFrontmatter } from '@/lib/projects/validation';
 import type { Project, ProjectDetail } from '@/types/project';
@@ -161,6 +159,9 @@ export async function serializeProjectSource(
   source: string,
   frontmatter: Record<string, unknown>
 ): Promise<MDXRemoteSerializeResult> {
+  const { serialize } = await import('next-mdx-remote/serialize');
+  const remarkGfm = (await import('remark-gfm')).default;
+
   return serialize(source, {
     mdxOptions: {
       remarkPlugins: [remarkGfm],

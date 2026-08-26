@@ -19,6 +19,10 @@ jest.mock('@/i18n/navigation', () => ({
   ),
 }));
 
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+}));
+
 describe('TreeView', () => {
   it('renders tree items correctly', () => {
     render(<TreeView items={mockItems} />);
@@ -28,12 +32,16 @@ describe('TreeView', () => {
   it('expands/collapses on click', () => {
     render(<TreeView items={mockItems} />);
     const button = screen.getByRole('button');
-    
-    fireEvent.click(button);
+    const parentGroup = screen.getAllByRole('group')[0];
+
+    expect(parentGroup).not.toHaveClass('hidden');
     expect(screen.getByText('Child 1')).toBeInTheDocument();
-    
+
     fireEvent.click(button);
-    expect(screen.queryByText('Child 1')).not.toBeVisible();
+    expect(parentGroup).toHaveClass('hidden');
+
+    fireEvent.click(button);
+    expect(parentGroup).not.toHaveClass('hidden');
   });
 
   it('highlights active item', () => {

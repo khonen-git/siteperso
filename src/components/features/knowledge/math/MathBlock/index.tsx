@@ -4,24 +4,27 @@ import { InlineMath, BlockMath } from 'react-katex';
 import { cn } from '@/lib/utils';
 import type { MathProps } from '../../types';
 
-/**
- * MathBlock - Composant pour le rendu des formules mathématiques en bloc
- */
-export function MathBlock({ children, className }: MathProps) {
+function throwKatexError(error: Error): never {
+  throw error;
+}
+
+/** Block math — invalid TeX raises instead of rendering a silent error. */
+export function MathBlock({ children, className }: MathProps): React.JSX.Element {
   return (
-    <div className={cn("my-4", className)}>
-      <BlockMath math={children} />
+    <div className={cn('my-4', className)}>
+      <BlockMath math={children} renderError={throwKatexError} />
     </div>
   );
 }
 
-/**
- * MathInline - Composant pour le rendu des formules mathématiques en ligne
- */
-export function MathInline({ children, className }: MathProps) {
+/** Inline math — invalid TeX raises instead of rendering a silent error. */
+export function MathInline({
+  children,
+  className,
+}: MathProps): React.JSX.Element {
   return (
     <span className={className}>
-      <InlineMath math={children} />
+      <InlineMath math={children} renderError={throwKatexError} />
     </span>
   );
 }

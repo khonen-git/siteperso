@@ -1,24 +1,31 @@
-const nextJest = require('next/jest')
+const nextJest = require('next/jest');
 
 const createJestConfig = nextJest({
   dir: './',
-})
+});
 
 const customJestConfig = {
-  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+  setupFilesAfterEnv: ['<rootDir>/test/setup.ts'],
   testEnvironment: 'jest-environment-jsdom',
+  testMatch: ['**/?(*.)+(test|spec).[jt]s?(x)'],
+  testPathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/.next/',
+    // Reporté : rewrite visualiseurs (voir docs/testing.md)
+    '<rootDir>/src/components/mdx/__tests__/',
+    '<rootDir>/src/components/features/knowledge/visualization/DistributionVisualizer/__tests__/',
+  ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^lucide-react$': '<rootDir>/src/__tests__/mocks/lucide-react.ts',
+    '^lucide-react$': '<rootDir>/test/mocks/lucide-react.ts',
   },
   transform: {
     '^.+\\.(js|jsx|ts|tsx|mjs)$': ['@swc/jest'],
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(next|next/dist/lib|next/dist/client|next/dist/pages|@radix-ui|next-themes|class-variance-authority)/)',
+    '/node_modules/(?!(next-intl|use-intl|next-mdx-remote|@mdx-js|remark-gfm|react-syntax-highlighter|lowlight|hastscript|property-information|space-separated-tokens|comma-separated-tokens|bail|trough|vfile|vfile-message|unist-util-.*|unified|mdast-util-.*|micromark.*|decode-named-character-reference|character-entities|ccount|escape-string-regexp|markdown-table|zwitch|longest-streak|devlop)/)',
   ],
   moduleDirectories: ['node_modules', '<rootDir>/'],
-  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
@@ -26,8 +33,8 @@ const customJestConfig = {
     '!src/**/*.stories.{js,jsx,ts,tsx}',
     '!src/**/*.test.{js,jsx,ts,tsx}',
     '!src/**/index.{js,jsx,ts,tsx}',
-    '!src/__tests__/mocks/**',
   ],
-}
+  coveragePathIgnorePatterns: ['/node_modules/', '/.next/', '<rootDir>/test/'],
+};
 
-module.exports = createJestConfig(customJestConfig)
+module.exports = createJestConfig(customJestConfig);

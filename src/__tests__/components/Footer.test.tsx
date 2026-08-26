@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { render, screen } from '@/__tests__/utils/test-utils';
-import { setViewportSize, VIEWPORT_SIZES } from '@/__tests__/utils/responsive-utils';
+import { render, screen } from '../../../test/utils/render';
+import { setViewportSize, VIEWPORT_SIZES } from '../../../test/utils/responsive';
 import Footer from '@/components/layout/Footer';
 
 jest.mock('next-intl/server', () => ({

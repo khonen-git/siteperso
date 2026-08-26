@@ -1,58 +1,58 @@
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MdxDistributionVisualizer } from '../MdxDistributionVisualizer';
 import { normalDistribution } from '@/lib/distributions/normal';
 
-// Mock des composants enfants
 jest.mock('@/components/features/knowledge/visualization/DistributionVisualizer', () => ({
-  DistributionVisualizer: jest.fn(() => <div data-testid="distribution-visualizer" />)
+  DistributionVisualizer: jest.fn(() => <div data-testid="distribution-visualizer" />),
 }));
 
 jest.mock('@/components/features/knowledge/visualization/PresetManager', () => ({
-  PresetManager: jest.fn(() => <div data-testid="preset-manager" />)
+  PresetManager: jest.fn(() => <div data-testid="preset-manager" />),
 }));
 
 describe('MdxDistributionVisualizer', () => {
-  it('rend correctement le visualisateur', () => {
+  it('renders the visualizer', () => {
     render(<MdxDistributionVisualizer distribution={normalDistribution} />);
     expect(screen.getByTestId('distribution-visualizer')).toBeInTheDocument();
   });
 
-  it('ne montre pas les presets par défaut', () => {
+  it('hides presets by default', () => {
     render(<MdxDistributionVisualizer distribution={normalDistribution} />);
     expect(screen.queryByTestId('preset-manager')).not.toBeInTheDocument();
   });
 
-  it('montre les presets quand showPresets est true', () => {
+  it('shows presets when showPresets is true', () => {
     render(
-      <MdxDistributionVisualizer 
-        distribution={normalDistribution} 
-        showPresets={true} 
+      <MdxDistributionVisualizer
+        distribution={normalDistribution}
+        showPresets={true}
       />
     );
     expect(screen.getByTestId('preset-manager')).toBeInTheDocument();
   });
 
-  it('applique les styles de base correctement', () => {
+  it('applies base wrapper classes', () => {
     const { container } = render(
       <MdxDistributionVisualizer distribution={normalDistribution} />
     );
-    
+
     const wrapper = container.firstChild as HTMLElement;
     expect(wrapper).toHaveClass('my-8', 'space-y-6');
   });
 
-  it('applique les styles du conteneur de presets correctement', () => {
+  it('applies preset container classes', () => {
     render(
-      <MdxDistributionVisualizer 
-        distribution={normalDistribution} 
-        showPresets={true} 
+      <MdxDistributionVisualizer
+        distribution={normalDistribution}
+        showPresets={true}
       />
     );
-    
-    const presetContainer = screen.getByRole('heading', { 
-      name: /presets/i 
+
+    const presetContainer = screen.getByRole('heading', {
+      name: /presets/i,
     }).parentElement;
-    
+
     expect(presetContainer).toHaveClass(
       'mt-4',
       'p-4',
@@ -63,46 +63,44 @@ describe('MdxDistributionVisualizer', () => {
   });
 
   describe('Hydration', () => {
-    it('maintient l\'état entre les re-rendus', () => {
+    it('keeps state across rerenders', () => {
       const { rerender } = render(
         <MdxDistributionVisualizer distribution={normalDistribution} />
       );
 
-      // Premier rendu
       expect(screen.getByTestId('distribution-visualizer')).toBeInTheDocument();
 
-      // Re-rendu
       rerender(<MdxDistributionVisualizer distribution={normalDistribution} />);
       expect(screen.getByTestId('distribution-visualizer')).toBeInTheDocument();
     });
   });
 
   describe('Performance', () => {
-    it('se charge rapidement', () => {
+    it('renders quickly', () => {
       const start = performance.now();
-      
+
       render(<MdxDistributionVisualizer distribution={normalDistribution} />);
-      
+
       const end = performance.now();
-      expect(end - start).toBeLessThan(100); // Moins de 100ms pour le rendu initial
+      expect(end - start).toBeLessThan(100);
     });
 
-    it('gère efficacement les mises à jour', () => {
+    it('handles updates efficiently', () => {
       const { rerender } = render(
         <MdxDistributionVisualizer distribution={normalDistribution} />
       );
 
       const start = performance.now();
-      
+
       rerender(
-        <MdxDistributionVisualizer 
-          distribution={normalDistribution} 
-          showPresets={true} 
+        <MdxDistributionVisualizer
+          distribution={normalDistribution}
+          showPresets={true}
         />
       );
-      
+
       const end = performance.now();
-      expect(end - start).toBeLessThan(50); // Moins de 50ms pour les mises à jour
+      expect(end - start).toBeLessThan(50);
     });
   });
-}); 
+});

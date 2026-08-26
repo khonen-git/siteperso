@@ -3,62 +3,47 @@ import { useDistributionCalculator } from '../useDistributionCalculator';
 import { normalDistribution } from '@/lib/distributions/normal';
 
 describe('useDistributionCalculator', () => {
-  const createCurves = (count: number) => Array.from({ length: count }, (_, i) => ({
-    id: String(i + 1),
-    parameters: { mu: 0, sigma: 1 },
-    color: '#000000'
-  }));
+  const params = { mu: 0, sigma: 1 };
 
-  it('calculates points efficiently', () => {
-    const start = performance.now();
-    
-    const { result } = renderHook(() => useDistributionCalculator(
-      normalDistribution,
-      createCurves(1),
-      'pdf'
-    ));
-    
-    const end = performance.now();
-    expect(end - start).toBeLessThan(100); // Moins de 100ms pour le calcul initial
-    expect(result.current.data.length).toBe(200); // 200 points par défaut
+  it('computes xValues and yValues for a pdf', () => {
+    const { result } = renderHook(() =>
+      useDistributionCalculator(normalDistribution, params, 'pdf')
+    );
+
+    expect(result.current.xValues).toHaveLength(200);
+    expect(result.current.yValues).toHaveLength(200);
+
+    let closestIndex = 0;
+    let closestAbs = Math.abs(result.current.xValues[0]);
+    result.current.xValues.forEach((x, i) => {
+      const abs = Math.abs(x);
+      if (abs < closestAbs) {
+        closestAbs = abs;
+        closestIndex = i;
+      }
+    });
+
+    expect(closestAbs).toBeLessThan(0.05);
+    expect(result.current.yValues[closestIndex]).toBeCloseTo(0.399, 2);
   });
 
-  it('handles multiple curves efficiently', () => {
-    const start = performance.now();
-    
-    const { result } = renderHook(() => useDistributionCalculator(
-      normalDistribution,
-      createCurves(5),
-      'pdf'
-    ));
-    
-    const end = performance.now();
-    expect(end - start).toBeLessThan(200); // Moins de 200ms pour 5 courbes
-    expect(result.current.data[0]).toHaveProperty('1');
-    expect(result.current.data[0]).toHaveProperty('5');
+  it('computes an increasing cdf', () => {
+    const { result } = renderHook(() =>
+      useDistributionCalculator(normalDistribution, params, 'cdf')
+    );
+
+    const first = result.current.yValues[0];
+    const last = result.current.yValues[result.current.yValues.length - 1];
+    expect(last).toBeGreaterThan(first);
   });
 
-  it('calculates correct values', () => {
-    const { result } = renderHook(() => useDistributionCalculator(
-      normalDistribution,
-      createCurves(1),
-      'pdf'
-    ));
+  it('memoizes the result across rerenders', () => {
+    const { result, rerender } = renderHook(() =>
+      useDistributionCalculator(normalDistribution, params, 'pdf')
+    );
 
-    // Vérifier la valeur au point x = 0 (doit être ≈ 0.399 pour une normale standard)
-    const centerPoint = result.current.data.find(point => Math.abs(point.x) < 0.01);
-    expect(centerPoint?.['1']).toBeCloseTo(0.399, 3);
-  });
-
-  it('memoizes calculations correctly', () => {
-    const { result, rerender } = renderHook(() => useDistributionCalculator(
-      normalDistribution,
-      createCurves(1),
-      'pdf'
-    ));
-
-    const firstResult = result.current;
+    const first = result.current;
     rerender();
-    expect(result.current).toBe(firstResult); // Même référence grâce à useMemo
+    expect(result.current).toBe(first);
   });
-}); 
+});

@@ -1,24 +1,3 @@
-import { MDXRemoteSerializeResult } from 'next-mdx-remote';
-
-export interface ProjectMeta {
-  title: string;
-  description: string;
-  category: string;
-  tags: string[];
-  image: string;
-  link: string;
-  date: string;
-  status: 'completed' | 'in-progress' | 'planned';
-}
-
-
-
-export interface ProjectContent {
-  meta: ProjectMeta;
-  content: MDXRemoteSerializeResult;
-}
-
-// Types des composants
 import type { Project } from '@/types/project';
 
 export interface ProjectCardProps {
@@ -26,12 +5,10 @@ export interface ProjectCardProps {
   className?: string;
 }
 
-export interface ProjectContentProps {
-  content: MDXRemoteSerializeResult;
-  meta: ProjectMeta;
+export interface NotFoundProjectProps {
+  className?: string;
 }
 
-// Types pour les animations
 export interface ProjectAnimationConfig {
   initial: {
     opacity: number;

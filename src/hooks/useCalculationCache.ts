@@ -16,7 +16,17 @@ export function useCalculationCache<T>(options: CacheOptions = {}) {
   const cacheRef = useRef<Map<string, CacheEntry<T>>>(new Map());
 
   const generateKey = useCallback((params: unknown) => {
-    return JSON.stringify(params);
+    return JSON.stringify(params, (_, value) => {
+      if (value && typeof value === 'object' && !Array.isArray(value)) {
+        return Object.keys(value as Record<string, unknown>)
+          .sort()
+          .reduce<Record<string, unknown>>((acc, key) => {
+            acc[key] = (value as Record<string, unknown>)[key];
+            return acc;
+          }, {});
+      }
+      return value;
+    });
   }, []);
 
   const get = useCallback((key: string): T | undefined => {
