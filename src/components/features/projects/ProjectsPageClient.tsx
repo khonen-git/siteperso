@@ -58,7 +58,7 @@ export function ProjectsPageClient({
         <ProjectsHeader title={t('header.title')} description={t('header.description')} />
 
         <div className="mt-12 space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid min-w-0 gap-4 md:grid-cols-2 lg:grid-cols-4">
             <SearchBar
               value={searchQuery}
               onChange={setSearchQuery}

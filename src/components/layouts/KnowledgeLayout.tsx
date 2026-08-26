@@ -32,13 +32,13 @@ export function KnowledgeLayout({ children, toc = true }: KnowledgeLayoutProps):
 
   return (
     <div className="flex h-[calc(100vh-3.5rem)] overflow-hidden">
-      <aside className="w-64 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <aside className="hidden w-64 shrink-0 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 lg:block">
         <ScrollArea className="h-full">
           <KnowledgeSidebar />
         </ScrollArea>
       </aside>
 
-      <div className="flex min-h-0 flex-1 flex-col">
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col">
         <ProgressBar progress={scrollProgress} />
 
         <div className="flex min-h-0 flex-1 flex-col xl:flex-row">
@@ -46,16 +46,16 @@ export function KnowledgeLayout({ children, toc = true }: KnowledgeLayoutProps):
             data-knowledge-content
             ref={contentRef}
             onScroll={handleContentScroll}
-            className="flex-1 overflow-y-auto px-8 py-6"
+            className="min-w-0 flex-1 overflow-y-auto px-4 py-6 sm:px-8"
           >
             {children}
           </main>
 
           {toc && (
-            <aside className="hidden xl:block w-64 border-l bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-              <ScrollArea className="h-full py-6 px-4">
+            <aside className="hidden w-64 shrink-0 border-l bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 xl:block">
+              <ScrollArea className="h-full px-4 py-6">
                 <div className="space-y-4">
-                  <h3 className="font-semibold text-sm">{t('tocTitle')}</h3>
+                  <h3 className="text-sm font-semibold">{t('tocTitle')}</h3>
                   <TableOfContents className="text-sm" />
                 </div>
               </ScrollArea>

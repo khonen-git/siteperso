@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '../../../test/utils/render';
-import { setViewportSize, VIEWPORT_SIZES } from '../../../test/utils/responsive';
+import { setViewportSize, VIEWPORTS } from '../../../test/utils/responsive';
 import Footer from '@/components/layout/Footer';
 
 jest.mock('next-intl/server', () => ({
@@ -38,7 +38,7 @@ describe('Footer', () => {
   });
 
   it('adapts layout on mobile screens', async () => {
-    setViewportSize(VIEWPORT_SIZES.mobile.width, VIEWPORT_SIZES.mobile.height);
+    setViewportSize(VIEWPORTS.mobile.width, VIEWPORTS.mobile.height);
     await renderFooter();
 
     const container = document.querySelector('.container');

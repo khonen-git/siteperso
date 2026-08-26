@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '../../../test/utils/render';
-import { setViewportSize, VIEWPORT_SIZES } from '../../../test/utils/responsive';
+import { setViewportSize, VIEWPORTS } from '../../../test/utils/responsive';
 import Header from '@/components/layout/Header';
 
 jest.mock('@/components/theme/ThemeToggle', () => ({
@@ -44,7 +44,7 @@ jest.mock('next-intl/server', () => ({
 
 describe('Header', () => {
   it('renders the logo and navigation links on desktop', async () => {
-    setViewportSize(VIEWPORT_SIZES.desktop.width, VIEWPORT_SIZES.desktop.height);
+    setViewportSize(VIEWPORTS.desktop.width, VIEWPORTS.desktop.height);
     const ui = await Header();
     render(ui);
 
@@ -55,22 +55,23 @@ describe('Header', () => {
     expect(screen.getByText('Contact')).toBeInTheDocument();
   });
 
-  it('hides navigation container on mobile', async () => {
-    setViewportSize(VIEWPORT_SIZES.mobile.width, VIEWPORT_SIZES.mobile.height);
+  it('shows the brand on mobile while keeping nav behind md:flex', async () => {
+    setViewportSize(VIEWPORTS.mobile.width, VIEWPORTS.mobile.height);
     const ui = await Header();
     render(ui);
 
-    const navContainer = document.querySelector('.mr-4');
-    expect(navContainer).toHaveClass('hidden', 'md:flex');
+    expect(screen.getByText('Théo Charron')).toBeInTheDocument();
+    const nav = document.querySelector('nav');
+    expect(nav).toHaveClass('hidden', 'md:flex');
   });
 
   it('shows theme toggle on all screen sizes', async () => {
-    setViewportSize(VIEWPORT_SIZES.mobile.width, VIEWPORT_SIZES.mobile.height);
+    setViewportSize(VIEWPORTS.mobile.width, VIEWPORTS.mobile.height);
     const ui = await Header();
     render(ui);
     expect(screen.getByText('Theme Toggle')).toBeInTheDocument();
 
-    setViewportSize(VIEWPORT_SIZES.desktop.width, VIEWPORT_SIZES.desktop.height);
+    setViewportSize(VIEWPORTS.desktop.width, VIEWPORTS.desktop.height);
     expect(screen.getByText('Theme Toggle')).toBeInTheDocument();
   });
 });
