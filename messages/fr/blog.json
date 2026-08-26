@@ -1,0 +1,14 @@
+{
+  "header": {
+    "title": "Blog & Recherche",
+    "description": "Notes de réflexion et comptes rendus de recherche — encore surtout des modèles pour démarrer."
+  },
+  "kinds": {
+    "thought": "Réflexion",
+    "research": "Recherche"
+  },
+  "empty": "Aucun article pour le moment.",
+  "detail": {
+    "backToList": "Retour au blog"
+  }
+}

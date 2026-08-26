@@ -34,6 +34,7 @@ jest.mock('next-intl/server', () => ({
       'nav.about': 'À propos',
       'nav.knowledge': 'Connaissances',
       'nav.projects': 'Projets',
+      'nav.blog': 'Blog & Recherche',
       'nav.references': 'Références',
       'nav.activity': 'Activité du site',
       'nav.contact': 'Contact',
@@ -55,6 +56,7 @@ describe('Header', () => {
     expect(screen.getByText('À propos')).toBeInTheDocument();
     expect(screen.getByText('Connaissances')).toBeInTheDocument();
     expect(screen.getByText('Projets')).toBeInTheDocument();
+    expect(screen.getByText('Blog & Recherche')).toBeInTheDocument();
     expect(screen.getByText('Contact')).toBeInTheDocument();
   });
 

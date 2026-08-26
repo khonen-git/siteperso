@@ -1,0 +1,14 @@
+{
+  "header": {
+    "title": "Blog & Research",
+    "description": "Thought notes and research write-ups — mostly templates for now."
+  },
+  "kinds": {
+    "thought": "Thought",
+    "research": "Research"
+  },
+  "empty": "No posts yet.",
+  "detail": {
+    "backToList": "Back to blog"
+  }
+}
