@@ -17,13 +17,16 @@ export function useCurveData(
     functionType
   );
 
-  return useMemo(() => ({
-    id: curve.id,
-    color: curve.color,
-    data: xValues.map((x, i) => {
-      const point = { x, y: yValues[i] };
-      point[curve.id] = yValues[i];
-      return point;
+  return useMemo(
+    () => ({
+      id: curve.id,
+      color: curve.color,
+      data: xValues.map((x, i) => ({
+        x,
+        y: yValues[i],
+        [curve.id]: yValues[i],
+      })),
     }),
-  }), [curve.id, curve.color, xValues, yValues]);
+    [curve.id, curve.color, xValues, yValues]
+  );
 }

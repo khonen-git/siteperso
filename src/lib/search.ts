@@ -71,7 +71,9 @@ export function fuzzySearch<T extends Record<string, any>>(
     keys = Object.keys(items[0] || {}) // Toutes les clés par défaut
   } = options;
 
-  if (!searchQuery.trim()) return items;
+  if (!searchQuery.trim()) {
+    return items.map((item) => ({ item, similarity: 1 }));
+  }
 
   const results = items.map(item => {
     let maxSimilarity = 0;

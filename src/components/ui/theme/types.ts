@@ -1,8 +1,8 @@
-import { ThemeProviderProps as NextThemeProviderProps } from 'next-themes';
+import type * as React from 'react';
 
-export interface ThemeProviderProps extends Partial<NextThemeProviderProps> {
-  children: React.ReactNode;
-}
+export type ThemeProviderProps = React.ComponentProps<
+  typeof import('next-themes').ThemeProvider
+>;
 
 export interface ThemeToggleProps {
   className?: string;

@@ -3,12 +3,16 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { useTheme } from 'next-themes';
+import type { SyntaxHighlighterProps } from 'react-syntax-highlighter';
 import { cn } from '@/lib/utils';
 import { codeBlockCustomStyle, getPrismSyntaxStyle } from '@/lib/code-syntax-theme';
 import type { CodeBlockProps } from '../../types';
 
 const SyntaxHighlighter = dynamic(
-  () => import('react-syntax-highlighter').then((mod) => mod.Prism),
+  () =>
+    import('react-syntax-highlighter').then(
+      (mod) => mod.Prism as React.ComponentType<SyntaxHighlighterProps>
+    ),
   {
     ssr: false,
     loading: () => (
@@ -37,7 +41,7 @@ export function CodeBlock({
     typeof children === 'string'
       ? children.trim()
       : Array.isArray(children)
-        ? children.join('').trim()
+        ? children.map(String).join('').trim()
         : String(children ?? '').trim();
 
   return (

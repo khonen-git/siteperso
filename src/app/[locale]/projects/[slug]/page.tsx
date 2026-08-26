@@ -1,6 +1,7 @@
 import { setRequestLocale } from 'next-intl/server';
 import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
+import * as React from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import ProjectHero from '@/components/project/ProjectHero';
@@ -45,7 +46,7 @@ export default async function ProjectPage({
       <ProjectContent>
         <MDXRemote
           source={projectData.source}
-          components={MDXComponents}
+          components={MDXComponents as React.ComponentProps<typeof MDXRemote>['components']}
           options={{
             mdxOptions: {
               remarkPlugins: [remarkGfm],

@@ -9,7 +9,8 @@
 | `eslint-plugin-prettier` + `eslint-config-prettier` | Format as lint | Configured via `plugin:prettier/recommended` |
 | Prettier | Format | [`.prettierrc`](../.prettierrc) — `endOfLine: auto` (Windows-friendly) |
 | EditorConfig | Editor defaults | [`.editorconfig`](../.editorconfig) — prefer LF |
-| TypeScript | Types | `ignoreBuildErrors: true` in Next config (debt) |
+| TypeScript | Types | Checked on `next build` (`ignoreBuildErrors: false`) |
+| ESLint on build | Gate | Still ignored (`ignoreDuringBuilds: true`) — Prettier/CRLF noise |
 | Jest | Unit/UI tests | See [testing.md](./testing.md) |
 
 ## Commands
@@ -17,16 +18,15 @@
 ```bash
 npm run lint        # eslint directly (preferred)
 npm run lint:next   # legacy next lint wrapper (deprecated upstream)
+npx tsc --noEmit    # typecheck without build
 npm test
 ```
 
 ## Known issues / debt
 
 1. **`next lint` is deprecated** — Next.js 16 will remove it. Prefer `npm run lint` (`eslint .`).
-2. **Prettier noise on Windows** — many historical files mix CRLF/LF; `endOfLine: auto` reduces false positives. Prefer saving as LF (EditorConfig).
-3. **Build ignores TS errors** — `typescript.ignoreBuildErrors: true` in `next.config.js` hides type regressions; plan to turn off once the backlog is clean.
-4. **`shadcn-ui` in `dependencies`** — CLI package; should live in `devDependencies` or be removed if unused at runtime.
-5. **Major upgrades deferred** — ESLint 9 flat config, typescript-eslint 8, React 19, Next 16: do as a dedicated migration, not piecemeal.
+2. **Prettier noise on Windows** — many historical files mix CRLF/LF; `endOfLine: auto` reduces false positives. Prefer saving as LF (EditorConfig). A full `eslint --fix` / format pass is needed before turning `eslint.ignoreDuringBuilds` off.
+3. **Major upgrades deferred** — ESLint 9 flat config, typescript-eslint 8, React 19, Next 16: do as a dedicated migration, not piecemeal.
 
 ## Unexpected runtime errors (content)
 

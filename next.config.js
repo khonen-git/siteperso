@@ -161,10 +161,11 @@ const nextConfig = {
     ],
   },
   eslint: {
+    // Still noisy (mostly prettier/CRLF); keep off until a dedicated format pass
     ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   experimental: {
     serverActions: {}

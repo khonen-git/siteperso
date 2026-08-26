@@ -17,8 +17,8 @@ export function SortSelect({ value, onChange, labels, className }: SortSelectPro
   };
 
   return (
-    <Select value={value} onValueChange={handleValueChange} className={className}>
-      <SelectTrigger>
+    <Select value={value} onValueChange={handleValueChange}>
+      <SelectTrigger className={cn(className)}>
         <SelectValue placeholder={labels.placeholder} />
       </SelectTrigger>
       <SelectContent>

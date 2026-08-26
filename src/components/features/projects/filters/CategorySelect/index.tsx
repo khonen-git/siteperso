@@ -19,8 +19,8 @@ export function CategorySelect({
   className,
 }: CategorySelectProps) {
   return (
-    <Select value={value} onValueChange={onChange} className={className}>
-      <SelectTrigger>
+    <Select value={value} onValueChange={onChange}>
+      <SelectTrigger className={cn(className)}>
         <SelectValue placeholder={labels.placeholder} />
       </SelectTrigger>
       <SelectContent>

@@ -13,7 +13,6 @@ const customJestConfig = {
     '<rootDir>/.next/',
     // Reporté : rewrite visualiseurs (voir docs/testing.md)
     '<rootDir>/src/components/mdx/__tests__/',
-    '<rootDir>/src/components/features/knowledge/visualization/DistributionVisualizer/__tests__/',
   ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',

@@ -15,7 +15,7 @@ interface DistributionState {
   curves: Curve[];
   functionType: 'pdf' | 'cdf';
   presets: PresetConfig[];
-  setActiveDistribution: (distribution: DistributionConfig) => void;
+  setActiveDistribution: (distribution: DistributionConfig | null) => void;
   setCurves: (curves: Curve[]) => void;
   setFunctionType: (type: 'pdf' | 'cdf') => void;
   addCurve: (curve: Curve) => void;
@@ -34,7 +34,7 @@ export const useDistributionStore = create<DistributionState>()(
       functionType: 'pdf',
       presets: [],
 
-      setActiveDistribution: (distribution: DistributionConfig) => 
+      setActiveDistribution: (distribution: DistributionConfig | null) =>
         set(() => ({ activeDistribution: distribution })),
       
       setCurves: (curves: Curve[]) => 

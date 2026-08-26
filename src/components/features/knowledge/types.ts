@@ -1,3 +1,4 @@
+import type * as React from 'react';
 import type { TreeItem } from '@/config/knowledge';
 
 // Types pour la visualisation
@@ -52,7 +53,7 @@ export interface MathProps {
 }
 
 export interface CodeBlockProps {
-  children: string;
+  children: React.ReactNode;
   language?: string;
   className?: string;
 }

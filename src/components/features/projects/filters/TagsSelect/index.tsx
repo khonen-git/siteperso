@@ -27,12 +27,8 @@ export function TagsSelect({
   };
 
   return (
-    <Select
-      value={value[0] || 'all'}
-      onValueChange={handleValueChange}
-      className={className}
-    >
-      <SelectTrigger>
+    <Select value={value[0] || 'all'} onValueChange={handleValueChange}>
+      <SelectTrigger className={cn(className)}>
         <SelectValue placeholder={labels.placeholder} />
       </SelectTrigger>
       <SelectContent>

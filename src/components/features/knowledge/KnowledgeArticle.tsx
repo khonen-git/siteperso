@@ -33,7 +33,7 @@ export async function KnowledgeArticle({
         <KnowledgeMdxRenderer locale={locale} slug={slug}>
           <MDXRemote
             source={content}
-            components={MDXComponents}
+            components={MDXComponents as React.ComponentProps<typeof MDXRemote>['components']}
             options={{
               mdxOptions: {
                 remarkPlugins: [remarkGfm],

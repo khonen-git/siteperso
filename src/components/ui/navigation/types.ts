@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
 
 export interface DropdownMenuProps {
   trigger: React.ReactNode;
@@ -13,8 +14,9 @@ export interface DropdownMenuItemProps extends React.ButtonHTMLAttributes<HTMLBu
   destructive?: boolean;
 }
 
-export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {
-  orientation?: "horizontal" | "vertical" | "both";
+export interface ScrollAreaProps
+  extends React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> {
+  orientation?: "horizontal" | "vertical";
   scrollHideDelay?: number;
 }
 
