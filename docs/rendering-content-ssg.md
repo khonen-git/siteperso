@@ -107,7 +107,7 @@ Nécessaire sous Next 15 pour éviter l’erreur _« A React Element from an old
 
 | Fichier                                                                                                                 | Rôle                                                                          |
 | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [`src/lib/projects/content.ts`](../src/lib/projects/content.ts)                                                         | `getProjects`, `getProject`, `listProjectFileNames`, `serializeProjectSource` |
+| [`src/lib/projects/content.ts`](../src/lib/projects/content.ts)                                                         | `getProjects`, `getProject`, `listProjectFileNames`                             |
 | [`src/app/[locale]/projects/page.tsx`](../src/app/[locale]/projects/page.tsx)                                           | Server page → props vers client                                               |
 | [`src/components/features/projects/ProjectsPageClient.tsx`](../src/components/features/projects/ProjectsPageClient.tsx) | Filtres / recherche / grille                                                  |
 | [`src/app/[locale]/projects/[slug]/page.tsx`](../src/app/[locale]/projects/[slug]/page.tsx)                             | Détail SSG + MDX RSC                                                          |
@@ -116,14 +116,10 @@ Nécessaire sous Next 15 pour éviter l’erreur _« A React Element from an old
 
 ### Helpers `lib/projects`
 
-- `getProjects(locale)` — liste visible, triée par date, avec `link: /projects/{slug}`
+- `getProjects(locale)` — liste visible, triée par importance puis date, avec `link: /projects/{slug}`
 - `getProject(locale, slug)` — `{ project, source }` où `source` est le corps MDX brut
-- `serializeProjectSource` — uniquement pour l’API JSON legacy
 
-Les pages n’appellent **plus** `fetch('/api/projects')`. Les routes API existent encore et délèguent à `lib` :
-
-- [`src/app/api/projects/route.ts`](../src/app/api/projects/route.ts)
-- [`src/app/api/projects/[slug]/route.ts`](../src/app/api/projects/[slug]/route.ts)
+Les routes API `/api/projects` ont été supprimées ; tout passe par SSG + `lib/projects/content.ts`.
 
 ### Séparation server / client
 
@@ -164,4 +160,3 @@ Note : la chaîne `Chargement des projets récents...` peut encore apparaître d
 1. **Metadata** : `generateMetadata` sur Knowledge et Projects (title, description, Open Graph).
 2. **Sitemap** : `app/sitemap.ts` à partir de `listKnowledgeSlugs` + `listProjectFileNames`.
 3. **Research** : reprendre le même pipeline (MDX dans `src/content` + page serveur + RSC).
-4. **API projects** : supprimer si aucun consommateur externe ne reste.

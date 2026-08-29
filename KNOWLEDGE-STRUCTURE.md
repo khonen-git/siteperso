@@ -506,4 +506,4 @@ Outils
 
 - Navigation actuelle : `src/config/knowledge/navigation.fr.ts`, `navigation.en.ts`
 - Contenu MDX : `src/content/{fr,en}/knowledge/`
-- Cahier des charges initial : `CDC.md` (section Connaissances)
+- État du site : [`REVIEW.md`](REVIEW.md)

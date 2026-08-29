@@ -10,7 +10,7 @@
 | Prettier                                            | Format          | [`.prettierrc`](../.prettierrc) — `endOfLine: lf`                  |
 | EditorConfig                                        | Editor defaults | [`.editorconfig`](../.editorconfig) — prefer LF                    |
 | TypeScript                                          | Types           | Checked on `next build` (`ignoreBuildErrors: false`)               |
-| ESLint on build                                     | Gate            | **Active** (`ignoreDuringBuilds: false`) — 0 errors, ~171 warnings |
+| ESLint on build                                     | Gate            | **Active** (`ignoreDuringBuilds: false`) — 0 errors, 0 warnings |
 | Jest                                                | Unit/UI tests   | See [testing.md](./testing.md)                                     |
 
 ## Commands
@@ -28,8 +28,7 @@ npm test
 ## Known issues / debt
 
 1. **`next lint` is deprecated** — Next.js 16 will remove it. Prefer `npm run lint` (`eslint .`).
-2. **ESLint warnings** — ~171 warnings remain (`explicit-function-return-type`, etc.) ; backlog optional.
-3. **Major upgrades deferred** — idem [todo-later.md](./todo-later.md) (ESLint 9, React 19, Next 16).
+2. **Major upgrades deferred** — idem [todo-later.md](./todo-later.md) (ESLint 9, React 19, Next 16).
 
 ## Unexpected runtime errors (content)
 

@@ -26,6 +26,11 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+eslint-warnings.json
+lint-report.json
+build-scan.txt
+test-mdx-out.txt
+e2e-run.log
 
 # local env files
 .env*.local
