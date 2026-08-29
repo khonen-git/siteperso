@@ -81,6 +81,29 @@ export function ProjectImage({ url, caption }: { url: string; caption: string })
   );
 }
 
+function unwrapNestedAnchors(children: React.ReactNode): React.ReactNode {
+  if (React.isValidElement<{ children?: React.ReactNode }>(children) && children.type === 'a') {
+    return unwrapNestedAnchors(children.props.children);
+  }
+  if (Array.isArray(children)) {
+    return children.map((child) => unwrapNestedAnchors(child));
+  }
+  return children;
+}
+
+function MdxAnchor({ href, children }: { href?: string; children: React.ReactNode }) {
+  const isExternal = href?.startsWith('http://') || href?.startsWith('https://');
+  return (
+    <a
+      href={href}
+      className="text-primary underline transition-colors hover:text-primary/80"
+      {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+    >
+      {unwrapNestedAnchors(children)}
+    </a>
+  );
+}
+
 const baseComponents = {
   h1: ({ children }: { children: React.ReactNode }) => (
     <h1 id={headingId(children)} className="mt-8 mb-4 text-3xl font-bold">
@@ -112,11 +135,7 @@ const baseComponents = {
   blockquote: ({ children }: { children: React.ReactNode }) => (
     <blockquote className="mb-4 border-l-4 border-primary/50 pl-4 italic">{children}</blockquote>
   ),
-  a: ({ href, children }: { href?: string; children: React.ReactNode }) => (
-    <a href={href} className="text-primary underline transition-colors hover:text-primary/80">
-      {children}
-    </a>
-  ),
+  a: MdxAnchor,
   hr: () => <hr className="my-6 border-gray-300 dark:border-gray-700" />,
   code: ({ children }: { children: React.ReactNode }) => (
     <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-sm">{children}</code>
