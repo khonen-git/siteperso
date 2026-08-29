@@ -28,7 +28,9 @@ Toujours reporté : rewrite des tests MDX / visualiseurs (ignorés dans [`jest.c
 
 ## 4. Playwright multi-viewport
 
-Une fois Playwright en place, couvrir les layouts avec :
+**Smoke console en place** — [`e2e/smoke-console.spec.ts`](../e2e/smoke-console.spec.ts), `npm run test:e2e`.
+
+Suite à étendre :
 
 - viewports représentatifs (`VIEWPORTS` dans [`test/utils/responsive.ts`](../test/utils/responsive.ts))
 - largeurs aux bords de breakpoints (`BREAKPOINT_EDGE_WIDTHS` : 639/640, 767/768, 1023/1024…)

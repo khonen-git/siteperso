@@ -5,7 +5,7 @@ Organisation et conventions de la suite de tests après la refonte alignée sur 
 ## Pyramide
 
 ```text
-        E2E (reporté — Playwright)
+        E2E smoke (Playwright — console)
                ▲
         intégration légère
      loaders → slugs → params
@@ -15,9 +15,9 @@ Organisation et conventions de la suite de tests après la refonte alignée sur 
 
 Priorité actuelle :
 
-1. **Logique pure** — loaders Knowledge/Projects, finance, hooks, stores
+1. **Logique pure** — loaders Knowledge/Projects/Blog, finance, hooks, stores
 2. **Composants interactifs** — filtres/cartes/navigation utiles
-3. **E2E Playwright** — phase suivante (non configuré)
+3. **E2E Playwright** — smoke console (`npm run test:e2e`)
 
 ## Commandes
 
@@ -45,6 +45,10 @@ src/config/breakpoints.test.ts
 src/lib/projects/content.test.ts
 src/lib/knowledge/content.test.ts
 src/**/__tests__/*.test.tsx   # co-localisés quand pertinent
+e2e/
+  smoke-console.spec.ts
+  helpers/console-guard.ts
+playwright.config.ts
 ```
 
 ### Responsive (Jest vs Playwright)
@@ -77,11 +81,31 @@ Config : [`jest.config.js`](../jest.config.js)
 | Breakpoints            | `src/config/breakpoints.test.ts`                 |
 | Knowledge UI           | TreeView, TableOfContents, CodeBlock             |
 | Projects UI            | ProjectCard, useProjectAnimation                 |
-| Visualisation          | hooks cache/calculator, distributionStore        |
+| Visualisation        | hooks cache/calculator, distributionStore, MdxDistributionVisualizer |
+| **E2E smoke**        | [`e2e/smoke-console.spec.ts`](../e2e/smoke-console.spec.ts) — 12 routes, zéro `console.error` |
+
+## Playwright (smoke console)
+
+```bash
+npm run test:e2e          # build + start + 12 pages (production, ~2–3 min)
+npm run test:e2e:dev      # réutilise `next dev` déjà lancé (~30 s)
+npm run test:e2e:only     # Playwright seul (serveur déjà up sur :3000)
+npx playwright test --ui  # mode interactif
+```
+
+Écoute `console.error` et `pageerror` (ignore favicon / React DevTools).
+
+Routes couvertes : accueil FR/EN, about, projects (+ website-creation), blog (+ article recherche), knowledge (+ normal + statistical-tests), references, contact.
+
+Scan MDX statique (sans navigateur) :
+
+```bash
+node scripts/scan-mdx-hazards.mjs
+```
 
 ## Reporté
 
-- Playwright (`e2e/`) — campagne multi-viewport (voir [todo-later.md](./todo-later.md))
+- Campagne multi-viewport élargie (bords de breakpoints) — voir [todo-later.md](./todo-later.md) §4
 - Rewrite `integration/layout`
 - Co-localisation complète de tous les tests hors `src/__tests__`
 - Menu mobile Header + drawer sidebar Knowledge (navigation sous `md` / `lg`)
