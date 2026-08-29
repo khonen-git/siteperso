@@ -39,20 +39,14 @@ Le dossier **`/showcase`** était un lab local temporaire — **hors site**, ign
 ### ESLint / build
 
 - `next.config.js` : `eslint.ignoreDuringBuilds: false` — gate active.
-- `npm run lint` : **0 erreur**, ~171 warnings (types de retour, etc.).
+- `npm run lint` : **0 erreur**, **0 warning**. Voir [`LINT-BUILD.md`](LINT-BUILD.md).
 - `npm run build` : **OK** (~78 s, 174 pages SSG). Voir [`LINT-BUILD.md`](LINT-BUILD.md).
 - TypeScript au build : OK (`ignoreBuildErrors: false`).
 
-### Pyodide
+### References / Contact
 
-- Mentionné dans `website-creation.mdx`, `CDC.md`, `DEVBOOK.md`.
-- **Aucune implémentation** dans `src/` (pas de dépendance, pas de composant runtime).
-
-### Activity / References / Contact
-
-- **Activity** (`src/app/[locale]/activity/page.tsx`) : 5 entrées **hardcodées**, dates fictives 2024-02, **sans i18n**, sans lien vers détail ; ne reflète pas le déploiement ni la migration blog.
-- **References** : 14 entrées inline (asyncio, pandas, Tr8dr, etc.) ; UI filtre/tri OK ; liste insuffisante vs TODO.
-- **Contact** : infos mail/GitHub/LinkedIn OK ; **formulaire commenté / désactivé** ; `handleSubmit` = `console.log` + TODO.
+- **References** : **34 entrées** dans `src/content/{fr,en}/references.json` ; UI i18n (`messages/*/references.json`) ; filtre/recherche/tri via `ReferencesPageClient`.
+- **Contact** : mailto + GitHub + LinkedIn uniquement (pas de formulaire).
 
 ---
 
@@ -86,9 +80,7 @@ Le dossier **`/showcase`** était un lab local temporaire — **hors site**, ign
 
 ### Dette code / layouts
 
-- **Double `KnowledgeLayout`** :
-  - Actif : `src/components/layouts/KnowledgeLayout.tsx` (via `KnowledgeArticle.tsx`).
-  - Mort : `src/components/layout/knowledge/index.tsx` (ScrollArea différent, pas d'import trouvé).
+- ~~Double `KnowledgeLayout`~~ — layout mort supprimé.
 - `distributionStore.ts` : utilisé (PresetManager, tests visualiseur) — **pas mort**.
 - `TechnologiesSection` : utilisé dans `website-creation.mdx` ; candidat simplification (TODO).
 - Tests MDX visualiseurs : dossier `src/components/mdx/__tests__/` **exclu** de Jest.
@@ -106,11 +98,9 @@ Le dossier **`/showcase`** était un lab local temporaire — **hors site**, ign
 5. Design patterns — contenu marqué « généré par IA », à réécrire.
 6. Outils (vscode, git, jupyter, power-bi) — stubs.
 
-### Activity / References — features manquantes
+### References — suite
 
-- Activity : pages détail, catégories/tags, historique réel (déploiement, publications OC, série blog recherche).
-- References : enrichir la liste (TODO).
-- Contact : brancher envoi formulaire (API route ou service tiers).
+- Enrichir ou retirer des entrées dans `references.json` au fil de l'eau.
 
 ### Tooling / tests (cf. `docs/todo-later.md`)
 
@@ -160,7 +150,6 @@ Knowledge touché : `normal/index.mdx`, `statistical-tests/index.mdx` (FR+EN). I
 | Knowledge  | ~50 % MDX avec contenu ; ~32 % hubs rédigés ; piliers finance/ML/engineering vides |
 | Blog       | **Production-ready** (5×2 articles recherche + templates)                          |
 | Projets    | Contenu OC présent ; polish visuel / ranking manquant                              |
-| Activity   | **Prototype** — données fictives                                                   |
-| References | **MVP** — 14 liens                                                                 |
-| Contact    | **Partiel** — pas de formulaire actif                                              |
-| Tooling    | TS strict ; ESLint actif au build ; ~171 warnings ; build ~78 s / 174 pages        |
+| References | **OK** — 34 liens, JSON + i18n ; curaté par l'auteur                             |
+| Contact    | **OK** — mailto + liens sociaux                                                    |
+| Tooling    | TS strict ; ESLint 0 warning ; build ~78 s / 174 pages                             |

@@ -1,0 +1,21 @@
+{
+  "title": "References",
+  "subtitle": "A collection of useful resources, tools, and documentation.",
+  "searchPlaceholder": "Search references…",
+  "categoryLabel": "Categories",
+  "categoryAll": "All categories",
+  "categoryPlaceholder": "Category",
+  "tagsLabel": "Tags",
+  "tagsAll": "All tags",
+  "tagsPlaceholder": "Tags",
+  "sortLabel": "Sort by",
+  "sortPlaceholder": "Sort by",
+  "sortName": "Name",
+  "sortCategory": "Category",
+  "viewLink": "View",
+  "tableName": "Name",
+  "tableDescription": "Description",
+  "tableLink": "Link",
+  "tableCategory": "Category",
+  "tableTags": "Tags"
+}

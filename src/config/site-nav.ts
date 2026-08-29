@@ -4,7 +4,6 @@ export const SITE_NAV = [
   { href: '/projects', messageKey: 'projects' },
   { href: '/blog', messageKey: 'blog' },
   { href: '/references', messageKey: 'references' },
-  // { href: '/activity', messageKey: 'activity' },
   { href: '/contact', messageKey: 'contact' },
 ] as const;
 

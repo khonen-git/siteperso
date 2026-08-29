@@ -1,0 +1,284 @@
+{
+  "categories": {
+    "Développement": "Outils et ressources de développement web",
+    "Data Science": "Analyse de données et machine learning",
+    "Mathématiques": "Concepts et outils mathématiques",
+    "Finance": "Analyse financière et trading quantitatif",
+    "Documentation": "Documentation technique et tutoriels",
+    "Outils": "Outils généraux et utilitaires"
+  },
+  "references": [
+    {
+      "id": "python-docs",
+      "name": "Documentation Python",
+      "description": "Documentation officielle du langage Python",
+      "link": "https://docs.python.org/3/",
+      "category": "Documentation",
+      "tags": ["python", "docs"]
+    },
+    {
+      "id": "asyncio",
+      "name": "asyncio",
+      "description": "Bibliothèque pour gérer des opérations asynchrones en Python",
+      "link": "https://docs.python.org/3/library/asyncio.html",
+      "category": "Développement",
+      "tags": ["python", "async", "concurrence"]
+    },
+    {
+      "id": "numpy",
+      "name": "NumPy",
+      "description": "Calcul numérique et tableaux multidimensionnels en Python",
+      "link": "https://numpy.org/doc/",
+      "category": "Data Science",
+      "tags": ["python", "data", "math"]
+    },
+    {
+      "id": "pandas",
+      "name": "pandas",
+      "description": "Manipulation et analyse de données tabulaires",
+      "link": "https://pandas.pydata.org/docs/",
+      "category": "Data Science",
+      "tags": ["python", "data", "analyse"]
+    },
+    {
+      "id": "scipy",
+      "name": "SciPy",
+      "description": "Algorithmes scientifiques : optimisation, statistiques, algèbre linéaire",
+      "link": "https://docs.scipy.org/doc/scipy/",
+      "category": "Mathématiques",
+      "tags": ["python", "math", "data"]
+    },
+    {
+      "id": "statsmodels",
+      "name": "statsmodels",
+      "description": "Modèles statistiques, séries temporelles et inférence en Python",
+      "link": "https://www.statsmodels.org/stable/",
+      "category": "Data Science",
+      "tags": ["python", "data", "math"]
+    },
+    {
+      "id": "scikit-learn",
+      "name": "scikit-learn",
+      "description": "Bibliothèque de machine learning en Python",
+      "link": "https://scikit-learn.org/stable/",
+      "category": "Data Science",
+      "tags": ["python", "ml", "data"]
+    },
+    {
+      "id": "matplotlib",
+      "name": "Matplotlib",
+      "description": "Visualisation de données et graphiques en Python",
+      "link": "https://matplotlib.org/stable/",
+      "category": "Data Science",
+      "tags": ["python", "data", "analyse"]
+    },
+    {
+      "id": "seaborn",
+      "name": "Seaborn",
+      "description": "Visualisation statistique construite sur Matplotlib",
+      "link": "https://seaborn.pydata.org/",
+      "category": "Data Science",
+      "tags": ["python", "data", "analyse"]
+    },
+    {
+      "id": "pytorch",
+      "name": "PyTorch",
+      "description": "Framework deep learning — tenseurs, autograd et entraînement de modèles",
+      "link": "https://pytorch.org/docs/stable/",
+      "category": "Data Science",
+      "tags": ["python", "ml", "data"]
+    },
+    {
+      "id": "huggingface",
+      "name": "Hugging Face",
+      "description": "Modèles, datasets et bibliothèque Transformers pour le NLP et le ML",
+      "link": "https://huggingface.co/docs",
+      "category": "Data Science",
+      "tags": ["python", "ml", "docs"]
+    },
+    {
+      "id": "jupyter",
+      "name": "Jupyter",
+      "description": "Notebooks interactifs pour l'exploration de données et la recherche",
+      "link": "https://jupyter.org/documentation",
+      "category": "Outils",
+      "tags": ["python", "data", "docs"]
+    },
+    {
+      "id": "real-python",
+      "name": "Real Python",
+      "description": "Tutoriels Python de qualité — fondamentaux à sujets avancés",
+      "link": "https://realpython.com/",
+      "category": "Documentation",
+      "tags": ["python", "docs"]
+    },
+    {
+      "id": "katex",
+      "name": "KaTeX",
+      "description": "Moteur de rendu LaTeX mathématique côté client, rapide et léger",
+      "link": "https://katex.org/docs/",
+      "category": "Mathématiques",
+      "tags": ["math", "web", "docs"]
+    },
+    {
+      "id": "mathworld",
+      "name": "Wolfram MathWorld",
+      "description": "Encyclopédie en ligne de concepts et définitions mathématiques",
+      "link": "https://mathworld.wolfram.com/",
+      "category": "Mathématiques",
+      "tags": ["math", "docs"]
+    },
+    {
+      "id": "nextjs",
+      "name": "Next.js",
+      "description": "Framework React pour applications web et sites statiques",
+      "link": "https://nextjs.org/docs",
+      "category": "Développement",
+      "tags": ["web", "react", "docs"]
+    },
+    {
+      "id": "react",
+      "name": "React",
+      "description": "Bibliothèque UI pour construire des interfaces composables",
+      "link": "https://react.dev/",
+      "category": "Développement",
+      "tags": ["web", "react", "docs"]
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript",
+      "description": "Superset typé de JavaScript — documentation du langage",
+      "link": "https://www.typescriptlang.org/docs/",
+      "category": "Développement",
+      "tags": ["web", "docs"]
+    },
+    {
+      "id": "tailwind",
+      "name": "Tailwind CSS",
+      "description": "Framework CSS utility-first pour le design d'interfaces",
+      "link": "https://tailwindcss.com/docs",
+      "category": "Développement",
+      "tags": ["web", "docs"]
+    },
+    {
+      "id": "mdn",
+      "name": "MDN Web Docs",
+      "description": "Référence web (HTML, CSS, JavaScript) maintenue par Mozilla",
+      "link": "https://developer.mozilla.org/fr/",
+      "category": "Documentation",
+      "tags": ["web", "docs"]
+    },
+    {
+      "id": "tr8dr",
+      "name": "Tr8dr",
+      "description": "Blog sur algorithmes, modèles et marchés — HFT, crypto, ML appliqué à la finance",
+      "link": "https://tr8dr.github.io/",
+      "category": "Finance",
+      "tags": ["quant", "finance", "trading", "blog", "ml"]
+    },
+    {
+      "id": "reasonable-deviations",
+      "name": "Reasonable Deviations",
+      "description": "Blog de Robert Andrew Martin, quant trader chez DE Shaw",
+      "link": "https://reasonabledeviations.com/",
+      "category": "Finance",
+      "tags": ["quant", "finance", "blog"]
+    },
+    {
+      "id": "quant-guild",
+      "name": "Quant Guild",
+      "description": "Ressources pour maîtriser la finance quantitative",
+      "link": "https://quantguild.com/",
+      "category": "Finance",
+      "tags": ["quant", "finance", "trading"]
+    },
+    {
+      "id": "frenchquant",
+      "name": "FrenchQuant",
+      "description": "Outils de R&D en finance quantitative",
+      "link": "https://frenchquant.com/",
+      "category": "Finance",
+      "tags": ["quant", "finance", "trading", "blog"]
+    },
+    {
+      "id": "quantpad",
+      "name": "QuantPad",
+      "description": "IDE IA pour le trading quantitatif — données de marché, backtests et agent de recherche",
+      "link": "https://quantpad.ai/",
+      "category": "Finance",
+      "tags": ["quant", "finance", "trading"]
+    },
+    {
+      "id": "quantconnect",
+      "name": "QuantConnect",
+      "description": "Plateforme open source de backtesting et déploiement de stratégies quantitatives",
+      "link": "https://www.quantconnect.com/docs/",
+      "category": "Finance",
+      "tags": ["quant", "finance", "trading", "docs"]
+    },
+    {
+      "id": "getmonero",
+      "name": "getmonero.org",
+      "description": "Site officiel du projet Monero",
+      "link": "https://www.getmonero.org/",
+      "category": "Finance",
+      "tags": ["crypto", "finance"]
+    },
+    {
+      "id": "neurotrader-yt",
+      "name": "neurotrader (YouTube)",
+      "description": "Trading algorithmique data-driven — stratégies, indicateurs et code Python open source",
+      "link": "https://www.youtube.com/@neurotrader888",
+      "category": "Finance",
+      "tags": ["quant", "finance", "trading", "youtube", "python"]
+    },
+    {
+      "id": "quant-guild-yt",
+      "name": "Quant Guild (YouTube)",
+      "description": "Cours open source en finance quantitative — maths, probabilités, pricing et coding",
+      "link": "https://www.youtube.com/@QuantGuild",
+      "category": "Finance",
+      "tags": ["quant", "finance", "youtube"]
+    },
+    {
+      "id": "deltatrend-yt",
+      "name": "DeltaTrend Trading (YouTube)",
+      "description": "Créateur de quantpad.ai — trading quantitatif, prop firms et simulations Monte Carlo",
+      "link": "https://www.youtube.com/@deltatrendtrading",
+      "category": "Finance",
+      "tags": ["quant", "finance", "trading", "youtube"]
+    },
+    {
+      "id": "frenchquant-yt",
+      "name": "FrenchQuant (YouTube)",
+      "description": "Finance quantitative en français — microstructure, volatilité, order flow et backtesting",
+      "link": "https://www.youtube.com/@FrenchQuant-jz5vf",
+      "category": "Finance",
+      "tags": ["quant", "finance", "trading", "youtube"]
+    },
+    {
+      "id": "tactical-brief-yt",
+      "name": "The Tactical Brief (YouTube)",
+      "description": "Finance quantitative — vidéos pédagogiques (ex. interprétation de l'entropie)",
+      "link": "https://www.youtube.com/@thetacticalbrief9952",
+      "category": "Finance",
+      "tags": ["finance", "trading", "youtube"]
+    },
+    {
+      "id": "statquest-yt",
+      "name": "StatQuest (YouTube)",
+      "description": "Statistiques et machine learning expliqués clairement par Josh Starmer",
+      "link": "https://www.youtube.com/@statquest",
+      "category": "Data Science",
+      "tags": ["ml", "data", "youtube", "math"]
+    },
+    {
+      "id": "3blue1brown-yt",
+      "name": "3Blue1Brown (YouTube)",
+      "description": "Visualisations intuitives de maths avancées — algèbre linéaire, calcul, probabilités",
+      "link": "https://www.youtube.com/@3blue1brown",
+      "category": "Mathématiques",
+      "tags": ["math", "youtube"]
+    }
+  ]
+}

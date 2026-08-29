@@ -79,7 +79,6 @@ Ce site servira à la fois de vitrine pour mes compétences et de plateforme pou
 - Utiliser Katex pour les formules mathématiques
 - Utiliser Framer Motion pour les animations
 - Utiliser MDX pour le contenu statique (blog, documentation, tutoriels)
-- Utiliser Pyodide pour exécuter du code Python en JavaScript
 - Utiliser Docker pour le développement local
 - Utiliser Vercel pour le déploiement et l'hébergement
 - Utiliser Cloudflare pour le CDN et la sécurité

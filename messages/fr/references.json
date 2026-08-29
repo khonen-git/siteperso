@@ -1,0 +1,21 @@
+{
+  "title": "Références",
+  "subtitle": "Une collection de ressources, outils et documentations utiles.",
+  "searchPlaceholder": "Rechercher une référence…",
+  "categoryLabel": "Catégories",
+  "categoryAll": "Toutes les catégories",
+  "categoryPlaceholder": "Catégorie",
+  "tagsLabel": "Tags",
+  "tagsAll": "Tous les tags",
+  "tagsPlaceholder": "Tags",
+  "sortLabel": "Trier par",
+  "sortPlaceholder": "Trier par",
+  "sortName": "Nom",
+  "sortCategory": "Catégorie",
+  "viewLink": "Voir",
+  "tableName": "Nom",
+  "tableDescription": "Description",
+  "tableLink": "Lien",
+  "tableCategory": "Catégorie",
+  "tableTags": "Tags"
+}

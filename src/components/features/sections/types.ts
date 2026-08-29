@@ -11,16 +11,6 @@ export interface RecentProjectsProps {
   className?: string;
 }
 
-export interface LatestUpdatesProps {
-  updates: {
-    title: string;
-    date: string;
-    description: string;
-    link: string;
-  }[];
-  className?: string;
-}
-
 export interface AboutSectionProps {
   className?: string;
 }

@@ -32,31 +32,25 @@
 - title et h1 markdown : mettre deux différents ? ask GPT ou cursor
 - utilité de description dans les mdx ?
 
-# Activity
-
-La partie activity servira d'historique de patch ou maj pour les changements de site. Chaque note doit être synthétique (énumération des modifications) et regrouper un maximum d'éléments.
-
-## Content
-
-- Mettre le lancement du site : déploiement
-- Mettre l'activité de la publication des principaux projets OC
-
-## Features
-
-- Pouvoir accéder aux détails d'un élément activity similaire à projects
-- Pouvoir filtrer et trier les éléments de activity
-- Déterminer les catégories d'activité si nécessaire ou tags
-- Animation onHover
-
 # References
 
 ## Content
 
-- Rajouter une liste importante de références
+- Liste dans `src/content/{fr,en}/references.json` (34 entrées)
+- Enrichir / retirer au besoin
+
+## Features
+
+- i18n UI via `messages/*/references.json`
+- Filtrage, recherche floue, tri — OK
+
+# Contact
+
+- Mailto + GitHub + LinkedIn — pas de formulaire.
 
 # Code du site
 
-Ne pas hésiter à utiliser l'IA pour faire toutes les vérifications sur utilité de chaque élément de code voire de faire un refactoring complet du code (qu'on pourra ajouter dans activités). Ne pas hésiter aussi à enlever des features peu utiles ou ambigu quitte à les remettre plus tard. En gros faire un gros nettoyage du code et garder l'essentiel.
+Ne pas hésiter à utiliser l'IA pour faire toutes les vérifications sur utilité de chaque élément de code voire de faire un refactoring complet du code. Ne pas hésiter aussi à enlever des features peu utiles ou ambiguës quitte à les remettre plus tard. En gros faire un gros nettoyage du code et garder l'essentiel.
 
 ## Vérification
 

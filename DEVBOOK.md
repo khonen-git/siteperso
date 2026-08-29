@@ -176,13 +176,11 @@
 ### Tests à Implémenter
 
 - [ ] Tests des animations
-- [ ] Tests Pyodide
 - [ ] Tests KaTeX
 - [ ] Tests des thèmes dynamiques
 
 ### Développement
 
-- [ ] Intégration Pyodide
 - [ ] Intégration KaTeX
 - [ ] Animations Framer Motion
 - [ ] Thèmes dynamiques
@@ -298,6 +296,6 @@ Priorité de résolution : Moyenne (à traiter dans les prochains sprints)
 - [19/02/2025] : Début de la migration du contenu frontend
 - [19/02/2025] : Création de la structure de dossiers pour le contenu
 - [19/02/2025] : Migration de la page d'accueil vers MDX
-- [19/02/2025] : Création des composants de section (HeroSection, LatestUpdates, RecentProjects)
+- [19/02/2025] : Création des composants de section (HeroSection, RecentProjects)
 - [19/02/2025] : Ajout des composants UI (Card, Badge)
 - [19/02/2025] : Installation et configuration de Framer Motion

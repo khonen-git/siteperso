@@ -29,7 +29,6 @@ jest.mock('next-intl/server', () => ({
       'nav.projects': 'Projets',
       'nav.blog': 'Blog & Recherche',
       'nav.references': 'Références',
-      'nav.activity': 'Activité du site',
       'nav.contact': 'Contact',
       'nav.menuTitle': 'Menu',
       'nav.openMenu': 'Ouvrir le menu',
