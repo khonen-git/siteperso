@@ -4,20 +4,20 @@ Documentation technique du site (architecture, rendu, contenu).
 
 ## Index
 
-| Document | Sujet |
-|----------|--------|
-| [rendering-content-ssg.md](./rendering-content-ssg.md) | Rendu SSG Knowledge + Projects (HTML crawlable) |
-| [testing.md](./testing.md) | Suite Jest : organisation, pyramide, commandes |
-| [tooling.md](./tooling.md) | Lint, Prettier, ESLint, dette technique outils |
-| [research/](./research/) | Protocoles intégraux eurusd-lab (blog recherche) |
-| [todo-later.md](./todo-later.md) | Backlog reporté (ESLint au build, migrations, tests visualiseurs) |
+| Document                                               | Sujet                                                             |
+| ------------------------------------------------------ | ----------------------------------------------------------------- |
+| [rendering-content-ssg.md](./rendering-content-ssg.md) | Rendu SSG Knowledge + Projects (HTML crawlable)                   |
+| [testing.md](./testing.md)                             | Suite Jest : organisation, pyramide, commandes                    |
+| [tooling.md](./tooling.md)                             | Lint, Prettier, ESLint, dette technique outils                    |
+| [research/](./research/)                               | Protocoles intégraux eurusd-lab (blog recherche)                  |
+| [todo-later.md](./todo-later.md)                       | Backlog reporté (ESLint au build, migrations, tests visualiseurs) |
 
 ## Conventions
 
 - Un fichier Markdown par sujet technique.
 - Préférer le français.
 - Pointer vers les chemins réels du repo (`src/...`).
-- Documenter le *pourquoi* et le flux de données, pas seulement la liste des fichiers.
+- Documenter le _pourquoi_ et le flux de données, pas seulement la liste des fichiers.
 
 Les specs produit / structure éditoriale restent hors de ce dossier pour l’instant :
 

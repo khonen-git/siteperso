@@ -14,6 +14,7 @@ Organisation et conventions de la suite de tests après la refonte alignée sur 
 ```
 
 Priorité actuelle :
+
 1. **Logique pure** — loaders Knowledge/Projects, finance, hooks, stores
 2. **Composants interactifs** — filtres/cartes/navigation utiles
 3. **E2E Playwright** — phase suivante (non configuré)
@@ -64,17 +65,17 @@ Config : [`jest.config.js`](../jest.config.js)
 
 ## Ce qui est couvert
 
-| Zone | Fichiers |
-|------|----------|
-| Loaders Projects | `src/lib/projects/content.test.ts` |
-| Loaders Knowledge | `src/lib/knowledge/content.test.ts` |
-| Validation frontmatter | inclus dans content.test projects |
-| Finance | `src/lib/finance/__tests__/blackScholes.test.ts` |
-| Layout UI | Header, Footer, ThemeProvider |
-| Breakpoints | `src/config/breakpoints.test.ts` |
-| Knowledge UI | TreeView, TableOfContents, CodeBlock |
-| Projects UI | ProjectCard, useProjectAnimation |
-| Visualisation | hooks cache/calculator, distributionStore |
+| Zone                   | Fichiers                                         |
+| ---------------------- | ------------------------------------------------ |
+| Loaders Projects       | `src/lib/projects/content.test.ts`               |
+| Loaders Knowledge      | `src/lib/knowledge/content.test.ts`              |
+| Validation frontmatter | inclus dans content.test projects                |
+| Finance                | `src/lib/finance/__tests__/blackScholes.test.ts` |
+| Layout UI              | Header, Footer, ThemeProvider                    |
+| Breakpoints            | `src/config/breakpoints.test.ts`                 |
+| Knowledge UI           | TreeView, TableOfContents, CodeBlock             |
+| Projects UI            | ProjectCard, useProjectAnimation                 |
+| Visualisation          | hooks cache/calculator, distributionStore        |
 
 ## Reporté
 

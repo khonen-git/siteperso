@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from 'react';
 import { Link } from '@/i18n/navigation';
 import { motion } from 'framer-motion';
@@ -41,9 +41,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </div>
 
           <CardContent className="p-4 pt-0">
-            <p className="line-clamp-2 text-sm text-muted-foreground">
-              {project.description}
-            </p>
+            <p className="line-clamp-2 text-sm text-muted-foreground">{project.description}</p>
           </CardContent>
 
           <Badge variant="outline" className="absolute top-2 right-2">

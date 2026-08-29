@@ -15,22 +15,22 @@ interface UseProjectAnimationProps {
 export function useProjectAnimation({
   delay = 0,
   duration = 0.5,
-  y = 20
+  y = 20,
 }: UseProjectAnimationProps = {}): ProjectAnimationConfig {
   return useMemo(
     () => ({
       initial: {
         opacity: 0,
-        y
+        y,
       },
       animate: {
         opacity: 1,
-        y: 0
+        y: 0,
       },
       transition: {
         duration,
-        delay
-      }
+        delay,
+      },
     }),
     [delay, duration, y]
   );

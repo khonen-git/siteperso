@@ -1,9 +1,4 @@
-import {
-  blackScholesGreeks,
-  blackScholesPrice,
-  intrinsicValue,
-  normCdf,
-} from '../blackScholes';
+import { blackScholesGreeks, blackScholesPrice, intrinsicValue, normCdf } from '../blackScholes';
 
 describe('blackScholes', () => {
   it('normCdf(0) is approximately 0.5', () => {
@@ -34,7 +29,8 @@ describe('blackScholes', () => {
     };
     const call = blackScholesPrice({ ...params, optionType: 'call' as const });
     const put = blackScholesPrice({ ...params, optionType: 'put' as const });
-    const parity = call - put - params.spot + params.strike * Math.exp(-params.rate * params.timeYears);
+    const parity =
+      call - put - params.spot + params.strike * Math.exp(-params.rate * params.timeYears);
     expect(Math.abs(parity)).toBeLessThan(0.01);
   });
 

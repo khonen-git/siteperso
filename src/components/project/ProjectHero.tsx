@@ -29,12 +29,7 @@ export function ProjectHero({ project }: ProjectHeroProps) {
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent" />
       <div className="container relative z-10 flex h-full flex-col justify-end pb-16">
-        <Button
-          variant="ghost"
-          size="sm"
-          className="absolute left-4 top-4 text-white"
-          asChild
-        >
+        <Button variant="ghost" size="sm" className="absolute left-4 top-4 text-white" asChild>
           <Link href="/projects">
             <ArrowLeft className="mr-2 h-4 w-4" />
             {t('allProjects')}

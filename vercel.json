@@ -10,4 +10,4 @@
   "outputDirectory": ".next",
   "framework": "nextjs",
   "devCommand": "npm run dev"
-} 
+}

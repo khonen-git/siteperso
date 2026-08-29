@@ -8,10 +8,7 @@ const glossaries = {
 
 export type KnowledgeGlossaryKey = keyof typeof knowledgeGlossaryFr;
 
-export function getGlossaryDefinition(
-  locale: string,
-  term: string
-): string | undefined {
+export function getGlossaryDefinition(locale: string, term: string): string | undefined {
   const glossary = locale === 'en' ? glossaries.en : glossaries.fr;
   return glossary[term as KnowledgeGlossaryKey];
 }

@@ -7,15 +7,15 @@ Décisions validées — ne pas modifier le code tant que ce document n'est pas 
 
 ## Décisions structurantes
 
-| Sujet | Décision |
-|-------|----------|
-| Mathématiques / Probabilités / Statistiques | **3 piliers séparés** (top-level) |
-| Finance | Pilier **Finance quantitative** (`/knowledge/quantitative-finance`) |
-| Programmation & Data | Pilier **Ingénierie & Programmation** (socle technique unifié) |
-| Théorie de l'information | Reste sous **Mathématiques** |
-| HMM | Page canonique en **Économétrie financière** (régimes) ; lien depuis Machine Learning |
-| Design patterns | **Inchangé** — 1 page par pattern, arbre complet conservé |
-| Data Science | Renommé en **Machine Learning** |
+| Sujet                                       | Décision                                                                              |
+| ------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Mathématiques / Probabilités / Statistiques | **3 piliers séparés** (top-level)                                                     |
+| Finance                                     | Pilier **Finance quantitative** (`/knowledge/quantitative-finance`)                   |
+| Programmation & Data                        | Pilier **Ingénierie & Programmation** (socle technique unifié)                        |
+| Théorie de l'information                    | Reste sous **Mathématiques**                                                          |
+| HMM                                         | Page canonique en **Économétrie financière** (régimes) ; lien depuis Machine Learning |
+| Design patterns                             | **Inchangé** — 1 page par pattern, arbre complet conservé                             |
+| Data Science                                | Renommé en **Machine Learning**                                                       |
 
 ---
 
@@ -29,33 +29,35 @@ Décisions validées — ne pas modifier le code tant que ce document n'est pas 
 
 ### Granularité des pages
 
-| Type de contenu | Granularité | Exemples |
-|-----------------|-------------|----------|
-| **Catalogue / référence** | 1 entrée = 1 concept nommé | Design patterns, distributions (optionnel), Greeks |
-| **Chapitre théorique** | 1 page = 1 idée, sections H2/H3 | Convexité, VaR, ACF/PACF |
-| **Famille technique homogène** | 1 page, sections H2 | Métriques ML, estimateurs de vol, tests mineurs |
+| Type de contenu                | Granularité                     | Exemples                                           |
+| ------------------------------ | ------------------------------- | -------------------------------------------------- |
+| **Catalogue / référence**      | 1 entrée = 1 concept nommé      | Design patterns, distributions (optionnel), Greeks |
+| **Chapitre théorique**         | 1 page = 1 idée, sections H2/H3 | Convexité, VaR, ACF/PACF                           |
+| **Famille technique homogène** | 1 page, sections H2             | Métriques ML, estimateurs de vol, tests mineurs    |
 
 **Regrouper sur 1 page** quand :
+
 - concepts atomiques liés (bid/ask/spread/slippage) ;
 - familles homogènes (Greeks, métriques ML, rendements) ;
 - définitions courtes sans visualisation dédiée (ITM/ATM/OTM sur « Bases des options »).
 
 **Page dédiée** quand :
+
 - formules, preuves ou visualisations interactives (SVD, Black-Scholes, Kalman) ;
 - modèle complet (Heston, Almgren-Chriss, ARIMA) ;
 - sujet recherché par nom propre (CNN, Transformer, LSTM).
 
 ### Anti-doublon : page canonique + liens
 
-| Concept | Page canonique | Liens depuis |
-|---------|----------------|--------------|
-| Stationnarité | Séries temporelles (Statistiques) | Économétrie financière, Processus stochastiques |
-| Martingale | Processus stochastiques (Probabilités) | Calcul stochastique, Pricing |
-| Régularisation | Optimisation (Mathématiques) | Machine Learning, Régression |
-| Volatilité (réalisée / implicite) | Volatilité & modèles GARCH (Finance quantitative) | Options, Risque, Microstructure |
-| Cross-validation / walk-forward | ML — Concepts généraux | Backtesting |
-| Matrices de covariance | Algèbre linéaire (Mathématiques) | Statistiques, Portfolio, Facteurs |
-| HMM | Économétrie financière — Régimes & HMM | Machine Learning (non supervisé) |
+| Concept                           | Page canonique                                    | Liens depuis                                    |
+| --------------------------------- | ------------------------------------------------- | ----------------------------------------------- |
+| Stationnarité                     | Séries temporelles (Statistiques)                 | Économétrie financière, Processus stochastiques |
+| Martingale                        | Processus stochastiques (Probabilités)            | Calcul stochastique, Pricing                    |
+| Régularisation                    | Optimisation (Mathématiques)                      | Machine Learning, Régression                    |
+| Volatilité (réalisée / implicite) | Volatilité & modèles GARCH (Finance quantitative) | Options, Risque, Microstructure                 |
+| Cross-validation / walk-forward   | ML — Concepts généraux                            | Backtesting                                     |
+| Matrices de covariance            | Algèbre linéaire (Mathématiques)                  | Statistiques, Portfolio, Facteurs               |
+| HMM                               | Économétrie financière — Régimes & HMM            | Machine Learning (non supervisé)                |
 
 ---
 
@@ -333,13 +335,13 @@ Finance quantitative
 
 **Pages existantes à repositionner** :
 
-| Page actuelle | Destination |
-|---------------|-------------|
-| `/knowledge/finance/asset-classes` | Marchés & produits — Produits financiers |
+| Page actuelle                       | Destination                                 |
+| ----------------------------------- | ------------------------------------------- |
+| `/knowledge/finance/asset-classes`  | Marchés & produits — Produits financiers    |
 | `/knowledge/finance/contract-types` | Marchés & produits — section ou page dédiée |
-| `/knowledge/finance/options` | Options & dérivés — Bases des options |
-| `/knowledge/finance/black-scholes` | Options & dérivés — Black-Scholes |
-| `/knowledge/finance/volatility` | Volatilité — Implicite vs réalisée |
+| `/knowledge/finance/options`        | Options & dérivés — Bases des options       |
+| `/knowledge/finance/black-scholes`  | Options & dérivés — Black-Scholes           |
+| `/knowledge/finance/volatility`     | Volatilité — Implicite vs réalisée          |
 
 ---
 
@@ -435,16 +437,16 @@ Outils
 
 ## Estimation volumétrique
 
-| Pilier | Pages estimées | Dont existantes |
-|--------|----------------|-----------------|
-| Mathématiques | ~21 | 1 (théorie de l'info) |
-| Probabilités | ~12 | ~4 (à fusionner/aplatir) |
-| Statistiques | ~18 | ~8 |
-| Machine Learning | ~22 | ~4 |
-| Finance quantitative | ~45 | ~5 |
-| Ingénierie & Programmation | ~25 | ~35 (design patterns, Python, hardware…) |
-| Outils | 4 | 4 |
-| **Total** | **~147 pages** | **~57 existantes / à migrer** |
+| Pilier                     | Pages estimées | Dont existantes                          |
+| -------------------------- | -------------- | ---------------------------------------- |
+| Mathématiques              | ~21            | 1 (théorie de l'info)                    |
+| Probabilités               | ~12            | ~4 (à fusionner/aplatir)                 |
+| Statistiques               | ~18            | ~8                                       |
+| Machine Learning           | ~22            | ~4                                       |
+| Finance quantitative       | ~45            | ~5                                       |
+| Ingénierie & Programmation | ~25            | ~35 (design patterns, Python, hardware…) |
+| Outils                     | 4              | 4                                        |
+| **Total**                  | **~147 pages** | **~57 existantes / à migrer**            |
 
 ---
 

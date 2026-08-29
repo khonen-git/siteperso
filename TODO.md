@@ -1,4 +1,4 @@
-# Page principale 
+# Page principale
 
 # Projets
 
@@ -32,7 +32,7 @@
 - title et h1 markdown : mettre deux différents ? ask GPT ou cursor
 - utilité de description dans les mdx ?
 
-# Activity 
+# Activity
 
 La partie activity servira d'historique de patch ou maj pour les changements de site. Chaque note doit être synthétique (énumération des modifications) et regrouper un maximum d'éléments.
 

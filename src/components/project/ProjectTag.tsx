@@ -12,23 +12,17 @@ interface ProjectTagProps {
   className?: string;
 }
 
-export function ProjectTag({ 
-  tag, 
-  variant = 'secondary', 
+export function ProjectTag({
+  tag,
+  variant = 'secondary',
   size = 'default',
-  className 
+  className,
 }: ProjectTagProps) {
   return (
-    <Badge
-      variant={variant}
-      className={cn(
-        themes[tag as keyof typeof themes]?.color,
-        className
-      )}
-    >
+    <Badge variant={variant} className={cn(themes[tag as keyof typeof themes]?.color, className)}>
       {tag}
     </Badge>
   );
 }
 
-export default ProjectTag; 
+export default ProjectTag;

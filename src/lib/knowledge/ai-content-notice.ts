@@ -6,7 +6,9 @@ const AI_CONTENT_NOTICE_EN =
 
 export function isDesignPatternsArticle(slug: string[]): boolean {
   const path = slug.join('/');
-  return path.startsWith('engineering/design-patterns') || path.startsWith('programming/design-patterns');
+  return (
+    path.startsWith('engineering/design-patterns') || path.startsWith('programming/design-patterns')
+  );
 }
 
 export function getAiContentNotice(locale: string): string {

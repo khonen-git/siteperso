@@ -13,8 +13,9 @@ const ambitions = [
   },
   {
     icon: Brain,
-    title: 'Domaines d\'intérêt',
-    description: 'Data, machine learning, phénomènes aléatoires, développement d\'application et web, finance.',
+    title: "Domaines d'intérêt",
+    description:
+      "Data, machine learning, phénomènes aléatoires, développement d'application et web, finance.",
   },
   {
     icon: Rocket,
@@ -37,7 +38,7 @@ export function Ambitions(): React.JSX.Element {
             Ambitions & Projets
           </h2>
           <p className="mb-16 text-muted-foreground">
-            Mes objectifs et ma vision pour l'avenir.
+            {"Mes objectifs et ma vision pour l'avenir."}
           </p>
         </motion.div>
 
@@ -64,4 +65,4 @@ export function Ambitions(): React.JSX.Element {
       </div>
     </section>
   );
-} 
+}

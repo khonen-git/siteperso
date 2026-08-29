@@ -6,10 +6,13 @@ const SunIcon = () => React.createElement('div', { 'data-testid': 'sun-icon' });
 export const Moon = MoonIcon;
 export const Sun = SunIcon;
 
-const createIcon =
-  (testId: string) =>
-  (props: Record<string, unknown>) =>
-    React.createElement('span', { 'data-testid': testId, ...props });
+const createIcon = (testId: string) => {
+  function LucideIcon(props: Record<string, unknown>) {
+    return React.createElement('span', { 'data-testid': testId, ...props });
+  }
+  LucideIcon.displayName = `LucideIcon(${testId})`;
+  return LucideIcon;
+};
 
 export const ArrowUpRight = createIcon('arrow-up-right');
 export const ArrowLeft = createIcon('arrow-left');

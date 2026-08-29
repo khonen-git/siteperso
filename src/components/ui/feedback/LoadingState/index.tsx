@@ -7,10 +7,7 @@ interface LoadingStateProps {
   className?: string;
 }
 
-export function LoadingState({
-  message = "Chargement...",
-  className
-}: LoadingStateProps) {
+export function LoadingState({ message = 'Chargement...', className }: LoadingStateProps) {
   return (
     <div className={cn('mt-16 text-center', className)}>
       <div className="inline-flex items-center gap-2">
@@ -20,5 +17,3 @@ export function LoadingState({
     </div>
   );
 }
-
-

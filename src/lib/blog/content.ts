@@ -41,9 +41,7 @@ export function listBlogFileNames(locale: string): string[] {
     return [];
   }
 
-  return fs
-    .readdirSync(directory)
-    .filter((fileName) => fileName.endsWith('.mdx'));
+  return fs.readdirSync(directory).filter((fileName) => fileName.endsWith('.mdx'));
 }
 
 function isValidBlogFrontmatter(data: Record<string, unknown>): boolean {

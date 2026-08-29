@@ -5,13 +5,23 @@ description: Tree gradient boosting, regularization, and a modern tabular benchm
 
 import { MdxCard } from '@/components/mdx/MdxCard';
 import { NotaBene } from '@/components/mdx/NotaBene';
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from '@/components/ui/table';
 import { MathInline } from '@/components/features/knowledge/math/MathBlock';
 
 # XGBoost
 
 <MdxCard title="Definition">
-**XGBoost** (Extreme Gradient Boosting) is a **gradient boosting** method built on decision trees. Unlike the bagging used in [Random Forest](/knowledge/machine-learning/classical-models/random-forest), trees are trained **sequentially**: each new tree corrects part of the current model's errors.
+  **XGBoost** (Extreme Gradient Boosting) is a **gradient boosting** method built on decision trees.
+  Unlike the bagging used in [Random
+  Forest](/knowledge/machine-learning/classical-models/random-forest), trees are trained
+  **sequentially**: each new tree corrects part of the current model's errors.
 </MdxCard>
 
 ## Intuition
@@ -24,17 +34,32 @@ The goal is not to average independent trees, but to build an **additive** ensem
 - the sum of trees produces a function more expressive than a single tree.
 
 XGBoost adds **explicit regularization**, efficient handling of tabular data, and training optimizations that make it a practical reference on many structured supervised problems.
+
 </MdxCard>
 
 ## How it works
 
 <MdxCard>
   <ol className="list-decimal pl-6 space-y-3">
-    <li><strong>Initialization</strong>: start from a constant prediction (mean for regression, log-odds for classification).</li>
-    <li><strong>Gradient computation</strong>: at each iteration, measure the direction in which the loss should be corrected.</li>
-    <li><strong>Weak tree</strong>: train a small tree on these gradients / pseudo-residuals.</li>
-    <li><strong>Additive update</strong>: add this tree to the ensemble with a weight controlled by <code>learning_rate</code>.</li>
-    <li><strong>Repeat</strong>: continue until <code>n_estimators</code> is reached or a stopping rule is triggered, ideally with <code>early_stopping</code>.</li>
+    <li>
+      <strong>Initialization</strong>: start from a constant prediction (mean for regression,
+      log-odds for classification).
+    </li>
+    <li>
+      <strong>Gradient computation</strong>: at each iteration, measure the direction in which the
+      loss should be corrected.
+    </li>
+    <li>
+      <strong>Weak tree</strong>: train a small tree on these gradients / pseudo-residuals.
+    </li>
+    <li>
+      <strong>Additive update</strong>: add this tree to the ensemble with a weight controlled by{' '}
+      <code>learning_rate</code>.
+    </li>
+    <li>
+      <strong>Repeat</strong>: continue until <code>n_estimators</code> is reached or a stopping
+      rule is triggered, ideally with <code>early_stopping</code>.
+    </li>
   </ol>
 </MdxCard>
 
@@ -46,6 +71,7 @@ In practice, XGBoost optimizes an objective made of:
 - **shrinkage** through <code>learning_rate</code>.
 
 This explains why XGBoost can reach very strong performance, but also why it usually requires more tuning than a random forest.
+
 </MdxCard>
 
 ## Key hyperparameters
@@ -61,47 +87,71 @@ This explains why XGBoost can reach very strong performance, but also why it usu
     </TableHeader>
     <TableBody>
       <TableRow>
-        <TableCell className="font-medium"><code>n_estimators</code></TableCell>
+        <TableCell className="font-medium">
+          <code>n_estimators</code>
+        </TableCell>
         <TableCell>Number of added trees</TableCell>
-        <TableCell>Larger = more expressive, but slower and riskier without early stopping</TableCell>
+        <TableCell>
+          Larger = more expressive, but slower and riskier without early stopping
+        </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell className="font-medium"><code>learning_rate</code></TableCell>
+        <TableCell className="font-medium">
+          <code>learning_rate</code>
+        </TableCell>
         <TableCell>Weight of each tree</TableCell>
         <TableCell>Smaller = more stable learning, often needs more trees</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell className="font-medium"><code>max_depth</code></TableCell>
+        <TableCell className="font-medium">
+          <code>max_depth</code>
+        </TableCell>
         <TableCell>Maximum depth</TableCell>
         <TableCell>Controls local complexity and overfitting</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell className="font-medium"><code>min_child_weight</code></TableCell>
+        <TableCell className="font-medium">
+          <code>min_child_weight</code>
+        </TableCell>
         <TableCell>Minimum child node weight / size</TableCell>
         <TableCell>Prevents overly specific splits</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell className="font-medium"><code>subsample</code></TableCell>
+        <TableCell className="font-medium">
+          <code>subsample</code>
+        </TableCell>
         <TableCell>Row subsampling</TableCell>
         <TableCell>Reduces variance and cost; too low can add noise</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell className="font-medium"><code>colsample_bytree</code></TableCell>
+        <TableCell className="font-medium">
+          <code>colsample_bytree</code>
+        </TableCell>
         <TableCell>Feature subsampling</TableCell>
         <TableCell>Partly decorrelates trees and regularizes</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell className="font-medium"><code>reg_alpha</code></TableCell>
-        <TableCell><MathInline>{"L_1"}</MathInline> penalty</TableCell>
+        <TableCell className="font-medium">
+          <code>reg_alpha</code>
+        </TableCell>
+        <TableCell>
+          <MathInline>{'L_1'}</MathInline> penalty
+        </TableCell>
         <TableCell>Encourages sparser contributions</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell className="font-medium"><code>reg_lambda</code></TableCell>
-        <TableCell><MathInline>{"L_2"}</MathInline> penalty</TableCell>
+        <TableCell className="font-medium">
+          <code>reg_lambda</code>
+        </TableCell>
+        <TableCell>
+          <MathInline>{'L_2'}</MathInline> penalty
+        </TableCell>
         <TableCell>Stabilizes weights and limits extremes</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell className="font-medium"><code>gamma</code></TableCell>
+        <TableCell className="font-medium">
+          <code>gamma</code>
+        </TableCell>
         <TableCell>Minimum gain required to split</TableCell>
         <TableCell>Prevents low-value splits</TableCell>
       </TableRow>
@@ -154,12 +204,16 @@ This explains why XGBoost can reach very strong performance, but also why it usu
       <TableRow>
         <TableCell className="font-medium">Random Forest</TableCell>
         <TableCell>Bagging of independent trees</TableCell>
-        <TableCell>More robust and simpler; often less accurate but less demanding to tune</TableCell>
+        <TableCell>
+          More robust and simpler; often less accurate but less demanding to tune
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">LightGBM</TableCell>
         <TableCell>Histogram-based boosting optimized for speed</TableCell>
-        <TableCell>Often faster on large tabular datasets; different behavior on smaller ones</TableCell>
+        <TableCell>
+          Often faster on large tabular datasets; different behavior on smaller ones
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">CatBoost</TableCell>
@@ -188,11 +242,17 @@ This explains why XGBoost can reach very strong performance, but also why it usu
     <TableBody>
       <TableRow>
         <TableCell className="font-medium">Data splitting</TableCell>
-        <TableCell>Train / validation / test; in time settings: walk-forward or purged CV — see [cross-validation](/knowledge/machine-learning/general-concepts/cross-validation)</TableCell>
+        <TableCell>
+          Train / validation / test; in time settings: walk-forward or purged CV — see
+          [cross-validation](/knowledge/machine-learning/general-concepts/cross-validation)
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Starting point</TableCell>
-        <TableCell>Start with <code>learning_rate</code>, <code>n_estimators</code>, <code>max_depth</code>, then refine <code>subsample</code> and <code>colsample_bytree</code></TableCell>
+        <TableCell>
+          Start with <code>learning_rate</code>, <code>n_estimators</code>, <code>max_depth</code>,
+          then refine <code>subsample</code> and <code>colsample_bytree</code>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Early stopping</TableCell>
@@ -200,11 +260,16 @@ This explains why XGBoost can reach very strong performance, but also why it usu
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Metrics</TableCell>
-        <TableCell>Classification: log loss, ROC AUC, PR AUC, F1 depending on the problem; regression: RMSE, MAE</TableCell>
+        <TableCell>
+          Classification: log loss, ROC AUC, PR AUC, F1 depending on the problem; regression: RMSE,
+          MAE
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Main risk</TableCell>
-        <TableCell>Over-tuning on the validation set or leakage if splits are poorly designed</TableCell>
+        <TableCell>
+          Over-tuning on the validation set or leakage if splits are poorly designed
+        </TableCell>
       </TableRow>
     </TableBody>
   </Table>
@@ -240,7 +305,9 @@ This explains why XGBoost can reach very strong performance, but also why it usu
       <TableRow>
         <TableCell className="font-medium">SHAP</TableCell>
         <TableCell>Local decomposition of each feature contribution</TableCell>
-        <TableCell>Richer interpretation; see [ML for markets](/knowledge/machine-learning/market-ml)</TableCell>
+        <TableCell>
+          Richer interpretation; see [ML for markets](/knowledge/machine-learning/market-ml)
+        </TableCell>
       </TableRow>
     </TableBody>
   </Table>
@@ -248,16 +315,29 @@ This explains why XGBoost can reach very strong performance, but also why it usu
 
 ## Applications
 
-<NotaBene>
-I will add concrete, precise examples in the future.
-</NotaBene>
+<NotaBene>I will add concrete, precise examples in the future.</NotaBene>
 
 ## References
 
 <MdxCard>
   <div className="space-y-2">
-    <p>• XGBoost — <a href="https://xgboost.readthedocs.io/en/stable/">general documentation</a></p>
-    <p>• XGBoost Python API — <a href="https://xgboost.readthedocs.io/en/stable/python/python_api.html#xgboost.XGBClassifier">XGBClassifier</a>, <a href="https://xgboost.readthedocs.io/en/stable/python/python_api.html#xgboost.XGBRegressor">XGBRegressor</a></p>
-    <p>• cuML FIL — <a href="https://docs.rapids.ai/api/cuml/stable/fil/">Forest Inference Library</a> for GPU inference on models trained with XGBoost</p>
+    <p>
+      • XGBoost — <a href="https://xgboost.readthedocs.io/en/stable/">general documentation</a>
+    </p>
+    <p>
+      • XGBoost Python API —{' '}
+      <a href="https://xgboost.readthedocs.io/en/stable/python/python_api.html#xgboost.XGBClassifier">
+        XGBClassifier
+      </a>
+      ,{' '}
+      <a href="https://xgboost.readthedocs.io/en/stable/python/python_api.html#xgboost.XGBRegressor">
+        XGBRegressor
+      </a>
+    </p>
+    <p>
+      • cuML FIL —{' '}
+      <a href="https://docs.rapids.ai/api/cuml/stable/fil/">Forest Inference Library</a> for GPU
+      inference on models trained with XGBoost
+    </p>
   </div>
 </MdxCard>

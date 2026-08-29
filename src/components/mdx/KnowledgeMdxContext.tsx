@@ -11,11 +11,7 @@ export function KnowledgeMdxProvider({
   locale: string;
   children: React.ReactNode;
 }): React.JSX.Element {
-  return (
-    <KnowledgeMdxContext.Provider value={locale}>
-      {children}
-    </KnowledgeMdxContext.Provider>
-  );
+  return <KnowledgeMdxContext.Provider value={locale}>{children}</KnowledgeMdxContext.Provider>;
 }
 
 export function useKnowledgeMdxLocale(): string {

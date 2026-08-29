@@ -7,16 +7,13 @@ import type { KnowledgeSectionProps } from '../types';
  * KnowledgeSection - Section de contenu pour la page Knowledge
  * Affiche une section avec titre, description et icône optionnelle
  */
-export function KnowledgeSection({ 
-  title, 
-  description, 
-  icon, 
-  className 
-}: KnowledgeSectionProps) {
+export function KnowledgeSection({ title, description, icon, className }: KnowledgeSectionProps) {
   const Icon = icon ? Icons[icon as keyof typeof Icons] : null;
 
   return (
-    <div className={cn("group rounded-lg border p-4 transition-all hover:border-primary", className)}>
+    <div
+      className={cn('group rounded-lg border p-4 transition-all hover:border-primary', className)}
+    >
       <div className="flex items-center gap-4">
         {Icon && (
           <div className="rounded-full bg-primary/10 p-2 transition-colors group-hover:bg-primary/20">

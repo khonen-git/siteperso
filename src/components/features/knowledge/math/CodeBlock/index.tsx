@@ -27,15 +27,9 @@ const SyntaxHighlighter = dynamic(
  * Bloc de code MDX : coloration via Prism (react-syntax-highlighter).
  * Thème VS Code (vs / vscDarkPlus) selon le mode clair/sombre du site.
  */
-export function CodeBlock({
-  children,
-  language = 'typescript',
-  className,
-}: CodeBlockProps) {
+export function CodeBlock({ children, language = 'typescript', className }: CodeBlockProps) {
   const { resolvedTheme } = useTheme();
-  const syntaxStyle = getPrismSyntaxStyle(
-    resolvedTheme === 'dark' ? 'dark' : 'light'
-  );
+  const syntaxStyle = getPrismSyntaxStyle(resolvedTheme === 'dark' ? 'dark' : 'light');
 
   const code =
     typeof children === 'string'

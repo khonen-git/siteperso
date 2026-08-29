@@ -1,9 +1,9 @@
 ---
-title: "Pullback multi-échelle — existence oui, tradabilité nette non"
+title: 'Pullback multi-échelle — existence oui, tradabilité nette non'
 description: "Sur EURUSD TIMB, le conflit tendance courte vs longue existe et se prédit OOS — mais l'EV net s'effondre après coûts."
-date: "2026-08-18"
+date: '2026-08-18'
 kind: research
-tags: ["process-first", "competing-risks", "gates", "eurusd-lab"]
+tags: ['process-first', 'competing-risks', 'gates', 'eurusd-lab']
 visible: true
 ---
 
@@ -13,7 +13,7 @@ import { Link } from '@/i18n/navigation';
 
 <NotaBene>
 
-**En bref.** Quand la tendance courte (DC 5p) diverge de la longue (DC 15p), le marché entre dans un état de « pullback » mesurable. Sur 2023, **~79 %** des épisodes se résolvent par *Resume* (R), stable disc/dev. Le score causal prédit R vs F **OOS** (ΔLL jusqu'à **+137**). En revanche, la tradabilité nette **échoue** : EV **−0,22 pip** en dev sous spread 0,2.
+**En bref.** Quand la tendance courte (DC 5p) diverge de la longue (DC 15p), le marché entre dans un état de « pullback » mesurable. Sur 2023, **~79 %** des épisodes se résolvent par _Resume_ (R), stable disc/dev. Le score causal prédit R vs F **OOS** (ΔLL jusqu'à **+137**). En revanche, la tradabilité nette **échoue** : EV **−0,22 pip** en dev sous spread 0,2.
 
 </NotaBene>
 
@@ -27,13 +27,13 @@ Le framework **gates 0→4** impose cette discipline : existence → détection 
 
 Un épisode démarre quand <MathInline>{"\\mathrm{sign}(T_L) \\neq \\mathrm{sign}(T_S)"}</MathInline> (tendance longue DC 15p vs courte DC 5p), avec conflit minimal 3 bars. Issues :
 
-| Issue | Symbole | Sens |
-|-------|---------|------|
-| Resume | R | La courte rejoint la longue |
-| Fail | F | La structure longue casse |
-| Censure | C | Fin de série / split |
+| Issue   | Symbole | Sens                        |
+| ------- | ------- | --------------------------- |
+| Resume  | R       | La courte rejoint la longue |
+| Fail    | F       | La structure longue casse   |
+| Censure | C       | Fin de série / split        |
 
-<MathBlock>{"p(R \\mid R \\cup F) \\approx 0{,}79 \\quad \\text{(stable disc/dev)}"}</MathBlock>
+<MathBlock>{'p(R \\mid R \\cup F) \\approx 0{,}79 \\quad \\text{(stable disc/dev)}'}</MathBlock>
 
 **R et F sont des états de structure, pas des PnL.**
 
@@ -41,12 +41,12 @@ Un épisode démarre quand <MathInline>{"\\mathrm{sign}(T_L) \\neq \\mathrm{sign
 
 <MultiScaleGatesFigure />
 
-| Gate | Verdict | Lecture |
-|------|---------|---------|
-| 0–1 | PASS | Null circular-shift rejeté ; hazards stables |
-| 2 | PASS | Score causal discrimine R/F, surtout intra-épisode |
-| 3 | PASS | ΔLL OOS +32 (onset) à +143 (âge 8) vs contexte vol |
-| 4 | WEAK | EV net disc +0,14 → dev **−0,22** pip |
+| Gate | Verdict | Lecture                                            |
+| ---- | ------- | -------------------------------------------------- |
+| 0–1  | PASS    | Null circular-shift rejeté ; hazards stables       |
+| 2    | PASS    | Score causal discrimine R/F, surtout intra-épisode |
+| 3    | PASS    | ΔLL OOS +32 (onset) à +143 (âge 8) vs contexte vol |
+| 4    | WEAK    | EV net disc +0,14 → dev **−0,22** pip              |
 
 <MultiScaleEvNetFigure />
 
@@ -54,11 +54,11 @@ Quintiles du score (dev) : Q1 → 73,7 % Resume, Q5 → **83,5 %** — le score 
 
 ## Ce que j'en retiens
 
-| Question | Réponse |
-|----------|---------|
-| Le pullback existe-t-il ? | **Oui** — > null, taux R stable |
-| Peut-on prédire l'issue OOS ? | **Oui** — ΔLL significatif |
-| Faut-il le trader tel quel ? | **Non** — asymétrie MFE/MAE défavorable |
+| Question                      | Réponse                                 |
+| ----------------------------- | --------------------------------------- |
+| Le pullback existe-t-il ?     | **Oui** — > null, taux R stable         |
+| Peut-on prédire l'issue OOS ? | **Oui** — ΔLL significatif              |
+| Faut-il le trader tel quel ?  | **Non** — asymétrie MFE/MAE défavorable |
 
 > Un bon score de **prédictibilité d'état** n'implique pas un edge **exécutable**.
 
@@ -66,10 +66,12 @@ Quintiles du score (dev) : Q1 → 73,7 % Resume, Q5 → **83,5 %** — le score 
 
 ## Liens & suite
 
-- <Link href="/knowledge/quantitative-finance/financial-econometrics/regimes-hmm">Régimes & HMM</Link>
+- <Link href="/knowledge/quantitative-finance/financial-econometrics/regimes-hmm">
+    Régimes & HMM
+  </Link>
 - Série **eurusd-lab** · voir aussi <Link href="/blog/hmm-slope-denoise">HMM slope</Link>, <Link href="/blog/tr8dr-trend-labels">labels Tr8dr</Link>, <Link href="/blog/stoch-event-sampling">events stoch</Link>.
 - Protocole intégral : `docs/research/01_multi_scale_countertrend.md`.
 
 ---
 
-*Note de recherche — août 2026. EURUSD · TIMB · split disc/dev 2023.*
+_Note de recherche — août 2026. EURUSD · TIMB · split disc/dev 2023._

@@ -21,13 +21,29 @@ export function HmmCifFigure(): React.JSX.Element {
           const labels = ['R', 'E', 'B'];
           return (
             <React.Fragment key={row.label}>
-              <text x="40" y={y + 22} fill="#222" fontSize="12" fontWeight="600" textAnchor="middle">
+              <text
+                x="40"
+                y={y + 22}
+                fill="#222"
+                fontSize="12"
+                fontWeight="600"
+                textAnchor="middle"
+              >
                 {row.label}
               </text>
               {vals.map((v, i) => {
                 const w = v * 320;
                 const rect = (
-                  <rect key={i} x={x} y={y} width={w} height={36} fill={colors[i]} stroke="#fff" strokeWidth={1} />
+                  <rect
+                    key={i}
+                    x={x}
+                    y={y}
+                    width={w}
+                    height={36}
+                    fill={colors[i]}
+                    stroke="#fff"
+                    strokeWidth={1}
+                  />
                 );
                 x += w;
                 return rect;
@@ -55,7 +71,15 @@ export function HmmAucOnsetMidFigure(): React.JSX.Element {
         </text>
         <line x1="60" y1="200" x2="420" y2="200" stroke="#666" strokeWidth="1" />
         <line x1="60" y1="40" x2="60" y2="200" stroke="#666" strokeWidth="1" />
-        <line x1="60" y1="120" x2="420" y2="120" stroke="#888" strokeWidth="1" strokeDasharray="4 4" />
+        <line
+          x1="60"
+          y1="120"
+          x2="420"
+          y2="120"
+          stroke="#888"
+          strokeWidth="1"
+          strokeDasharray="4 4"
+        />
         <text x="52" y="124" fill="#888" fontSize="10" textAnchor="end">
           0,50
         </text>

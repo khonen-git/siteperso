@@ -36,61 +36,57 @@ export const useDistributionStore = create<DistributionState>()(
 
       setActiveDistribution: (distribution: DistributionConfig | null) =>
         set(() => ({ activeDistribution: distribution })),
-      
-      setCurves: (curves: Curve[]) => 
-        set(() => ({ curves })),
-      
-      setFunctionType: (type: 'pdf' | 'cdf') => 
-        set(() => ({ functionType: type })),
-      
-      addCurve: (curve: Curve) => 
+
+      setCurves: (curves: Curve[]) => set(() => ({ curves })),
+
+      setFunctionType: (type: 'pdf' | 'cdf') => set(() => ({ functionType: type })),
+
+      addCurve: (curve: Curve) =>
         set((state: DistributionState) => ({
-          curves: [...state.curves, curve]
+          curves: [...state.curves, curve],
         })),
-      
-      removeCurve: (id: string) => 
+
+      removeCurve: (id: string) =>
         set((state: DistributionState) => ({
-          curves: state.curves.filter((c: Curve) => c.id !== id)
+          curves: state.curves.filter((c: Curve) => c.id !== id),
         })),
-      
-      updateCurve: (id: string, params: Record<string, number>) => 
+
+      updateCurve: (id: string, params: Record<string, number>) =>
         set((state: DistributionState) => ({
-          curves: state.curves.map((c: Curve) => 
-            c.id === id ? { ...c, params } : c
-          )
+          curves: state.curves.map((c: Curve) => (c.id === id ? { ...c, params } : c)),
         })),
-      
-      savePreset: (name: string) => 
+
+      savePreset: (name: string) =>
         set((state: DistributionState) => {
           const newPreset: PresetConfig = {
             id: crypto.randomUUID(),
             name,
             curves: state.curves,
-            functionType: state.functionType
+            functionType: state.functionType,
           };
           return {
-            presets: [...state.presets, newPreset]
+            presets: [...state.presets, newPreset],
           };
         }),
-      
-      loadPreset: (id: string) => 
+
+      loadPreset: (id: string) =>
         set((state: DistributionState) => {
           const preset = state.presets.find((p: PresetConfig) => p.id === id);
           if (!preset) return {};
           return {
             curves: preset.curves,
-            functionType: preset.functionType
+            functionType: preset.functionType,
           };
         }),
-      
-      removePreset: (id: string) => 
+
+      removePreset: (id: string) =>
         set((state: DistributionState) => ({
-          presets: state.presets.filter((p: PresetConfig) => p.id !== id)
-        }))
+          presets: state.presets.filter((p: PresetConfig) => p.id !== id),
+        })),
     }),
     {
       name: 'distribution-store',
       version: 1,
     }
   )
-); 
+);

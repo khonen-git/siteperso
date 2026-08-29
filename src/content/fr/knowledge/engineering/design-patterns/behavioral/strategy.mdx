@@ -10,12 +10,11 @@ import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 # Strategy
 
 <i>
-    Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour proposer un contenu personnel et d'une meilleure qualité.
+  Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour
+  proposer un contenu personnel et d'une meilleure qualité.
 </i>
 
-<MdxCard>
-Définir une famille d'algorithmes interchangeables encapsulés.
-</MdxCard>
+<MdxCard>Définir une famille d'algorithmes interchangeables encapsulés.</MdxCard>
 
 ## Intention
 
@@ -29,24 +28,22 @@ Choisir l'algorithme à l'exécution (tri, tarification, export).
         return f"Paid {amount} by card"
 
 class PaypalPayment:
-    def pay(self, amount):
-        return f"Paid {amount} by PayPal"
+def pay(self, amount):
+return f"Paid {amount} by PayPal"
 
 class Checkout:
-    def __init__(self, strategy):
-        self.strategy = strategy
+def **init**(self, strategy):
+self.strategy = strategy
 
     def process(self, amount):
         print(self.strategy.pay(amount))
 
 Checkout(CardPayment()).process(49)
 Checkout(PaypalPayment()).process(49)`}
+
 </CodeBlock>
 
-<ConsoleOutput title="Sortie console">
-Paid 49 by card
-Paid 49 by PayPal
-</ConsoleOutput>
+<ConsoleOutput title="Sortie console">Paid 49 by card Paid 49 by PayPal</ConsoleOutput>
 
 ## Quand l'utiliser
 

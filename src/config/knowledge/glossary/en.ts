@@ -10,8 +10,7 @@ export const knowledgeGlossaryEn = {
   oob: 'Out-of-bag: observations not in a tree’s bootstrap sample, used as implicit validation to estimate performance.',
   'random-subspace':
     'At each tree split, only a random subset of features is considered; decorrelates trees from one another.',
-  overfitting:
-    'The model memorizes training noise and generalizes poorly to new data.',
+  overfitting: 'The model memorizes training noise and generalizes poorly to new data.',
 } as const;
 
 export type KnowledgeGlossaryKeyEn = keyof typeof knowledgeGlossaryEn;

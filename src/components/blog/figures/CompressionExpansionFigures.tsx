@@ -28,10 +28,24 @@ export function CompressionV1V1bFigure(): React.JSX.Element {
               <text x="20" y={y + 12} fill="#444" fontSize="11">
                 {m.label}
               </text>
-              <text x="180" y={y + 12} fill="#222" fontSize="11" fontWeight="600" textAnchor="middle">
+              <text
+                x="180"
+                y={y + 12}
+                fill="#222"
+                fontSize="11"
+                fontWeight="600"
+                textAnchor="middle"
+              >
                 {m.v1}
               </text>
-              <text x="360" y={y + 12} fill="#222" fontSize="11" fontWeight="600" textAnchor="middle">
+              <text
+                x="360"
+                y={y + 12}
+                fill="#222"
+                fontSize="11"
+                fontWeight="600"
+                textAnchor="middle"
+              >
                 {m.v1b}
               </text>
               <line x1="20" y1={y + 20} x2="500" y2={y + 20} stroke="#eee" strokeWidth="1" />
@@ -61,7 +75,15 @@ export function CompressionAblationFigure(): React.JSX.Element {
         </text>
         <line x1="80" y1="160" x2="400" y2="160" stroke="#666" strokeWidth="1" />
         <line x1="80" y1="40" x2="80" y2="160" stroke="#666" strokeWidth="1" />
-        <line x1="80" y1="100" x2="400" y2="100" stroke="#888" strokeWidth="1" strokeDasharray="4 4" />
+        <line
+          x1="80"
+          y1="100"
+          x2="400"
+          y2="100"
+          stroke="#888"
+          strokeWidth="1"
+          strokeDasharray="4 4"
+        />
         {metrics.map((m, i) => {
           const x = 120 + i * 110;
           return (

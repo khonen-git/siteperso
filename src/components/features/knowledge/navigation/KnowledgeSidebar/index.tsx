@@ -23,8 +23,10 @@ export function KnowledgeSidebar({ className, items }: KnowledgeSidebarProps) {
       )}
     >
       <ScrollArea className="h-full">
-        <nav className="p-4 space-y-2" role="tree" aria-label={t('sidebarLabel')}>
-          <TreeView items={items} />
+        <nav className="p-4 space-y-2" aria-label={t('sidebarLabel')}>
+          <div role="tree">
+            <TreeView items={items} />
+          </div>
         </nav>
       </ScrollArea>
     </aside>

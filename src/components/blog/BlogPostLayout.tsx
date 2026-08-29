@@ -12,10 +12,7 @@ interface BlogPostLayoutProps {
   children: React.ReactNode;
 }
 
-export function BlogPostLayout({
-  post,
-  children,
-}: BlogPostLayoutProps): React.JSX.Element {
+export function BlogPostLayout({ post, children }: BlogPostLayoutProps): React.JSX.Element {
   const t = useTranslations('blog');
 
   return (
@@ -29,9 +26,7 @@ export function BlogPostLayout({
             </span>
             {t(`kinds.${post.kind}`)}
           </p>
-          <h1 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
-            {post.title}
-          </h1>
+          <h1 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">{post.title}</h1>
           <p className="mb-10 text-lg text-muted-foreground">{post.description}</p>
 
           <div className="prose prose-lg dark:prose-invert max-w-none">{children}</div>

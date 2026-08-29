@@ -29,33 +29,40 @@ export function useCalculationCache<T>(options: CacheOptions = {}) {
     });
   }, []);
 
-  const get = useCallback((key: string): T | undefined => {
-    const entry = cacheRef.current.get(key);
-    if (!entry) return undefined;
+  const get = useCallback(
+    (key: string): T | undefined => {
+      const entry = cacheRef.current.get(key);
+      if (!entry) return undefined;
 
-    const now = Date.now();
-    if (now - entry.timestamp > ttl) {
-      cacheRef.current.delete(key);
-      return undefined;
-    }
+      const now = Date.now();
+      if (now - entry.timestamp > ttl) {
+        cacheRef.current.delete(key);
+        return undefined;
+      }
 
-    return entry.value;
-  }, [ttl]);
+      return entry.value;
+    },
+    [ttl]
+  );
 
-  const set = useCallback((key: string, value: T) => {
-    if (cacheRef.current.size >= maxSize) {
-      // Supprimer l'entrée la plus ancienne
-      const oldestKey = Array.from(cacheRef.current.entries())
-        .sort(([, a], [, b]) => a.timestamp - b.timestamp)[0][0];
-      cacheRef.current.delete(oldestKey);
-    }
+  const set = useCallback(
+    (key: string, value: T) => {
+      if (cacheRef.current.size >= maxSize) {
+        // Supprimer l'entrée la plus ancienne
+        const oldestKey = Array.from(cacheRef.current.entries()).sort(
+          ([, a], [, b]) => a.timestamp - b.timestamp
+        )[0][0];
+        cacheRef.current.delete(oldestKey);
+      }
 
-    cacheRef.current.set(key, {
-      key,
-      value,
-      timestamp: Date.now()
-    });
-  }, [maxSize]);
+      cacheRef.current.set(key, {
+        key,
+        value,
+        timestamp: Date.now(),
+      });
+    },
+    [maxSize]
+  );
 
   const clear = useCallback(() => {
     cacheRef.current.clear();
@@ -65,6 +72,6 @@ export function useCalculationCache<T>(options: CacheOptions = {}) {
     generateKey,
     get,
     set,
-    clear
+    clear,
   };
-} 
+}

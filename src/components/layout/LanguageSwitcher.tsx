@@ -12,10 +12,7 @@ export function LanguageSwitcher(): React.JSX.Element {
   const pathname = usePathname();
 
   return (
-    <nav
-      aria-label="Language"
-      className="flex items-center gap-1 rounded-md border p-0.5 text-sm"
-    >
+    <nav aria-label="Language" className="flex items-center gap-1 rounded-md border p-0.5 text-sm">
       {routing.locales.map((loc) => (
         <Link
           key={loc}

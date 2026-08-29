@@ -8,12 +8,12 @@ Inventaire technique et éditorial du dépôt `siteperso`. Priorités P0 → P2.
 
 Le dossier **`/showcase`** était un lab local temporaire — **hors site**, ignoré par git (`.gitignore`). Le contenu utile a été déplacé :
 
-| Élément | Emplacement |
-|---------|-------------|
-| Protocoles intégraux (5 études) | `docs/research/0N_*.md` — voir [`docs/research/README.md`](docs/research/README.md) |
-| Scripts figures matplotlib | `scripts/research-figures/` → sortie `docs/research/assets/<slug>/` |
-| Articles publics (synthèse) | `src/content/{fr,en}/blog/` — 5 paires, `kind: research`, tag `eurusd-lab` |
-| Figures site | Composants React inline dans `src/components/blog/figures/` (enregistrés dans `MDXComponents.tsx`) |
+| Élément                         | Emplacement                                                                                        |
+| ------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Protocoles intégraux (5 études) | `docs/research/0N_*.md` — voir [`docs/research/README.md`](docs/research/README.md)                |
+| Scripts figures matplotlib      | `scripts/research-figures/` → sortie `docs/research/assets/<slug>/`                                |
+| Articles publics (synthèse)     | `src/content/{fr,en}/blog/` — 5 paires, `kind: research`, tag `eurusd-lab`                         |
+| Figures site                    | Composants React inline dans `src/components/blog/figures/` (enregistrés dans `MDXComponents.tsx`) |
 
 **Reste à faire par l'auteur** : réécriture éditoriale des articles blog ; suppression manuelle du dossier `showcase/` local si encore présent.
 
@@ -23,12 +23,12 @@ Le dossier **`/showcase`** était un lab local temporaire — **hors site**, ign
 
 ### Knowledge (109 MDX/locale, dont 79 `index.mdx`)
 
-| Métrique | FR | EN |
-|----------|----|----|
-| Total MDX | 109 | 109 |
-| Stubs auto-générés | 54 | 54 |
-| Pages avec contenu | 55 | 55 |
-| Hubs `index.mdx` complets | 25 | 25 |
+| Métrique                  | FR  | EN  |
+| ------------------------- | --- | --- |
+| Total MDX                 | 109 | 109 |
+| Stubs auto-générés        | 54  | 54  |
+| Pages avec contenu        | 55  | 55  |
+| Hubs `index.mdx` complets | 25  | 25  |
 
 - **~68 % des hubs** (`index.mdx`) sont des stubs (« Ce contenu est en cours de rédaction »), générés via `scripts/knowledge-stub-manifest.json` (83 entrées) + `scripts/generate-knowledge-stubs.mjs`.
 - **Piliers entièrement stub** : Outils (5), Finance quantitative (hubs), Machine Learning (hubs), Ingénierie (hubs sauf design patterns), Mathématiques (linear-algebra, numerical-methods, information-theory), Statistiques (descriptive, time-series, feuilles tests param./non-param.).
@@ -38,10 +38,10 @@ Le dossier **`/showcase`** était un lab local temporaire — **hors site**, ign
 
 ### ESLint / build
 
-- `next.config.js` : `eslint.ignoreDuringBuilds: true`.
-- `npm run lint` : **1148 problèmes** (976 erreurs, 172 warnings) — surtout `prettier/prettier` / CRLF ; ~962 fixables avec `--fix`.
+- `next.config.js` : `eslint.ignoreDuringBuilds: false` — gate active.
+- `npm run lint` : **0 erreur**, ~171 warnings (types de retour, etc.).
+- `npm run build` : **OK** (~78 s, 174 pages SSG). Voir [`LINT-BUILD.md`](LINT-BUILD.md).
 - TypeScript au build : OK (`ignoreBuildErrors: false`).
-- Doc procédure : `docs/todo-later.md`, `docs/tooling.md`.
 
 ### Pyodide
 
@@ -60,14 +60,14 @@ Le dossier **`/showcase`** était un lab local temporaire — **hors site**, ign
 
 ### Blog FR/EN
 
-| Élément | État |
-|---------|------|
+| Élément                    | État                                                                                                                       |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | Articles recherche publiés | 5 (`compression-expansion`, `multi-scale-countertrend`, `hmm-slope-denoise`, `tr8dr-trend-labels`, `stoch-event-sampling`) |
-| Parité FR/EN | **Oui** — 5 paires traduites, `kind: research`, tag `eurusd-lab` |
-| Templates | `template-pensee`, `template-recherche` — `visible: false` |
-| i18n UI | `messages/fr|en/blog.json` (header, kinds, empty, backToList) |
-| Protocoles | Liens vers `docs/research/0N_*.md` en bas de chaque article |
-| Tests | `src/lib/blog/content.test.ts` — couvre FR + EN (≥5 posts, slug `stoch-event-sampling`) |
+| Parité FR/EN               | **Oui** — 5 paires traduites, `kind: research`, tag `eurusd-lab`                                                           |
+| Templates                  | `template-pensee`, `template-recherche` — `visible: false`                                                                 |
+| i18n UI                    | `messages/fr                                                                                                               | en/blog.json` (header, kinds, empty, backToList) |
+| Protocoles                 | Liens vers `docs/research/0N_*.md` en bas de chaque article                                                                |
+| Tests                      | `src/lib/blog/content.test.ts` — couvre FR + EN (≥5 posts, slug `stoch-event-sampling`)                                    |
 
 ### Projets
 
@@ -114,7 +114,7 @@ Le dossier **`/showcase`** était un lab local temporaire — **hors site**, ign
 
 ### Tooling / tests (cf. `docs/todo-later.md`)
 
-- Passer ESLint au build après passe Prettier/LF.
+- Passer ESLint au build après passe Prettier/LF. ~~**Fait** — voir `LINT-BUILD.md`.~~
 - Migrations majeures séparées : ESLint 9, React 19, Next 16.
 - Playwright multi-viewport (home, knowledge, projects).
 - Drawer sidebar Knowledge mobile (`lg` breakpoint).
@@ -125,13 +125,13 @@ Le dossier **`/showcase`** était un lab local temporaire — **hors site**, ign
 
 ### Protocoles — `docs/research/`
 
-| Fichier | Article blog |
-|---------|--------------|
+| Fichier                          | Article blog                     |
+| -------------------------------- | -------------------------------- |
 | `01_multi_scale_countertrend.md` | `/blog/multi-scale-countertrend` |
-| `02_hmm_slope_denoise.md` | `/blog/hmm-slope-denoise` |
-| `03_tr8dr_trend_labels.md` | `/blog/tr8dr-trend-labels` |
-| `04_compression_expansion.md` | `/blog/compression-expansion` |
-| `05_stoch_event_context.md` | `/blog/stoch-event-sampling` |
+| `02_hmm_slope_denoise.md`        | `/blog/hmm-slope-denoise`        |
+| `03_tr8dr_trend_labels.md`       | `/blog/tr8dr-trend-labels`       |
+| `04_compression_expansion.md`    | `/blog/compression-expansion`    |
+| `05_stoch_event_context.md`      | `/blog/stoch-event-sampling`     |
 
 Figures site = React ; PNG lab optionnels dans `docs/research/assets/<slug>/`.
 
@@ -155,12 +155,12 @@ Knowledge touché : `normal/index.mdx`, `statistical-tests/index.mdx` (FR+EN). I
 
 ## Synthèse chiffrée
 
-| Zone | Maturité |
-|------|----------|
-| Knowledge | ~50 % MDX avec contenu ; ~32 % hubs rédigés ; piliers finance/ML/engineering vides |
-| Blog | **Production-ready** (5×2 articles recherche + templates) |
-| Projets | Contenu OC présent ; polish visuel / ranking manquant |
-| Activity | **Prototype** — données fictives |
-| References | **MVP** — 14 liens |
-| Contact | **Partiel** — pas de formulaire actif |
-| Tooling | TS strict ; ESLint hors build ; ~1k lint errors |
+| Zone       | Maturité                                                                           |
+| ---------- | ---------------------------------------------------------------------------------- |
+| Knowledge  | ~50 % MDX avec contenu ; ~32 % hubs rédigés ; piliers finance/ML/engineering vides |
+| Blog       | **Production-ready** (5×2 articles recherche + templates)                          |
+| Projets    | Contenu OC présent ; polish visuel / ranking manquant                              |
+| Activity   | **Prototype** — données fictives                                                   |
+| References | **MVP** — 14 liens                                                                 |
+| Contact    | **Partiel** — pas de formulaire actif                                              |
+| Tooling    | TS strict ; ESLint actif au build ; ~171 warnings ; build ~78 s / 174 pages        |

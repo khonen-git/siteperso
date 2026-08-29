@@ -12,13 +12,7 @@ jest.mock('@/lib/code-syntax-theme', () => ({
 }));
 
 jest.mock('next/dynamic', () => () => {
-  return function MockHighlighter({
-    children,
-    language,
-  }: {
-    children: string;
-    language: string;
-  }) {
+  return function MockHighlighter({ children, language }: { children: string; language: string }) {
     return (
       <pre data-testid="syntax" data-language={language}>
         {children}
@@ -36,16 +30,11 @@ describe('CodeBlock', () => {
 
   it('passes language to highlighter', () => {
     render(<CodeBlock language="python">{'print(1)'}</CodeBlock>);
-    expect(screen.getByTestId('syntax')).toHaveAttribute(
-      'data-language',
-      'python'
-    );
+    expect(screen.getByTestId('syntax')).toHaveAttribute('data-language', 'python');
   });
 
   it('applies custom className on wrapper', () => {
-    const { container } = render(
-      <CodeBlock className="custom-class">{`test`}</CodeBlock>
-    );
+    const { container } = render(<CodeBlock className="custom-class">{`test`}</CodeBlock>);
     expect(container.firstChild).toHaveClass('custom-class');
   });
 });

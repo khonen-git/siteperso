@@ -10,12 +10,11 @@ import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 # Mediator
 
 <i>
-    Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour proposer un contenu personnel et d'une meilleure qualité.
+  Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour
+  proposer un contenu personnel et d'une meilleure qualité.
 </i>
 
-<MdxCard>
-Centraliser les communications entre objets via un médiateur.
-</MdxCard>
+<MdxCard>Centraliser les communications entre objets via un médiateur.</MdxCard>
 
 ## Intention
 
@@ -38,9 +37,9 @@ Réduire les dépendances en étoile entre composants UI ou services.
                 user.receive(sender, message)
 
 class User:
-    def __init__(self, name):
-        self.name = name
-        self.room = None
+def **init**(self, name):
+self.name = name
+self.room = None
 
     def say(self, message):
         self.room.send(self.name, message)
@@ -53,6 +52,7 @@ alice, bob = User("Alice"), User("Bob")
 room.register(alice)
 room.register(bob)
 alice.say("Hello")`}
+
 </CodeBlock>
 
 <ConsoleOutput title="Sortie console" output={`Bob <- Alice: Hello`} />

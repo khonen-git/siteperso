@@ -4,18 +4,20 @@ import { TreeView } from '..';
 
 const mockItems = [
   {
-    title: "Parent",
+    title: 'Parent',
     children: [
-      { title: "Child 1", href: "/child1" },
-      { title: "Child 2", href: "/child2" }
-    ]
-  }
+      { title: 'Child 1', href: '/child1' },
+      { title: 'Child 2', href: '/child2' },
+    ],
+  },
 ];
 
 jest.mock('@/i18n/navigation', () => ({
   usePathname: () => '/child1',
   Link: ({ href, children, ...props }: { href: string; children: React.ReactNode }) => (
-    <a href={href} {...props}>{children}</a>
+    <a href={href} {...props}>
+      {children}
+    </a>
   ),
 }));
 

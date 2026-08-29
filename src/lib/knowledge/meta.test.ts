@@ -6,9 +6,13 @@ jest.mock('@/i18n/routing', () => ({
   },
 }));
 
-import { isKnowledgeDraft } from './meta';
+import { isKnowledgeDraft, clearKnowledgeDraftCache } from './meta';
 
 describe('isKnowledgeDraft', () => {
+  beforeEach(() => {
+    clearKnowledgeDraftCache();
+  });
+
   it('detects auto-generated stub pages', () => {
     expect(isKnowledgeDraft('fr', ['tools', 'git-github'])).toBe(true);
     expect(isKnowledgeDraft('en', ['tools', 'git-github'])).toBe(true);

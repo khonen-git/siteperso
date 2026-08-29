@@ -43,6 +43,20 @@ export function filterNavigationTree(items: TreeItem[], locale: string): TreeIte
   return filtered;
 }
 
+const filteredNavCache = new Map<string, TreeItem[]>();
+
 export function getFilteredNavigationData(locale: string): TreeItem[] {
-  return filterNavigationTree(getNavigationData(locale), locale);
+  const cached = filteredNavCache.get(locale);
+  if (cached) {
+    return cached;
+  }
+
+  const filtered = filterNavigationTree(getNavigationData(locale), locale);
+  filteredNavCache.set(locale, filtered);
+  return filtered;
+}
+
+/** Vide le cache (tests uniquement). */
+export function clearFilteredNavigationCache(): void {
+  filteredNavCache.clear();
 }

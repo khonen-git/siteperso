@@ -8,50 +8,65 @@ Synthèse courte. Détail procédural : `docs/tooling.md`, `docs/todo-later.md`.
 
 | Métrique | Valeur |
 |----------|--------|
-| Total | **1148** (976 erreurs, 172 warnings) |
-| Auto-fixables | **~962** erreurs (`npm run lint -- --fix`) |
-| ESLint au build | **Désactivé** (`eslint.ignoreDuringBuilds: true` dans `next.config.js`) |
+| Erreurs | **0** |
+| Warnings | **~171** (tolérés — types de retour, `any` dans test/) |
+| ESLint au build | **Actif** (`ignoreDuringBuilds: false`) |
 
-### Règles dominantes
+### Commandes
 
-| Règle | Nature |
-|-------|--------|
-| `prettier/prettier` | ~84 % des erreurs — CRLF Windows, indentation, retours ligne |
-| `@typescript-eslint/explicit-function-return-type` | Majorité des warnings — types de retour manquants |
-| `react/display-name` | Composants anonymes (tests, mocks) |
-| `@typescript-eslint/no-explicit-any` | Surtout `test/setup.ts`, mocks |
+```bash
+npm run lint          # 0 erreur attendu
+npm run lint -- --fix
+npm run format        # prettier --write .
+npm run format:check
+npm run typecheck     # tsc --noEmit
+npm run validate      # lint + typecheck + test + build
+```
 
-### Zones les plus touchées
+### Hygiène
 
-- `src/components/mdx/**` — visualiseurs, presets
-- `src/components/features/knowledge/**`
-- `test/**`, `coverage/**` (artefacts Jest — à exclure ou ignorer)
-- Fichiers config racine (`jest.config.js`, `next.config.js`)
-
-### Action recommandée
-
-1. Normaliser les fins de ligne (LF) + `npm run lint -- --fix`
-2. Réactiver ESLint au build une fois la dette Prettier soldée
-3. Exclure `coverage/` de ESLint si pas déjà fait
+- [`.eslintignore`](.eslintignore) — `coverage/`, configs, tests (`**/*.test.*`, `**/__tests__/**`)
+- [`.prettierignore`](.prettierignore), [`.gitattributes`](.gitattributes) (`eol=lf`)
+- `endOfLine: "lf"` dans `.prettierrc` et `.eslintrc.json`
 
 ---
 
 ## Build (`npm run build`)
 
-| Élément | État |
-|---------|------|
-| TypeScript | **OK** (`ignoreBuildErrors: false`) |
-| Compilation Next.js | OK en conditions normales |
-| Dernière exécution (2026-08-29) | **Échec EPERM** sur `.next/trace` — fichier verrouillé (serveur dev ou autre processus Next actif) |
+| Étape | Durée typique (machine locale) |
+|-------|------------------------------|
+| Compilation webpack | ~27–46 s |
+| ESLint + TypeScript (gate Next) | ~10 s |
+| SSG **174 pages** (Knowledge MDX, blog, projects…) | ~20–30 s |
+| **Total** | **~1–1,5 min** |
 
-### Action recommandée
+Dernière exécution réussie : **~78 s** (174 pages statiques).
 
-Arrêter `npm run dev`, supprimer `.next/`, relancer le build.
+### Pourquoi ça peut sembler « bloqué »
+
+1. **Processus Node concurrents** (`npm run dev` + build) → EPERM sur `.next/trace`. Arrêter le dev server avant le build.
+2. **Sortie PowerShell pipée** (`| Select-Object -Last N`) — bufferise tout jusqu'à la fin.
+3. **Phase SSG silencieuse** — peu de logs entre « Generating static pages (0/N) » et la fin.
+
+### Optimisations appliquées
+
+| Optimisation | Effet |
+|--------------|-------|
+| `listPublishedKnowledgeSlugs` (stubs masqués) | ~218 → **112** routes Knowledge / locale |
+| Cache `isKnowledgeDraft` + `getFilteredNavigationData` | évite des milliers de `readFileSync` redondants par page |
+| `experimental.optimizePackageImports` (lucide, recharts, radix icons) | bundles plus légers |
+| Fix MDX (`MdxCard` + listes imbriquées) | build ne plante plus au prerender |
+
+### Pistes futures (non implémentées)
+
+- ISR / `dynamic` pour pages Knowledge peu consultées
+- `next build` avec cache CI (`.next/cache`)
+- Audit MDX : éviter listes Markdown à l'intérieur de `<MdxCard>` (pattern fragile)
+- Réduire les ~171 warnings ESLint
 
 ---
 
-## Non bloquant pour la prod actuelle
+## Dette reportée
 
-- ESLint n’empêche pas le déploiement (ignoré au build).
-- TypeScript strict reste la barrière principale.
-- Dette principalement cosmétique (formatage) + conventions TS dans le code legacy.
+- Warnings ESLint (`explicit-function-return-type`, etc.)
+- Migrations ESLint 9 / React 19 / Next 16 — `docs/todo-later.md` §2

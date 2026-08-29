@@ -6,29 +6,37 @@ description: Typage dynamique, annotations et outils pour sécuriser du code Pyt
 import { MdxCard } from '@/components/mdx/MdxCard';
 import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
 import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from '@/components/ui/table';
 
 # Typage
 
 <MdxCard>
-En Python, le **type est porté par la valeur**, pas par la variable. On peut enrichir le code avec des **annotations** et des **vérificateurs** (mypy, Pyright) sans perdre la souplesse du langage.
+  En Python, le **type est porté par la valeur**, pas par la variable. On peut enrichir le code avec
+  des **annotations** et des **vérificateurs** (mypy, Pyright) sans perdre la souplesse du langage.
 </MdxCard>
 
 ## Typage dynamique vs statique
 
 Python est **dynamiquement typé** : une variable peut référencer des valeurs de types différents au fil du temps. Des langages comme **C++** ou **Rust** sont **statiquement typés** : le type est fixé à la compilation.
 
-En **python** : 
+En **python** :
 
 <CodeBlock language="python">
-{`x = 2
+  {`x = 2
 x = "hello"  # valide : x pointe maintenant vers une chaîne`}
 </CodeBlock>
 
 En **C++** :
 
 <CodeBlock language="cpp">
-{`int x = 2;
+  {`int x = 2;
 // x = "hello";  // erreur de compilation`}
 </CodeBlock>
 
@@ -51,13 +59,12 @@ Sur une petite fonction isolée, le typage implicite suffit. Sur une codebase la
         self.qty = qty
         self.price = price
 
+def apply*commission(order: MarketOrder, rate: float) -> float:
+return order.qty * order.price \_ (1 + rate)
 
-def apply_commission(order: MarketOrder, rate: float) -> float:
-    return order.qty * order.price * (1 + rate)
+apply_commission(MarketOrder("AAPL", 100, 150.0), 0.001) # OK
+apply_commission(100, 0.001) # AttributeError : int n'a pas qty ni price`}
 
-
-apply_commission(MarketOrder("AAPL", 100, 150.0), 0.001)   # OK
-apply_commission(100, 0.001)  # AttributeError : int n'a pas qty ni price`}
 </CodeBlock>
 
 <ConsoleOutput output={`AttributeError: 'int' object has no attribute 'qty'`} />
@@ -74,10 +81,11 @@ Aucune annotation : tout est résolu à l’exécution. C’est le comportement 
 {`def add_exposure(a, b):
     return a + b
 
-add_exposure(0.5, 0.3)        # 0.8 — somme de poids
-add_exposure("0.5", "0.3")    # "0.50.3" — concaténation, pas une somme !
-add_exposure([0.5], [0.3])    # [0.5, 0.3] — concaténation de listes
-add_exposure(0.5, "0.3")      # TypeError à l'exécution`}
+add_exposure(0.5, 0.3) # 0.8 — somme de poids
+add_exposure("0.5", "0.3") # "0.50.3" — concaténation, pas une somme !
+add_exposure([0.5], [0.3]) # [0.5, 0.3] — concaténation de listes
+add_exposure(0.5, "0.3") # TypeError à l'exécution`}
+
 </CodeBlock>
 
 Le piège : `+` ne fait pas la même chose selon le type (somme, concaténation…). Sans annotations, une colonne lue en `str` depuis un CSV peut passer inaperçue jusqu’au backtest.
@@ -89,22 +97,19 @@ Depuis Python 3, on peut **annoter** paramètres et valeurs de retour. Ces annot
 <CodeBlock language="python">
 {`from typing import Optional
 
-
 def apply_slippage(price: float, slippage_bps: float) -> float:
-    return price * (1 + slippage_bps / 10_000)
+return price \* (1 + slippage_bps / 10_000)
 
+def get_reference_price(symbol: str) -> Optional[float]: # None si pas de cotation disponible
+...
 
-def get_reference_price(symbol: str) -> Optional[float]:
-    # None si pas de cotation disponible
-    ...
-
-
-class TickBuffer[T]:  # génériques (PEP 695, Python 3.12+)
-    def __init__(self) -> None:
-        self._ticks: list[T] = []
+class TickBuffer[T]: # génériques (PEP 695, Python 3.12+)
+def **init**(self) -> None:
+self.\_ticks: list[T] = []
 
     def push(self, tick: T) -> None:
         self._ticks.append(tick)`}
+
 </CodeBlock>
 
 Avec **mypy** ou **Pyright**, on peut vérifier le projet avant l’exécution :
@@ -119,7 +124,8 @@ Exemple de ce qu’un outil peut remonter :
 {`def notional(price: float, qty: int) -> float:
     return price * qty
 
-notional(150.25, "100")  # erreur statique : incompatible type "str"; expected "int"`}
+notional(150.25, "100") # erreur statique : incompatible type "str"; expected "int"`}
+
 </CodeBlock>
 
 Le **gradual typing** signifie qu’on peut typer **progressivement** : commencer par les modules critiques, laisser le reste sans annotations au début.
@@ -132,17 +138,18 @@ Pour des **données entrantes** (API HTTP, JSON, config), les annotations seules
 {`from pydantic import BaseModel, ValidationError
 from typing import Literal
 
-
 class MarketOrderPayload(BaseModel):
-    symbol: str
-    side: Literal["buy", "sell"]
-    qty: int
-    limit_price: float | None = None
+symbol: str
+side: Literal["buy", "sell"]
+qty: int
+limit_price: float | None = None
 
+MarketOrderPayload(symbol="EURUSD", side="buy", qty=1000) # OK
 
-MarketOrderPayload(symbol="EURUSD", side="buy", qty=1000)       # OK
-# MarketOrderPayload(symbol="EURUSD", side="buy", qty="1000")  # souvent OK : coercion
-# MarketOrderPayload(symbol="EURUSD", side="buy", qty=-10)    # ValidationError`}
+# MarketOrderPayload(symbol="EURUSD", side="buy", qty="1000") # souvent OK : coercion
+
+# MarketOrderPayload(symbol="EURUSD", side="buy", qty=-10) # ValidationError`}
+
 </CodeBlock>
 
 On reste en Python dynamique, mais on **refuse** tôt les données incohérentes — utile aux frontières du système (flux broker, fichiers de barres, config de backtest).

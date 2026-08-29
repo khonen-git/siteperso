@@ -37,9 +37,7 @@ export function listProjectFileNames(locale: string): string[] {
     return [];
   }
 
-  return fs
-    .readdirSync(directory)
-    .filter((fileName) => fileName.endsWith('.mdx'));
+  return fs.readdirSync(directory).filter((fileName) => fileName.endsWith('.mdx'));
 }
 
 function resolveProjectsDirectory(locale: string): string {
@@ -91,9 +89,7 @@ export function getProjects(locale: string): Project[] {
     }
   }
 
-  return projects.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
+  return projects.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export interface ProjectPageData {
@@ -101,10 +97,7 @@ export interface ProjectPageData {
   source: string;
 }
 
-export function getProject(
-  locale: string,
-  slug: string
-): ProjectPageData | null {
+export function getProject(locale: string, slug: string): ProjectPageData | null {
   const fullPath = resolveProjectFilePath(locale, slug);
 
   if (!fullPath) {

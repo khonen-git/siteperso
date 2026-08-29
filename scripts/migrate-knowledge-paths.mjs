@@ -62,26 +62,20 @@ for (const locale of LOCALES) {
   ensureDir(k('quantitative-finance', 'volatility', 'implied-vs-realized'));
 
   for (const file of ['asset-classes.mdx', 'contract-types.mdx']) {
-    gitMv(
-      k('finance', file),
-      k('quantitative-finance', 'markets-products', file),
-    );
+    gitMv(k('finance', file), k('quantitative-finance', 'markets-products', file));
   }
 
   gitMv(
     k('finance', 'options.mdx'),
-    k('quantitative-finance', 'options-derivatives', 'options.mdx'),
+    k('quantitative-finance', 'options-derivatives', 'options.mdx')
   );
 
   gitMv(
     k('finance', 'black-scholes'),
-    k('quantitative-finance', 'options-derivatives', 'black-scholes'),
+    k('quantitative-finance', 'options-derivatives', 'black-scholes')
   );
 
-  gitMv(
-    k('finance', 'volatility'),
-    k('quantitative-finance', 'volatility', 'implied-vs-realized'),
-  );
+  gitMv(k('finance', 'volatility'), k('quantitative-finance', 'volatility', 'implied-vs-realized'));
 
   // data-science → machine-learning / financial-econometrics
   ensureDir(k('machine-learning', 'general-concepts'));
@@ -90,29 +84,29 @@ for (const locale of LOCALES) {
 
   gitMv(
     k('data-science', 'cross-validation'),
-    k('machine-learning', 'general-concepts', 'cross-validation'),
+    k('machine-learning', 'general-concepts', 'cross-validation')
   );
 
   gitMv(
     k('data-science', 'machine-learning', 'supervised', 'random-forest'),
-    k('machine-learning', 'classical-models', 'random-forest'),
+    k('machine-learning', 'classical-models', 'random-forest')
   );
 
   gitMv(
     k('data-science', 'machine-learning', 'supervised', 'xgboost'),
-    k('machine-learning', 'classical-models', 'xgboost'),
+    k('machine-learning', 'classical-models', 'xgboost')
   );
 
   gitMv(
     k('data-science', 'machine-learning', 'unsupervised', 'hmm'),
-    k('quantitative-finance', 'financial-econometrics', 'regimes-hmm'),
+    k('quantitative-finance', 'financial-econometrics', 'regimes-hmm')
   );
 
   // probability
   ensureDir(k('probability', 'distributions', 'normal'));
   gitMv(
     k('mathematics', 'probability', 'distributions', 'continuous', 'normal.mdx'),
-    k('probability', 'distributions', 'normal', 'index.mdx'),
+    k('probability', 'distributions', 'normal', 'index.mdx')
   );
 
   // statistics
@@ -121,22 +115,22 @@ for (const locale of LOCALES) {
 
   gitMv(
     k('mathematics', 'statistics', 'inductive', 'statistical-tests'),
-    k('statistics', 'inference', 'statistical-tests'),
+    k('statistics', 'inference', 'statistical-tests')
   );
 
   gitMv(
     k('mathematics', 'statistics', 'inductive', 'fundamentals'),
-    k('statistics', 'inference', 'fundamentals'),
+    k('statistics', 'inference', 'fundamentals')
   );
 
   gitMv(
     k('mathematics', 'statistics', 'descriptive', 'fundamentals'),
-    k('statistics', 'descriptive', 'fundamentals'),
+    k('statistics', 'descriptive', 'fundamentals')
   );
 
   gitMv(
     k('mathematics', 'statistics', 'descriptive', 'visualization'),
-    k('statistics', 'descriptive', 'visualization'),
+    k('statistics', 'descriptive', 'visualization')
   );
 
   // cleanup empty legacy dirs

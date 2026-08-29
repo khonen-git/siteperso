@@ -20,7 +20,7 @@ export function renderWithProviders(ui: React.ReactElement) {
 export const mockNextImage = () => {
   jest.mock('next/image', () => ({
     __esModule: true,
-    default: (props: any) => <img {...props} />
+    default: (props: any) => <img alt="" {...props} />,
   }));
 };
 
@@ -30,7 +30,7 @@ export const mockNextImage = () => {
 export const mockNextLink = () => {
   jest.mock('next/link', () => ({
     __esModule: true,
-    default: ({ children, href }: any) => <a href={href}>{children}</a>
+    default: ({ children, href }: any) => <a href={href}>{children}</a>,
   }));
 };
 
@@ -39,8 +39,11 @@ export const mockNextLink = () => {
  */
 export const mockIcons = () => {
   jest.mock('@/components/ui/icons', () => ({
-    Icons: new Proxy({}, {
-      get: () => () => <span data-testid="mock-icon" />
-    })
+    Icons: new Proxy(
+      {},
+      {
+        get: () => () => <span data-testid="mock-icon" />,
+      }
+    ),
   }));
 };

@@ -148,10 +148,7 @@ export function OptionPayoffVisualizer({ className }: { className?: string }): R
         </div>
         <div className="space-y-2">
           <span className="text-sm font-medium">{t.position}</span>
-          <Select
-            value={isLong ? 'long' : 'short'}
-            onValueChange={(v) => setIsLong(v === 'long')}
-          >
+          <Select value={isLong ? 'long' : 'short'} onValueChange={(v) => setIsLong(v === 'long')}>
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>

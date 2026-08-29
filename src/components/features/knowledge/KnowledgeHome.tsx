@@ -12,7 +12,11 @@ const PILLAR_SECTIONS = [
   { id: 'probability', titleKey: 'probabilityTitle', textKey: 'probabilityText' },
   { id: 'statistics', titleKey: 'statisticsTitle', textKey: 'statisticsText' },
   { id: 'machine-learning', titleKey: 'machineLearningTitle', textKey: 'machineLearningText' },
-  { id: 'quantitative-finance', titleKey: 'quantitativeFinanceTitle', textKey: 'quantitativeFinanceText' },
+  {
+    id: 'quantitative-finance',
+    titleKey: 'quantitativeFinanceTitle',
+    textKey: 'quantitativeFinanceText',
+  },
   { id: 'engineering', titleKey: 'engineeringTitle', textKey: 'engineeringText' },
   { id: 'tools', titleKey: 'toolsTitle', textKey: 'toolsText' },
 ] as const;

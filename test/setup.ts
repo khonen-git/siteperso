@@ -9,20 +9,21 @@ jest.mock('next/font/google', () => ({
 
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) =>
-      React.createElement('div', props, children),
+    div: ({ children, ...props }: any) => React.createElement('div', props, children),
   },
 }));
 
 jest.mock('next/link', () => {
-  return ({ children, ...props }: any) =>
-    React.createElement('a', props, children);
+  function MockLink({ children, ...props }: any) {
+    return React.createElement('a', props, children);
+  }
+  MockLink.displayName = 'MockLink';
+  return MockLink;
 });
 
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: ({ src, alt, ...props }: any) =>
-    React.createElement('img', { src, alt, ...props }),
+  default: ({ src, alt, ...props }: any) => React.createElement('img', { src, alt, ...props }),
 }));
 
 Object.defineProperty(window, 'matchMedia', {
@@ -44,8 +45,7 @@ if (typeof globalThis.crypto === 'undefined') {
   globalThis.crypto = {};
 }
 if (typeof globalThis.crypto.randomUUID !== 'function') {
-  globalThis.crypto.randomUUID = () =>
-    '00000000-0000-4000-8000-000000000000';
+  globalThis.crypto.randomUUID = () => '00000000-0000-4000-8000-000000000000';
 }
 
 class IntersectionObserverMock {

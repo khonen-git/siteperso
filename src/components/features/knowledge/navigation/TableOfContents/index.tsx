@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -19,9 +19,7 @@ export function TableOfContents({ className }: TableOfContentsProps) {
   const [items, setItems] = useState<TOCItem[]>([]);
 
   useEffect(() => {
-    const contentRoot = document.querySelector(
-      '[data-knowledge-content]'
-    ) as HTMLElement | null;
+    const contentRoot = document.querySelector('[data-knowledge-content]') as HTMLElement | null;
     if (!contentRoot) return;
 
     let observer: IntersectionObserver | null = null;
@@ -80,15 +78,15 @@ export function TableOfContents({ className }: TableOfContentsProps) {
   }, []);
 
   return (
-    <nav className={cn("space-y-1", className)} aria-label="Table des matières">
+    <nav className={cn('space-y-1', className)} aria-label="Table des matières">
       {items.map(({ id, text, level }) => (
         <a
           key={id}
           href={`#${id}`}
           className={cn(
-            "block text-sm py-1 transition-colors hover:text-foreground/80",
-            activeId === id ? "text-foreground font-medium" : "text-foreground/60",
-            level === 1 ? "text-base font-semibold" : level === 2 ? "pl-4" : "pl-8"
+            'block text-sm py-1 transition-colors hover:text-foreground/80',
+            activeId === id ? 'text-foreground font-medium' : 'text-foreground/60',
+            level === 1 ? 'text-base font-semibold' : level === 2 ? 'pl-4' : 'pl-8'
           )}
           onClick={(e) => {
             e.preventDefault();

@@ -38,10 +38,10 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
       <div className="absolute inset-0 -z-10 transition-all duration-[2000ms]">
         {/* Grille de fond */}
         <div className="absolute inset-0 bg-grid-gray-900/5 bg-[size:32px_32px] transition-all duration-[2000ms]" />
-        
+
         {/* Dégradé principal */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background to-background/80 transition-all duration-[2000ms]" />
-        
+
         {/* Formes animées */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div
@@ -54,7 +54,7 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
             transition={{
               duration: 10,
               repeat: Infinity,
-              repeatType: "reverse",
+              repeatType: 'reverse',
             }}
           />
           <motion.div
@@ -67,7 +67,7 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
             transition={{
               duration: 10,
               repeat: Infinity,
-              repeatType: "reverse",
+              repeatType: 'reverse',
             }}
           />
         </div>
@@ -89,7 +89,7 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
           >
             Data - Développement - IA
           </motion.div>
-          
+
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -98,7 +98,7 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
           >
             {title}
           </motion.h1>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -107,7 +107,7 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
           >
             {subtitle}
           </motion.p>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -116,9 +116,9 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
           >
             {description}
           </motion.p>
-          
+
           {/* Boutons */}
-            {/*
+          {/*
             TODO: Corriger la transition des boutons lors du switch entre le mode clair et sombre
 
             Problème: Les boutons clignotent lors du switch entre le mode clair et sombre
@@ -138,11 +138,9 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
               <Link href="/projects" className="relative z-10">
                 Voir mes projets
               </Link>
-              <motion.div
-                className="absolute inset-0 -z-10 bg-primary/20"
-              />
+              <motion.div className="absolute inset-0 -z-10 bg-primary/20" />
             </Button>
-            
+
             <Button
               size="lg"
               variant="outline"
@@ -151,9 +149,7 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
               <Link href="/contact" className="relative z-10">
                 Me contacter
               </Link>
-              <motion.div
-                className="absolute inset-0 -z-10 bg-secondary/10"
-              />
+              <motion.div className="absolute inset-0 -z-10 bg-secondary/10" />
             </Button>
           </motion.div>
 
@@ -169,7 +165,7 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
               transition={{
                 duration: 1.5,
                 repeat: Infinity,
-                repeatType: "reverse",
+                repeatType: 'reverse',
               }}
               className="flex flex-col items-center"
             >
@@ -180,7 +176,7 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
                   transition={{
                     duration: 1.5,
                     repeat: Infinity,
-                    repeatType: "reverse",
+                    repeatType: 'reverse',
                   }}
                 />
               </div>
@@ -191,4 +187,4 @@ export function HeroSection({ title, subtitle, description }: HeroSectionProps):
       </div>
     </section>
   );
-} 
+}

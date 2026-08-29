@@ -1,4 +1,4 @@
-import { VariantProps } from "class-variance-authority";
+import { VariantProps } from 'class-variance-authority';
 
 export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
   value?: number;
@@ -14,22 +14,22 @@ export interface ToastProps {
     label: string;
     onClick: () => void;
   };
-  variant?: "default" | "destructive" | "success";
+  variant?: 'default' | 'destructive' | 'success';
   duration?: number;
   className?: string;
 }
 
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: "default" | "destructive" | "success" | "warning";
+  variant?: 'default' | 'destructive' | 'success' | 'warning';
   title?: string;
 }
 
 export interface LoadingSpinnerProps extends React.SVGAttributes<SVGElement> {
-  size?: "sm" | "default" | "lg";
+  size?: 'sm' | 'default' | 'lg';
 }
 
 export interface ToastProviderProps {
   children: React.ReactNode;
-  swipeDirection?: "up" | "down" | "left" | "right";
+  swipeDirection?: 'up' | 'down' | 'left' | 'right';
   duration?: number;
 }

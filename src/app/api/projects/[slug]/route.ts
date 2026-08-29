@@ -5,15 +5,10 @@ import { getProject, serializeProjectSource } from '@/lib/projects/content';
 
 function resolveLocale(searchParams: URLSearchParams): string {
   const requested = searchParams.get('locale');
-  return requested && hasLocale(routing.locales, requested)
-    ? requested
-    : routing.defaultLocale;
+  return requested && hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
 }
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ slug: string }> }
-) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const locale = resolveLocale(request.nextUrl.searchParams);
 
@@ -44,9 +39,6 @@ export async function GET(
     });
   } catch (error) {
     console.error(`Erreur lors du chargement du projet ${slug}:`, error);
-    return NextResponse.json(
-      { error: 'Erreur lors du chargement du projet' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Erreur lors du chargement du projet' }, { status: 500 });
   }
 }

@@ -52,11 +52,7 @@ export function DistributionVisualizer({ distribution }: DistributionVisualizerP
 
   return (
     <div className="space-y-4">
-      <DistributionPlot
-        distribution={distribution}
-        calculator={calculator}
-        cache={cache}
-      />
+      <DistributionPlot distribution={distribution} calculator={calculator} cache={cache} />
       <CurveCalculator
         distribution={distribution}
         curve={defaultCurve}

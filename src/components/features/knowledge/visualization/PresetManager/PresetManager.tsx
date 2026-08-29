@@ -38,18 +38,10 @@ export function PresetManager() {
             {presets.map((preset) => (
               <div key={preset.name} className="flex items-center gap-2">
                 <span className="flex-1">{preset.name}</span>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => loadPreset(preset.name)}
-                >
+                <Button variant="outline" size="sm" onClick={() => loadPreset(preset.name)}>
                   Charger
                 </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => removePreset(preset.name)}
-                >
+                <Button variant="outline" size="sm" onClick={() => removePreset(preset.name)}>
                   Supprimer
                 </Button>
               </div>
@@ -60,5 +52,3 @@ export function PresetManager() {
     </div>
   );
 }
-
-

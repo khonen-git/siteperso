@@ -22,7 +22,11 @@ function TreeNode({ item, level = 0 }: TreeNodeProps) {
   const [isExpanded, setIsExpanded] = useTreeNodeState(item.href, isPathActive);
 
   return (
-    <div role="treeitem" aria-expanded={hasChildren ? isExpanded : undefined}>
+    <div
+      role="treeitem"
+      aria-expanded={hasChildren ? isExpanded : undefined}
+      aria-selected={isActive}
+    >
       <div
         className={cn(
           'flex items-center justify-between py-2 px-2',
@@ -48,10 +52,7 @@ function TreeNode({ item, level = 0 }: TreeNodeProps) {
             aria-label={isExpanded ? t('collapseSection') : t('expandSection')}
           >
             <ChevronDown
-              className={cn(
-                'h-4 w-4 transition-transform',
-                isExpanded && 'transform rotate-180'
-              )}
+              className={cn('h-4 w-4 transition-transform', isExpanded && 'transform rotate-180')}
             />
           </button>
         )}

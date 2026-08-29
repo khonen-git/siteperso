@@ -6,11 +6,11 @@ import type { CurveCalculatorProps } from './types';
  * CurveCalculator - Composant de calcul de courbe
  * Responsable uniquement du calcul et de la notification des données
  */
-export function CurveCalculator({ 
-  curve, 
-  distribution, 
+export function CurveCalculator({
+  curve,
+  distribution,
   functionType,
-  onDataCalculated 
+  onDataCalculated,
 }: CurveCalculatorProps) {
   const curveData = useCurveData(curve, distribution, functionType);
 

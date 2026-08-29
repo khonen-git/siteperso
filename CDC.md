@@ -90,18 +90,21 @@ Ce site servira à la fois de vitrine pour mes compétences et de plateforme pou
 ## Infrastructure
 
 ### Statique
+
 - Pages principales (Accueil, À propos, Portfolio)
 - Documentation et tutoriels en MDX
 - Blog en MDX
 - Système de connaissances basé sur MDX
 
 ### Dynamique (API Routes Next.js)
+
 - Formulaire de contact
 - Analytics simples
 - Recherche basique
 - Gestion des métadonnées
 
 ### Services Externes
+
 - Algolia : Recherche avancée
 - Cloudflare : CDN et protection
 - GitHub : Stockage du contenu

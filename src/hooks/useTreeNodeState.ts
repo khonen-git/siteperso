@@ -26,4 +26,4 @@ export function useTreeNodeState(href: string | undefined, isPathActive: boolean
   }, [isExpanded, href, isClient]);
 
   return [isExpanded, setIsExpanded] as const;
-} 
+}

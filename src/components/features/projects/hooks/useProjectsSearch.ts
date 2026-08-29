@@ -22,31 +22,27 @@ export function useProjectsSearch(projects: Project[]): UseProjectsSearchReturn 
     }
 
     // Appliquer la recherche fuzzy et calculer les scores
-    const projectsWithScores: ProjectWithScore[] = projects.map(project => {
-      const searchResults = fuzzySearch(
-        [project],
-        searchQuery,
-        {
-          threshold: 0.3,
-          keys: ['title', 'description', 'tags']
-        }
-      );
+    const projectsWithScores: ProjectWithScore[] = projects.map((project) => {
+      const searchResults = fuzzySearch([project], searchQuery, {
+        threshold: 0.3,
+        keys: ['title', 'description', 'tags'],
+      });
 
       return {
         ...project,
-        similarityScore: searchResults.length > 0 ? searchResults[0].similarity : 0
+        similarityScore: searchResults.length > 0 ? searchResults[0].similarity : 0,
       };
     });
 
     // Filtrer les résultats avec un score > 0 et trier par score
     return projectsWithScores
-      .filter(project => project.similarityScore > 0)
+      .filter((project) => project.similarityScore > 0)
       .sort((a, b) => b.similarityScore - a.similarityScore);
   }, [projects, searchQuery]);
 
   return {
     searchQuery,
     setSearchQuery,
-    searchResults
+    searchResults,
   };
 }

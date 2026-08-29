@@ -1,9 +1,9 @@
 ---
-title: "HMM slope denoising — régime oui, entrée non"
+title: 'HMM slope denoising — régime oui, entrée non'
 description: "Un HMM 3 états débruite la pente OLS multi-horizon. Structure soft-fade stable, hazard mid-épisode utile — pas de gate d'entrée ni EV net."
-date: "2026-08-19"
+date: '2026-08-19'
 kind: research
-tags: ["hmm", "soft-fade", "survival", "eurusd-lab"]
+tags: ['hmm', 'soft-fade', 'survival', 'eurusd-lab']
 visible: true
 ---
 
@@ -25,14 +25,14 @@ Piège classique : confondre un taux conditionnel élevé de ré-alignement avec
 
 ## Setup (résumé)
 
-| Paramètre | Valeur |
-|-----------|--------|
-| Actif / barrière | EURUSD · TIMB |
-| Fit HMM | 60j 2023 → freeze |
-| Éval | IS post-calib 2023 + **OOS 2024** |
-| HMM | C2, K=3, sticky E[D]=40 |
+| Paramètre        | Valeur                            |
+| ---------------- | --------------------------------- |
+| Actif / barrière | EURUSD · TIMB                     |
+| Fit HMM          | 60j 2023 → freeze                 |
+| Éval             | IS post-calib 2023 + **OOS 2024** |
+| HMM              | C2, K=3, sticky E[D]=40           |
 
-Onset soft-fade (ex. long) : <MathInline>{"s_{16}"}</MathInline> passe de +1 à 0 alors que <MathInline>{"s_{128}=+1"}</MathInline>.
+Onset soft-fade (ex. long) : <MathInline>{"s*{16}"}</MathInline> passe de +1 à 0 alors que <MathInline>{"s*{128}=+1"}</MathInline>.
 
 Issues absorbantes : **Resolve** (R), **Escalate** (E), **Break** (B).
 
@@ -40,13 +40,13 @@ Issues absorbantes : **Resolve** (R), **Escalate** (E), **Break** (B).
 
 <HmmCifFigure />
 
-| Gate | Verdict | Détail |
-|------|---------|--------|
-| 0 Setup | PASS | Freeze OOS corr 0,955–0,996 |
-| 1 Existence | PASS | CIF stable IS/OOS |
-| 2 Detectability | **FAIL** | AUC E onset 0,522 |
-| 3 Predictability | PARTIAL | AUC E mid 0,816 |
-| 4 Tradability | **FAIL** | mean pips @0,2 RT ≈ −0,21 OOS |
+| Gate             | Verdict  | Détail                        |
+| ---------------- | -------- | ----------------------------- |
+| 0 Setup          | PASS     | Freeze OOS corr 0,955–0,996   |
+| 1 Existence      | PASS     | CIF stable IS/OOS             |
+| 2 Detectability  | **FAIL** | AUC E onset 0,522             |
+| 3 Predictability | PARTIAL  | AUC E mid 0,816               |
+| 4 Tradability    | **FAIL** | mean pips @0,2 RT ≈ −0,21 OOS |
 
 <HmmAucOnsetMidFigure />
 
@@ -54,12 +54,12 @@ PnL par issue : resolve **~+4,3 pips**, escalate **~−1,8** — avec ~**68 %** 
 
 ## Ce que j'en retiens
 
-| Question | Réponse |
-|----------|---------|
-| Le dénoiseur est-il sain ? | **Oui** — rapide (~23 s/an), freeze stable |
-| Gate d'entrée à l'onset ? | **Non** |
-| Risque dynamique mid-épisode ? | **Oui** — person-period |
-| Trade standalone ? | **Non** |
+| Question                       | Réponse                                    |
+| ------------------------------ | ------------------------------------------ |
+| Le dénoiseur est-il sain ?     | **Oui** — rapide (~23 s/an), freeze stable |
+| Gate d'entrée à l'onset ?      | **Non**                                    |
+| Risque dynamique mid-épisode ? | **Oui** — person-period                    |
+| Trade standalone ?             | **Non**                                    |
 
 > Le « ~90 % de ré-alignement » est **conditionnel** à R∪B — pas P(onset gagnant).
 
@@ -67,10 +67,12 @@ PnL par issue : resolve **~+4,3 pips**, escalate **~−1,8** — avec ~**68 %** 
 
 ## Liens & suite
 
-- <Link href="/knowledge/quantitative-finance/financial-econometrics/regimes-hmm">Régimes & HMM</Link>
+- <Link href="/knowledge/quantitative-finance/financial-econometrics/regimes-hmm">
+    Régimes & HMM
+  </Link>
 - Série **eurusd-lab** · voir aussi <Link href="/blog/multi-scale-countertrend">pullback multi-échelle</Link>, <Link href="/blog/tr8dr-trend-labels">labels Tr8dr</Link>.
 - Protocole intégral : `docs/research/02_hmm_slope_denoise.md`.
 
 ---
 
-*Note de recherche — août 2026. EURUSD · TIMB · 2023–2024.*
+_Note de recherche — août 2026. EURUSD · TIMB · 2023–2024._

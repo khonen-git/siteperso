@@ -11,10 +11,7 @@ export function getKnowledgeDirectory(locale: string): string {
 
 function getKnowledgeCandidatePaths(locale: string, slug: string[]): string[] {
   const baseDir = getKnowledgeDirectory(locale);
-  return [
-    path.join(baseDir, `${slug.join('/')}.mdx`),
-    path.join(baseDir, ...slug, 'index.mdx'),
-  ];
+  return [path.join(baseDir, `${slug.join('/')}.mdx`), path.join(baseDir, ...slug, 'index.mdx')];
 }
 
 /** Résout le fichier MDX (repli sur la locale par défaut si absent). */

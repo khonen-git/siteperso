@@ -11,13 +11,7 @@ import {
 import { cn } from '@/lib/utils';
 import type { TagsSelectProps } from './types';
 
-export function TagsSelect({
-  value,
-  onChange,
-  availableTags,
-  labels,
-  className,
-}: TagsSelectProps) {
+export function TagsSelect({ value, onChange, availableTags, labels, className }: TagsSelectProps) {
   const handleValueChange = (newValue: string) => {
     if (newValue === 'all') {
       onChange([]);

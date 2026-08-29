@@ -6,11 +6,7 @@ jest.mock('@/i18n/routing', () => ({
   },
 }));
 
-import {
-  getProject,
-  getProjects,
-  listProjectFileNames,
-} from './content';
+import { getProject, getProjects, listProjectFileNames } from './content';
 import { isValidProjectFrontmatter } from './validation';
 import { routing } from '@/i18n/routing';
 
@@ -92,16 +88,12 @@ describe('listProjectFileNames / generateStaticParams shape', () => {
         slug: fileName.replace(/\.mdx$/, ''),
       }))
     );
-    const frSlugs = listProjectFileNames('fr').map((f) =>
-      f.replace(/\.mdx$/, '')
-    );
+    const frSlugs = listProjectFileNames('fr').map((f) => f.replace(/\.mdx$/, ''));
 
     expect(params.length).toBeGreaterThan(0);
     for (const slug of frSlugs) {
       expect(params).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({ locale: 'fr', slug }),
-        ])
+        expect.arrayContaining([expect.objectContaining({ locale: 'fr', slug })])
       );
     }
   });

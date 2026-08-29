@@ -8,22 +8,9 @@ import type { BadgeProps } from './types';
  * Badge - Composant d'affichage d'étiquette
  * Supporte différentes variantes et peut être supprimable
  */
-export function Badge({ 
-  className, 
-  variant, 
-  removable,
-  onRemove,
-  children,
-  ...props 
-}: BadgeProps) {
+export function Badge({ className, variant, removable, onRemove, children, ...props }: BadgeProps) {
   return (
-    <div 
-      className={cn(badgeVariants({ variant }), 
-        removable && "pr-1",
-        className
-      )} 
-      {...props}
-    >
+    <div className={cn(badgeVariants({ variant }), removable && 'pr-1', className)} {...props}>
       <span className="flex items-center gap-1">
         {children}
         {removable && (

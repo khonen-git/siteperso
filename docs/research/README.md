@@ -4,13 +4,13 @@ Protocoles intégraux des études EURUSD / barres TIMB. Les articles publics du 
 
 ## Index
 
-| Protocole | Article blog |
-|-----------|--------------|
+| Protocole                                                          | Article blog                                               |
+| ------------------------------------------------------------------ | ---------------------------------------------------------- |
 | [01_multi_scale_countertrend.md](./01_multi_scale_countertrend.md) | [Multi-scale countertrend](/blog/multi-scale-countertrend) |
-| [02_hmm_slope_denoise.md](./02_hmm_slope_denoise.md) | [HMM slope denoise](/blog/hmm-slope-denoise) |
-| [03_tr8dr_trend_labels.md](./03_tr8dr_trend_labels.md) | [Tr8dr trend labels](/blog/tr8dr-trend-labels) |
-| [04_compression_expansion.md](./04_compression_expansion.md) | [Compression → expansion](/blog/compression-expansion) |
-| [05_stoch_event_context.md](./05_stoch_event_context.md) | [Stoch event sampling](/blog/stoch-event-sampling) |
+| [02_hmm_slope_denoise.md](./02_hmm_slope_denoise.md)               | [HMM slope denoise](/blog/hmm-slope-denoise)               |
+| [03_tr8dr_trend_labels.md](./03_tr8dr_trend_labels.md)             | [Tr8dr trend labels](/blog/tr8dr-trend-labels)             |
+| [04_compression_expansion.md](./04_compression_expansion.md)       | [Compression → expansion](/blog/compression-expansion)     |
+| [05_stoch_event_context.md](./05_stoch_event_context.md)           | [Stoch event sampling](/blog/stoch-event-sampling)         |
 
 ## Figures
 

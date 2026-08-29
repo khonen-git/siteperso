@@ -10,12 +10,11 @@ import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 # Visitor
 
 <i>
-    Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour proposer un contenu personnel et d'une meilleure qualité.
+  Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour
+  proposer un contenu personnel et d'une meilleure qualité.
 </i>
 
-<MdxCard>
-Séparer un algorithme des classes sur lesquelles il opère.
-</MdxCard>
+<MdxCard>Séparer un algorithme des classes sur lesquelles il opère.</MdxCard>
 
 ## Intention
 
@@ -32,15 +31,15 @@ Ajouter des opérations sur une hiérarchie stable sans la modifier.
         return visitor.visit_circle(self)
 
 class Square:
-    def __init__(self, side):
-        self.side = side
+def **init**(self, side):
+self.side = side
 
     def accept(self, visitor):
         return visitor.visit_square(self)
 
 class AreaVisitor:
-    def visit_circle(self, circle):
-        return 3.14 * circle.radius ** 2
+def visit_circle(self, circle):
+return 3.14 \* circle.radius \*\* 2
 
     def visit_square(self, square):
         return square.side ** 2
@@ -48,13 +47,11 @@ class AreaVisitor:
 shapes = [Circle(2), Square(3)]
 visitor = AreaVisitor()
 for s in shapes:
-    print(round(s.accept(visitor), 2))`}
+print(round(s.accept(visitor), 2))`}
+
 </CodeBlock>
 
-<ConsoleOutput title="Sortie console">
-12.56
-9
-</ConsoleOutput>
+<ConsoleOutput title="Sortie console">12.56 9</ConsoleOutput>
 
 ## Quand l'utiliser
 

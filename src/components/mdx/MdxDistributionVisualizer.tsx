@@ -9,9 +9,9 @@ interface MdxDistributionVisualizerProps {
   showPresets?: boolean;
 }
 
-export function MdxDistributionVisualizer({ 
+export function MdxDistributionVisualizer({
   distribution,
-  showPresets = false 
+  showPresets = false,
 }: MdxDistributionVisualizerProps) {
   return (
     <div className="my-8 space-y-6">
@@ -24,4 +24,4 @@ export function MdxDistributionVisualizer({
       )}
     </div>
   );
-} 
+}

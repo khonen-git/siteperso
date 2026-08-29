@@ -7,9 +7,5 @@ interface MdxCardProps {
 }
 
 export function MdxCard({ children, className }: MdxCardProps) {
-  return (
-    <Card className={cn('p-4 mb-6', className)}>
-      {children}
-    </Card>
-  );
-} 
+  return <Card className={cn('p-4 mb-6', className)}>{children}</Card>;
+}

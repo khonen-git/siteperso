@@ -5,9 +5,7 @@ import { getProjects } from '@/lib/projects/content';
 
 function resolveLocale(searchParams: URLSearchParams): string {
   const requested = searchParams.get('locale');
-  return requested && hasLocale(routing.locales, requested)
-    ? requested
-    : routing.defaultLocale;
+  return requested && hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
 }
 
 export async function GET(request: NextRequest) {

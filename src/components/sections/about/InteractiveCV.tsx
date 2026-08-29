@@ -16,9 +16,7 @@ export function InteractiveCV(): React.JSX.Element {
           transition={{ duration: 0.5 }}
           className="mx-auto max-w-4xl text-center"
         >
-          <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
-            Curriculum Vitae
-          </h2>
+          <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">Curriculum Vitae</h2>
           <p className="mb-8 text-muted-foreground">
             Une vue détaillée de mon parcours professionnel et de mes compétences.
           </p>
@@ -70,10 +68,9 @@ export function InteractiveCV(): React.JSX.Element {
                 </div>
               </CardContent>
             </Card> */}
-            
           </div>
         </motion.div>
       </div>
     </section>
   );
-} 
+}

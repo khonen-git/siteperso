@@ -161,15 +161,15 @@ const nextConfig = {
     ],
   },
   eslint: {
-    // Still noisy (mostly prettier/CRLF); keep off until a dedicated format pass
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   typescript: {
     ignoreBuildErrors: false,
   },
   experimental: {
-    serverActions: {}
-  }
+    serverActions: {},
+    optimizePackageImports: ['lucide-react', 'recharts', '@radix-ui/react-icons'],
+  },
 };
 
-module.exports = withNextIntl(withMDX(nextConfig)); 
+module.exports = withNextIntl(withMDX(nextConfig));

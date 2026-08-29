@@ -2,43 +2,23 @@
 
 Backlog volontairement reporté. Ne bloque pas le build TypeScript (`ignoreBuildErrors: false`).
 
-## 1. ESLint au build
+## 1. ESLint au build — **Fait (2026-08-29)**
 
-**État actuel :** `eslint.ignoreDuringBuilds: true` dans [`next.config.js`](../next.config.js).
-
-**Problème :** `npm run lint` remonte ~900+ erreurs (surtout `prettier/prettier` / fins de ligne CRLF vs LF), plus des warnings (`explicit-function-return-type`, `no-explicit-any`, `react/display-name` dans les mocks de test).
-
-**Objectif :** pouvoir passer à `ignoreDuringBuilds: false` sans casser CI / Vercel.
-
-### Étapes suggérées
-
-1. Sauvegarder / committer l’état actuel.
-2. Passer une fois le formatage massif (idéalement LF via EditorConfig) :
-   ```bash
-   npx prettier --write .
-   # ou
-   npm run lint -- --fix
-   ```
-3. Corriger à la main ce que `--fix` ne règle pas (display names, `any`, etc. dans `test/`).
-4. Vérifier : `npm run lint` → 0 erreur.
-5. Dans `next.config.js` : `eslint.ignoreDuringBuilds: false`.
-6. Smoke : `npm run build`.
-
-### Notes
-
-- Préférer LF (voir [`.editorconfig`](../.editorconfig) et `endOfLine: auto` dans [`.prettierrc`](../.prettierrc)).
-- Éviter de mélanger cette passe avec une montée de version ESLint / Next.
+- `eslint.ignoreDuringBuilds: false` dans [`next.config.js`](../next.config.js)
+- `npm run lint` → **0 erreur** (~171 warnings tolérés)
+- Passe Prettier/LF, `.eslintignore`, scripts `format` / `typecheck` / `validate`
+- Build OK (~78 s, 174 pages SSG) — détail dans [`LINT-BUILD.md`](../LINT-BUILD.md)
 
 ## 2. Migrations majeures (séparées)
 
 À traiter chacune dans une PR dédiée, pas en même temps que le formatage :
 
-| Sujet | Pourquoi attendre |
-|-------|-------------------|
-| ESLint 9 + flat config | Breaking ; `eslint-config-next` / plugins à aligner |
-| typescript-eslint 8 | Dépend d’ESLint 9 |
-| React 19 | Breaking peer deps, tests, libs UI |
-| Next.js 16 | Deprecate `next lint` ; migration App Router / config |
+| Sujet                  | Pourquoi attendre                                     |
+| ---------------------- | ----------------------------------------------------- |
+| ESLint 9 + flat config | Breaking ; `eslint-config-next` / plugins à aligner   |
+| typescript-eslint 8    | Dépend d'ESLint 9                                     |
+| React 19               | Breaking peer deps, tests, libs UI                    |
+| Next.js 16             | Deprecate `next lint` ; migration App Router / config |
 
 Quand ESLint 9 sera en place, retirer progressivement la dépendance à `npm run lint:next` (wrapper déprécié).
 

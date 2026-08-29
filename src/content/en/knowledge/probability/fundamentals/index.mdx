@@ -9,7 +9,8 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
 # Fundamentals
 
 <MdxCard>
-This page covers core probability concepts: axiomatic framework, random variables, moments, and limit theorems. For concrete laws, see [Distributions](/knowledge/probability/distributions).
+  This page covers core probability concepts: axiomatic framework, random variables, moments, and
+  limit theorems. For concrete laws, see [Distributions](/knowledge/probability/distributions).
 </MdxCard>
 
 ## Axiomatic framework
@@ -17,9 +18,10 @@ This page covers core probability concepts: axiomatic framework, random variable
 <MdxCard>
 A probability <MathInline>P</MathInline> on a space <MathInline>{"\\Omega"}</MathInline> satisfies:
 
-1. <MathInline>{"P(A) \\geq 0"}</MathInline> for every event <MathInline>A</MathInline>
-2. <MathInline>{"P(\\Omega) = 1"}</MathInline>
-3. <MathInline>{"\\sigma"}</MathInline>-additivity: for disjoint events <MathInline>{"A_i"}</MathInline>,
+1. <MathInline>{'P(A) \\geq 0'}</MathInline> for every event <MathInline>A</MathInline>
+2. <MathInline>{'P(\\Omega) = 1'}</MathInline>
+3. <MathInline>{'\\sigma'}</MathInline>-additivity: for disjoint events
+   <MathInline>{'A_i'}</MathInline>,
 
 <MathBlock>{"P\\left(\\bigcup_{i} A_i\\right) = \\sum_{i} P(A_i)"}</MathBlock>
 </MdxCard>
@@ -29,11 +31,12 @@ A probability <MathInline>P</MathInline> on a space <MathInline>{"\\Omega"}</Mat
 <MdxCard>
 A **probability space** is a triple <MathInline>{"(\\Omega, \\mathcal{F}, P)"}</MathInline>:
 
-- <MathInline>{"\\Omega"}</MathInline>: sample space
-- <MathInline>{"\\mathcal{F}"}</MathInline>: sigma-algebra of measurable events
+- <MathInline>{'\\Omega'}</MathInline>: sample space
+- <MathInline>{'\\mathcal{F}'}</MathInline>: sigma-algebra of measurable events
 - <MathInline>P</MathInline>: probability measure
 
 The sigma-algebra supports countable limits on events.
+
 </MdxCard>
 
 ## Random variable and distribution
@@ -47,6 +50,7 @@ Its **law** is the pushforward measure <MathInline>{"P_X(B) = P(X \\in B)"}</Mat
 - **Continuous**: density <MathInline>{"f_X"}</MathInline> with <MathInline>{"P(X \\in B) = \\int_B f_X(x)\\,dx"}</MathInline>
 
 CDF: <MathInline>{"F_X(x) = P(X \\leq x)"}</MathInline>.
+
 </MdxCard>
 
 ## Expectation
@@ -54,11 +58,14 @@ CDF: <MathInline>{"F_X(x) = P(X \\leq x)"}</MathInline>.
 <MdxCard>
 **Expectation** is the center of mass of a law:
 
-<MathBlock>{"\\mathbb{E}[X] = \\sum_x x\\,p_X(x) \\quad \\text{or} \\quad \\int_{\\mathbb{R}} x f_X(x)\\,dx"}</MathBlock>
+<MathBlock>
+  {'\\mathbb{E}[X] = \\sum_x x\\,p_X(x) \\quad \\text{or} \\quad \\int_{\\mathbb{R}} x f_X(x)\\,dx'}
+</MathBlock>
 
 **Linearity**: <MathInline>{"\\mathbb{E}[aX + bY] = a\\mathbb{E}[X] + b\\mathbb{E}[Y]"}</MathInline> (no independence required).
 
 **Transfer**: <MathInline>{"\\mathbb{E}[g(X)] = \\int g(x)\\,dP_X(x)"}</MathInline>.
+
 </MdxCard>
 
 ## Variance, covariance, and correlation
@@ -66,11 +73,14 @@ CDF: <MathInline>{"F_X(x) = P(X \\leq x)"}</MathInline>.
 <MdxCard>
 <MathBlock>{"\\mathrm{Var}(X) = \\mathbb{E}[(X - \\mathbb{E}[X])^2] = \\mathbb{E}[X^2] - (\\mathbb{E}[X])^2"}</MathBlock>
 
-<MathBlock>{"\\mathrm{Cov}(X,Y) = \\mathbb{E}[(X-\\mathbb{E}[X])(Y-\\mathbb{E}[Y])]"}</MathBlock>
+<MathBlock>{'\\mathrm{Cov}(X,Y) = \\mathbb{E}[(X-\\mathbb{E}[X])(Y-\\mathbb{E}[Y])]'}</MathBlock>
 
-<MathBlock>{"\\rho_{X,Y} = \\frac{\\mathrm{Cov}(X,Y)}{\\sigma_X \\sigma_Y} \\in [-1, 1]"}</MathBlock>
+<MathBlock>
+  {'\\rho_{X,Y} = \\frac{\\mathrm{Cov}(X,Y)}{\\sigma_X \\sigma_Y} \\in [-1, 1]'}
+</MathBlock>
 
 For a sum: <MathInline>{"\\mathrm{Var}(X+Y) = \\mathrm{Var}(X) + \\mathrm{Var}(Y) + 2\\mathrm{Cov}(X,Y)"}</MathInline>; if <MathInline>X</MathInline> and <MathInline>Y</MathInline> are independent, the cross term vanishes.
+
 </MdxCard>
 
 ## Moments, skewness, and kurtosis
@@ -82,6 +92,7 @@ The <MathInline>k</MathInline>-th moment: <MathInline>{"\\mathbb{E}[X^k]"}</Math
 - **Kurtosis**: tail heaviness relative to the normal
 
 In finance, high kurtosis signals **tail risk**.
+
 </MdxCard>
 
 ## Conditional law and independence
@@ -89,11 +100,12 @@ In finance, high kurtosis signals **tail risk**.
 <MdxCard>
 Conditional law of <MathInline>X</MathInline> given <MathInline>Y</MathInline>:
 
-<MathBlock>{"P(X \\in A \\mid Y = y) = \\frac{P(X \\in A, Y = y)}{P(Y = y)}"}</MathBlock>
+<MathBlock>{'P(X \\in A \\mid Y = y) = \\frac{P(X \\in A, Y = y)}{P(Y = y)}'}</MathBlock>
 
-**Independence**: <MathInline>{"P(X \\in A, Y \\in B) = P(X \\in A)\\,P(Y \\in B)"}</MathInline>, or <MathInline>{"f_{X,Y}(x,y) = f_X(x) f_Y(y)"}</MathInline>.
+**Independence**: <MathInline>{"P(X \\in A, Y \\in B) = P(X \\in A)\\,P(Y \\in B)"}</MathInline>, or <MathInline>{"f\_{X,Y}(x,y) = f_X(x) f_Y(y)"}</MathInline>.
 
 Independence <MathInline>{"\\neq"}</MathInline> uncorrelatedness (except in the Gaussian case).
+
 </MdxCard>
 
 ## Law of large numbers
@@ -101,9 +113,12 @@ Independence <MathInline>{"\\neq"}</MathInline> uncorrelatedness (except in the 
 <MdxCard>
 For i.i.d. <MathInline>{"X_1, \\ldots, X_n"}</MathInline> with <MathInline>{"\\mathbb{E}[|X_1|] < \\infty"}</MathInline>:
 
-<MathBlock>{"\\bar{X}_n = \\frac{1}{n}\\sum_{i=1}^n X_i \\xrightarrow[n\\to\\infty]{} \\mathbb{E}[X_1]"}</MathBlock>
+<MathBlock>
+  {'\\bar{X}_n = \\frac{1}{n}\\sum_{i=1}^n X_i \\xrightarrow[n\\to\\infty]{} \\mathbb{E}[X_1]'}
+</MathBlock>
 
 The sample mean converges to the true mean — foundation of Monte Carlo and long backtests.
+
 </MdxCard>
 
 ## Central limit theorem
@@ -111,7 +126,12 @@ The sample mean converges to the true mean — foundation of Monte Carlo and lon
 <MdxCard>
 If <MathInline>{"\\mathbb{E}[X_1]=\\mu"}</MathInline> and <MathInline>{"\\mathrm{Var}(X_1)=\\sigma^2 < \\infty"}</MathInline>:
 
-<MathBlock>{"\\frac{\\bar{X}_n - \\mu}{\\sigma / \\sqrt{n}} \\xrightarrow[n\\to\\infty]{\\mathcal{L}} \\mathcal{N}(0,1)"}</MathBlock>
+<MathBlock>
+  {
+    '\\frac{\\bar{X}_n - \\mu}{\\sigma / \\sqrt{n}} \\xrightarrow[n\\to\\infty]{\\mathcal{L}} \\mathcal{N}(0,1)'
+  }
+</MathBlock>
 
 Justifies widespread use of the [normal distribution](/knowledge/probability/distributions/normal) and approximation of estimation errors.
+
 </MdxCard>

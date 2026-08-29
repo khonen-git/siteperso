@@ -18,9 +18,7 @@ interface ProjectsPageClientProps {
   projects: Project[];
 }
 
-export function ProjectsPageClient({
-  projects,
-}: ProjectsPageClientProps): React.JSX.Element {
+export function ProjectsPageClient({ projects }: ProjectsPageClientProps): React.JSX.Element {
   const t = useTranslations('projects');
 
   const categoryLabels = React.useMemo(() => {
@@ -34,17 +32,10 @@ export function ProjectsPageClient({
     );
   }, [projects, t]);
 
-  const {
-    filters,
-    setCategory,
-    setTags,
-    setSortBy,
-    filteredProjects,
-    allTags,
-  } = useProjectsFilter(projects);
+  const { filters, setCategory, setTags, setSortBy, filteredProjects, allTags } =
+    useProjectsFilter(projects);
 
-  const { searchQuery, setSearchQuery, searchResults } =
-    useProjectsSearch(filteredProjects);
+  const { searchQuery, setSearchQuery, searchResults } = useProjectsSearch(filteredProjects);
 
   const finalProjects = searchQuery ? searchResults : filteredProjects;
 
@@ -100,11 +91,7 @@ export function ProjectsPageClient({
           </div>
 
           {filters.tags.length > 0 && (
-            <SelectedTags
-              tags={filters.tags}
-              onRemove={handleRemoveTag}
-              themes={themes}
-            />
+            <SelectedTags tags={filters.tags} onRemove={handleRemoveTag} themes={themes} />
           )}
         </div>
 

@@ -1,5 +1,5 @@
 ---
-title: "Compression → expansion — structure corrigée, info incrémentale nulle"
+title: 'Compression → expansion — structure corrigée, info incrémentale nulle'
 date: 2026-08-21
 universe: EURUSD · tick_imbalance_10_fixed · 2023
 tags: [compression, ablation, null-filter, causal, methodology]
@@ -19,26 +19,26 @@ Réponse courte : V1 était **laggé** ; V1b corrige la structure ; le **surplus
 
 ### Lexique
 
-| Terme | Signification |
-|-------|----------------|
-| **`std_logp`** | Détecteur d'onset sur écart-type log-prix (quantile haut). |
-| **event-centered τ** | Alignement des séries autour de l'onset (\(\tau=0\)). |
-| **\(D_k^\pm\)** | Déplacement médian \(k\) bars avant (−) / après (+) l'onset. |
-| **\(N_A/N_B/N_C\)** | Nulls de matching croissants : TOD → +compression → +\(D_{\mathrm{pre}}\). |
-| **V1b** | Reformulation early+causal (moins de clustering, \(D^-\) réduit). |
-| **incremental ablation** | Δ métrique base+vol − base (slope/ER). |
-| **mechanical persistence** | ACF d'un z rolling ≈ null IID-RW reconstruit de la même façon. |
-| **TIMB** | *Tick Imbalance Bars*. |
+| Terme                      | Signification                                                              |
+| -------------------------- | -------------------------------------------------------------------------- |
+| **`std_logp`**             | Détecteur d'onset sur écart-type log-prix (quantile haut).                 |
+| **event-centered τ**       | Alignement des séries autour de l'onset (\(\tau=0\)).                      |
+| **\(D_k^\pm\)**            | Déplacement médian \(k\) bars avant (−) / après (+) l'onset.               |
+| **\(N_A/N_B/N_C\)**        | Nulls de matching croissants : TOD → +compression → +\(D_{\mathrm{pre}}\). |
+| **V1b**                    | Reformulation early+causal (moins de clustering, \(D^-\) réduit).          |
+| **incremental ablation**   | Δ métrique base+vol − base (slope/ER).                                     |
+| **mechanical persistence** | ACF d'un z rolling ≈ null IID-RW reconstruit de la même façon.             |
+| **TIMB**                   | _Tick Imbalance Bars_.                                                     |
 
 ---
 
 ## Setup
 
-| Paramètre | Valeur |
-|-----------|--------|
-| Actif / barrière | EURUSD · TIMB 2023 |
-| Détecteurs | `std_logp`, `std_ret` |
-| Cadre | \(E\) (sampler) → \(X\) (features) → \(Y\) (outcome) |
+| Paramètre        | Valeur                                               |
+| ---------------- | ---------------------------------------------------- |
+| Actif / barrière | EURUSD · TIMB 2023                                   |
+| Détecteurs       | `std_logp`, `std_ret`                                |
+| Cadre            | \(E\) (sampler) → \(X\) (features) → \(Y\) (outcome) |
 
 ---
 
@@ -81,12 +81,12 @@ Sous \(N_C\) (compression + \(D_{\mathrm{pre}}\)) : Δ MFE\(_{50}\) H=10 ≈ **+
 
 ![Clustering gaps](assets/compression_expansion/gap_clustering_frac.png)
 
-| Métrique | V1 | V1b |
-|----------|---:|----:|
-| \(n\) events | 3 068 | 1 697 |
-| \(D_5^-\) | 2.24 | **1.50** |
-| Frac gaps < 40 | 57 % | **5 %** |
-| Median gap | 26 | **152** |
+| Métrique       |    V1 |      V1b |
+| -------------- | ----: | -------: |
+| \(n\) events   | 3 068 |    1 697 |
+| \(D_5^-\)      |  2.24 | **1.50** |
+| Frac gaps < 40 |  57 % |  **5 %** |
+| Median gap     |    26 |  **152** |
 
 Early+causal OK — mais ce n'est pas encore de l'edge.
 
@@ -96,11 +96,11 @@ Early+causal OK — mais ce n'est pas encore de l'edge.
 
 Base = compression % + \(D_{\mathrm{pre}}\) + |slope| + ER. Ajouter des features vol :
 
-| Δ métrique | Valeur |
-|------------|-------:|
+| Δ métrique |     Valeur |
+| ---------- | ---------: |
 | Δ log-loss | **−0.001** |
-| Δ Brier | ≈ 0 |
-| Δ R² | ≈ 0 |
+| Δ Brier    |        ≈ 0 |
+| Δ R²       |        ≈ 0 |
 
 `std_logp` = **contexte / maturité**, pas trigger autonome.
 
@@ -116,12 +116,12 @@ Excès ACF(z,1) vs null IID-RW ≈ **+0.004** — quasi nul. Les détecteurs Δv
 
 ## Synthèse
 
-| Question | Réponse |
-|----------|---------|
-| V1 prouve-t-il compression→expansion ? | **Non** — lag + null déjà saturé |
-| V1b sauve-t-il la structure ? | **Oui** — moins de clustering, \(D^-\) plus propre |
-| La vol ajoute-t-elle de l'info ? | **Non** — surplus ≈ 0 vs slope+ER |
-| La persistance z est-elle un régime ? | **Non** — artefact du filtre rolling |
+| Question                               | Réponse                                            |
+| -------------------------------------- | -------------------------------------------------- |
+| V1 prouve-t-il compression→expansion ? | **Non** — lag + null déjà saturé                   |
+| V1b sauve-t-il la structure ?          | **Oui** — moins de clustering, \(D^-\) plus propre |
+| La vol ajoute-t-elle de l'info ?       | **Non** — surplus ≈ 0 vs slope+ER                  |
+| La persistance z est-elle un régime ?  | **Non** — artefact du filtre rolling               |
 
 > On a cru voir un process de vol ; le diagnostic montre un **détecteur retardé**, puis une **structure corrigée sans edge incrémental**.
 
@@ -131,16 +131,16 @@ Excès ACF(z,1) vs null IID-RW ≈ **+0.004** — quasi nul. Les détecteurs Δv
 
 ## Banque de figures
 
-| Fichier | Usage suggéré |
-|---------|----------------|
-| `v1_escape_scoreboard.png` | Scoreboard V1 non informatif |
-| `event_centered_std_logp.png` | Detection lag |
-| `ablation_matching_mfe.png` | Nulls \(N_A\to N_C\) |
-| `v1_vs_v1b_profiles.png` | Fix structurel |
-| `gap_clustering_frac.png` | Déclustering V1b |
-| `incremental_ablation_bars.png` | Punchline surplus ≈ 0 |
-| `acf_z_vs_iid_null.png` | Persistance mécanique |
-| `onset_benchmark_recall_delay.png` | Trade-off recall / FA |
+| Fichier                            | Usage suggéré                |
+| ---------------------------------- | ---------------------------- |
+| `v1_escape_scoreboard.png`         | Scoreboard V1 non informatif |
+| `event_centered_std_logp.png`      | Detection lag                |
+| `ablation_matching_mfe.png`        | Nulls \(N_A\to N_C\)         |
+| `v1_vs_v1b_profiles.png`           | Fix structurel               |
+| `gap_clustering_frac.png`          | Déclustering V1b             |
+| `incremental_ablation_bars.png`    | Punchline surplus ≈ 0        |
+| `acf_z_vs_iid_null.png`            | Persistance mécanique        |
+| `onset_benchmark_recall_delay.png` | Trade-off recall / FA        |
 
 ```bash
 micromamba run -n financial-ml python scripts/research-figures/generate_compression_expansion_figures.py
@@ -150,12 +150,12 @@ micromamba run -n financial-ml python scripts/research-figures/generate_compress
 
 ## Reproductibilité
 
-| Artefact | Chemin |
-|----------|--------|
+| Artefact      | Chemin                                                                                 |
+| ------------- | -------------------------------------------------------------------------------------- |
 | PLAN / README | [`research_notes/compression_expansion/`](../../research_notes/compression_expansion/) |
-| Journaux | `RESULTATS_V1*.md`, `RESULTATS_FILTER_NULL.md` |
-| JSON | `out/v1_*.json`, `out/v1b_*.json`, `out/filter_null_onset_2023.json` |
+| Journaux      | `RESULTATS_V1*.md`, `RESULTATS_FILTER_NULL.md`                                         |
+| JSON          | `out/v1_*.json`, `out/v1b_*.json`, `out/filter_null_onset_2023.json`                   |
 
 ---
 
-*Article dérivé du journal lab — août 2026.*
+_Article dérivé du journal lab — août 2026._

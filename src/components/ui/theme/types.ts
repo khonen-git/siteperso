@@ -1,8 +1,6 @@
 import type * as React from 'react';
 
-export type ThemeProviderProps = React.ComponentProps<
-  typeof import('next-themes').ThemeProvider
->;
+export type ThemeProviderProps = React.ComponentProps<typeof import('next-themes').ThemeProvider>;
 
 export interface ThemeToggleProps {
   className?: string;

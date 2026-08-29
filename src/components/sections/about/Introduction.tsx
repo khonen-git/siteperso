@@ -69,8 +69,8 @@ export function Introduction(): React.JSX.Element {
               transition={{ duration: 0.5, delay: 0.5 }}
               className="mb-6 text-xl text-muted-foreground"
             >
-              Data Analyst, mon travail consiste à exploiter les données pour identifier des informations
-              clés utiles à la prise de décision et optimiser les processus.
+              Data Analyst, mon travail consiste à exploiter les données pour identifier des
+              informations clés utiles à la prise de décision et optimiser les processus.
             </motion.p>
 
             <motion.p
@@ -79,9 +79,10 @@ export function Introduction(): React.JSX.Element {
               transition={{ duration: 0.5, delay: 0.6 }}
               className="mb-8 text-muted-foreground"
             >
-              Ayant un attrait pour les nouvelles technologies, je cherche constamment à me mettre à jour 
-              en adoptant les technologies qui accélère ma productivité et qui améliore la qualité de mon travail.
-              Je cherche aussi à développer des compétences annexes qui sont complémentaires à mes analyses.
+              Ayant un attrait pour les nouvelles technologies, je cherche constamment à me mettre à
+              jour en adoptant les technologies qui accélère ma productivité et qui améliore la
+              qualité de mon travail. Je cherche aussi à développer des compétences annexes qui sont
+              complémentaires à mes analyses.
             </motion.p>
 
             <motion.div
@@ -105,4 +106,4 @@ export function Introduction(): React.JSX.Element {
       </div>
     </section>
   );
-} 
+}

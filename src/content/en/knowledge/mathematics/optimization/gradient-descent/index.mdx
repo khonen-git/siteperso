@@ -4,7 +4,14 @@ description: Iterative gradient minimization, learning rate, and variants (SGD, 
 ---
 
 import { MdxCard } from '@/components/mdx/MdxCard';
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from '@/components/ui/table';
 import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
 
 # Gradient descent
@@ -12,22 +19,18 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
 <MdxCard title="Definition">
 **Gradient descent** minimizes a differentiable function <MathInline>{"f : \\mathbb{R}^n \\to \\mathbb{R}"}</MathInline> through successive steps opposite to the gradient:
 
-<MathBlock>{"x_{k+1} = x_k - \\eta_k \\nabla f(x_k)"}</MathBlock>
+<MathBlock>{'x_{k+1} = x_k - \\eta_k \\nabla f(x_k)'}</MathBlock>
 
 where <MathInline>{"\\eta_k > 0"}</MathInline> is the **learning rate** at iteration <MathInline>{"k"}</MathInline>.
 
 The idea: the gradient points toward steepest ascent; subtracting <MathInline>{"\\nabla f"}</MathInline> moves locally toward a minimum.
+
 </MdxCard>
 
 ## Intuition
 
 <MdxCard>
-Imagine a ball rolling on a surface: at each step, read the local slope (<MathInline>{"\\nabla f"}</MathInline>) and move in the steepest descent direction.
-
-- Step **too large**: overshoot and divergence.
-- Step **too small**: very slow convergence.
-- On a **convex** smooth function, a good choice of <MathInline>{"\\eta"}</MathInline> guarantees convergence to the global minimum (see [Convex optimization](/knowledge/mathematics/optimization/convex-optimization)).
-- On a **non-convex** function (neural networks), you often land at a local minimum or saddle — hence initialization and variants (momentum, Adam).
+Imagine a ball rolling on a surface: at each step, read the local slope (<MathInline>{"\\nabla f"}</MathInline>) and move in the steepest descent direction. Step **too large**: overshoot and divergence. Step **too small**: very slow convergence. On a **convex** smooth function, a good choice of <MathInline>{"\\eta"}</MathInline> guarantees convergence to the global minimum (see [Convex optimization](/knowledge/mathematics/optimization/convex-optimization)). On a **non-convex** function (neural networks), you often land at a local minimum or saddle — hence initialization and variants (momentum, Adam).
 </MdxCard>
 
 ## Learning rate
@@ -44,22 +47,32 @@ Imagine a ball rolling on a surface: at each step, read the local slope (<MathIn
     <TableBody>
       <TableRow>
         <TableCell className="font-medium">Fixed step</TableCell>
-        <TableCell><MathInline>{"\\eta_k = \\eta"}</MathInline> constant</TableCell>
+        <TableCell>
+          <MathInline>{'\\eta_k = \\eta'}</MathInline> constant
+        </TableCell>
         <TableCell>Simple; requires manual tuning</TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Decay</TableCell>
-        <TableCell><MathInline>{"\\eta_k = \\eta_0 / \\sqrt{k}"}</MathInline> or <MathInline>{"\\eta_0 / k"}</MathInline></TableCell>
+        <TableCell>
+          <MathInline>{'\\eta_k = \\eta_0 / \\sqrt{k}'}</MathInline> or{' '}
+          <MathInline>{'\\eta_0 / k'}</MathInline>
+        </TableCell>
         <TableCell>SGD convergence guarantees under assumptions</TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Line search</TableCell>
-        <TableCell>Choose <MathInline>{"\\eta"}</MathInline> minimizing <MathInline>{"f(x_k - \\eta \\nabla f(x_k))"}</MathInline></TableCell>
+        <TableCell>
+          Choose <MathInline>{'\\eta'}</MathInline> minimizing{' '}
+          <MathInline>{'f(x_k - \\eta \\nabla f(x_k))'}</MathInline>
+        </TableCell>
         <TableCell>Costly but adaptive; Newton uses similar logic</TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Schedule (warmup, cosine)</TableCell>
-        <TableCell><MathInline>{"\\eta_k"}</MathInline> planned over epochs</TableCell>
+        <TableCell>
+          <MathInline>{'\\eta_k'}</MathInline> planned over epochs
+        </TableCell>
         <TableCell>Standard in deep learning</TableCell>
       </TableRow>
     </TableBody>
@@ -67,7 +80,11 @@ Imagine a ball rolling on a surface: at each step, read the local slope (<MathIn
 </MdxCard>
 
 <MdxCard>
-For an <MathInline>{"L"}</MathInline>-smooth convex function, a constant step <MathInline>{"\\eta \\leq 1/L"}</MathInline> guarantees convergence. In practice, <MathInline>{"L"}</MathInline> is rarely known: test values (log-scale: <MathInline>{"10^{-4}"}</MathInline>, <MathInline>{"10^{-3}"}</MathInline>, …) or use an adaptive optimizer.
+  For an <MathInline>{'L'}</MathInline>-smooth convex function, a constant step{' '}
+  <MathInline>{'\\eta \\leq 1/L'}</MathInline> guarantees convergence. In practice,{' '}
+  <MathInline>{'L'}</MathInline> is rarely known: test values (log-scale:{' '}
+  <MathInline>{'10^{-4}'}</MathInline>, <MathInline>{'10^{-3}'}</MathInline>, …) or use an adaptive
+  optimizer.
 </MdxCard>
 
 ## Variants
@@ -94,17 +111,24 @@ For an <MathInline>{"L"}</MathInline>-smooth convex function, a constant step <M
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Mini-batch</TableCell>
-        <TableCell>Gradient on a subset of size <MathInline>{"B"}</MathInline></TableCell>
+        <TableCell>
+          Gradient on a subset of size <MathInline>{'B'}</MathInline>
+        </TableCell>
         <TableCell>Standard compromise; GPU-parallelizable</TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Momentum</TableCell>
-        <TableCell><MathInline>{"v_{k+1} = \\beta v_k + \\nabla f(x_k)"}</MathInline>, then <MathInline>{"x_{k+1} = x_k - \\eta v_{k+1}"}</MathInline></TableCell>
+        <TableCell>
+          <MathInline>{'v_{k+1} = \\beta v_k + \\nabla f(x_k)'}</MathInline>, then{' '}
+          <MathInline>{'x_{k+1} = x_k - \\eta v_{k+1}'}</MathInline>
+        </TableCell>
         <TableCell>Accelerates along consistent directions; dampens oscillation</TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Adam / RMSProp</TableCell>
-        <TableCell>Per-coordinate adaptive step (moving averages of gradient and variance)</TableCell>
+        <TableCell>
+          Per-coordinate adaptive step (moving averages of gradient and variance)
+        </TableCell>
         <TableCell>Little tuning; default in tabular DL and neural nets</TableCell>
       </TableRow>
     </TableBody>
@@ -116,7 +140,7 @@ For an <MathInline>{"L"}</MathInline>-smooth convex function, a constant step <M
 <MdxCard title="Smooth convex case">
 If <MathInline>{"f"}</MathInline> is convex and <MathInline>{"L"}</MathInline>-smooth, gradient descent with <MathInline>{"\\eta = 1/L"}</MathInline> satisfies:
 
-<MathBlock>{"f(x_k) - f(x^\\star) \\leq \\frac{L \\|x_0 - x^\\star\\|^2}{2k}"}</MathBlock>
+<MathBlock>{'f(x_k) - f(x^\\star) \\leq \\frac{L \\|x_0 - x^\\star\\|^2}{2k}'}</MathBlock>
 
 <MathInline>{"O(1/k)"}</MathInline> convergence — linear in iteration count for **accuracy**, not exponential. For faster convergence near the optimum, see Newton and quasi-Newton (coming soon).
 </MdxCard>
@@ -124,9 +148,12 @@ If <MathInline>{"f"}</MathInline> is convex and <MathInline>{"L"}</MathInline>-s
 <MdxCard title="Strongly convex case">
 If <MathInline>{"f"}</MathInline> is <MathInline>{"\\mu"}</MathInline>-strongly convex (<MathInline>{"\\nabla^2 f \\succeq \\mu I"}</MathInline>), the rate becomes **linear** (geometric):
 
-<MathBlock>{"f(x_k) - f(x^\\star) \\leq \\left(1 - \\frac{\\mu}{L}\\right)^k (f(x_0) - f(x^\\star))"}</MathBlock>
+<MathBlock>
+  {'f(x_k) - f(x^\\star) \\leq \\left(1 - \\frac{\\mu}{L}\\right)^k (f(x_0) - f(x^\\star))'}
+</MathBlock>
 
 The condition number <MathInline>{"L/\\mu"}</MathInline> governs speed: the larger it is, the slower the convergence.
+
 </MdxCard>
 
 ## Key hyperparameters
@@ -142,28 +169,40 @@ The condition number <MathInline>{"L/\\mu"}</MathInline> governs speed: the larg
     </TableHeader>
     <TableBody>
       <TableRow>
-        <TableCell className="font-medium"><code>learning_rate</code> (<MathInline>{"\\eta"}</MathInline>)</TableCell>
+        <TableCell className="font-medium">
+          <code>learning_rate</code> (<MathInline>{'\\eta'}</MathInline>)
+        </TableCell>
         <TableCell>Step size</TableCell>
         <TableCell>Too large → divergence; too small → slowness</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell className="font-medium"><code>batch_size</code></TableCell>
+        <TableCell className="font-medium">
+          <code>batch_size</code>
+        </TableCell>
         <TableCell>Mini-batch size</TableCell>
         <TableCell>Large → stable gradient; small → noise and generalization</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell className="font-medium"><code>momentum</code> (<MathInline>{"\\beta"}</MathInline>)</TableCell>
+        <TableCell className="font-medium">
+          <code>momentum</code> (<MathInline>{'\\beta'}</MathInline>)
+        </TableCell>
         <TableCell>Gradient inertia</TableCell>
         <TableCell>Typically 0.9; accelerates in narrow valleys</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell className="font-medium"><code>max_iter</code> / epochs</TableCell>
+        <TableCell className="font-medium">
+          <code>max_iter</code> / epochs
+        </TableCell>
         <TableCell>Number of iterations</TableCell>
         <TableCell>Pair with early stopping to avoid overfitting</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell className="font-medium"><code>tolerance</code></TableCell>
-        <TableCell>Stop threshold on <MathInline>{"\\|\\nabla f\\|"}</MathInline> or loss gain</TableCell>
+        <TableCell className="font-medium">
+          <code>tolerance</code>
+        </TableCell>
+        <TableCell>
+          Stop threshold on <MathInline>{'\\|\\nabla f\\|'}</MathInline> or loss gain
+        </TableCell>
         <TableCell>Useful when loss plateaus</TableCell>
       </TableRow>
     </TableBody>
@@ -179,6 +218,7 @@ The condition number <MathInline>{"L/\\mu"}</MathInline> governs speed: the larg
 - **Calibration**: fit model parameters by minimizing a loss on historical data.
 
 Gradient descent is the baseline algorithm in [Derivatives, gradient, and Hessian](/knowledge/mathematics/analysis/derivatives-gradient-hessian); [Convex optimization](/knowledge/mathematics/optimization/convex-optimization) explains why, on a convex problem, this procedure targets the right optimum.
+
 </MdxCard>
 
 ## Limits and pitfalls
@@ -205,12 +245,16 @@ Gradient descent is the baseline algorithm in [Derivatives, gradient, and Hessia
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Plateaus</TableCell>
-        <TableCell><MathInline>{"\\|\\nabla f\\| \\approx 0"}</MathInline> far from optimum</TableCell>
+        <TableCell>
+          <MathInline>{'\\|\\nabla f\\| \\approx 0'}</MathInline> far from optimum
+        </TableCell>
         <TableCell>ReLU/sigmoid in DL; momentum or Adam</TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Non-smooth objective</TableCell>
-        <TableCell><MathInline>{"\\|\\beta\\|_1"}</MathInline> (lasso)</TableCell>
+        <TableCell>
+          <MathInline>{'\\|\\beta\\|_1'}</MathInline> (lasso)
+        </TableCell>
         <TableCell>Subgradient, proximal gradient (ISTA)</TableCell>
       </TableRow>
       <TableRow>
@@ -226,9 +270,19 @@ Gradient descent is the baseline algorithm in [Derivatives, gradient, and Hessia
 
 <MdxCard>
   <div className="space-y-2">
-    <p>• [Derivatives, gradient, and Hessian](/knowledge/mathematics/analysis/derivatives-gradient-hessian) — gradient and differential interpretation</p>
-    <p>• [Convex optimization](/knowledge/mathematics/optimization/convex-optimization) — convergence guarantees on convex problems</p>
+    <p>
+      • [Derivatives, gradient, and
+      Hessian](/knowledge/mathematics/analysis/derivatives-gradient-hessian) — gradient and
+      differential interpretation
+    </p>
+    <p>
+      • [Convex optimization](/knowledge/mathematics/optimization/convex-optimization) — convergence
+      guarantees on convex problems
+    </p>
     <p>• [Convexity](/knowledge/mathematics/analysis/convexity) — why a local minimum is global</p>
-    <p>• [Regression](/knowledge/statistics/regression) — quadratic case and closed-form alternative (OLS)</p>
+    <p>
+      • [Regression](/knowledge/statistics/regression) — quadratic case and closed-form alternative
+      (OLS)
+    </p>
   </div>
 </MdxCard>

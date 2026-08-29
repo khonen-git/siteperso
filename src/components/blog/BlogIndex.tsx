@@ -33,10 +33,7 @@ export async function BlogIndex({ posts }: BlogIndexProps): Promise<React.JSX.El
                     <span>{t(`kinds.${post.kind}`)}</span>
                   </div>
                   <h2 className="text-xl font-semibold tracking-tight">
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="hover:text-foreground/80"
-                    >
+                    <Link href={`/blog/${post.slug}`} className="hover:text-foreground/80">
                       {post.title}
                     </Link>
                   </h2>

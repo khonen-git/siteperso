@@ -131,4 +131,4 @@ export function LatestUpdates(): React.JSX.Element {
       </div>
     </section>
   );
-} 
+}

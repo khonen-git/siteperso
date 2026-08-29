@@ -3,7 +3,10 @@
 import * as React from 'react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 
-export function ThemeProvider({ children, ...props }: React.ComponentProps<typeof NextThemesProvider>): React.JSX.Element {
+export function ThemeProvider({
+  children,
+  ...props
+}: React.ComponentProps<typeof NextThemesProvider>): React.JSX.Element {
   return (
     <NextThemesProvider
       attribute="class"
@@ -14,4 +17,4 @@ export function ThemeProvider({ children, ...props }: React.ComponentProps<typeo
       {children}
     </NextThemesProvider>
   );
-} 
+}

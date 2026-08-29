@@ -10,11 +10,12 @@ import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 # Composite
 
 <i>
-    Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour proposer un contenu personnel et d'une meilleure qualité.
+  Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour
+  proposer un contenu personnel et d'une meilleure qualité.
 </i>
 
 <MdxCard>
-Composer des objets en arborescences pour traiter individus et groupes uniformément.
+  Composer des objets en arborescences pour traiter individus et groupes uniformément.
 </MdxCard>
 
 ## Intention
@@ -32,9 +33,9 @@ Modéliser une hiérarchie partiel-total (fichiers/dossiers, UI).
         print("  " * indent + self.name)
 
 class Folder(Node):
-    def __init__(self, name):
-        super().__init__(name)
-        self.children = []
+def **init**(self, name):
+super().**init**(name)
+self.children = []
 
     def add(self, node):
         self.children.append(node)
@@ -50,14 +51,10 @@ src = Folder("src")
 src.add(Node("main.py"))
 root.add(src)
 root.display()`}
+
 </CodeBlock>
 
-<ConsoleOutput title="Sortie console">
-project
-  README.md
-  src
-    main.py
-</ConsoleOutput>
+<ConsoleOutput title="Sortie console">project README.md src main.py</ConsoleOutput>
 
 ## Quand l'utiliser
 

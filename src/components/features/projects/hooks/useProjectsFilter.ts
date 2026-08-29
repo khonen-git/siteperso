@@ -20,26 +20,26 @@ export function useProjectsFilter(projects: Project[]): UseProjectsFilterReturn 
   const [filters, setFilters] = useState<ProjectFilters>({
     category: 'all',
     tags: [],
-    sortBy: 'date'
+    sortBy: 'date',
   });
 
   // Récupérer tous les tags uniques
-  const allTags = useMemo(() => 
-    Array.from(new Set(projects.flatMap(project => project.tags))),
+  const allTags = useMemo(
+    () => Array.from(new Set(projects.flatMap((project) => project.tags))),
     [projects]
   );
 
   // Filtrer et trier les projets
   const filteredProjects = useMemo(() => {
     return projects
-      .filter(project => {
+      .filter((project) => {
         if (!project || !project.title || !project.tags) {
           return false;
         }
-        
+
         const matchesCategory = filters.category === 'all' || project.category === filters.category;
-        const matchesTags = filters.tags.length === 0 || 
-                          filters.tags.some(tag => project.tags.includes(tag));
+        const matchesTags =
+          filters.tags.length === 0 || filters.tags.some((tag) => project.tags.includes(tag));
 
         return matchesCategory && matchesTags;
       })
@@ -51,14 +51,11 @@ export function useProjectsFilter(projects: Project[]): UseProjectsFilterReturn 
       });
   }, [projects, filters]);
 
-  const setCategory = (category: string) => 
-    setFilters(prev => ({ ...prev, category }));
+  const setCategory = (category: string) => setFilters((prev) => ({ ...prev, category }));
 
-  const setTags = (tags: string[]) => 
-    setFilters(prev => ({ ...prev, tags }));
+  const setTags = (tags: string[]) => setFilters((prev) => ({ ...prev, tags }));
 
-  const setSortBy = (sortBy: 'date' | 'title') => 
-    setFilters(prev => ({ ...prev, sortBy }));
+  const setSortBy = (sortBy: 'date' | 'title') => setFilters((prev) => ({ ...prev, sortBy }));
 
   return {
     filters,
@@ -66,6 +63,6 @@ export function useProjectsFilter(projects: Project[]): UseProjectsFilterReturn 
     setTags,
     setSortBy,
     filteredProjects,
-    allTags
+    allTags,
   };
 }

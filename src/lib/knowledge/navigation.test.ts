@@ -1,4 +1,8 @@
-import { filterNavigationTree, hrefToKnowledgeSlug } from './navigation';
+import {
+  filterNavigationTree,
+  hrefToKnowledgeSlug,
+  clearFilteredNavigationCache,
+} from './navigation';
 import { isKnowledgeDraft } from './meta';
 
 jest.mock('@/config/knowledge', () => ({
@@ -28,6 +32,7 @@ describe('hrefToKnowledgeSlug', () => {
 describe('filterNavigationTree', () => {
   beforeEach(() => {
     mockedIsDraft.mockReset();
+    clearFilteredNavigationCache();
   });
 
   it('removes draft leaf nodes', () => {

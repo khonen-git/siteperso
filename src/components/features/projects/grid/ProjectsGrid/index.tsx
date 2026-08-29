@@ -11,7 +11,7 @@ export function ProjectsGrid({
   loading = false,
   className,
   animationDelay = 0.2,
-  emptyMessage = "Aucun projet ne correspond à vos critères de recherche."
+  emptyMessage = 'Aucun projet ne correspond à vos critères de recherche.',
 }: ProjectsGridProps) {
   if (loading) {
     return <LoadingState />;

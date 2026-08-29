@@ -1,9 +1,9 @@
 ---
-title: "Tr8dr labels — solid y, partial OOS permission"
-description: "Amplitude-based segments on EURUSD TIMB: D(h) peak +0.55, C4 stack permission R=0.56 valid → 0.34 OOS 2024."
-date: "2026-08-20"
+title: 'Tr8dr labels — solid y, partial OOS permission'
+description: 'Amplitude-based segments on EURUSD TIMB: D(h) peak +0.55, C4 stack permission R=0.56 valid → 0.34 OOS 2024.'
+date: '2026-08-20'
 kind: research
-tags: ["tr8dr", "labels", "permission", "eurusd-lab"]
+tags: ['tr8dr', 'labels', 'permission', 'eurusd-lab']
 visible: true
 ---
 
@@ -27,12 +27,14 @@ Pipeline: L0 census → <MathInline>{"D(h)"}</MathInline> validity → univariat
 
 Up / neutral / down segments via min amplitude + inactivity timeout:
 
-<MathBlock>{"D(h) = P(r_{t\\to t+h}>0 \\mid y=\\mathrm{up}) - P(r_{t\\to t+h}>0 \\mid y=\\mathrm{down})"}</MathBlock>
+<MathBlock>
+  {'D(h) = P(r_{t\\to t+h}>0 \\mid y=\\mathrm{up}) - P(r_{t\\to t+h}>0 \\mid y=\\mathrm{down})'}
+</MathBlock>
 
-| L0 metric | Value |
-|-----------|------:|
-| Signed occupancy | 48.6% |
-| Segments / day | ~5.2 |
+| L0 metric          |         Value |
+| ------------------ | ------------: |
+| Signed occupancy   |         48.6% |
+| Segments / day     |          ~5.2 |
 | Duration p50 / p90 | 83 / 206 bars |
 
 ## Key results
@@ -45,20 +47,20 @@ Up / neutral / down segments via min amplitude + inactivity timeout:
 
 <Tr8drValidOosFigure />
 
-| Metric | Valid | OOS 2024 |
-|--------|------:|---------:|
-| R | 0.558 | **0.344** |
-| Live AUC | 0.606 | 0.587 |
-| Live rate | 0.497 | 0.442 |
+| Metric    | Valid |  OOS 2024 |
+| --------- | ----: | --------: |
+| R         | 0.558 | **0.344** |
+| Live AUC  | 0.606 |     0.587 |
+| Live rate | 0.497 |     0.442 |
 
 ## Takeaways
 
-| Question | Answer |
-|----------|--------|
-| Sound label? | **Yes** |
-| C4 permission? | **Yes** in-sample |
-| OOS 2024? | **Partial** — R 0.34, signal present but degraded |
-| Standalone strategy? | **No** — regime gate |
+| Question             | Answer                                            |
+| -------------------- | ------------------------------------------------- |
+| Sound label?         | **Yes**                                           |
+| C4 permission?       | **Yes** in-sample                                 |
+| OOS 2024?            | **Partial** — R 0.34, signal present but degraded |
+| Standalone strategy? | **No** — regime gate                              |
 
 **Recommended use:** frozen y + C score as **permission** in the lab stack (HMM, process, events).
 
@@ -70,4 +72,4 @@ Up / neutral / down segments via min amplitude + inactivity timeout:
 
 ---
 
-*Research note — Aug 2026. EURUSD · TIMB · 2023–2024.*
+_Research note — Aug 2026. EURUSD · TIMB · 2023–2024._

@@ -1,9 +1,9 @@
 ---
 title: "Stochastic events — quand l'AUC 0,85 est un artefact"
 description: "Sur EURUSD, un croisement stochastique « raw » flatterait le modèle. En corrigeant le sampling, l'AUC retombe : filtre de régime faible, pas stratégie."
-date: "2026-08-21"
+date: '2026-08-21'
 kind: research
-tags: ["process-first", "sampling", "stoch", "eurusd-lab"]
+tags: ['process-first', 'sampling', 'stoch', 'eurusd-lab']
 visible: true
 ---
 
@@ -13,7 +13,7 @@ import { Link } from '@/i18n/navigation';
 
 <NotaBene>
 
-**En bref.** J'ai testé les croisements stochastiques (%K) comme events sur EURUSD (barres d'imbalance de ticks, 2023). En comptant *tous* les croisements, le modèle directionnel affiche une AUC séduisante (~**0,85**). Dès que je restreins l'univers aux events réellement tradables (côtés alternés, sans spam dans la même jambe), l'AUC retombe à **~0,59–0,63**. **Le sampling est la métrique** — usage possible : filtre de régime / permission, pas exécution directe.
+**En bref.** J'ai testé les croisements stochastiques (%K) comme events sur EURUSD (barres d'imbalance de ticks, 2023). En comptant _tous_ les croisements, le modèle directionnel affiche une AUC séduisante (~**0,85**). Dès que je restreins l'univers aux events réellement tradables (côtés alternés, sans spam dans la même jambe), l'AUC retombe à **~0,59–0,63**. **Le sampling est la métrique** — usage possible : filtre de régime / permission, pas exécution directe.
 
 </NotaBene>
 
@@ -33,34 +33,34 @@ En filtrant (`alternate_sides=True`), le nombre d'events est divisé par ~**5** 
 
 ## Setup (résumé)
 
-| Paramètre | Valeur |
-|-----------|--------|
-| Actif / barrière | EURUSD · TIMB (`tick_imbalance_10_fixed`), 2023 |
-| Split | train H1 / valid H2 |
-| Config focus | `stoch_32_10_90` (période 32, bandes 10/90) |
-| Features | contexte (range, slope, time-of-day) ; direction (slope FFD, OFI) |
+| Paramètre        | Valeur                                                            |
+| ---------------- | ----------------------------------------------------------------- |
+| Actif / barrière | EURUSD · TIMB (`tick_imbalance_10_fixed`), 2023                   |
+| Split            | train H1 / valid H2                                               |
+| Config focus     | `stoch_32_10_90` (période 32, bandes 10/90)                       |
+| Features         | contexte (range, slope, time-of-day) ; direction (slope FFD, OFI) |
 
 Un event à <MathInline>{"t"}</MathInline> : %K croise une bande <MathInline>{"[\\ell, h]"}</MathInline>.
 
-<MathBlock>{"e_t = \\mathbf{1}\\{\\%K_p(t)\\ \\text{crosses}\\ \\{\\ell,h\\}\\}"}</MathBlock>
+<MathBlock>{'e_t = \\mathbf{1}\\{\\%K_p(t)\\ \\text{crosses}\\ \\{\\ell,h\\}\\}'}</MathBlock>
 
 Trois univers comparés :
 
-| Mode | Events (`stoch_32_10_90`) | Rôle |
-|------|--------------------------:|------|
-| **raw** | 35 040 | Archive — biais same-side |
-| **alt_overlap** | 7 279 | Référence lab |
-| **alt_no_overlap** | 3 736 | Trade-sim swing (RR1, time-cap) |
+| Mode               | Events (`stoch_32_10_90`) | Rôle                            |
+| ------------------ | ------------------------: | ------------------------------- |
+| **raw**            |                    35 040 | Archive — biais same-side       |
+| **alt_overlap**    |                     7 279 | Référence lab                   |
+| **alt_no_overlap** |                     3 736 | Trade-sim swing (RR1, time-cap) |
 
 ## Résultats clés
 
 <StochAucRawVsAltFigure />
 
-| Mode | C_event | A_leg | A_fwd |
-|------|--------:|------:|------:|
-| raw | **0,70** | **0,85** | 0,79 |
-| alt_overlap | 0,63 | **0,59** | 0,54 |
-| alt_no_overlap | 0,62 | **0,63** | 0,60 |
+| Mode           |  C_event |    A_leg | A_fwd |
+| -------------- | -------: | -------: | ----: |
+| raw            | **0,70** | **0,85** |  0,79 |
+| alt_overlap    |     0,63 | **0,59** |  0,54 |
+| alt_no_overlap |     0,62 | **0,63** |  0,60 |
 
 - **C_event** (~0,62 sur alt) : permission / contexte autour de l'event — signal faible mais cohérent.
 - **A_leg** : chute brutale de 0,85 → ~0,59 quand on corrige le sampling — la « performance » raw était un artefact.
@@ -70,11 +70,11 @@ Le gain de log-vraisemblance vs prior (base rate) reste **modeste** sur alt. Sen
 
 ## Ce que j'en retiens
 
-| Question | Réponse |
-|----------|---------|
-| L'AUC 0,85 raw est-elle un edge ? | **Non** — artefact de spam same-side |
-| Que reste-t-il sur alt ? | C_event ~0,62 ; A_leg ~0,59–0,63 |
-| Usage recommandé | **Filtre de régime / permission**, pas exécution |
+| Question                          | Réponse                                          |
+| --------------------------------- | ------------------------------------------------ |
+| L'AUC 0,85 raw est-elle un edge ? | **Non** — artefact de spam same-side             |
+| Que reste-t-il sur alt ?          | C_event ~0,62 ; A_leg ~0,59–0,63                 |
+| Usage recommandé                  | **Filtre de régime / permission**, pas exécution |
 
 > Toujours scorer sur l'univers **tradable**. Sinon le modèle apprend la corrélation répliquée de la tendance, pas une décision d'entrée.
 
@@ -88,4 +88,4 @@ Je n'abandonne pas l'idée d'events stoch — je la **déplace** : plutôt briqu
 
 ---
 
-*Note de recherche — août 2026. Données EURUSD, barres TIMB, protocole gelé train/valid.*
+_Note de recherche — août 2026. Données EURUSD, barres TIMB, protocole gelé train/valid._

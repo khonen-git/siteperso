@@ -10,12 +10,11 @@ import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 # Command
 
 <i>
-    Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour proposer un contenu personnel et d'une meilleure qualité.
+  Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour
+  proposer un contenu personnel et d'une meilleure qualité.
 </i>
 
-<MdxCard>
-Encapsuler une action et ses paramètres dans un objet commande.
-</MdxCard>
+<MdxCard>Encapsuler une action et ses paramètres dans un objet commande.</MdxCard>
 
 ## Intention
 
@@ -33,15 +32,15 @@ File d'attente, undo/redo, journalisation des opérations.
         return "ON" if self.on else "OFF"
 
 class Command:
-    def __init__(self, light):
-        self.light = light
+def **init**(self, light):
+self.light = light
 
     def execute(self):
         return self.light.toggle()
 
 class Remote:
-    def __init__(self):
-        self.history = []
+def **init**(self):
+self.history = []
 
     def press(self, cmd):
         state = cmd.execute()
@@ -56,6 +55,7 @@ class Remote:
 remote = Remote()
 remote.press(Command(Light()))
 remote.undo()`}
+
 </CodeBlock>
 
 <ConsoleOutput title="Sortie console">

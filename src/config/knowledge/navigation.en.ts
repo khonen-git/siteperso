@@ -16,19 +16,34 @@ export const navigationData: TreeItem[] = [
         title: 'Analysis',
         href: '/knowledge/mathematics/analysis',
         children: [
-          { title: 'Derivatives, gradient, and Hessian', href: '/knowledge/mathematics/analysis/derivatives-gradient-hessian' },
+          {
+            title: 'Derivatives, gradient, and Hessian',
+            href: '/knowledge/mathematics/analysis/derivatives-gradient-hessian',
+          },
           { title: 'Convexity', href: '/knowledge/mathematics/analysis/convexity' },
           { title: 'Taylor series', href: '/knowledge/mathematics/analysis/taylor-series' },
-          { title: 'Ordinary differential equations', href: '/knowledge/mathematics/analysis/ordinary-differential-equations' },
-          { title: 'Partial differential equations', href: '/knowledge/mathematics/analysis/partial-differential-equations' },
+          {
+            title: 'Ordinary differential equations',
+            href: '/knowledge/mathematics/analysis/ordinary-differential-equations',
+          },
+          {
+            title: 'Partial differential equations',
+            href: '/knowledge/mathematics/analysis/partial-differential-equations',
+          },
         ],
       },
       {
         title: 'Optimization',
         href: '/knowledge/mathematics/optimization',
         children: [
-          { title: 'Convex optimization', href: '/knowledge/mathematics/optimization/convex-optimization' },
-          { title: 'Gradient descent', href: '/knowledge/mathematics/optimization/gradient-descent' },
+          {
+            title: 'Convex optimization',
+            href: '/knowledge/mathematics/optimization/convex-optimization',
+          },
+          {
+            title: 'Gradient descent',
+            href: '/knowledge/mathematics/optimization/gradient-descent',
+          },
         ],
       },
       { title: 'Numerical methods', href: '/knowledge/mathematics/numerical-methods' },
@@ -48,12 +63,18 @@ export const navigationData: TreeItem[] = [
             title: 'Discrete',
             href: '/knowledge/probability/distributions/discrete',
             children: [
-              { title: 'Bernoulli', href: '/knowledge/probability/distributions/discrete/bernoulli' },
+              {
+                title: 'Bernoulli',
+                href: '/knowledge/probability/distributions/discrete/bernoulli',
+              },
               { title: 'Binomial', href: '/knowledge/probability/distributions/discrete/binomial' },
               { title: 'Poisson', href: '/knowledge/probability/distributions/discrete/poisson' },
             ],
           },
-          { title: 'Continuous univariate', href: '/knowledge/probability/distributions/continuous-univariate' },
+          {
+            title: 'Continuous univariate',
+            href: '/knowledge/probability/distributions/continuous-univariate',
+          },
           { title: 'Normal distribution', href: '/knowledge/probability/distributions/normal' },
           { title: 'Multivariate', href: '/knowledge/probability/distributions/multivariate' },
         ],
@@ -81,10 +102,22 @@ export const navigationData: TreeItem[] = [
             title: 'Hypothesis tests',
             href: `${STATS}/inference/statistical-tests`,
             children: [
-              { title: "Student's t-test", href: `${STATS}/inference/statistical-tests/parametric/t-test` },
-              { title: "Welch's t-test", href: `${STATS}/inference/statistical-tests/parametric/t-test-welch` },
-              { title: 'Mann-Whitney test', href: `${STATS}/inference/statistical-tests/non-parametric/mann-whitney` },
-              { title: 'Wilcoxon test', href: `${STATS}/inference/statistical-tests/non-parametric/wilcoxon` },
+              {
+                title: "Student's t-test",
+                href: `${STATS}/inference/statistical-tests/parametric/t-test`,
+              },
+              {
+                title: "Welch's t-test",
+                href: `${STATS}/inference/statistical-tests/parametric/t-test-welch`,
+              },
+              {
+                title: 'Mann-Whitney test',
+                href: `${STATS}/inference/statistical-tests/non-parametric/mann-whitney`,
+              },
+              {
+                title: 'Wilcoxon test',
+                href: `${STATS}/inference/statistical-tests/non-parametric/wilcoxon`,
+              },
             ],
           },
         ],
@@ -100,9 +133,7 @@ export const navigationData: TreeItem[] = [
       {
         title: 'General concepts',
         href: '/knowledge/machine-learning/general-concepts',
-        children: [
-          { title: 'Cross-validation', href: `${ML}/general-concepts/cross-validation` },
-        ],
+        children: [{ title: 'Cross-validation', href: `${ML}/general-concepts/cross-validation` }],
       },
       {
         title: 'Classical models',
@@ -113,7 +144,10 @@ export const navigationData: TreeItem[] = [
         ],
       },
       { title: 'Deep Learning', href: '/knowledge/machine-learning/deep-learning' },
-      { title: 'Reinforcement Learning', href: '/knowledge/machine-learning/reinforcement-learning' },
+      {
+        title: 'Reinforcement Learning',
+        href: '/knowledge/machine-learning/reinforcement-learning',
+      },
       { title: 'ML for markets', href: '/knowledge/machine-learning/market-ml' },
     ],
   },
@@ -140,23 +174,28 @@ export const navigationData: TreeItem[] = [
       {
         title: 'Volatility',
         href: '/knowledge/quantitative-finance/volatility',
-        children: [
-          { title: 'Implied vs realized', href: `${QF}/volatility/implied-vs-realized` },
-        ],
+        children: [{ title: 'Implied vs realized', href: `${QF}/volatility/implied-vs-realized` }],
       },
       { title: 'Stochastic calculus', href: '/knowledge/quantitative-finance/stochastic-calculus' },
       { title: 'Risk management', href: '/knowledge/quantitative-finance/risk-management' },
-      { title: 'Portfolio management', href: '/knowledge/quantitative-finance/portfolio-management' },
+      {
+        title: 'Portfolio management',
+        href: '/knowledge/quantitative-finance/portfolio-management',
+      },
       { title: 'Factor models', href: '/knowledge/quantitative-finance/factor-models' },
-      { title: 'Market microstructure', href: '/knowledge/quantitative-finance/market-microstructure' },
+      {
+        title: 'Market microstructure',
+        href: '/knowledge/quantitative-finance/market-microstructure',
+      },
       {
         title: 'Financial econometrics',
         href: '/knowledge/quantitative-finance/financial-econometrics',
-        children: [
-          { title: 'Regimes & HMM', href: `${QF}/financial-econometrics/regimes-hmm` },
-        ],
+        children: [{ title: 'Regimes & HMM', href: `${QF}/financial-econometrics/regimes-hmm` }],
       },
-      { title: 'Backtesting & systematic research', href: '/knowledge/quantitative-finance/backtesting' },
+      {
+        title: 'Backtesting & systematic research',
+        href: '/knowledge/quantitative-finance/backtesting',
+      },
     ],
   },
   {
@@ -192,9 +231,7 @@ export const navigationData: TreeItem[] = [
       {
         title: 'Hardware',
         href: `${ENGINEERING}/hardware`,
-        children: [
-          { title: 'CPU architecture', href: `${ENGINEERING}/hardware/cpu-architecture` },
-        ],
+        children: [{ title: 'CPU architecture', href: `${ENGINEERING}/hardware/cpu-architecture` }],
       },
       getDesignPatternsNav(ENGINEERING, {
         title: 'Design patterns',

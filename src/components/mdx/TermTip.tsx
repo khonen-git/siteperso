@@ -22,8 +22,7 @@ export function TermTip({
   className,
 }: TermTipProps): React.JSX.Element {
   const locale = useKnowledgeMdxLocale();
-  const resolvedDefinition =
-    definition ?? (term ? getGlossaryDefinition(locale, term) : undefined);
+  const resolvedDefinition = definition ?? (term ? getGlossaryDefinition(locale, term) : undefined);
 
   const triggerRef = React.useRef<HTMLSpanElement>(null);
   const tooltipId = React.useId();
@@ -82,6 +81,7 @@ export function TermTip({
     <>
       <span
         ref={triggerRef}
+        role="button"
         tabIndex={0}
         aria-describedby={open ? tooltipId : undefined}
         onMouseEnter={show}

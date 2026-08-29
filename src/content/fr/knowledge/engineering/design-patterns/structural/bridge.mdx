@@ -10,11 +10,12 @@ import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 # Bridge
 
 <i>
-    Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour proposer un contenu personnel et d'une meilleure qualité.
+  Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour
+  proposer un contenu personnel et d'une meilleure qualité.
 </i>
 
 <MdxCard>
-Séparer une abstraction de son implémentation pour qu'elles évoluent indépendamment.
+  Séparer une abstraction de son implémentation pour qu'elles évoluent indépendamment.
 </MdxCard>
 
 ## Intention
@@ -29,25 +30,23 @@ Séparer une abstraction de son implémentation pour qu'elles évoluent indépen
         print(f"Vector {shape}")
 
 class RasterRenderer:
-    def render(self, shape):
-        print(f"Raster {shape}")
+def render(self, shape):
+print(f"Raster {shape}")
 
 class Circle:
-    def __init__(self, renderer, radius):
-        self.renderer = renderer
-        self.radius = radius
+def **init**(self, renderer, radius):
+self.renderer = renderer
+self.radius = radius
 
     def draw(self):
         self.renderer.render(f"circle r={self.radius}")
 
 Circle(RasterRenderer(), 5).draw()
 Circle(VectorRenderer(), 3).draw()`}
+
 </CodeBlock>
 
-<ConsoleOutput title="Sortie console">
-Raster circle r=5
-Vector circle r=3
-</ConsoleOutput>
+<ConsoleOutput title="Sortie console">Raster circle r=5 Vector circle r=3</ConsoleOutput>
 
 ## Quand l'utiliser
 

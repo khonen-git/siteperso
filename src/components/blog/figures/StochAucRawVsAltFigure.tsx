@@ -19,7 +19,15 @@ export function StochAucRawVsAltFigure(): React.JSX.Element {
 
         <line x1="70" y1="250" x2="600" y2="250" stroke="#666" strokeWidth="1" />
         <line x1="70" y1="50" x2="70" y2="250" stroke="#666" strokeWidth="1" />
-        <line x1="70" y1="170" x2="600" y2="170" stroke="#ddd" strokeWidth="1" strokeDasharray="4 4" />
+        <line
+          x1="70"
+          y1="170"
+          x2="600"
+          y2="170"
+          stroke="#ddd"
+          strokeWidth="1"
+          strokeDasharray="4 4"
+        />
         <text x="62" y="174" fill="#888" fontSize="10" textAnchor="end" dominantBaseline="middle">
           0,50
         </text>

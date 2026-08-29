@@ -10,12 +10,11 @@ import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 # Proxy
 
 <i>
-    Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour proposer un contenu personnel et d'une meilleure qualité.
+  Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour
+  proposer un contenu personnel et d'une meilleure qualité.
 </i>
 
-<MdxCard>
-Substitut contrôlant l'accès à un autre objet (lazy load, sécurité, logging).
-</MdxCard>
+<MdxCard>Substitut contrôlant l'accès à un autre objet (lazy load, sécurité, logging).</MdxCard>
 
 ## Intention
 
@@ -33,9 +32,9 @@ Reporter ou encadrer l'accès sans que le client change.
         print(f"Display {self.path}")
 
 class ImageProxy:
-    def __init__(self, path):
-        self.path = path
-        self._real = None
+def **init**(self, path):
+self.path = path
+self.\_real = None
 
     def display(self):
         if self._real is None:
@@ -46,13 +45,11 @@ img = ImageProxy("photo.png")
 print("Proxy ready")
 img.display()
 img.display()`}
+
 </CodeBlock>
 
 <ConsoleOutput title="Sortie console">
-Proxy ready
-Loading photo.png
-Display photo.png
-Display photo.png
+  Proxy ready Loading photo.png Display photo.png Display photo.png
 </ConsoleOutput>
 
 ## Quand l'utiliser

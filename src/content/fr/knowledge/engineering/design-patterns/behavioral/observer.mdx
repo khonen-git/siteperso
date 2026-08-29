@@ -10,12 +10,11 @@ import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 # Observer
 
 <i>
-    Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour proposer un contenu personnel et d'une meilleure qualité.
+  Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour
+  proposer un contenu personnel et d'une meilleure qualité.
 </i>
 
-<MdxCard>
-Notifier automatiquement plusieurs observateurs lors d'un changement d'état.
-</MdxCard>
+<MdxCard>Notifier automatiquement plusieurs observateurs lors d'un changement d'état.</MdxCard>
 
 ## Intention
 
@@ -39,12 +38,13 @@ Découpler la source d'événements de ses abonnés (UI, domain events).
             obs.update(self)
 
 class Investor:
-    def update(self, stock):
-        print(f"Alert {stock.symbol} -> {stock.price}")
+def update(self, stock):
+print(f"Alert {stock.symbol} -> {stock.price}")
 
 stock = Stock("ACME")
 stock.attach(Investor())
 stock.set_price(120)`}
+
 </CodeBlock>
 
 <ConsoleOutput title="Sortie console">

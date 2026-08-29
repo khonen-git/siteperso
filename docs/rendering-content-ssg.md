@@ -4,11 +4,11 @@ Documente le pipeline Knowledge + Projects tel qu’implémenté pour exposer le
 
 ## Objectif
 
-| Avant | Après |
-|-------|--------|
+| Avant                                    | Après                                         |
+| ---------------------------------------- | --------------------------------------------- |
 | Placeholder « Chargement… » dans le HTML | Corps d’article / cartes projets dans le HTML |
-| Fetch client (`useEffect` → `/api/...`) | Lecture MDX au build / côté serveur |
-| Knowledge forcé en dynamique | Pages Knowledge + Projects en **SSG** |
+| Fetch client (`useEffect` → `/api/...`)  | Lecture MDX au build / côté serveur           |
+| Knowledge forcé en dynamique             | Pages Knowledge + Projects en **SSG**         |
 
 Règle : le JavaScript enrichit (filtres, tooltips, visualisations) ; il n’est **pas** requis pour lire le contenu principal.
 
@@ -61,23 +61,23 @@ Repli de locale : si un fichier manque en `en`, lecture possible depuis la local
 
 ### Fichiers clés
 
-| Fichier | Rôle |
-|---------|------|
-| [`src/app/[locale]/knowledge/[...slug]/page.tsx`](../src/app/[locale]/knowledge/[...slug]/page.tsx) | Page serveur + `generateStaticParams` |
-| [`src/lib/knowledge/content.ts`](../src/lib/knowledge/content.ts) | `resolveKnowledgeFilePath`, `listKnowledgeSlugs` |
-| [`src/components/features/knowledge/KnowledgeArticle.tsx`](../src/components/features/knowledge/KnowledgeArticle.tsx) | Lecture MDX + `MDXRemote` RSC |
-| [`src/components/features/knowledge/KnowledgeMdxRenderer.tsx`](../src/components/features/knowledge/KnowledgeMdxRenderer.tsx) | Shell client (NotaBene AI, context, tooltips) |
-| [`src/components/mdx/MDXComponents.tsx`](../src/components/mdx/MDXComponents.tsx) | Map de composants MDX (module **sans** `'use client'`) |
+| Fichier                                                                                                                       | Rôle                                                   |
+| ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| [`src/app/[locale]/knowledge/[...slug]/page.tsx`](../src/app/[locale]/knowledge/[...slug]/page.tsx)                           | Page serveur + `generateStaticParams`                  |
+| [`src/lib/knowledge/content.ts`](../src/lib/knowledge/content.ts)                                                             | `resolveKnowledgeFilePath`, `listKnowledgeSlugs`       |
+| [`src/components/features/knowledge/KnowledgeArticle.tsx`](../src/components/features/knowledge/KnowledgeArticle.tsx)         | Lecture MDX + `MDXRemote` RSC                          |
+| [`src/components/features/knowledge/KnowledgeMdxRenderer.tsx`](../src/components/features/knowledge/KnowledgeMdxRenderer.tsx) | Shell client (NotaBene AI, context, tooltips)          |
+| [`src/components/mdx/MDXComponents.tsx`](../src/components/mdx/MDXComponents.tsx)                                             | Map de composants MDX (module **sans** `'use client'`) |
 
 ### `listKnowledgeSlugs`
 
 Walk récursif de `src/content/{locale}/knowledge` :
 
-| Fichier | Slug |
-|---------|------|
-| `foo.mdx` | `['foo']` |
-| `foo/index.mdx` | `['foo']` |
-| `a/b/c.mdx` | `['a','b','c']` |
+| Fichier         | Slug            |
+| --------------- | --------------- |
+| `foo.mdx`       | `['foo']`       |
+| `foo/index.mdx` | `['foo']`       |
+| `a/b/c.mdx`     | `['a','b','c']` |
 
 Utilisé par `generateStaticParams` pour pré-générer toutes les routes `fr` / `en`.
 
@@ -99,20 +99,20 @@ Dans [`next.config.js`](../next.config.js) :
 transpilePackages: ['next-mdx-remote'],
 ```
 
-Nécessaire sous Next 15 pour éviter l’erreur *« A React Element from an older version of React was rendered »* avec `next-mdx-remote/rsc`.
+Nécessaire sous Next 15 pour éviter l’erreur _« A React Element from an older version of React was rendered »_ avec `next-mdx-remote/rsc`.
 
 ## Projects
 
 ### Fichiers clés
 
-| Fichier | Rôle |
-|---------|------|
-| [`src/lib/projects/content.ts`](../src/lib/projects/content.ts) | `getProjects`, `getProject`, `listProjectFileNames`, `serializeProjectSource` |
-| [`src/app/[locale]/projects/page.tsx`](../src/app/[locale]/projects/page.tsx) | Server page → props vers client |
-| [`src/components/features/projects/ProjectsPageClient.tsx`](../src/components/features/projects/ProjectsPageClient.tsx) | Filtres / recherche / grille |
-| [`src/app/[locale]/projects/[slug]/page.tsx`](../src/app/[locale]/projects/[slug]/page.tsx) | Détail SSG + MDX RSC |
-| [`src/app/[locale]/page.tsx`](../src/app/[locale]/page.tsx) | Accueil : `getProjects(locale).slice(0, 3)` |
-| [`src/components/sections/RecentProjects.tsx`](../src/components/sections/RecentProjects.tsx) | UI client, données en props |
+| Fichier                                                                                                                 | Rôle                                                                          |
+| ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [`src/lib/projects/content.ts`](../src/lib/projects/content.ts)                                                         | `getProjects`, `getProject`, `listProjectFileNames`, `serializeProjectSource` |
+| [`src/app/[locale]/projects/page.tsx`](../src/app/[locale]/projects/page.tsx)                                           | Server page → props vers client                                               |
+| [`src/components/features/projects/ProjectsPageClient.tsx`](../src/components/features/projects/ProjectsPageClient.tsx) | Filtres / recherche / grille                                                  |
+| [`src/app/[locale]/projects/[slug]/page.tsx`](../src/app/[locale]/projects/[slug]/page.tsx)                             | Détail SSG + MDX RSC                                                          |
+| [`src/app/[locale]/page.tsx`](../src/app/[locale]/page.tsx)                                                             | Accueil : `getProjects(locale).slice(0, 3)`                                   |
+| [`src/components/sections/RecentProjects.tsx`](../src/components/sections/RecentProjects.tsx)                           | UI client, données en props                                                   |
 
 ### Helpers `lib/projects`
 

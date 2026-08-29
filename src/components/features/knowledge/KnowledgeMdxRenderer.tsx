@@ -4,10 +4,7 @@ import * as React from 'react';
 import { NotaBene } from '@/components/mdx/NotaBene';
 import { KnowledgeMdxProvider } from '@/components/mdx/KnowledgeMdxContext';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import {
-  getAiContentNotice,
-  isDesignPatternsArticle,
-} from '@/lib/knowledge/ai-content-notice';
+import { getAiContentNotice, isDesignPatternsArticle } from '@/lib/knowledge/ai-content-notice';
 
 interface KnowledgeMdxRendererProps {
   locale: string;

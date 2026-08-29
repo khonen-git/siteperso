@@ -10,7 +10,8 @@ import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 # Builder
 
 <i>
-    Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour proposer un contenu personnel et d'une meilleure qualité.
+  Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour
+  proposer un contenu personnel et d'une meilleure qualité.
 </i>
 
 ## L'idée en bref
@@ -20,7 +21,8 @@ Le pattern **Builder** sert à fabriquer un objet **composé de plusieurs partie
 Au lieu d'appeler un constructeur avec 12 arguments dont la moitié sont `None`, on enchaîne des méthodes explicites (`avec_pate()`, `avec_sauce()`, etc.) puis on finalise avec `build()`.
 
 <MdxCard>
-**À retenir :** on sépare *comment on construit* l'objet de *ce qu'on obtient* à la fin. Le builder accumule les choix ; `build()` produit le résultat final.
+  **À retenir :** on sépare *comment on construit* l'objet de *ce qu'on obtient* à la fin. Le
+  builder accumule les choix ; `build()` produit le résultat final.
 </MdxCard>
 
 C'est utile quand :
@@ -41,10 +43,9 @@ Imaginons une `Pizza` dont la recette se compose au fil de l'eau. Le builder ren
     def __repr__(self):
         return f"Pizza({', '.join(self.ingredients)})"
 
-
 class PizzaBuilder:
-    def __init__(self):
-        self._pizza = Pizza()
+def **init**(self):
+self.\_pizza = Pizza()
 
     def pate(self, type_pate: str):
         self._pizza.ingredients.append(f"pâte:{type_pate}")
@@ -61,22 +62,23 @@ class PizzaBuilder:
     def build(self):
         return self._pizza
 
-
 # Construction fluide, lisible de haut en bas
+
 pizza = (
-    PizzaBuilder()
-    .pate("fine")
-    .sauce("tomate")
-    .garniture("mozzarella")
-    .garniture("basilic")
-    .build()
+PizzaBuilder()
+.pate("fine")
+.sauce("tomate")
+.garniture("mozzarella")
+.garniture("basilic")
+.build()
 )
 
 print(pizza)`}
+
 </CodeBlock>
 
 <ConsoleOutput>
-Pizza(pâte:fine, sauce:tomate, garniture:mozzarella, garniture:basilic)
+  Pizza(pâte:fine, sauce:tomate, garniture:mozzarella, garniture:basilic)
 </ConsoleOutput>
 
 Chaque méthode du builder **retourne `self`** : c'est ce qui permet la chaîne `.pate(...).sauce(...).build()`.
@@ -99,10 +101,9 @@ Même logique côté data : un rapport peut avoir un titre, des filtres, un tri 
             f"tri={self.tri} | export={self.format_export}"
         )
 
-
 class RapportBuilder:
-    def __init__(self):
-        self._rapport = Rapport()
+def **init**(self):
+self.\_rapport = Rapport()
 
     def titre(self, valeur):
         self._rapport.titre = valeur
@@ -123,18 +124,18 @@ class RapportBuilder:
     def build(self):
         return self._rapport
 
-
 rapport = (
-    RapportBuilder()
-    .titre("Ventes Q1")
-    .filtre("region", "=", "EU")
-    .filtre("montant", ">", 1000)
-    .trier_par("date")
-    .exporter_en("xlsx")
-    .build()
+RapportBuilder()
+.titre("Ventes Q1")
+.filtre("region", "=", "EU")
+.filtre("montant", ">", 1000)
+.trier_par("date")
+.exporter_en("xlsx")
+.build()
 )
 
 print(rapport.resume())`}
+
 </CodeBlock>
 
 <ConsoleOutput>

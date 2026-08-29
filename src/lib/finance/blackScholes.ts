@@ -18,10 +18,7 @@ export function normCdf(x: number): number {
   const t = 1 / (1 + 0.2316419 * Math.abs(x));
   const d = 0.3989423 * Math.exp((-x * x) / 2);
   const p =
-    d *
-    t *
-    (0.3193815 +
-      t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+    d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
   return x > 0 ? 1 - p : p;
 }
 
@@ -88,19 +85,14 @@ export function blackScholesGreeks(params: BlackScholesParams): OptionGreeks {
   const pdf = normPdf(d1);
   const discount = Math.exp(-rate * timeYears);
 
-  const delta =
-    optionType === 'call' ? normCdf(d1) : normCdf(d1) - 1;
+  const delta = optionType === 'call' ? normCdf(d1) : normCdf(d1) - 1;
 
   const gamma = pdf / (spot * volatility * sqrtT);
 
   const thetaPerYear =
     optionType === 'call'
-      ? (-(spot * pdf * volatility) / (2 * sqrtT) -
-          rate * strike * discount * normCdf(d2)) /
-        365
-      : (-(spot * pdf * volatility) / (2 * sqrtT) +
-          rate * strike * discount * normCdf(-d2)) /
-        365;
+      ? (-(spot * pdf * volatility) / (2 * sqrtT) - rate * strike * discount * normCdf(d2)) / 365
+      : (-(spot * pdf * volatility) / (2 * sqrtT) + rate * strike * discount * normCdf(-d2)) / 365;
 
   const vegaPerVolPoint = (spot * pdf * sqrtT) / 100;
 

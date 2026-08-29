@@ -28,12 +28,12 @@ import { fuzzySearch } from '@/lib/search';
 
 // Définition des catégories
 const categories = {
-  'Développement': 'Outils et ressources de développement',
+  Développement: 'Outils et ressources de développement',
   'Data Science': 'Analyse de données et machine learning',
-  'Mathématiques': 'Concepts et outils mathématiques',
-  'Finance': 'Analyse financière et trading',
-  'Documentation': 'Documentation technique et tutoriels',
-  'Outils': 'Outils généraux et utilitaires',
+  Mathématiques: 'Concepts et outils mathématiques',
+  Finance: 'Analyse financière et trading',
+  Documentation: 'Documentation technique et tutoriels',
+  Outils: 'Outils généraux et utilitaires',
 };
 
 interface Reference {
@@ -58,7 +58,7 @@ const references: Reference[] = [
   {
     id: 2,
     name: 'pandas',
-    description: 'Bibliothèque Python pour la manipulation et l\'analyse de données',
+    description: "Bibliothèque Python pour la manipulation et l'analyse de données",
     link: 'https://pandas.pydata.org/docs/',
     category: 'Data Science',
     tags: ['python', 'data', 'analyse'],
@@ -74,7 +74,8 @@ const references: Reference[] = [
   {
     id: 4,
     name: 'Tr8dr',
-    description: 'Blog sur algorithmes, modèles et marchés — HFT, crypto, machine learning appliqué à la finance',
+    description:
+      'Blog sur algorithmes, modèles et marchés — HFT, crypto, machine learning appliqué à la finance',
     link: 'https://tr8dr.github.io/',
     category: 'Finance',
     tags: ['quant', 'finance', 'trading', 'blog', 'ml'],
@@ -106,7 +107,8 @@ const references: Reference[] = [
   {
     id: 8,
     name: 'QuantPad',
-    description: 'SIte de DeltaTrend Trading, IDE IA pour le trading quantitatif — données de marché intégrées, backtests et agent de recherche',
+    description:
+      'SIte de DeltaTrend Trading, IDE IA pour le trading quantitatif — données de marché intégrées, backtests et agent de recherche',
     link: 'https://quantpad.ai/',
     category: 'Finance',
     tags: ['quant', 'finance', 'trading'],
@@ -122,7 +124,8 @@ const references: Reference[] = [
   {
     id: 10,
     name: 'neurotrader (YouTube)',
-    description: 'Chaîne sur le trading algorithmique data-driven — stratégies, indicateurs et code Python open source',
+    description:
+      'Chaîne sur le trading algorithmique data-driven — stratégies, indicateurs et code Python open source',
     link: 'https://www.youtube.com/@neurotrader888',
     category: 'Finance',
     tags: ['quant', 'finance', 'trading', 'youtube', 'python'],
@@ -130,7 +133,8 @@ const references: Reference[] = [
   {
     id: 11,
     name: 'Quant Guild (YouTube)',
-    description: 'Cours open source en finance quantitative — maths, probabilités, pricing et coding (Roman Paolucci)',
+    description:
+      'Cours open source en finance quantitative — maths, probabilités, pricing et coding (Roman Paolucci)',
     link: 'https://www.youtube.com/@QuantGuild',
     category: 'Finance',
     tags: ['quant', 'finance', 'youtube'],
@@ -138,7 +142,8 @@ const references: Reference[] = [
   {
     id: 12,
     name: 'DeltaTrend Trading (YouTube)',
-    description: 'Créateur de quantpad.ai - Trading quantitatif, prop firms et simulations Monte Carlo',
+    description:
+      'Créateur de quantpad.ai - Trading quantitatif, prop firms et simulations Monte Carlo',
     link: 'https://www.youtube.com/@deltatrendtrading',
     category: 'Finance',
     tags: ['quant', 'finance', 'trading', 'youtube'],
@@ -146,7 +151,8 @@ const references: Reference[] = [
   {
     id: 13,
     name: 'FrenchQuant (YouTube)',
-    description: 'Finance quantitative en français — microstructure, surfaces de volatilité, order flow et backtesting',
+    description:
+      'Finance quantitative en français — microstructure, surfaces de volatilité, order flow et backtesting',
     link: 'https://www.youtube.com/@FrenchQuant-jz5vf',
     category: 'Finance',
     tags: ['quant', 'finance', 'trading', 'youtube'],
@@ -154,7 +160,8 @@ const references: Reference[] = [
   {
     id: 14,
     name: 'The Tactical Brief (YouTube)',
-    description: 'Finance quantitative - Excellente vidéo pour comprendre et interpréter l\'entropie',
+    description:
+      "Finance quantitative - Excellente vidéo pour comprendre et interpréter l'entropie",
     link: 'https://www.youtube.com/@thetacticalbrief9952',
     category: 'Finance',
     tags: ['finance', 'trading', 'youtube'],
@@ -184,32 +191,30 @@ export default function ReferencesPage(): React.JSX.Element {
   const [sortBy, setSortBy] = React.useState<'name' | 'category'>('name');
 
   // Récupérer tous les tags uniques
-  const allTags = Array.from(new Set(references.flatMap(ref => ref.tags)));
+  const allTags = Array.from(new Set(references.flatMap((ref) => ref.tags)));
 
   // Filtrer et trier les références
   const filteredReferences = references
-    .filter(ref => {
+    .filter((ref) => {
       const matchesCategory = selectedCategory === 'all' || ref.category === selectedCategory;
-      const matchesTags = selectedTags.length === 0 || selectedTags[0] === 'all' || 
-                         selectedTags.some(tag => ref.tags.includes(tag));
+      const matchesTags =
+        selectedTags.length === 0 ||
+        selectedTags[0] === 'all' ||
+        selectedTags.some((tag) => ref.tags.includes(tag));
 
       return matchesCategory && matchesTags;
     })
-    .map(ref => {
+    .map((ref) => {
       // Si pas de recherche, retourner la référence telle quelle
       if (!searchQuery.trim()) {
         return { ...ref, similarityScore: 1 };
       }
 
       // Calculer le score de similarité
-      const searchResults = fuzzySearch(
-        [ref],
-        searchQuery,
-        {
-          threshold: 0.3,
-          keys: ['name', 'description', 'tags']
-        }
-      );
+      const searchResults = fuzzySearch([ref], searchQuery, {
+        threshold: 0.3,
+        keys: ['name', 'description', 'tags'],
+      });
 
       // Si aucun résultat ne dépasse le seuil, on exclut la référence
       if (searchResults.length === 0) {
@@ -219,7 +224,7 @@ export default function ReferencesPage(): React.JSX.Element {
       // Sinon on garde le meilleur score
       return { ...ref, similarityScore: searchResults[0].similarity };
     })
-    .filter(ref => !searchQuery.trim() || ref.similarityScore > 0)
+    .filter((ref) => !searchQuery.trim() || ref.similarityScore > 0)
     .sort((a, b) => {
       // Si une recherche est en cours, on trie d'abord par score de similarité
       if (searchQuery.trim()) {
@@ -241,9 +246,7 @@ export default function ReferencesPage(): React.JSX.Element {
           transition={{ duration: 0.5 }}
           className="mx-auto max-w-2xl text-center"
         >
-          <h1 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl">
-            Références
-          </h1>
+          <h1 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl">Références</h1>
           <p className="text-muted-foreground">
             Une collection de ressources, outils et documentations utiles.
           </p>
@@ -259,7 +262,9 @@ export default function ReferencesPage(): React.JSX.Element {
                 placeholder="Rechercher une référence..."
                 className="pl-8"
                 value={searchQuery}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSearchQuery(e.target.value)
+                }
               />
             </div>
 
@@ -296,7 +301,7 @@ export default function ReferencesPage(): React.JSX.Element {
                 <SelectGroup>
                   <SelectLabel>Tags</SelectLabel>
                   <SelectItem value="all">Tous les tags</SelectItem>
-                  {allTags.map(tag => (
+                  {allTags.map((tag) => (
                     <SelectItem key={tag} value={tag}>
                       {tag}
                     </SelectItem>
@@ -306,10 +311,7 @@ export default function ReferencesPage(): React.JSX.Element {
             </Select>
 
             {/* Tri */}
-            <Select
-              value={sortBy}
-              onValueChange={(value: 'name' | 'category') => setSortBy(value)}
-            >
+            <Select value={sortBy} onValueChange={(value: 'name' | 'category') => setSortBy(value)}>
               <SelectTrigger>
                 <SelectValue placeholder="Trier par" />
               </SelectTrigger>
@@ -326,15 +328,12 @@ export default function ReferencesPage(): React.JSX.Element {
           {/* Tags sélectionnés */}
           {selectedTags.length > 0 && (
             <div className="flex flex-wrap gap-2">
-              {selectedTags.map(tag => (
+              {selectedTags.map((tag) => (
                 <Badge
                   key={tag}
                   variant="secondary"
-                  className={cn(
-                    themes[tag as keyof typeof themes],
-                    'cursor-pointer'
-                  )}
-                  onClick={() => setSelectedTags(prev => prev.filter(t => t !== tag))}
+                  className={cn(themes[tag as keyof typeof themes], 'cursor-pointer')}
+                  onClick={() => setSelectedTags((prev) => prev.filter((t) => t !== tag))}
                 >
                   {tag} ×
                 </Badge>
@@ -362,7 +361,7 @@ export default function ReferencesPage(): React.JSX.Element {
                   <TableCell>{ref.description}</TableCell>
                   <TableCell>
                     {ref.link && (
-                      <Link 
+                      <Link
                         href={ref.link}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -374,20 +373,15 @@ export default function ReferencesPage(): React.JSX.Element {
                     )}
                   </TableCell>
                   <TableCell>
-                    <Badge variant="outline">
-                      {ref.category}
-                    </Badge>
+                    <Badge variant="outline">{ref.category}</Badge>
                   </TableCell>
                   <TableCell>
                     <div className="flex flex-wrap gap-1">
-                      {ref.tags.map(tag => (
+                      {ref.tags.map((tag) => (
                         <Badge
                           key={tag}
                           variant="secondary"
-                          className={cn(
-                            themes[tag as keyof typeof themes],
-                            'text-xs'
-                          )}
+                          className={cn(themes[tag as keyof typeof themes], 'text-xs')}
                         >
                           {tag}
                         </Badge>
@@ -402,4 +396,4 @@ export default function ReferencesPage(): React.JSX.Element {
       </section>
     </div>
   );
-} 
+}

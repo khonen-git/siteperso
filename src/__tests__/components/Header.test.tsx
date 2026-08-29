@@ -13,14 +13,7 @@ jest.mock('@/components/layout/LanguageSwitcher', () => ({
 }));
 
 jest.mock('@/i18n/navigation', () => ({
-  Link: ({
-    href,
-    children,
-    ...props
-  }: {
-    href: string;
-    children: React.ReactNode;
-  }) => (
+  Link: ({ href, children, ...props }: { href: string; children: React.ReactNode }) => (
     <a href={href} {...props}>
       {children}
     </a>

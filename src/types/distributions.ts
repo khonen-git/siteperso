@@ -18,4 +18,4 @@ export interface DistributionConfig {
     pdf?: (params: Record<string, number>, x: number) => number;
     cdf?: (params: Record<string, number>, x: number) => number;
   };
-} 
+}

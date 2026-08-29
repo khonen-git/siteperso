@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, '..');
 const manifest = JSON.parse(
-  fs.readFileSync(path.join(__dirname, 'knowledge-stub-manifest.json'), 'utf8'),
+  fs.readFileSync(path.join(__dirname, 'knowledge-stub-manifest.json'), 'utf8')
 );
 
 const CONTENT_ROOT = path.join(root, 'src/content');

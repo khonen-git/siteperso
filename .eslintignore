@@ -1,0 +1,11 @@
+.next/
+node_modules/
+coverage/
+out/
+*.min.js
+jest.config.js
+next.config.js
+next-env.d.ts
+**/*.test.ts
+**/*.test.tsx
+**/__tests__/**

@@ -24,11 +24,9 @@ export default function ContactPage(): React.JSX.Element {
     console.log('Form data:', formData);
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -40,12 +38,8 @@ export default function ContactPage(): React.JSX.Element {
           transition={{ duration: 0.5 }}
           className="mx-auto max-w-2xl text-center"
         >
-          <h1 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl">
-            {t('title')}
-          </h1>
-          <p className="text-muted-foreground">
-            {t('subtitle')}
-          </p>
+          <h1 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl">{t('title')}</h1>
+          <p className="text-muted-foreground">{t('subtitle')}</p>
         </motion.div>
 
         <div className="mt-16 grid gap-8 md:grid-cols-2">
@@ -153,4 +147,4 @@ export default function ContactPage(): React.JSX.Element {
       </section>
     </div>
   );
-} 
+}

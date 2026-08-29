@@ -30,10 +30,7 @@ export function MathBlock({ children, className }: MathProps): React.JSX.Element
 }
 
 /** Inline math — invalid TeX raises instead of rendering a silent error. */
-export function MathInline({
-  children,
-  className,
-}: MathProps): React.JSX.Element {
+export function MathInline({ children, className }: MathProps): React.JSX.Element {
   const math = mathStringFromChildren(children);
   return (
     <span className={className}>

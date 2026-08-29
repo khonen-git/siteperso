@@ -9,9 +9,7 @@ interface BlogPageProps {
   params: Promise<{ locale: string }>;
 }
 
-export default async function BlogPage({
-  params,
-}: BlogPageProps): Promise<React.JSX.Element> {
+export default async function BlogPage({ params }: BlogPageProps): Promise<React.JSX.Element> {
   const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {

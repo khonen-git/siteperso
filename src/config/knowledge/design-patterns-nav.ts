@@ -31,10 +31,7 @@ export interface DesignPatternsLabels {
 }
 
 /** Arbre design patterns — base path `/knowledge/engineering`. */
-export function getDesignPatternsNav(
-  basePath: string,
-  labels: DesignPatternsLabels,
-): TreeItem {
+export function getDesignPatternsNav(basePath: string, labels: DesignPatternsLabels): TreeItem {
   return {
     title: labels.title,
     href: `${basePath}/design-patterns`,
@@ -43,9 +40,15 @@ export function getDesignPatternsNav(
         title: labels.creational,
         href: `${basePath}/design-patterns/creational`,
         children: [
-          { title: labels.abstractFactory, href: `${basePath}/design-patterns/creational/abstract-factory` },
+          {
+            title: labels.abstractFactory,
+            href: `${basePath}/design-patterns/creational/abstract-factory`,
+          },
           { title: labels.builder, href: `${basePath}/design-patterns/creational/builder` },
-          { title: labels.factoryMethod, href: `${basePath}/design-patterns/creational/factory-method` },
+          {
+            title: labels.factoryMethod,
+            href: `${basePath}/design-patterns/creational/factory-method`,
+          },
           { title: labels.prototype, href: `${basePath}/design-patterns/creational/prototype` },
           { title: labels.singleton, href: `${basePath}/design-patterns/creational/singleton` },
         ],
@@ -67,7 +70,10 @@ export function getDesignPatternsNav(
         title: labels.behavioral,
         href: `${basePath}/design-patterns/behavioral`,
         children: [
-          { title: labels.chainOfResponsibility, href: `${basePath}/design-patterns/behavioral/chain-of-responsibility` },
+          {
+            title: labels.chainOfResponsibility,
+            href: `${basePath}/design-patterns/behavioral/chain-of-responsibility`,
+          },
           { title: labels.command, href: `${basePath}/design-patterns/behavioral/command` },
           { title: labels.interpreter, href: `${basePath}/design-patterns/behavioral/interpreter` },
           { title: labels.iterator, href: `${basePath}/design-patterns/behavioral/iterator` },
@@ -76,7 +82,10 @@ export function getDesignPatternsNav(
           { title: labels.observer, href: `${basePath}/design-patterns/behavioral/observer` },
           { title: labels.state, href: `${basePath}/design-patterns/behavioral/state` },
           { title: labels.strategy, href: `${basePath}/design-patterns/behavioral/strategy` },
-          { title: labels.templateMethod, href: `${basePath}/design-patterns/behavioral/template-method` },
+          {
+            title: labels.templateMethod,
+            href: `${basePath}/design-patterns/behavioral/template-method`,
+          },
           { title: labels.visitor, href: `${basePath}/design-patterns/behavioral/visitor` },
         ],
       },

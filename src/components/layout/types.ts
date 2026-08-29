@@ -12,7 +12,7 @@ export interface FooterProps {
 }
 
 export interface KnowledgeLayoutProps extends BaseLayoutProps {
-  toc?: boolean;  // Table of Contents
+  toc?: boolean; // Table of Contents
 }
 
 export interface ProjectLayoutProps extends BaseLayoutProps {

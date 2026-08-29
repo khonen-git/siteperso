@@ -7,7 +7,7 @@ describe('ThemeProvider', () => {
   beforeAll(() => {
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: jest.fn().mockImplementation(query => ({
+      value: jest.fn().mockImplementation((query) => ({
         matches: false,
         media: query,
         onchange: null,
@@ -27,7 +27,7 @@ describe('ThemeProvider', () => {
         <div>{testContent}</div>
       </ThemeProvider>
     );
-    
+
     expect(container.innerHTML).toContain(testContent);
   });
-}); 
+});

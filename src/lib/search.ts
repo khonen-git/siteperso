@@ -5,7 +5,9 @@
  * @returns Distance de Levenshtein
  */
 export function levenshteinDistance(a: string, b: string): number {
-  const matrix = Array(b.length + 1).fill(null).map(() => Array(a.length + 1).fill(null));
+  const matrix = Array(b.length + 1)
+    .fill(null)
+    .map(() => Array(a.length + 1).fill(null));
 
   // Initialisation de la première ligne et colonne
   for (let i = 0; i <= a.length; i++) matrix[0][i] = i;
@@ -35,7 +37,7 @@ export function levenshteinDistance(a: string, b: string): number {
 export function stringSimilarity(a: string, b: string): number {
   if (a.length === 0 && b.length === 0) return 1;
   if (a.length === 0 || b.length === 0) return 0;
-  
+
   const distance = levenshteinDistance(a.toLowerCase(), b.toLowerCase());
   const maxLength = Math.max(a.length, b.length);
   return 1 - distance / maxLength;
@@ -68,23 +70,23 @@ export function fuzzySearch<T extends Record<string, any>>(
 ): SearchResult<T>[] {
   const {
     threshold = 0.4, // Seuil par défaut
-    keys = Object.keys(items[0] || {}) // Toutes les clés par défaut
+    keys = Object.keys(items[0] || {}), // Toutes les clés par défaut
   } = options;
 
   if (!searchQuery.trim()) {
     return items.map((item) => ({ item, similarity: 1 }));
   }
 
-  const results = items.map(item => {
+  const results = items.map((item) => {
     let maxSimilarity = 0;
 
     // Pour chaque clé spécifiée, on cherche la meilleure correspondance
-    keys.forEach(key => {
+    keys.forEach((key) => {
       const value = item[key];
       if (typeof value === 'string') {
         // Diviser la valeur en mots pour une recherche plus précise
         const words = value.split(/\s+/);
-        words.forEach(word => {
+        words.forEach((word) => {
           const similarity = stringSimilarity(searchQuery, word);
           maxSimilarity = Math.max(maxSimilarity, similarity);
         });
@@ -93,12 +95,12 @@ export function fuzzySearch<T extends Record<string, any>>(
 
     return {
       item,
-      similarity: maxSimilarity
+      similarity: maxSimilarity,
     };
   });
 
   // Filtrer et trier les résultats
   return results
-    .filter(result => result.similarity >= threshold)
+    .filter((result) => result.similarity >= threshold)
     .sort((a, b) => b.similarity - a.similarity);
 }

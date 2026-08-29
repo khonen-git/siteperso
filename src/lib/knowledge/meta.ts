@@ -19,20 +19,32 @@ function isStubBody(content: string): boolean {
   return STUB_BODY.has(body);
 }
 
+const draftCache = new Map<string, boolean>();
+
 /** Page masquée : frontmatter `draft: true` ou corps placeholder auto-généré. */
 export function isKnowledgeDraft(locale: string, slug: string[]): boolean {
+  const key = `${locale}:${slug.join('/')}`;
+  const cached = draftCache.get(key);
+  if (cached !== undefined) {
+    return cached;
+  }
+
   const filePath = resolveKnowledgeFilePath(locale, slug);
 
   if (!filePath) {
+    draftCache.set(key, true);
     return true;
   }
 
   const raw = fs.readFileSync(filePath, 'utf8');
   const { data, content } = matter(raw);
 
-  if (data.draft === true) {
-    return true;
-  }
+  const draft = data.draft === true || isStubBody(content);
+  draftCache.set(key, draft);
+  return draft;
+}
 
-  return isStubBody(content);
+/** Vide le cache (tests uniquement). */
+export function clearKnowledgeDraftCache(): void {
+  draftCache.clear();
 }

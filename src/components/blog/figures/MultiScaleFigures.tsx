@@ -35,13 +35,7 @@ export function MultiScaleGatesFigure(): React.JSX.Element {
             >
               {g.id}
             </text>
-            <text
-              x={79 + i * 138}
-              y={70}
-              fill="#fff"
-              fontSize="10"
-              textAnchor="middle"
-            >
+            <text x={79 + i * 138} y={70} fill="#fff" fontSize="10" textAnchor="middle">
               {g.verdict}
             </text>
             {i < gates.length - 1 ? (
@@ -79,7 +73,15 @@ export function MultiScaleEvNetFigure(): React.JSX.Element {
         </text>
         <line x1="60" y1="200" x2="420" y2="200" stroke="#666" strokeWidth="1" />
         <line x1="60" y1="40" x2="60" y2="200" stroke="#666" strokeWidth="1" />
-        <line x1="60" y1="120" x2="420" y2="120" stroke="#ddd" strokeWidth="1" strokeDasharray="4 4" />
+        <line
+          x1="60"
+          y1="120"
+          x2="420"
+          y2="120"
+          stroke="#ddd"
+          strokeWidth="1"
+          strokeDasharray="4 4"
+        />
         <text x="52" y="124" fill="#888" fontSize="10" textAnchor="end">
           0
         </text>

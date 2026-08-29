@@ -22,9 +22,7 @@ describe('useCalculationCache', () => {
   });
 
   it('respects max cache size', () => {
-    const { result } = renderHook(() =>
-      useCalculationCache<number>({ maxSize: 2 })
-    );
+    const { result } = renderHook(() => useCalculationCache<number>({ maxSize: 2 }));
 
     const key1 = result.current.generateKey({ id: 1 });
     const key2 = result.current.generateKey({ id: 2 });

@@ -13,4 +13,4 @@ export default function AboutPage(): React.JSX.Element {
       <Ambitions />
     </>
   );
-} 
+}

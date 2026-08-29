@@ -12,7 +12,14 @@ import { NotaBene } from '@/components/mdx/NotaBene';
 import { InfoTooltip, InfoTooltipProvider } from '@/components/mdx/InfoTooltip';
 import { TermTip } from '@/components/mdx/TermTip';
 import { OptionPayoffVisualizer } from '@/components/mdx/OptionPayoffVisualizer';
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from '@/components/ui/table';
 import { Link } from '@/i18n/navigation';
 import {
   CompressionAblationFigure,
@@ -25,7 +32,10 @@ import {
 } from '@/components/blog/figures/MultiScaleFigures';
 import { StochAucRawVsAltFigure } from '@/components/blog/figures/StochAucRawVsAltFigure';
 import { StochSamplingBiasFigure } from '@/components/blog/figures/StochSamplingBiasFigure';
-import { Tr8drDeltaHitFigure, Tr8drValidOosFigure } from '@/components/blog/figures/Tr8drTrendFigures';
+import {
+  Tr8drDeltaHitFigure,
+  Tr8drValidOosFigure,
+} from '@/components/blog/figures/Tr8drTrendFigures';
 
 function textFromNode(node: React.ReactNode): string {
   if (typeof node === 'string' || typeof node === 'number') return String(node);
@@ -48,13 +58,7 @@ export function TechnologiesSection({ children }: { children: React.ReactNode })
   return <div className="mt-6 grid gap-4 md:grid-cols-2">{children}</div>;
 }
 
-export function Technology({
-  name,
-  description,
-}: {
-  name: string;
-  description: string;
-}) {
+export function Technology({ name, description }: { name: string; description: string }) {
   return (
     <Card>
       <CardContent className="p-4">
@@ -122,15 +126,10 @@ const baseComponents = {
     <li className="leading-relaxed">{children}</li>
   ),
   blockquote: ({ children }: { children: React.ReactNode }) => (
-    <blockquote className="mb-4 border-l-4 border-primary/50 pl-4 italic">
-      {children}
-    </blockquote>
+    <blockquote className="mb-4 border-l-4 border-primary/50 pl-4 italic">{children}</blockquote>
   ),
   a: ({ href, children }: { href?: string; children: React.ReactNode }) => (
-    <a
-      href={href}
-      className="text-primary underline transition-colors hover:text-primary/80"
-    >
+    <a href={href} className="text-primary underline transition-colors hover:text-primary/80">
       {children}
     </a>
   ),
@@ -139,30 +138,18 @@ const baseComponents = {
     <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-sm">{children}</code>
   ),
   pre: ({ children }: { children: React.ReactNode }) => (
-    <pre className="mb-4 overflow-x-auto rounded bg-muted/70 p-4 font-mono text-sm">
-      {children}
-    </pre>
+    <pre className="mb-4 overflow-x-auto rounded bg-muted/70 p-4 font-mono text-sm">{children}</pre>
   ),
   table: ({ children }: { children: React.ReactNode }) => (
     <div className="mb-4 overflow-x-auto">
       <Table>{children}</Table>
     </div>
   ),
-  thead: ({ children }: { children: React.ReactNode }) => (
-    <TableHeader>{children}</TableHeader>
-  ),
-  tbody: ({ children }: { children: React.ReactNode }) => (
-    <TableBody>{children}</TableBody>
-  ),
-  tr: ({ children }: { children: React.ReactNode }) => (
-    <TableRow>{children}</TableRow>
-  ),
-  th: ({ children }: { children: React.ReactNode }) => (
-    <TableHead>{children}</TableHead>
-  ),
-  td: ({ children }: { children: React.ReactNode }) => (
-    <TableCell>{children}</TableCell>
-  ),
+  thead: ({ children }: { children: React.ReactNode }) => <TableHeader>{children}</TableHeader>,
+  tbody: ({ children }: { children: React.ReactNode }) => <TableBody>{children}</TableBody>,
+  tr: ({ children }: { children: React.ReactNode }) => <TableRow>{children}</TableRow>,
+  th: ({ children }: { children: React.ReactNode }) => <TableHead>{children}</TableHead>,
+  td: ({ children }: { children: React.ReactNode }) => <TableCell>{children}</TableCell>,
   img: ({ src, alt }: { src?: string; alt?: string }) => (
     <figure className="not-prose my-6">
       {/* eslint-disable-next-line @next/next/no-img-element */}

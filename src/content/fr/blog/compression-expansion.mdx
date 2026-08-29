@@ -1,9 +1,9 @@
 ---
-title: "Compression → expansion — structure corrigée, edge nul"
-description: "Onset std_logp V1 laggé ; V1b restaure la structure. Surplus vol vs slope+ER ≈ 0 — contexte, pas trigger."
-date: "2026-08-17"
+title: 'Compression → expansion — structure corrigée, edge nul'
+description: 'Onset std_logp V1 laggé ; V1b restaure la structure. Surplus vol vs slope+ER ≈ 0 — contexte, pas trigger.'
+date: '2026-08-17'
 kind: research
-tags: ["compression", "volatility", "methodology", "eurusd-lab"]
+tags: ['compression', 'volatility', 'methodology', 'eurusd-lab']
 visible: true
 ---
 
@@ -33,16 +33,16 @@ Le narratif « vol comprimée → expansion » est omniprésent. Je voulais le s
 
 <CompressionV1V1bFigure />
 
-Sous null **N_C** (compression + <MathInline>{"D_{\\mathrm{pre}}"}</MathInline> contrôlés) : Δ MFE50 H=10 ≈ **+0,06** seulement — pas d'edge exploitable même après matching serré.
+Sous null **N_C** (compression + <MathInline>{"D\_{\\mathrm{pre}}"}</MathInline> contrôlés) : Δ MFE50 H=10 ≈ **+0,06** seulement — pas d'edge exploitable même après matching serré.
 
 <CompressionAblationFigure />
 
-| Question | Réponse |
-|----------|---------|
-| V1 prouve compression→expansion ? | **Non** |
-| V1b structure propre ? | **Oui** |
-| Surplus vol ? | **≈ 0** |
-| Persistance z = régime ? | **Non** — ACF excès ≈ +0,004 vs null IID-RW |
+| Question                          | Réponse                                     |
+| --------------------------------- | ------------------------------------------- |
+| V1 prouve compression→expansion ? | **Non**                                     |
+| V1b structure propre ?            | **Oui**                                     |
+| Surplus vol ?                     | **≈ 0**                                     |
+| Persistance z = régime ?          | **Non** — ACF excès ≈ +0,004 vs null IID-RW |
 
 ## Ce que j'en retiens
 
@@ -52,10 +52,12 @@ Sous null **N_C** (compression + <MathInline>{"D_{\\mathrm{pre}}"}</MathInline> 
 
 ## Liens & suite
 
-- <Link href="/knowledge/quantitative-finance/volatility/implied-vs-realized">Volatilité réalisée / implicite</Link>
+- <Link href="/knowledge/quantitative-finance/volatility/implied-vs-realized">
+    Volatilité réalisée / implicite
+  </Link>
 - Série **eurusd-lab** · voir aussi <Link href="/blog/multi-scale-countertrend">pullback multi-échelle</Link>, <Link href="/blog/hmm-slope-denoise">HMM slope</Link>.
 - Protocole intégral : `docs/research/04_compression_expansion.md`.
 
 ---
 
-*Note de recherche — août 2026. EURUSD · TIMB · 2023.*
+_Note de recherche — août 2026. EURUSD · TIMB · 2023._

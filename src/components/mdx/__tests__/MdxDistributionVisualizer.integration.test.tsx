@@ -12,10 +12,7 @@ function TestMdxContent() {
       <div>
         <h1>Normal Distribution Test</h1>
         <p>Normal distribution description</p>
-        <MdxDistributionVisualizer
-          distribution={normalDistribution}
-          showPresets={true}
-        />
+        <MdxDistributionVisualizer distribution={normalDistribution} showPresets={true} />
       </div>
     </MDXProvider>
   );

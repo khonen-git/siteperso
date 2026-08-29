@@ -9,26 +9,18 @@ interface EmptyStateProps {
 }
 
 export function EmptyState({
-  message = "Aucun élément à afficher.",
+  message = 'Aucun élément à afficher.',
   className,
-  icon: Icon = FileX
+  icon: Icon = FileX,
 }: EmptyStateProps) {
   return (
     <div className={cn('col-span-full text-center', className)}>
       {Icon && (
         <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-          {typeof Icon === 'function' ? (
-            <Icon className="h-6 w-6 text-muted-foreground" />
-          ) : (
-            Icon
-          )}
+          {typeof Icon === 'function' ? <Icon className="h-6 w-6 text-muted-foreground" /> : Icon}
         </div>
       )}
-      <p className="text-muted-foreground">
-        {message}
-      </p>
+      <p className="text-muted-foreground">{message}</p>
     </div>
   );
 }
-
-

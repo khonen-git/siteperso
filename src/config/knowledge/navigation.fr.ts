@@ -16,23 +16,38 @@ export const navigationData: TreeItem[] = [
         title: 'Analyse',
         href: '/knowledge/mathematics/analysis',
         children: [
-          { title: 'Dérivées, gradient et Hessienne', href: '/knowledge/mathematics/analysis/derivatives-gradient-hessian' },
+          {
+            title: 'Dérivées, gradient et Hessienne',
+            href: '/knowledge/mathematics/analysis/derivatives-gradient-hessian',
+          },
           { title: 'Convexité', href: '/knowledge/mathematics/analysis/convexity' },
           { title: 'Séries de Taylor', href: '/knowledge/mathematics/analysis/taylor-series' },
-          { title: 'Équations différentielles ordinaires', href: '/knowledge/mathematics/analysis/ordinary-differential-equations' },
-          { title: 'Équations aux dérivées partielles', href: '/knowledge/mathematics/analysis/partial-differential-equations' },
+          {
+            title: 'Équations différentielles ordinaires',
+            href: '/knowledge/mathematics/analysis/ordinary-differential-equations',
+          },
+          {
+            title: 'Équations aux dérivées partielles',
+            href: '/knowledge/mathematics/analysis/partial-differential-equations',
+          },
         ],
       },
       {
         title: 'Optimisation',
         href: '/knowledge/mathematics/optimization',
         children: [
-          { title: 'Optimisation convexe', href: '/knowledge/mathematics/optimization/convex-optimization' },
-          { title: 'Descente de gradient', href: '/knowledge/mathematics/optimization/gradient-descent' },
+          {
+            title: 'Optimisation convexe',
+            href: '/knowledge/mathematics/optimization/convex-optimization',
+          },
+          {
+            title: 'Descente de gradient',
+            href: '/knowledge/mathematics/optimization/gradient-descent',
+          },
         ],
       },
       { title: 'Calcul numérique', href: '/knowledge/mathematics/numerical-methods' },
-      { title: 'Théorie de l\'information', href: '/knowledge/mathematics/information-theory' },
+      { title: "Théorie de l'information", href: '/knowledge/mathematics/information-theory' },
     ],
   },
   {
@@ -48,12 +63,21 @@ export const navigationData: TreeItem[] = [
             title: 'Discrètes',
             href: '/knowledge/probability/distributions/discrete',
             children: [
-              { title: 'Bernoulli', href: '/knowledge/probability/distributions/discrete/bernoulli' },
-              { title: 'Binomiale', href: '/knowledge/probability/distributions/discrete/binomial' },
+              {
+                title: 'Bernoulli',
+                href: '/knowledge/probability/distributions/discrete/bernoulli',
+              },
+              {
+                title: 'Binomiale',
+                href: '/knowledge/probability/distributions/discrete/binomial',
+              },
               { title: 'Poisson', href: '/knowledge/probability/distributions/discrete/poisson' },
             ],
           },
-          { title: 'Continues univariées', href: '/knowledge/probability/distributions/continuous-univariate' },
+          {
+            title: 'Continues univariées',
+            href: '/knowledge/probability/distributions/continuous-univariate',
+          },
           { title: 'Loi normale', href: '/knowledge/probability/distributions/normal' },
           { title: 'Multivariées', href: '/knowledge/probability/distributions/multivariate' },
         ],
@@ -78,13 +102,25 @@ export const navigationData: TreeItem[] = [
         href: '/knowledge/statistics/inference',
         children: [
           {
-            title: 'Tests d\'hypothèses',
+            title: "Tests d'hypothèses",
             href: `${STATS}/inference/statistical-tests`,
             children: [
-              { title: 'Test t de Student', href: `${STATS}/inference/statistical-tests/parametric/t-test` },
-              { title: 'Test t de Welch', href: `${STATS}/inference/statistical-tests/parametric/t-test-welch` },
-              { title: 'Test de Mann-Whitney', href: `${STATS}/inference/statistical-tests/non-parametric/mann-whitney` },
-              { title: 'Test de Wilcoxon', href: `${STATS}/inference/statistical-tests/non-parametric/wilcoxon` },
+              {
+                title: 'Test t de Student',
+                href: `${STATS}/inference/statistical-tests/parametric/t-test`,
+              },
+              {
+                title: 'Test t de Welch',
+                href: `${STATS}/inference/statistical-tests/parametric/t-test-welch`,
+              },
+              {
+                title: 'Test de Mann-Whitney',
+                href: `${STATS}/inference/statistical-tests/non-parametric/mann-whitney`,
+              },
+              {
+                title: 'Test de Wilcoxon',
+                href: `${STATS}/inference/statistical-tests/non-parametric/wilcoxon`,
+              },
             ],
           },
         ],
@@ -113,7 +149,10 @@ export const navigationData: TreeItem[] = [
         ],
       },
       { title: 'Deep Learning', href: '/knowledge/machine-learning/deep-learning' },
-      { title: 'Reinforcement Learning', href: '/knowledge/machine-learning/reinforcement-learning' },
+      {
+        title: 'Reinforcement Learning',
+        href: '/knowledge/machine-learning/reinforcement-learning',
+      },
       { title: 'ML appliqué aux marchés', href: '/knowledge/machine-learning/market-ml' },
     ],
   },
@@ -146,17 +185,24 @@ export const navigationData: TreeItem[] = [
       },
       { title: 'Calcul stochastique', href: '/knowledge/quantitative-finance/stochastic-calculus' },
       { title: 'Gestion du risque', href: '/knowledge/quantitative-finance/risk-management' },
-      { title: 'Gestion de portefeuille', href: '/knowledge/quantitative-finance/portfolio-management' },
+      {
+        title: 'Gestion de portefeuille',
+        href: '/knowledge/quantitative-finance/portfolio-management',
+      },
       { title: 'Modèles factoriels', href: '/knowledge/quantitative-finance/factor-models' },
-      { title: 'Microstructure de marché', href: '/knowledge/quantitative-finance/market-microstructure' },
+      {
+        title: 'Microstructure de marché',
+        href: '/knowledge/quantitative-finance/market-microstructure',
+      },
       {
         title: 'Économétrie financière',
         href: '/knowledge/quantitative-finance/financial-econometrics',
-        children: [
-          { title: 'Régimes & HMM', href: `${QF}/financial-econometrics/regimes-hmm` },
-        ],
+        children: [{ title: 'Régimes & HMM', href: `${QF}/financial-econometrics/regimes-hmm` }],
       },
-      { title: 'Backtesting & recherche systématique', href: '/knowledge/quantitative-finance/backtesting' },
+      {
+        title: 'Backtesting & recherche systématique',
+        href: '/knowledge/quantitative-finance/backtesting',
+      },
     ],
   },
   {
@@ -192,9 +238,7 @@ export const navigationData: TreeItem[] = [
       {
         title: 'Hardware',
         href: `${ENGINEERING}/hardware`,
-        children: [
-          { title: 'Architecture CPU', href: `${ENGINEERING}/hardware/cpu-architecture` },
-        ],
+        children: [{ title: 'Architecture CPU', href: `${ENGINEERING}/hardware/cpu-architecture` }],
       },
       getDesignPatternsNav(ENGINEERING, {
         title: 'Design patterns',

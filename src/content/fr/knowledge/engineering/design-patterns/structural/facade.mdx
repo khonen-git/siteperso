@@ -10,12 +10,11 @@ import { ConsoleOutput } from '@/components/mdx/ConsoleOutput';
 # Facade
 
 <i>
-    Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour proposer un contenu personnel et d'une meilleure qualité.
+  Nota bene : Ce contenu a été généré par IA. Je suis en train de travailler sur cette page pour
+  proposer un contenu personnel et d'une meilleure qualité.
 </i>
 
-<MdxCard>
-Offrir une interface simple à un sous-système complexe.
-</MdxCard>
+<MdxCard>Offrir une interface simple à un sous-système complexe.</MdxCard>
 
 ## Intention
 
@@ -33,13 +32,13 @@ Réduire le couplage du client avec de nombreuses classes internes.
         print("CPU execute")
 
 class Memory:
-    def load(self, addr, data):
-        print(f"RAM load {addr}={data}")
+def load(self, addr, data):
+print(f"RAM load {addr}={data}")
 
 class ComputerFacade:
-    def __init__(self):
-        self.cpu = CPU()
-        self.memory = Memory()
+def **init**(self):
+self.cpu = CPU()
+self.memory = Memory()
 
     def start(self):
         self.cpu.freeze()
@@ -48,13 +47,11 @@ class ComputerFacade:
         self.cpu.execute()
 
 ComputerFacade().start()`}
+
 </CodeBlock>
 
 <ConsoleOutput title="Sortie console">
-CPU freeze
-RAM load 0=boot
-CPU jump 0
-CPU execute
+  CPU freeze RAM load 0=boot CPU jump 0 CPU execute
 </ConsoleOutput>
 
 ## Quand l'utiliser

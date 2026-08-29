@@ -4,7 +4,14 @@ description: Régression linéaire, diagnostics, inférence et extensions régul
 ---
 
 import { MdxCard } from '@/components/mdx/MdxCard';
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from '@/components/ui/table';
 import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
 
 # Régression linéaire
@@ -14,9 +21,10 @@ La **régression linéaire** modélise la relation entre une variable cible <Mat
 
 Dans le cas multiple :
 
-<MathBlock>{"y = X\\beta + \\varepsilon"}</MathBlock>
+<MathBlock>{'y = X\\beta + \\varepsilon'}</MathBlock>
 
 où <MathInline>{"X"}</MathInline> contient les features, <MathInline>{"\\beta"}</MathInline> les coefficients et <MathInline>{"\\varepsilon"}</MathInline> le terme d'erreur.
+
 </MdxCard>
 
 ## Intuition
@@ -26,9 +34,10 @@ La régression linéaire cherche le **meilleur hyperplan** pour approximer une c
 
 Dans le cas simple :
 
-<MathBlock>{"y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i"}</MathBlock>
+<MathBlock>{'y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i'}</MathBlock>
 
 Le coefficient <MathInline>{"\\beta_1"}</MathInline> mesure la variation moyenne de <MathInline>{"y"}</MathInline> associée à une hausse d'une unité de <MathInline>{"x"}</MathInline>, toutes choses égales par ailleurs dans le cas multiple.
+
 </MdxCard>
 
 ## Estimation par moindres carrés ordinaires
@@ -36,13 +45,14 @@ Le coefficient <MathInline>{"\\beta_1"}</MathInline> mesure la variation moyenne
 <MdxCard>
 L'estimateur OLS minimise :
 
-<MathBlock>{"\\min_{\\beta} \\sum_{i=1}^n (y_i - x_i^\\top \\beta)^2"}</MathBlock>
+<MathBlock>{'\\min_{\\beta} \\sum_{i=1}^n (y_i - x_i^\\top \\beta)^2'}</MathBlock>
 
 En notation matricielle, si <MathInline>{"X^\\top X"}</MathInline> est inversible :
 
-<MathBlock>{"\\hat{\\beta} = (X^\\top X)^{-1} X^\\top y"}</MathBlock>
+<MathBlock>{'\\hat{\\beta} = (X^\\top X)^{-1} X^\\top y'}</MathBlock>
 
 Cette formule montre immédiatement pourquoi la colinéarité pose problème : si les colonnes de <MathInline>{"X"}</MathInline> sont linéairement dépendantes, l'inverse n'existe pas.
+
 </MdxCard>
 
 <MdxCard>
@@ -57,22 +67,30 @@ Cette formule montre immédiatement pourquoi la colinéarité pose problème : s
     <TableBody>
       <TableRow>
         <TableCell className="font-medium">Prédiction</TableCell>
-        <TableCell><MathInline>{"\\hat{y} = X\\hat{\\beta}"}</MathInline></TableCell>
+        <TableCell>
+          <MathInline>{'\\hat{y} = X\\hat{\\beta}'}</MathInline>
+        </TableCell>
         <TableCell>Valeurs ajustées par le modèle</TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Résidus</TableCell>
-        <TableCell><MathInline>{"e = y - \\hat{y}"}</MathInline></TableCell>
+        <TableCell>
+          <MathInline>{'e = y - \\hat{y}'}</MathInline>
+        </TableCell>
         <TableCell>Erreur observée sur l'échantillon</TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">RSS</TableCell>
-        <TableCell><MathInline>{"\\sum_i e_i^2"}</MathInline></TableCell>
+        <TableCell>
+          <MathInline>{'\\sum_i e_i^2'}</MathInline>
+        </TableCell>
         <TableCell>Somme des carrés des résidus</TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Estimateur de variance</TableCell>
-        <TableCell><MathInline>{"\\hat{\\sigma}^2 = \\frac{RSS}{n-p-1}"}</MathInline></TableCell>
+        <TableCell>
+          <MathInline>{'\\hat{\\sigma}^2 = \\frac{RSS}{n-p-1}'}</MathInline>
+        </TableCell>
         <TableCell>Variance résiduelle estimée</TableCell>
       </TableRow>
     </TableBody>
@@ -93,12 +111,16 @@ Cette formule montre immédiatement pourquoi la colinéarité pose problème : s
     <TableBody>
       <TableRow>
         <TableCell className="font-medium">Linéarité</TableCell>
-        <TableCell><MathInline>{"\\mathbb{E}[y \\mid X] = X\\beta"}</MathInline></TableCell>
+        <TableCell>
+          <MathInline>{'\\mathbb{E}[y \\mid X] = X\\beta'}</MathInline>
+        </TableCell>
         <TableCell>Le modèle doit être bien spécifié en moyenne</TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Exogénéité</TableCell>
-        <TableCell><MathInline>{"\\mathbb{E}[\\varepsilon \\mid X] = 0"}</MathInline></TableCell>
+        <TableCell>
+          <MathInline>{'\\mathbb{E}[\\varepsilon \\mid X] = 0'}</MathInline>
+        </TableCell>
         <TableCell>Condition clé pour l'absence de biais</TableCell>
       </TableRow>
       <TableRow>
@@ -108,18 +130,28 @@ Cette formule montre immédiatement pourquoi la colinéarité pose problème : s
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Homoscédasticité</TableCell>
-        <TableCell><MathInline>{"\\mathrm{Var}(\\varepsilon \\mid X) = \\sigma^2"}</MathInline></TableCell>
+        <TableCell>
+          <MathInline>{'\\mathrm{Var}(\\varepsilon \\mid X) = \\sigma^2'}</MathInline>
+        </TableCell>
         <TableCell>Sinon les erreurs standards OLS sont invalides</TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Pas de colinéarité parfaite</TableCell>
-        <TableCell><MathInline>{"X^\\top X"}</MathInline> inversible</TableCell>
-        <TableCell>Condition d'existence de <MathInline>{"\\hat{\\beta}"}</MathInline></TableCell>
+        <TableCell>
+          <MathInline>{'X^\\top X'}</MathInline> inversible
+        </TableCell>
+        <TableCell>
+          Condition d'existence de <MathInline>{'\\hat{\\beta}'}</MathInline>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Normalité des erreurs</TableCell>
-        <TableCell><MathInline>{"\\varepsilon \\sim \\mathcal{N}(0, \\sigma^2 I)"}</MathInline></TableCell>
-        <TableCell>Utile pour les tests exacts à petit échantillon, pas pour calculer OLS</TableCell>
+        <TableCell>
+          <MathInline>{'\\varepsilon \\sim \\mathcal{N}(0, \\sigma^2 I)'}</MathInline>
+        </TableCell>
+        <TableCell>
+          Utile pour les tests exacts à petit échantillon, pas pour calculer OLS
+        </TableCell>
       </TableRow>
     </TableBody>
   </Table>
@@ -136,9 +168,10 @@ Sous les hypothèses usuelles, l'estimateur OLS est :
 
 Sa variance conditionnelle vaut :
 
-<MathBlock>{"\\mathrm{Var}(\\hat{\\beta} \\mid X) = \\sigma^2 (X^\\top X)^{-1}"}</MathBlock>
+<MathBlock>{'\\mathrm{Var}(\\hat{\\beta} \\mid X) = \\sigma^2 (X^\\top X)^{-1}'}</MathBlock>
 
 Sous normalité des erreurs, OLS coïncide aussi avec l'estimateur du maximum de vraisemblance.
+
 </MdxCard>
 
 ## Inférence statistique
@@ -155,17 +188,25 @@ Sous normalité des erreurs, OLS coïncide aussi avec l'estimateur du maximum de
     <TableBody>
       <TableRow>
         <TableCell className="font-medium">Erreur standard</TableCell>
-        <TableCell><MathInline>{"SE(\\hat{\\beta}_j)"}</MathInline></TableCell>
+        <TableCell>
+          <MathInline>{'SE(\\hat{\\beta}_j)'}</MathInline>
+        </TableCell>
         <TableCell>Incertitude estimée sur un coefficient</TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Statistique t</TableCell>
-        <TableCell><MathInline>{"t_j = \\frac{\\hat{\\beta}_j - \\beta_{j,0}}{SE(\\hat{\\beta}_j)}"}</MathInline></TableCell>
+        <TableCell>
+          <MathInline>
+            {'t_j = \\frac{\\hat{\\beta}_j - \\beta_{j,0}}{SE(\\hat{\\beta}_j)}'}
+          </MathInline>
+        </TableCell>
         <TableCell>Test de nullité ou de valeur cible d'un coefficient</TableCell>
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">IC à 95 %</TableCell>
-        <TableCell><MathInline>{"\\hat{\\beta}_j \\pm t_{n-p-1, 0.975} SE(\\hat{\\beta}_j)"}</MathInline></TableCell>
+        <TableCell>
+          <MathInline>{'\\hat{\\beta}_j \\pm t_{n-p-1, 0.975} SE(\\hat{\\beta}_j)'}</MathInline>
+        </TableCell>
         <TableCell>Intervalle plausible pour le vrai coefficient</TableCell>
       </TableRow>
       <TableRow>
@@ -175,7 +216,9 @@ Sous normalité des erreurs, OLS coïncide aussi avec l'estimateur du maximum de
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">p-value</TableCell>
-        <TableCell>Probabilité sous <MathInline>{"H_0"}</MathInline> d'observer aussi extrême ou plus</TableCell>
+        <TableCell>
+          Probabilité sous <MathInline>{'H_0'}</MathInline> d'observer aussi extrême ou plus
+        </TableCell>
         <TableCell>Mesure de compatibilité avec l'hypothèse nulle, pas taille d'effet</TableCell>
       </TableRow>
     </TableBody>
@@ -183,12 +226,7 @@ Sous normalité des erreurs, OLS coïncide aussi avec l'estimateur du maximum de
 </MdxCard>
 
 <MdxCard>
-Les p-values ne suffisent pas à juger un modèle. Il faut aussi regarder :
-
-- la taille et le signe des coefficients
-- la stabilité hors échantillon
-- la cohérence métier ou économique
-- la sensibilité aux variables ajoutées ou retirées
+Les p-values ne suffisent pas à juger un modèle. Il faut aussi regarder la taille et le signe des coefficients, la stabilité hors échantillon, la cohérence métier ou économique, et la sensibilité aux variables ajoutées ou retirées.
 </MdxCard>
 
 ## Qualité d'ajustement
@@ -204,12 +242,16 @@ Les p-values ne suffisent pas à juger un modèle. Il faut aussi regarder :
     </TableHeader>
     <TableBody>
       <TableRow>
-        <TableCell className="font-medium"><MathInline>{"R^2"}</MathInline></TableCell>
+        <TableCell className="font-medium">
+          <MathInline>{'R^2'}</MathInline>
+        </TableCell>
         <TableCell>Part de variance expliquée</TableCell>
         <TableCell>Augmente mécaniquement quand on ajoute des variables</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell className="font-medium"><MathInline>{"R^2"}</MathInline> ajusté</TableCell>
+        <TableCell className="font-medium">
+          <MathInline>{'R^2'}</MathInline> ajusté
+        </TableCell>
         <TableCell>Pénalise les variables inutiles</TableCell>
         <TableCell>Reste une mesure intra-échantillon</TableCell>
       </TableRow>
@@ -271,11 +313,11 @@ Les p-values ne suffisent pas à juger un modèle. Il faut aussi regarder :
 ## Limites
 
 <MdxCard>
-- La causalité ne découle pas d'une corrélation linéaire significative.
-- Les outliers peuvent fortement déplacer les coefficients.
-- La relation réelle peut être non linéaire ou dépendre d'interactions omises.
-- En présence de fuite d'information ou de mauvaise temporalité, l'inférence devient trompeuse.
-- La régression linéaire extrapole selon une droite ou un hyperplan, ce qui peut être économiquement absurde hors zone observée.
+  - La causalité ne découle pas d'une corrélation linéaire significative. - Les outliers peuvent
+  fortement déplacer les coefficients. - La relation réelle peut être non linéaire ou dépendre
+  d'interactions omises. - En présence de fuite d'information ou de mauvaise temporalité,
+  l'inférence devient trompeuse. - La régression linéaire extrapole selon une droite ou un
+  hyperplan, ce qui peut être économiquement absurde hors zone observée.
 </MdxCard>
 
 ## Extensions proches
@@ -307,7 +349,9 @@ Les p-values ne suffisent pas à juger un modèle. Il faut aussi regarder :
       </TableRow>
       <TableRow>
         <TableCell className="font-medium">Régression logistique</TableCell>
-        <TableCell>Version classification binaire, lien logit au lieu d'une cible continue</TableCell>
+        <TableCell>
+          Version classification binaire, lien logit au lieu d'une cible continue
+        </TableCell>
       </TableRow>
     </TableBody>
   </Table>
@@ -324,13 +368,24 @@ En machine learning tabulaire, la régression linéaire reste une **baseline ess
 - utile pour détecter si la complexité supplémentaire (arbres, boosting, réseaux) apporte réellement quelque chose
 
 Elle devient particulièrement pertinente quand les données sont peu nombreuses, le bruit modéré et l'interprétation des coefficients importante.
+
 </MdxCard>
 
 ## Références
 
 <MdxCard>
   <div className="space-y-2">
-    <p>• statsmodels — <a href="https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLS.html">OLS</a></p>
-    <p>• scikit-learn — <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">LinearRegression</a></p>
+    <p>
+      • statsmodels —{' '}
+      <a href="https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLS.html">
+        OLS
+      </a>
+    </p>
+    <p>
+      • scikit-learn —{' '}
+      <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">
+        LinearRegression
+      </a>
+    </p>
   </div>
 </MdxCard>
