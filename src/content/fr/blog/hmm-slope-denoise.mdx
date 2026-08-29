@@ -1,0 +1,75 @@
+---
+title: "HMM slope denoising — régime oui, entrée non"
+description: "Un HMM 3 états débruite la pente OLS multi-horizon. Structure soft-fade stable, hazard mid-épisode utile — pas de gate d'entrée ni EV net."
+date: "2026-08-19"
+kind: research
+tags: ["hmm", "soft-fade", "survival", "eurusd-lab"]
+visible: true
+---
+
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+import { NotaBene } from '@/components/mdx/NotaBene';
+import { Link } from '@/i18n/navigation';
+
+<NotaBene>
+
+**En bref.** J'ai filtré la t-stat OLS de pente via un HMM à 3 états (down / neutral / up) sur horizons {16, 32, 64, 128}. Les épisodes **soft-fade** (doute court vs thesis long) ont une structure stable : CIF **R/E/B ≈ 28/68/4 %** IS≈OOS. On peut lire le risque **mid-épisode** (AUC E ≈ **0,82**), pas à l'onset (AUC ≈ **0,52**). EV net ≈ **0** après coûts.
+
+</NotaBene>
+
+## Pourquoi j'ai lancé cette piste
+
+La pente brute est bruyante ; le MAP seul est instable bar-à-bar. L'idée : des **soft slopes** causales comme couche de régime, puis tester si un pattern « fade » (s16 passe neutre alors que s128 reste en thesis) porte de l'information tradable.
+
+Piège classique : confondre un taux conditionnel élevé de ré-alignement avec une probabilité d'onset favorable.
+
+## Setup (résumé)
+
+| Paramètre | Valeur |
+|-----------|--------|
+| Actif / barrière | EURUSD · TIMB |
+| Fit HMM | 60j 2023 → freeze |
+| Éval | IS post-calib 2023 + **OOS 2024** |
+| HMM | C2, K=3, sticky E[D]=40 |
+
+Onset soft-fade (ex. long) : <MathInline>{"s_{16}"}</MathInline> passe de +1 à 0 alors que <MathInline>{"s_{128}=+1"}</MathInline>.
+
+Issues absorbantes : **Resolve** (R), **Escalate** (E), **Break** (B).
+
+## Résultats clés
+
+<HmmCifFigure />
+
+| Gate | Verdict | Détail |
+|------|---------|--------|
+| 0 Setup | PASS | Freeze OOS corr 0,955–0,996 |
+| 1 Existence | PASS | CIF stable IS/OOS |
+| 2 Detectability | **FAIL** | AUC E onset 0,522 |
+| 3 Predictability | PARTIAL | AUC E mid 0,816 |
+| 4 Tradability | **FAIL** | mean pips @0,2 RT ≈ −0,21 OOS |
+
+<HmmAucOnsetMidFigure />
+
+PnL par issue : resolve **~+4,3 pips**, escalate **~−1,8** — avec ~**68 %** d'escalate, le book meurt.
+
+## Ce que j'en retiens
+
+| Question | Réponse |
+|----------|---------|
+| Le dénoiseur est-il sain ? | **Oui** — rapide (~23 s/an), freeze stable |
+| Gate d'entrée à l'onset ? | **Non** |
+| Risque dynamique mid-épisode ? | **Oui** — person-period |
+| Trade standalone ? | **Non** |
+
+> Le « ~90 % de ré-alignement » est **conditionnel** à R∪B — pas P(onset gagnant).
+
+**Usage recommandé :** softs multi-échelle comme **features de régime / hazard** — pas signal d'entrée isolé.
+
+## Liens & suite
+
+- <Link href="/knowledge/quantitative-finance/financial-econometrics/regimes-hmm">Régimes & HMM</Link>
+- Brouillon intégral : `showcase/02_hmm_slope_denoise.md`
+
+---
+
+*Note de recherche — août 2026. EURUSD · TIMB · 2023–2024.*

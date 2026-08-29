@@ -1,0 +1,72 @@
+---
+title: "Labels Tr8dr — un y solide, permission OOS partielle"
+description: "Segments amplitude-based sur EURUSD TIMB : D(h) peak +0,55, stack C4 permission R=0,56 valid → 0,34 OOS 2024."
+date: "2026-08-20"
+kind: research
+tags: ["tr8dr", "labels", "permission", "eurusd-lab"]
+visible: true
+---
+
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+import { NotaBene } from '@/components/mdx/NotaBene';
+import { Link } from '@/i18n/navigation';
+
+<NotaBene>
+
+**En bref.** Avant modèles riches, il faut un label <MathInline>{"y"}</MathInline> stable. Tr8dr amplitude-based (15 bps / Tinactive 60) sur EURUSD TIMB : occupancy **48,6 %**, peak <MathInline>{"D(h)"}</MathInline> **+0,549** à H=32. La stack contexte C4 donne une permission live R=**0,558** en valid — **0,344** OOS 2024. Socle solide, pas encore une stratégie.
+
+</NotaBene>
+
+## Pourquoi j'ai lancé cette piste
+
+Tout le lab aval (process gates, HMM, events) repose sur un **y** de segments directionnels gelé. Si le label est bruit de coding ou non séparable économiquement, le reste est décoratif.
+
+Pipeline : census L0 → validité <MathInline>{"D(h)"}</MathInline> → screening univarié T2/T5 → stack C4 → lock OOS 2024.
+
+## Définition (résumé)
+
+Segments up / neutral / down via amplitude min + timeout d'inactivité :
+
+<MathBlock>{"D(h) = P(r_{t\\to t+h}>0 \\mid y=\\mathrm{up}) - P(r_{t\\to t+h}>0 \\mid y=\\mathrm{down})"}</MathBlock>
+
+| Métrique L0 | Valeur |
+|-------------|-------:|
+| Occupancy signed | 48,6 % |
+| Segments / jour | ~5,2 |
+| Durée p50 / p90 | 83 / 206 bars |
+
+## Résultats clés
+
+<Tr8drDeltaHitFigure />
+
+**Screening P1 :** T5 terminaison AUC ~0,63–0,69 (range, vol) ; T2 onset modeste (~0,55–0,65) — conditionnement, pas edge d'entrée seul. T3 direction : plusieurs signaux **inversés** (AUC &lt; 0,5) → prudence sur l'orientation.
+
+**Context C4 :** best config `C_bps_slim` q=0,5 → R=**0,558**, live rate 50 %, AUC 0,606 valid.
+
+<Tr8drValidOosFigure />
+
+| Métrique | Valid | OOS 2024 |
+|----------|------:|---------:|
+| R | 0,558 | **0,344** |
+| AUC live | 0,606 | 0,587 |
+| Live rate | 0,497 | 0,442 |
+
+## Ce que j'en retiens
+
+| Question | Réponse |
+|----------|---------|
+| Label sain ? | **Oui** |
+| Permission C4 ? | **Oui** in-sample |
+| OOS 2024 ? | **Partiel** — R 0,34, signal présent mais dégradé |
+| Stratégie standalone ? | **Non** — gate de régime |
+
+**Usage recommandé :** y gelé + score C comme **permission** dans le stack lab (HMM, process, events).
+
+## Liens & suite
+
+- <Link href="/knowledge/quantitative-finance/backtesting">Backtesting & recherche systématique</Link>
+- Brouillon intégral : `showcase/03_tr8dr_trend_labels.md`
+
+---
+
+*Note de recherche — août 2026. EURUSD · TIMB · 2023–2024.*

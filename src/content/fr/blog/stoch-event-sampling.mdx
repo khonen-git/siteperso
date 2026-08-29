@@ -1,0 +1,91 @@
+---
+title: "Stochastic events — quand l'AUC 0,85 est un artefact"
+description: "Sur EURUSD, un croisement stochastique « raw » flatterait le modèle. En corrigeant le sampling, l'AUC retombe : filtre de régime faible, pas stratégie."
+date: "2026-08-21"
+kind: research
+tags: ["process-first", "sampling", "stoch", "eurusd-lab"]
+visible: true
+---
+
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+import { NotaBene } from '@/components/mdx/NotaBene';
+import { Link } from '@/i18n/navigation';
+
+<NotaBene>
+
+**En bref.** J'ai testé les croisements stochastiques (%K) comme events sur EURUSD (barres d'imbalance de ticks, 2023). En comptant *tous* les croisements, le modèle directionnel affiche une AUC séduisante (~**0,85**). Dès que je restreins l'univers aux events réellement tradables (côtés alternés, sans spam dans la même jambe), l'AUC retombe à **~0,59–0,63**. **Le sampling est la métrique** — usage possible : filtre de régime / permission, pas exécution directe.
+
+</NotaBene>
+
+## Pourquoi j'ai lancé cette piste
+
+Les croisements stochastiques sont un classique : signal visuel, règle simple, implémentation triviale. Dans mon lab « process-first », je ne cherche pas d'abord un trade — je veux savoir si l'event **porte de l'information** une fois le protocole gelé (split train/valid, features causales, pas d'optimisation sur le PnL).
+
+Mon intuition : un %K qui sort d'une zone extrême pourrait marquer un **contexte** utile — permission d'entrer, ou au contraire filtre « marché tendu ». Ce qui m'a surpris, c'est l'écart entre l'univers **raw** (tous les croisements) et l'univers **alt** (events tradables). La première version du pipeline me donnait envie de continuer ; la seconde m'a forcé à revoir la question.
+
+## Le piège : scorer sur le mauvais univers
+
+Sur une jambe Tr8dr haussière, le stoch peut recroiser plusieurs fois **dans le même sens** — du « same-side spam ». Le modèle n'apprend pas une décision d'entrée indépendante : il réplique la tendance déjà en cours. D'où une AUC directionnelle gonflée sans edge exécutable.
+
+<StochSamplingBiasFigure />
+
+En filtrant (`alternate_sides=True`), le nombre d'events est divisé par ~**5** (35 040 → 7 279 pour la config `stoch_32_10_90`). C'est le prix à payer pour une métrique honnête.
+
+## Setup (résumé)
+
+| Paramètre | Valeur |
+|-----------|--------|
+| Actif / barrière | EURUSD · TIMB (`tick_imbalance_10_fixed`), 2023 |
+| Split | train H1 / valid H2 |
+| Config focus | `stoch_32_10_90` (période 32, bandes 10/90) |
+| Features | contexte (range, slope, time-of-day) ; direction (slope FFD, OFI) |
+
+Un event à <MathInline>{"t"}</MathInline> : %K croise une bande <MathInline>{"[\\ell, h]"}</MathInline>.
+
+<MathBlock>{"e_t = \\mathbf{1}\\{\\%K_p(t)\\ \\text{crosses}\\ \\{\\ell,h\\}\\}"}</MathBlock>
+
+Trois univers comparés :
+
+| Mode | Events (`stoch_32_10_90`) | Rôle |
+|------|--------------------------:|------|
+| **raw** | 35 040 | Archive — biais same-side |
+| **alt_overlap** | 7 279 | Référence lab |
+| **alt_no_overlap** | 3 736 | Trade-sim swing (RR1, time-cap) |
+
+## Résultats clés
+
+<StochAucRawVsAltFigure />
+
+| Mode | C_event | A_leg | A_fwd |
+|------|--------:|------:|------:|
+| raw | **0,70** | **0,85** | 0,79 |
+| alt_overlap | 0,63 | **0,59** | 0,54 |
+| alt_no_overlap | 0,62 | **0,63** | 0,60 |
+
+- **C_event** (~0,62 sur alt) : permission / contexte autour de l'event — signal faible mais cohérent.
+- **A_leg** : chute brutale de 0,85 → ~0,59 quand on corrige le sampling — la « performance » raw était un artefact.
+- **A_fwd** : reste proche du hasard sur alt ; pas de edge directionnel net.
+
+Le gain de log-vraisemblance vs prior (base rate) reste **modeste** sur alt. Sensibilité aux paramètres stoch : la période 16 garde un AUC un peu plus élevé (~0,70–0,75) que la 32 — toujours dans la zone « filtre », pas « alpha ».
+
+## Ce que j'en retiens
+
+| Question | Réponse |
+|----------|---------|
+| L'AUC 0,85 raw est-elle un edge ? | **Non** — artefact de spam same-side |
+| Que reste-t-il sur alt ? | C_event ~0,62 ; A_leg ~0,59–0,63 |
+| Usage recommandé | **Filtre de régime / permission**, pas exécution |
+
+> Toujours scorer sur l'univers **tradable**. Sinon le modèle apprend la corrélation répliquée de la tendance, pas une décision d'entrée.
+
+Je n'abandonne pas l'idée d'events stoch — je la **déplace** : plutôt brique de contexte dans une stack (labels Tr8dr, régime HMM, gates amont) que signal standalone. C'est cohérent avec les autres notes du lab où la tradabilité nette échoue souvent alors que la structure d'état tient.
+
+## Liens & suite
+
+- Théorie et biais de recherche : <Link href="/knowledge/quantitative-finance/backtesting">Backtesting & recherche systématique</Link> (page en cours d'enrichissement).
+- Série **eurusd-lab** · voir aussi <Link href="/blog/multi-scale-countertrend">pullback multi-échelle</Link>, <Link href="/blog/hmm-slope-denoise">HMM slope</Link>, <Link href="/blog/tr8dr-trend-labels">labels Tr8dr</Link>.
+- **Version intégrale** (protocole, figures complètes, reproductibilité) : brouillon source dans `showcase/05_stoch_event_context.md` du dépôt.
+
+---
+
+*Note de recherche — août 2026. Données EURUSD, barres TIMB, protocole gelé train/valid.*

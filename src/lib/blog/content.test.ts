@@ -18,7 +18,7 @@ describe('blog content loader', () => {
 
   it('returns sorted posts with required fields', () => {
     const posts = getBlogPosts('fr');
-    expect(posts.length).toBeGreaterThanOrEqual(2);
+    expect(posts.length).toBeGreaterThanOrEqual(5);
     expect(posts[0].date >= posts[posts.length - 1].date).toBe(true);
     expect(posts[0]).toEqual(
       expect.objectContaining({
@@ -30,9 +30,9 @@ describe('blog content loader', () => {
   });
 
   it('loads a post by slug', () => {
-    const post = getBlogPost('fr', 'template-pensee');
+    const post = getBlogPost('fr', 'stoch-event-sampling');
     expect(post).not.toBeNull();
-    expect(post?.post.kind).toBe('thought');
+    expect(post?.post.kind).toBe('research');
     expect(post?.source.length).toBeGreaterThan(0);
   });
 

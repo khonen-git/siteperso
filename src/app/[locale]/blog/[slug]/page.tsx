@@ -47,6 +47,7 @@ export default async function BlogPostPage({
         options={{
           mdxOptions: {
             remarkPlugins: [remarkGfm],
+            format: 'mdx',
           },
         }}
       />

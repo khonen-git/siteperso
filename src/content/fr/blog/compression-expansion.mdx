@@ -1,0 +1,60 @@
+---
+title: "Compression → expansion — structure corrigée, edge nul"
+description: "Onset std_logp V1 laggé ; V1b restaure la structure. Surplus vol vs slope+ER ≈ 0 — contexte, pas trigger."
+date: "2026-08-17"
+kind: research
+tags: ["compression", "volatility", "methodology", "eurusd-lab"]
+visible: true
+---
+
+import { NotaBene } from '@/components/mdx/NotaBene';
+import { MathInline } from '@/components/features/knowledge/math/MathBlock';
+import { Link } from '@/i18n/navigation';
+
+<NotaBene>
+
+**En bref.** Compression de vol suivie d'expansion : motif séduisant, protocole exigeant. V1 (`std_logp`) réagit **après** le mouvement (AUCΔ pré-onset ≈ 39 vs post ≈ 6). V1b corrige lag et clustering. Ablation : ajouter la vol au-delà de slope + ER apporte **≈ 0** (Δ log-loss **−0,001**). Persistance du z-score rolling = artefact mécanique du filtre.
+
+</NotaBene>
+
+## Pourquoi j'ai lancé cette piste
+
+Le narratif « vol comprimée → expansion » est omniprésent. Je voulais le soumettre au même rigueur que le reste du lab : onset causal, nulls de matching croissants (TOD → compression → déplacement pré), ablation incrémentale.
+
+## Arc méthodo
+
+1. **V1 naive** — escape event vs null déjà saturé (0,89 vs 0,86 à H=10)
+2. **Diagnostic lag** — le détecteur voit un déplacement engagé, pas une compression pure
+3. **V1b** — reformulation early+causal
+4. **Ablation** — la vol ajoute-t-elle quelque chose vs slope + efficiency ratio ?
+5. **Filter null** — la persistance z est-elle un « régime » ?
+
+## Résultats clés
+
+<CompressionV1V1bFigure />
+
+Sous null **N_C** (compression + <MathInline>{"D_{\\mathrm{pre}}"}</MathInline> contrôlés) : Δ MFE50 H=10 ≈ **+0,06** seulement — pas d'edge exploitable même après matching serré.
+
+<CompressionAblationFigure />
+
+| Question | Réponse |
+|----------|---------|
+| V1 prouve compression→expansion ? | **Non** |
+| V1b structure propre ? | **Oui** |
+| Surplus vol ? | **≈ 0** |
+| Persistance z = régime ? | **Non** — ACF excès ≈ +0,004 vs null IID-RW |
+
+## Ce que j'en retiens
+
+> On a cru voir un process de vol ; le diagnostic montre un **détecteur retardé**, puis une **structure corrigée sans edge incrémental**.
+
+**Usage recommandé :** `std_logp` et dérivés comme **features de maturité / activité** — pas onset trading autonome.
+
+## Liens & suite
+
+- <Link href="/knowledge/quantitative-finance/volatility/implied-vs-realized">Volatilité réalisée / implicite</Link>
+- Brouillon intégral : `showcase/04_compression_expansion.md`
+
+---
+
+*Note de recherche — août 2026. EURUSD · TIMB · 2023.*

@@ -1,0 +1,87 @@
+import * as React from 'react';
+import { BlogFigure } from '@/components/blog/BlogFigure';
+
+export function StochSamplingBiasFigure(): React.JSX.Element {
+  return (
+    <BlogFigure caption="Schéma du biais same-side : univers raw vs alt">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 820 220"
+        role="img"
+        aria-hidden
+      >
+        <defs>
+          <marker
+            id="stoch-sampling-arrow"
+            markerWidth="8"
+            markerHeight="8"
+            refX="6"
+            refY="3"
+            orient="auto"
+          >
+            <path d="M0,0 L6,3 L0,6 Z" fill="#333" />
+          </marker>
+        </defs>
+        <text
+          x="410"
+          y="22"
+          fill="#111"
+          fontFamily="system-ui,sans-serif"
+          fontSize="15"
+          fontWeight="600"
+          textAnchor="middle"
+        >
+          Le biais same-side : l&apos;AUC apprend la tendance, pas l&apos;entrée
+        </text>
+
+        <rect x="20" y="50" width="200" height="56" rx="6" fill="#3a7d44" stroke="#1a1a1a" strokeWidth="1.2" />
+        <text x="120" y="78" fill="#fff" fontSize="13" fontWeight="600" textAnchor="middle" dominantBaseline="middle">
+          Jambe Tr8dr haussière
+        </text>
+
+        <line x1="230" y1="78" x2="270" y2="78" stroke="#333" strokeWidth="1.5" markerEnd="url(#stoch-sampling-arrow)" />
+        <rect x="280" y="50" width="220" height="56" rx="6" fill="#c44e52" stroke="#1a1a1a" strokeWidth="1.2" />
+        <text x="390" y="78" fill="#fff" fontSize="13" fontWeight="600" textAnchor="middle" dominantBaseline="middle">
+          Croisements stoch raw
+        </text>
+
+        <line x1="510" y1="78" x2="550" y2="78" stroke="#333" strokeWidth="1.5" markerEnd="url(#stoch-sampling-arrow)" />
+        <rect x="560" y="50" width="240" height="56" rx="6" fill="#dd8452" stroke="#1a1a1a" strokeWidth="1.2" />
+        <text x="680" y="70" fill="#fff" fontSize="13" fontWeight="600" textAnchor="middle" dominantBaseline="middle">
+          A_leg ≈ 0,85
+        </text>
+        <text x="680" y="88" fill="#fff" fontSize="11" fontWeight="600" textAnchor="middle" dominantBaseline="middle">
+          (artefact)
+        </text>
+
+        <rect x="20" y="140" width="200" height="56" rx="6" fill="#2c6e9b" stroke="#1a1a1a" strokeWidth="1.2" />
+        <text x="120" y="168" fill="#fff" fontSize="13" fontWeight="600" textAnchor="middle" dominantBaseline="middle">
+          Univers alt
+        </text>
+
+        <line x1="230" y1="168" x2="270" y2="168" stroke="#333" strokeWidth="1.5" markerEnd="url(#stoch-sampling-arrow)" />
+        <rect x="280" y="140" width="220" height="56" rx="6" fill="#888888" stroke="#1a1a1a" strokeWidth="1.2" />
+        <text x="390" y="160" fill="#fff" fontSize="13" fontWeight="600" textAnchor="middle" dominantBaseline="middle">
+          Events tradables
+        </text>
+        <text x="390" y="178" fill="#fff" fontSize="11" fontWeight="600" textAnchor="middle" dominantBaseline="middle">
+          n ÷ ~5
+        </text>
+
+        <line x1="510" y1="168" x2="550" y2="168" stroke="#333" strokeWidth="1.5" markerEnd="url(#stoch-sampling-arrow)" />
+        <rect x="560" y="140" width="240" height="56" rx="6" fill="#3a7d44" stroke="#1a1a1a" strokeWidth="1.2" />
+        <text x="680" y="160" fill="#fff" fontSize="13" fontWeight="600" textAnchor="middle" dominantBaseline="middle">
+          A_leg ≈ 0,59–0,63
+        </text>
+        <text x="680" y="178" fill="#fff" fontSize="11" fontWeight="600" textAnchor="middle" dominantBaseline="middle">
+          (réaliste)
+        </text>
+
+        <line x1="120" y1="106" x2="120" y2="134" stroke="#333" strokeWidth="1.5" markerEnd="url(#stoch-sampling-arrow)" />
+        <text x="155" y="122" fill="#444" fontSize="12" textAnchor="middle" dominantBaseline="middle">
+          corriger le sampling
+        </text>
+      </svg>
+    </BlogFigure>
+  );
+}

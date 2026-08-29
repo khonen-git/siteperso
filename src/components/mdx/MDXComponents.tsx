@@ -14,6 +14,18 @@ import { TermTip } from '@/components/mdx/TermTip';
 import { OptionPayoffVisualizer } from '@/components/mdx/OptionPayoffVisualizer';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 import { Link } from '@/i18n/navigation';
+import {
+  CompressionAblationFigure,
+  CompressionV1V1bFigure,
+} from '@/components/blog/figures/CompressionExpansionFigures';
+import { HmmAucOnsetMidFigure, HmmCifFigure } from '@/components/blog/figures/HmmSlopeFigures';
+import {
+  MultiScaleEvNetFigure,
+  MultiScaleGatesFigure,
+} from '@/components/blog/figures/MultiScaleFigures';
+import { StochAucRawVsAltFigure } from '@/components/blog/figures/StochAucRawVsAltFigure';
+import { StochSamplingBiasFigure } from '@/components/blog/figures/StochSamplingBiasFigure';
+import { Tr8drDeltaHitFigure, Tr8drValidOosFigure } from '@/components/blog/figures/Tr8drTrendFigures';
 
 function textFromNode(node: React.ReactNode): string {
   if (typeof node === 'string' || typeof node === 'number') return String(node);
@@ -54,17 +66,30 @@ export function Technology({
 }
 
 export function ProjectImages({ children }: { children: React.ReactNode }) {
-  return <div className="mt-6 grid gap-8">{children}</div>;
+  return <div className="my-6 grid gap-8">{children}</div>;
 }
 
 export function ProjectImage({ url, caption }: { url: string; caption: string }) {
+  const isSvg = url.toLowerCase().endsWith('.svg');
+
   return (
-    <div className="space-y-2">
-      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg">
-        <Image src={url} alt={caption} fill className="object-cover" />
+    <figure className="not-prose my-6 space-y-2">
+      <div
+        className={
+          isSvg
+            ? 'overflow-hidden rounded-lg border border-border/60 bg-background'
+            : 'relative aspect-[16/9] w-full overflow-hidden rounded-lg'
+        }
+      >
+        {isSvg ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={url} alt="" role="presentation" className="mx-auto block w-full max-w-3xl" />
+        ) : (
+          <Image src={url} alt={caption} fill className="object-cover" />
+        )}
       </div>
-      <p className="text-center text-sm text-muted-foreground">{caption}</p>
-    </div>
+      <figcaption className="text-center text-sm text-muted-foreground">{caption}</figcaption>
+    </figure>
   );
 }
 
@@ -138,6 +163,20 @@ const baseComponents = {
   td: ({ children }: { children: React.ReactNode }) => (
     <TableCell>{children}</TableCell>
   ),
+  img: ({ src, alt }: { src?: string; alt?: string }) => (
+    <figure className="not-prose my-6">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt=""
+        role="presentation"
+        className="mx-auto block w-full max-w-3xl rounded-lg border border-border/60"
+      />
+      {alt ? (
+        <figcaption className="mt-2 text-center text-sm text-muted-foreground">{alt}</figcaption>
+      ) : null}
+    </figure>
+  ),
 };
 
 const MDXComponents = {
@@ -166,6 +205,16 @@ const MDXComponents = {
   TableRow,
   TableHead,
   TableCell,
+  StochSamplingBiasFigure,
+  StochAucRawVsAltFigure,
+  MultiScaleGatesFigure,
+  MultiScaleEvNetFigure,
+  HmmCifFigure,
+  HmmAucOnsetMidFigure,
+  Tr8drDeltaHitFigure,
+  Tr8drValidOosFigure,
+  CompressionV1V1bFigure,
+  CompressionAblationFigure,
 };
 
 export default MDXComponents;
