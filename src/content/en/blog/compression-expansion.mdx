@@ -1,0 +1,61 @@
+---
+title: "Compression → expansion — structure fixed, no edge"
+description: "V1 std_logp onset is lagged; V1b restores structure. Incremental vol vs slope+ER ≈ 0 — context, not a trigger."
+date: "2026-08-17"
+kind: research
+tags: ["compression", "volatility", "methodology", "eurusd-lab"]
+visible: true
+---
+
+import { NotaBene } from '@/components/mdx/NotaBene';
+import { MathInline } from '@/components/features/knowledge/math/MathBlock';
+import { Link } from '@/i18n/navigation';
+
+<NotaBene>
+
+**In brief.** Vol compression followed by expansion is a seductive narrative — it needs a strict protocol. V1 (`std_logp`) reacts **after** the move (pre-onset AUCΔ ≈ 39 vs post ≈ 6). V1b fixes lag and clustering. Ablation: adding vol on top of slope + ER adds **≈ 0** (Δ log-loss **−0.001**). Rolling z-score persistence is a **mechanical filter artefact**.
+
+</NotaBene>
+
+## Why I ran this study
+
+The “compressed vol → expansion” story is everywhere. I wanted the same rigour as the rest of the lab: causal onset, progressively tighter matching nulls (TOD → compression → pre-move), incremental ablation.
+
+## Method arc
+
+1. **Naive V1** — escape event vs null already saturated (0.89 vs 0.86 at H=10)
+2. **Lag diagnostic** — detector sees displacement in progress, not pure compression
+3. **V1b** — early + causal reformulation
+4. **Ablation** — does vol add anything beyond slope + efficiency ratio?
+5. **Filter null** — is z persistence a “regime”?
+
+## Key results
+
+<CompressionV1V1bFigure />
+
+Under **N_C** null (compression + <MathInline>{"D_{\\mathrm{pre}}"}</MathInline> controlled): Δ MFE50 H=10 ≈ **+0.06** only — no exploitable edge even with tight matching.
+
+<CompressionAblationFigure />
+
+| Question | Answer |
+|----------|--------|
+| Does V1 prove compression→expansion? | **No** |
+| Does V1b fix structure? | **Yes** |
+| Vol surplus? | **≈ 0** |
+| z persistence = regime? | **No** — ACF excess ≈ +0.004 vs IID-RW null |
+
+## Takeaways
+
+> We thought we saw a vol process; the diagnosis shows a **lagged detector**, then a **clean structure with no incremental edge**.
+
+**Recommended use:** `std_logp` and derivatives as **maturity / activity context** — not a standalone trading onset.
+
+## Links
+
+- <Link href="/knowledge/quantitative-finance/volatility/implied-vs-realized">Realized vs implied volatility</Link>
+- **eurusd-lab** series: <Link href="/blog/multi-scale-countertrend">multi-scale pullback</Link>, <Link href="/blog/hmm-slope-denoise">HMM slope</Link>
+- Full protocol: `docs/research/04_compression_expansion.md`.
+
+---
+
+*Research note — Aug 2026. EURUSD · TIMB · 2023.*

@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { KnowledgeSidebar } from '@/components/features/knowledge/navigation/KnowledgeSidebar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { TableOfContents } from '@/components/features/knowledge/navigation/TableOfContents';
+import type { TreeItem } from '@/config/knowledge/types';
 
 const PILLAR_SECTIONS = [
   { id: 'mathematics', titleKey: 'mathematicsTitle', textKey: 'mathematicsText' },
@@ -16,7 +17,11 @@ const PILLAR_SECTIONS = [
   { id: 'tools', titleKey: 'toolsTitle', textKey: 'toolsText' },
 ] as const;
 
-export function KnowledgeHome(): React.JSX.Element {
+interface KnowledgeHomeProps {
+  navItems: TreeItem[];
+}
+
+export function KnowledgeHome({ navItems }: KnowledgeHomeProps): React.JSX.Element {
   const t = useTranslations('knowledge.home');
   const tLayout = useTranslations('knowledge.layout');
 
@@ -24,7 +29,7 @@ export function KnowledgeHome(): React.JSX.Element {
     <div className="flex min-h-screen overflow-x-hidden">
       <aside className="hidden w-64 shrink-0 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 lg:block">
         <ScrollArea className="h-full">
-          <KnowledgeSidebar />
+          <KnowledgeSidebar items={navItems} />
         </ScrollArea>
       </aside>
 

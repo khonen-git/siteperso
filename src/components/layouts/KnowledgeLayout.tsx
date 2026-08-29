@@ -6,13 +6,19 @@ import { TableOfContents } from '@/components/features/knowledge/navigation/Tabl
 import { ProgressBar } from '../ui/ProgressBar';
 import { KnowledgeSidebar } from '@/components/features/knowledge/navigation/KnowledgeSidebar';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import type { TreeItem } from '@/config/knowledge/types';
 
 interface KnowledgeLayoutProps {
   children: React.ReactNode;
   toc?: boolean;
+  navItems: TreeItem[];
 }
 
-export function KnowledgeLayout({ children, toc = true }: KnowledgeLayoutProps): React.JSX.Element {
+export function KnowledgeLayout({
+  children,
+  toc = true,
+  navItems,
+}: KnowledgeLayoutProps): React.JSX.Element {
   const t = useTranslations('knowledge.layout');
   const [scrollProgress, setScrollProgress] = useState(0);
   const contentRef = useRef<HTMLElement | null>(null);
@@ -34,7 +40,7 @@ export function KnowledgeLayout({ children, toc = true }: KnowledgeLayoutProps):
     <div className="flex h-[calc(100vh-3.5rem)] overflow-hidden">
       <aside className="hidden w-64 shrink-0 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 lg:block">
         <ScrollArea className="h-full">
-          <KnowledgeSidebar />
+          <KnowledgeSidebar items={navItems} />
         </ScrollArea>
       </aside>
 

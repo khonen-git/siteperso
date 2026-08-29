@@ -7,6 +7,8 @@ export interface KnowledgeFrontmatter {
   tags?: string[];
   category?: string;
   order?: number;
+  /** Masque la page du toctree et renvoie 404 si true ou corps placeholder. */
+  draft?: boolean;
 }
 
 export interface KnowledgeContent {

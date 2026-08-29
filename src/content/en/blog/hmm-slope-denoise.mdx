@@ -1,0 +1,76 @@
+---
+title: "HMM slope denoising — regime yes, entry no"
+description: "A 3-state HMM denoises multi-horizon OLS slope. Stable soft-fade structure, useful mid-episode hazard — no entry gate or net EV."
+date: "2026-08-19"
+kind: research
+tags: ["hmm", "soft-fade", "survival", "eurusd-lab"]
+visible: true
+---
+
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+import { NotaBene } from '@/components/mdx/NotaBene';
+import { Link } from '@/i18n/navigation';
+
+<NotaBene>
+
+**In brief.** I filtered OLS slope t-stat through a 3-state HMM (down / neutral / up) on horizons {16, 32, 64, 128}. **Soft-fade** episodes (short doubt vs long thesis) show stable structure: CIF **R/E/B ≈ 28/68/4%** IS≈OOS. **Mid-episode** risk is readable (AUC E ≈ **0.82**), not at onset (AUC ≈ **0.52**). Net EV ≈ **0** after costs.
+
+</NotaBene>
+
+## Why I ran this study
+
+Raw slope is noisy; MAP alone is unstable bar-to-bar. Idea: causal **soft slopes** as a regime layer, then test whether a “fade” pattern (s16 turns neutral while s128 stays on thesis) carries tradable information.
+
+Classic trap: confusing a high conditional realignment rate with a favourable onset probability.
+
+## Setup (summary)
+
+| Parameter | Value |
+|-----------|--------|
+| Asset / barrier | EURUSD · TIMB |
+| HMM fit | 60d 2023 → freeze |
+| Eval | IS post-calib 2023 + **OOS 2024** |
+| HMM | C2, K=3, sticky E[D]=40 |
+
+Soft-fade onset (e.g. long): <MathInline>{"s_{16}"}</MathInline> drops from +1 to 0 while <MathInline>{"s_{128}=+1"}</MathInline>.
+
+Absorbing outcomes: **Resolve** (R), **Escalate** (E), **Break** (B).
+
+## Key results
+
+<HmmCifFigure />
+
+| Gate | Verdict | Detail |
+|------|---------|--------|
+| 0 Setup | PASS | OOS freeze corr 0.955–0.996 |
+| 1 Existence | PASS | Stable CIF IS/OOS |
+| 2 Detectability | **FAIL** | AUC E onset 0.522 |
+| 3 Predictability | PARTIAL | AUC E mid 0.816 |
+| 4 Tradability | **FAIL** | mean pips @0.2 RT ≈ −0.21 OOS |
+
+<HmmAucOnsetMidFigure />
+
+PnL by outcome: resolve **~+4.3 pips**, escalate **~−1.8** — with ~**68%** escalate, the book dies.
+
+## Takeaways
+
+| Question | Answer |
+|----------|--------|
+| Is the denoiser sound? | **Yes** — fast (~23 s/yr), stable freeze |
+| Entry gate at onset? | **No** |
+| Dynamic mid-episode risk? | **Yes** — person-period |
+| Standalone trade? | **No** |
+
+> “~90% realignment” is **conditional** on R∪B — not P(winning onset).
+
+**Recommended use:** multi-scale softs as **regime / hazard features** — not an isolated entry signal.
+
+## Links
+
+- <Link href="/knowledge/quantitative-finance/financial-econometrics/regimes-hmm">Regimes & HMM</Link>
+- **eurusd-lab** series: <Link href="/blog/multi-scale-countertrend">multi-scale pullback</Link>, <Link href="/blog/tr8dr-trend-labels">Tr8dr labels</Link>
+- Full protocol: `docs/research/02_hmm_slope_denoise.md`.
+
+---
+
+*Research note — Aug 2026. EURUSD · TIMB · 2023–2024.*

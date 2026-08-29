@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { routing } from '@/i18n/routing';
+import { isKnowledgeDraft } from './meta';
 
 const CONTENT_ROOT = path.join(process.cwd(), 'src/content');
 
@@ -75,4 +76,9 @@ export function listKnowledgeSlugs(locale: string): string[][] {
 
   walk(directory, []);
   return slugs;
+}
+
+/** Slugs publiés (hors brouillons / placeholders). */
+export function listPublishedKnowledgeSlugs(locale: string): string[][] {
+  return listKnowledgeSlugs(locale).filter((slug) => !isKnowledgeDraft(locale, slug));
 }

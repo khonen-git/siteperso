@@ -1,0 +1,75 @@
+---
+title: "Multi-scale pullback — exists yes, net tradability no"
+description: "On EURUSD TIMB, short vs long trend conflict exists and predicts OOS — but net EV collapses after costs."
+date: "2026-08-18"
+kind: research
+tags: ["process-first", "competing-risks", "gates", "eurusd-lab"]
+visible: true
+---
+
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+import { NotaBene } from '@/components/mdx/NotaBene';
+import { Link } from '@/i18n/navigation';
+
+<NotaBene>
+
+**In brief.** When the short trend (DC 5p) diverges from the long one (DC 15p), the market enters a measurable “pullback” state. In 2023, **~79%** of episodes resolve as *Resume* (R), stable disc/dev. The causal score predicts R vs F **OOS** (ΔLL up to **+137**). Net tradability **fails**: EV **−0.22 pip** on dev under 0.2 spread.
+
+</NotaBene>
+
+## Why I ran this study
+
+The most visual price-action motif: a background trend with a shorter counter-move. Before trading anything, I asked whether this is a **process** (R/F states with competing risks) or labelled noise.
+
+The **gates 0→4** framework enforces: existence → detection → predictability → tradability — without tuning upstream gates on PnL.
+
+## Definition (summary)
+
+An episode starts when <MathInline>{"\\mathrm{sign}(T_L) \\neq \\mathrm{sign}(T_S)"}</MathInline> (long DC 15p vs short DC 5p), with minimal conflict of 3 bars. Outcomes:
+
+| Outcome | Symbol | Meaning |
+|---------|--------|---------|
+| Resume | R | Short realigns with long |
+| Fail | F | Long structure breaks |
+| Censor | C | Series end / split |
+
+<MathBlock>{"p(R \\mid R \\cup F) \\approx 0{,}79 \\quad \\text{(stable disc/dev)}"}</MathBlock>
+
+**R and F are structure states, not PnL.**
+
+## Key results
+
+<MultiScaleGatesFigure />
+
+| Gate | Verdict | Reading |
+|------|---------|---------|
+| 0–1 | PASS | Circular-shift null rejected; stable hazards |
+| 2 | PASS | Causal score separates R/F, especially intra-episode |
+| 3 | PASS | OOS ΔLL +32 (onset) to +143 (age 8) vs vol context |
+| 4 | WEAK | Net EV disc +0.14 → dev **−0.22** pip |
+
+<MultiScaleEvNetFigure />
+
+Score quintiles (dev): Q1 → 73.7% Resume, Q5 → **83.5%** — the score calibrates outcome, not optimal entry timing.
+
+## Takeaways
+
+| Question | Answer |
+|----------|--------|
+| Does the pullback exist? | **Yes** — beats null, stable R rate |
+| Can we predict outcome OOS? | **Yes** — significant ΔLL |
+| Trade it as-is? | **No** — unfavourable MFE/MAE asymmetry |
+
+> Strong **state predictability** does not imply an **executable edge**.
+
+**Recommended use:** regime feature / filter in a downstream stack (HMM, Tr8dr permission) — not a standalone signal.
+
+## Links
+
+- <Link href="/knowledge/quantitative-finance/financial-econometrics/regimes-hmm">Regimes & HMM</Link>
+- **eurusd-lab** series: <Link href="/blog/compression-expansion">compression → expansion</Link>, <Link href="/blog/tr8dr-trend-labels">Tr8dr labels</Link>, <Link href="/blog/stoch-event-sampling">stoch events</Link>
+- Full protocol: `docs/research/01_multi_scale_countertrend.md`.
+
+---
+
+*Research note — Aug 2026. EURUSD · TIMB · disc/dev split 2023.*

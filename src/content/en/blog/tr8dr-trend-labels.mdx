@@ -1,0 +1,73 @@
+---
+title: "Tr8dr labels — solid y, partial OOS permission"
+description: "Amplitude-based segments on EURUSD TIMB: D(h) peak +0.55, C4 stack permission R=0.56 valid → 0.34 OOS 2024."
+date: "2026-08-20"
+kind: research
+tags: ["tr8dr", "labels", "permission", "eurusd-lab"]
+visible: true
+---
+
+import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
+import { NotaBene } from '@/components/mdx/NotaBene';
+import { Link } from '@/i18n/navigation';
+
+<NotaBene>
+
+**In brief.** Before rich models, you need a stable label <MathInline>{"y"}</MathInline>. Tr8dr amplitude-based (15 bps / Tinactive 60) on EURUSD TIMB: **48.6%** signed occupancy, peak <MathInline>{"D(h)"}</MathInline> **+0.549** at H=32. Context stack C4 yields live permission R=**0.558** on valid — **0.344** OOS 2024. Solid foundation, not yet a strategy.
+
+</NotaBene>
+
+## Why I ran this study
+
+Everything downstream (process gates, HMM, events) rests on a frozen directional segment **y**. If the label is coding noise or not economically separable, the rest is decoration.
+
+Pipeline: L0 census → <MathInline>{"D(h)"}</MathInline> validity → univariate T2/T5 screening → C4 stack → OOS 2024 lock.
+
+## Definition (summary)
+
+Up / neutral / down segments via min amplitude + inactivity timeout:
+
+<MathBlock>{"D(h) = P(r_{t\\to t+h}>0 \\mid y=\\mathrm{up}) - P(r_{t\\to t+h}>0 \\mid y=\\mathrm{down})"}</MathBlock>
+
+| L0 metric | Value |
+|-----------|------:|
+| Signed occupancy | 48.6% |
+| Segments / day | ~5.2 |
+| Duration p50 / p90 | 83 / 206 bars |
+
+## Key results
+
+<Tr8drDeltaHitFigure />
+
+**P1 screening:** T5 termination AUC ~0.63–0.69 (range, vol); T2 onset modest (~0.55–0.65) — conditioning, not standalone entry edge. T3 direction: several **inverted** signals (AUC &lt; 0.5) → careful with orientation.
+
+**Context C4:** best config `C_bps_slim` q=0.5 → R=**0.558**, live rate 50%, AUC 0.606 valid.
+
+<Tr8drValidOosFigure />
+
+| Metric | Valid | OOS 2024 |
+|--------|------:|---------:|
+| R | 0.558 | **0.344** |
+| Live AUC | 0.606 | 0.587 |
+| Live rate | 0.497 | 0.442 |
+
+## Takeaways
+
+| Question | Answer |
+|----------|--------|
+| Sound label? | **Yes** |
+| C4 permission? | **Yes** in-sample |
+| OOS 2024? | **Partial** — R 0.34, signal present but degraded |
+| Standalone strategy? | **No** — regime gate |
+
+**Recommended use:** frozen y + C score as **permission** in the lab stack (HMM, process, events).
+
+## Links
+
+- <Link href="/knowledge/quantitative-finance/backtesting">Backtesting & systematic research</Link>
+- **eurusd-lab** series: <Link href="/blog/hmm-slope-denoise">HMM slope</Link>, <Link href="/blog/stoch-event-sampling">stoch events</Link>
+- Full protocol: `docs/research/03_tr8dr_trend_labels.md`.
+
+---
+
+*Research note — Aug 2026. EURUSD · TIMB · 2023–2024.*

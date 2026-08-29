@@ -2,7 +2,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { KnowledgeArticle } from '@/components/features/knowledge/KnowledgeArticle';
-import { listKnowledgeSlugs } from '@/lib/knowledge/content';
+import { listPublishedKnowledgeSlugs } from '@/lib/knowledge/content';
 import { routing } from '@/i18n/routing';
 
 interface KnowledgePageProps {
@@ -11,7 +11,7 @@ interface KnowledgePageProps {
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
-    listKnowledgeSlugs(locale).map((slug) => ({
+    listPublishedKnowledgeSlugs(locale).map((slug) => ({
       locale,
       slug,
     }))

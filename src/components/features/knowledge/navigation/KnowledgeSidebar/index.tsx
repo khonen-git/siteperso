@@ -1,21 +1,19 @@
 'use client';
 
-import React, { useMemo } from 'react';
-import { useLocale } from 'next-intl';
+import React from 'react';
 import { useTranslations } from 'next-intl';
 import { ScrollArea } from '@/components/ui/navigation/scroll-area';
 import { TreeView } from '../TreeView';
-import { getNavigationData } from '@/config/knowledge';
+import type { TreeItem } from '@/config/knowledge/types';
 import { cn } from '@/lib/utils';
 
 interface KnowledgeSidebarProps {
   className?: string;
+  items: TreeItem[];
 }
 
-export function KnowledgeSidebar({ className }: KnowledgeSidebarProps) {
-  const locale = useLocale();
+export function KnowledgeSidebar({ className, items }: KnowledgeSidebarProps) {
   const t = useTranslations('knowledge.layout');
-  const items = useMemo(() => getNavigationData(locale), [locale]);
 
   return (
     <aside

@@ -27,6 +27,7 @@ function mdxContent(locale, meta) {
   return `---
 title: ${meta.title}
 description: ${meta.description}
+draft: true
 ---
 
 # ${meta.title}
