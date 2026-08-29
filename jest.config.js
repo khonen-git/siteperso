@@ -8,12 +8,7 @@ const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/test/setup.ts'],
   testEnvironment: 'jest-environment-jsdom',
   testMatch: ['**/?(*.)+(test|spec).[jt]s?(x)'],
-  testPathIgnorePatterns: [
-    '<rootDir>/node_modules/',
-    '<rootDir>/.next/',
-    // Reporté : rewrite visualiseurs (voir docs/testing.md)
-    '<rootDir>/src/components/mdx/__tests__/',
-  ],
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^lucide-react$': '<rootDir>/test/mocks/lucide-react.ts',

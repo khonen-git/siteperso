@@ -13,6 +13,11 @@ describe('MathBlock / MathInline', () => {
     expect(container.querySelector('.katex')).toBeTruthy();
   });
 
+  it('renders inline math from MDX text nodes (single identifier)', () => {
+    const { container } = render(<MathInline>n</MathInline>);
+    expect(container.querySelector('.katex')).toBeTruthy();
+  });
+
   it('throws on invalid KaTeX expressions', () => {
     expect(() => render(<MathBlock>{'\\invalid{'}</MathBlock>)).toThrow();
     expect(() => render(<MathInline>{'\\invalid{'}</MathInline>)).toThrow();

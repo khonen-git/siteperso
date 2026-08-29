@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import { Card, CardContent } from '@/components/ui/card';
 import { MathBlock, MathInline } from '@/components/features/knowledge/math/MathBlock';
 import { CodeBlock } from '@/components/features/knowledge/math/CodeBlock';
 import { MdxCard } from '@/components/mdx/MdxCard';
@@ -52,21 +51,6 @@ function headingId(children: React.ReactNode): string {
     .replace(/[^a-z0-9\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-');
-}
-
-export function TechnologiesSection({ children }: { children: React.ReactNode }) {
-  return <div className="mt-6 grid gap-4 md:grid-cols-2">{children}</div>;
-}
-
-export function Technology({ name, description }: { name: string; description: string }) {
-  return (
-    <Card>
-      <CardContent className="p-4">
-        <h3 className="mb-2 font-bold">{name}</h3>
-        <p className="text-sm text-muted-foreground">{description}</p>
-      </CardContent>
-    </Card>
-  );
 }
 
 export function ProjectImages({ children }: { children: React.ReactNode }) {
@@ -169,8 +153,6 @@ const baseComponents = {
 const MDXComponents = {
   ...baseComponents,
   Link,
-  TechnologiesSection,
-  Technology,
   ProjectImages,
   ProjectImage,
   MathBlock,

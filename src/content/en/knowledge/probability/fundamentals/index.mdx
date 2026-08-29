@@ -16,9 +16,9 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
 ## Axiomatic framework
 
 <MdxCard>
-A probability <MathInline>P</MathInline> on a space <MathInline>{"\\Omega"}</MathInline> satisfies:
+A probability <MathInline>{"P"}</MathInline> on a space <MathInline>{"\\Omega"}</MathInline> satisfies:
 
-1. <MathInline>{'P(A) \\geq 0'}</MathInline> for every event <MathInline>A</MathInline>
+1. <MathInline>{'P(A) \\geq 0'}</MathInline> for every event <MathInline>{"A"}</MathInline>
 2. <MathInline>{'P(\\Omega) = 1'}</MathInline>
 3. <MathInline>{'\\sigma'}</MathInline>-additivity: for disjoint events
    <MathInline>{'A_i'}</MathInline>,
@@ -33,7 +33,7 @@ A **probability space** is a triple <MathInline>{"(\\Omega, \\mathcal{F}, P)"}</
 
 - <MathInline>{'\\Omega'}</MathInline>: sample space
 - <MathInline>{'\\mathcal{F}'}</MathInline>: sigma-algebra of measurable events
-- <MathInline>P</MathInline>: probability measure
+- <MathInline>{"P"}</MathInline>: probability measure
 
 The sigma-algebra supports countable limits on events.
 
@@ -42,7 +42,7 @@ The sigma-algebra supports countable limits on events.
 ## Random variable and distribution
 
 <MdxCard>
-A **random variable** <MathInline>X</MathInline> is a measurable map <MathInline>{"X : \\Omega \\to \\mathbb{R}"}</MathInline> (or <MathInline>{"\\mathbb{R}^d"}</MathInline>).
+A **random variable** <MathInline>{"X"}</MathInline> is a measurable map <MathInline>{"X : \\Omega \\to \\mathbb{R}"}</MathInline> (or <MathInline>{"\\mathbb{R}^d"}</MathInline>).
 
 Its **law** is the pushforward measure <MathInline>{"P_X(B) = P(X \\in B)"}</MathInline>.
 
@@ -79,14 +79,14 @@ CDF: <MathInline>{"F_X(x) = P(X \\leq x)"}</MathInline>.
   {'\\rho_{X,Y} = \\frac{\\mathrm{Cov}(X,Y)}{\\sigma_X \\sigma_Y} \\in [-1, 1]'}
 </MathBlock>
 
-For a sum: <MathInline>{"\\mathrm{Var}(X+Y) = \\mathrm{Var}(X) + \\mathrm{Var}(Y) + 2\\mathrm{Cov}(X,Y)"}</MathInline>; if <MathInline>X</MathInline> and <MathInline>Y</MathInline> are independent, the cross term vanishes.
+For a sum: <MathInline>{"\\mathrm{Var}(X+Y) = \\mathrm{Var}(X) + \\mathrm{Var}(Y) + 2\\mathrm{Cov}(X,Y)"}</MathInline>; if <MathInline>{"X"}</MathInline> and <MathInline>{"Y"}</MathInline> are independent, the cross term vanishes.
 
 </MdxCard>
 
 ## Moments, skewness, and kurtosis
 
 <MdxCard>
-The <MathInline>k</MathInline>-th moment: <MathInline>{"\\mathbb{E}[X^k]"}</MathInline>. Central moments of order 3 and 4 define:
+The <MathInline>{"k"}</MathInline>-th moment: <MathInline>{"\\mathbb{E}[X^k]"}</MathInline>. Central moments of order 3 and 4 define:
 
 - **Skewness**: asymmetry of the distribution
 - **Kurtosis**: tail heaviness relative to the normal
@@ -98,7 +98,7 @@ In finance, high kurtosis signals **tail risk**.
 ## Conditional law and independence
 
 <MdxCard>
-Conditional law of <MathInline>X</MathInline> given <MathInline>Y</MathInline>:
+Conditional law of <MathInline>{"X"}</MathInline> given <MathInline>{"Y"}</MathInline>:
 
 <MathBlock>{'P(X \\in A \\mid Y = y) = \\frac{P(X \\in A, Y = y)}{P(Y = y)}'}</MathBlock>
 

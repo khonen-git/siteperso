@@ -19,8 +19,8 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
 
 <MdxCard title="Definition">
   The **binomial distribution** counts the **number of successes** when repeating{' '}
-  <MathInline>n</MathInline> [Bernoulli](/knowledge/probability/distributions/discrete/bernoulli)
-  trials with success probability <MathInline>p</MathInline>, assuming **independent** identically
+  <MathInline>{"n"}</MathInline> [Bernoulli](/knowledge/probability/distributions/discrete/bernoulli)
+  trials with success probability <MathInline>{"p"}</MathInline>, assuming **independent** identically
   distributed trials.
 </MdxCard>
 
@@ -52,7 +52,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'n \\in \\mathbb{N}^*,\\; p \\in [0,1]'}</MathInline>
         </TableCell>
         <TableCell>
-          <MathInline>n</MathInline> trials; <MathInline>p</MathInline> success probability;{' '}
+          <MathInline>{"n"}</MathInline> trials; <MathInline>{"p"}</MathInline> success probability;{' '}
           <MathInline>{'q = 1-p'}</MathInline>
         </TableCell>
       </TableRow>
@@ -62,7 +62,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'\\{0, 1, \\ldots, n\\}'}</MathInline>
         </TableCell>
         <TableCell>
-          All integers from 0 to <MathInline>n</MathInline>
+          All integers from 0 to <MathInline>{"n"}</MathInline>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -92,7 +92,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'M_X(t) = (q + p e^t)^n'}</MathInline>
         </TableCell>
         <TableCell>
-          Product of <MathInline>n</MathInline> i.i.d. Bernoulli MGFs
+          Product of <MathInline>{"n"}</MathInline> i.i.d. Bernoulli MGFs
         </TableCell>
       </TableRow>
       <TableRow>
@@ -108,7 +108,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'\\mathbb{E}[X] = np'}</MathInline>
         </TableCell>
         <TableCell>
-          Average number of successes in <MathInline>n</MathInline> trials
+          Average number of successes in <MathInline>{"n"}</MathInline> trials
         </TableCell>
       </TableRow>
       <TableRow>
@@ -117,8 +117,8 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'\\mathrm{Var}(X) = np(1-p) = npq'}</MathInline>
         </TableCell>
         <TableCell>
-          Grows with <MathInline>n</MathInline>; maximized at <MathInline>{'p = 1/2'}</MathInline>{' '}
-          for fixed <MathInline>n</MathInline>
+          Grows with <MathInline>{"n"}</MathInline>; maximized at <MathInline>{'p = 1/2'}</MathInline>{' '}
+          for fixed <MathInline>{"n"}</MathInline>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -176,7 +176,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'\\mathcal{I}(p) = \\frac{n}{p(1-p)}'}</MathInline>
         </TableCell>
         <TableCell>
-          For parameter <MathInline>p</MathInline> from one observation{' '}
+          For parameter <MathInline>{"p"}</MathInline> from one observation{' '}
           <MathInline>{'X \\sim \\mathrm{Bin}(n,p)'}</MathInline>
         </TableCell>
       </TableRow>
@@ -190,7 +190,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           </MathInline>
         </TableCell>
         <TableCell>
-          Same number of trials <MathInline>n</MathInline>; reduces to Bernoulli divergence
+          Same number of trials <MathInline>{"n"}</MathInline>; reduces to Bernoulli divergence
         </TableCell>
       </TableRow>
     </TableBody>
@@ -234,7 +234,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
       </TableRow>
       <TableRow>
         <TableCell>
-          Additivity (same <MathInline>p</MathInline>)
+          Additivity (same <MathInline>{"p"}</MathInline>)
         </TableCell>
         <TableCell>
           <MathInline>{'X \\sim \\mathrm{Bin}(n,p),\\; Y \\sim \\mathrm{Bin}(m,p)'}</MathInline>{' '}
@@ -280,7 +280,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           </MathInline>
         </TableCell>
         <TableCell>
-          Improves Gaussian approximation for moderate <MathInline>n</MathInline>
+          Improves Gaussian approximation for moderate <MathInline>{"n"}</MathInline>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -320,7 +320,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
 
 ### Defaults and credit risk
 
-Number of defaults among <MathInline>n</MathInline> homogeneous credits (common PD): baseline portfolio risk model under independence.
+Number of defaults among <MathInline>{"n"}</MathInline> homogeneous credits (common PD): baseline portfolio risk model under independence.
 
 </MdxCard>
 
@@ -328,7 +328,7 @@ Number of defaults among <MathInline>n</MathInline> homogeneous credits (common 
 
 ### Quality control and compliance
 
-Number of defective items in a batch of size <MathInline>n</MathInline>, under a constant defect rate assumption.
+Number of defective items in a batch of size <MathInline>{"n"}</MathInline>, under a constant defect rate assumption.
 
 </MdxCard>
 
@@ -336,7 +336,7 @@ Number of defective items in a batch of size <MathInline>n</MathInline>, under a
 
 ### Success rates and A/B testing
 
-Number of conversions out of <MathInline>n</MathInline> exposures; comparing two proportions across cohorts.
+Number of conversions out of <MathInline>{"n"}</MathInline> exposures; comparing two proportions across cohorts.
 
 </MdxCard>
 
@@ -366,10 +366,10 @@ Multi-period modeling of an underlying (Cox-Ross-Rubinstein): each branch is a B
         <TableCell>Observation</TableCell>
         <TableCell>
           <MathInline>{'X \\sim \\mathrm{Bin}(n, p)'}</MathInline>, observe{' '}
-          <MathInline>k</MathInline> successes
+          <MathInline>{"k"}</MathInline> successes
         </TableCell>
         <TableCell>
-          Equivalent to <MathInline>n</MathInline> Bernoulli trials with <MathInline>k</MathInline>{' '}
+          Equivalent to <MathInline>{"n"}</MathInline> Bernoulli trials with <MathInline>{"k"}</MathInline>{' '}
           successes
         </TableCell>
       </TableRow>
@@ -379,7 +379,7 @@ Multi-period modeling of an underlying (Cox-Ross-Rubinstein): each branch is a B
           <MathInline>{'\\hat{p} = \\frac{k}{n}'}</MathInline>
         </TableCell>
         <TableCell>
-          Empirical proportion; unbiased for <MathInline>p</MathInline>, natural estimator
+          Empirical proportion; unbiased for <MathInline>{"p"}</MathInline>, natural estimator
         </TableCell>
       </TableRow>
       <TableRow>
@@ -388,7 +388,7 @@ Multi-period modeling of an underlying (Cox-Ross-Rubinstein): each branch is a B
           <MathInline>{'\\mathrm{Var}(\\hat{p}) = \\frac{p(1-p)}{n}'}</MathInline>
         </TableCell>
         <TableCell>
-          Same formula as for <MathInline>n</MathInline> observed Bernoulli trials
+          Same formula as for <MathInline>{"n"}</MathInline> observed Bernoulli trials
         </TableCell>
       </TableRow>
       <TableRow>
@@ -424,7 +424,7 @@ Multi-period modeling of an underlying (Cox-Ross-Rubinstein): each branch is a B
         </TableCell>
         <TableCell>
           Exact <MathInline>{'1-\\alpha'}</MathInline> confidence interval for{' '}
-          <MathInline>p</MathInline>
+          <MathInline>{"p"}</MathInline>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -437,7 +437,7 @@ Multi-period modeling of an underlying (Cox-Ross-Rubinstein): each branch is a B
           </MathInline>
         </TableCell>
         <TableCell>
-          Better behavior than Wald for <MathInline>p</MathInline> near 0 or 1
+          Better behavior than Wald for <MathInline>{"p"}</MathInline> near 0 or 1
         </TableCell>
       </TableRow>
       <TableRow>
@@ -450,7 +450,7 @@ Multi-period modeling of an underlying (Cox-Ross-Rubinstein): each branch is a B
           </MathInline>
         </TableCell>
         <TableCell>
-          Posterior after <MathInline>k</MathInline> successes in <MathInline>n</MathInline> trials
+          Posterior after <MathInline>{"k"}</MathInline> successes in <MathInline>{"n"}</MathInline> trials
         </TableCell>
       </TableRow>
     </TableBody>
@@ -462,13 +462,13 @@ Multi-period modeling of an underlying (Cox-Ross-Rubinstein): each branch is a B
     <h3 className="text-xl font-medium">Important remarks</h3>
     <ul className="list-disc pl-6 space-y-2">
       <li>
-        Inference on <MathInline>p</MathInline> from an observed{' '}
-        <MathInline>{'\\mathrm{Bin}(n,p)'}</MathInline> matches that from <MathInline>n</MathInline>{' '}
+        Inference on <MathInline>{"p"}</MathInline> from an observed{' '}
+        <MathInline>{'\\mathrm{Bin}(n,p)'}</MathInline> matches that from <MathInline>{"n"}</MathInline>{' '}
         Bernoulli trials — see [Bernoulli](/knowledge/probability/distributions/discrete/bernoulli).
       </li>
       <li>
-        Prefer the exact test for small <MathInline>n</MathInline> or extreme{' '}
-        <MathInline>p</MathInline>; the normal approximation simplifies large samples.
+        Prefer the exact test for small <MathInline>{"n"}</MathInline> or extreme{' '}
+        <MathInline>{"p"}</MathInline>; the normal approximation simplifies large samples.
       </li>
       <li>
         Comparing two groups (<MathInline>{'n_1'}</MathInline> vs <MathInline>{'n_2'}</MathInline>)
@@ -498,7 +498,7 @@ Multi-period modeling of an underlying (Cox-Ross-Rubinstein): each branch is a B
       <TableRow>
         <TableCell>Pseudo-random generation</TableCell>
         <TableCell>
-          Sum of <MathInline>n</MathInline> Bernoulli trials or equivalent algorithm (inversion,
+          Sum of <MathInline>{"n"}</MathInline> Bernoulli trials or equivalent algorithm (inversion,
           BTPE)
         </TableCell>
         <TableCell>Portfolio simulation, stress tests</TableCell>
@@ -509,7 +509,7 @@ Multi-period modeling of an underlying (Cox-Ross-Rubinstein): each branch is a B
           <code>np.random.binomial(n, p)</code> or <code>rng.binomial(n, p, size=m)</code>
         </TableCell>
         <TableCell>
-          <MathInline>m</MathInline> independent draws from{' '}
+          <MathInline>{"m"}</MathInline> independent draws from{' '}
           <MathInline>{'\\mathrm{Bin}(n,p)'}</MathInline>
         </TableCell>
       </TableRow>
@@ -535,7 +535,7 @@ Multi-period modeling of an underlying (Cox-Ross-Rubinstein): each branch is a B
           <MathInline>{'\\pm 0.5'}</MathInline>
         </TableCell>
         <TableCell>
-          Cumulative probabilities for large <MathInline>n</MathInline>
+          Cumulative probabilities for large <MathInline>{"n"}</MathInline>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -544,7 +544,7 @@ Multi-period modeling of an underlying (Cox-Ross-Rubinstein): each branch is a B
           <code>proportion_confint</code> (statsmodels) — Wilson, Clopper-Pearson
         </TableCell>
         <TableCell>
-          Robust estimation of <MathInline>p</MathInline>
+          Robust estimation of <MathInline>{"p"}</MathInline>
         </TableCell>
       </TableRow>
     </TableBody>

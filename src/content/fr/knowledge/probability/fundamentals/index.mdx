@@ -25,9 +25,9 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
 ## Cadre axiomatique
 
 <MdxCard>
-Une probabilité <MathInline>P</MathInline> sur un espace <MathInline>{"\\Omega"}</MathInline> vérifie :
+Une probabilité <MathInline>{"P"}</MathInline> sur un espace <MathInline>{"\\Omega"}</MathInline> vérifie :
 
-1. <MathInline>{'P(A) \\geq 0'}</MathInline> pour tout événement <MathInline>A</MathInline>
+1. <MathInline>{'P(A) \\geq 0'}</MathInline> pour tout événement <MathInline>{"A"}</MathInline>
 2. <MathInline>{'P(\\Omega) = 1'}</MathInline>
 3. <MathInline>{'\\sigma'}</MathInline>-additivité : pour des événements disjoints
    <MathInline>{'A_i'}</MathInline>,
@@ -42,7 +42,7 @@ Un **espace probabilisable** est un triplet <MathInline>{"(\\Omega, \\mathcal{F}
 
 - <MathInline>{'\\Omega'}</MathInline> : univers des issues
 - <MathInline>{'\\mathcal{F}'}</MathInline> : tribu d'événements mesurables
-- <MathInline>P</MathInline> : mesure de probabilité
+- <MathInline>{"P"}</MathInline> : mesure de probabilité
 
 La tribu permet de définir des opérations dénombrables (limites, sup, etc.) sur les événements.
 
@@ -51,7 +51,7 @@ La tribu permet de définir des opérations dénombrables (limites, sup, etc.) s
 ## Variable aléatoire et distribution
 
 <MdxCard>
-Une **variable aléatoire** <MathInline>X</MathInline> est une application mesurable <MathInline>{"X : \\Omega \\to \\mathbb{R}"}</MathInline> (ou <MathInline>{"\\mathbb{R}^d"}</MathInline>).
+Une **variable aléatoire** <MathInline>{"X"}</MathInline> est une application mesurable <MathInline>{"X : \\Omega \\to \\mathbb{R}"}</MathInline> (ou <MathInline>{"\\mathbb{R}^d"}</MathInline>).
 
 Sa **loi** est la mesure image <MathInline>{"P_X(B) = P(X \\in B)"}</MathInline>.
 
@@ -88,14 +88,14 @@ L'**espérance** résume le centre de gravité d'une loi :
   {'\\rho_{X,Y} = \\frac{\\mathrm{Cov}(X,Y)}{\\sigma_X \\sigma_Y} \\in [-1, 1]'}
 </MathBlock>
 
-La variance d'une somme : <MathInline>{"\\mathrm{Var}(X+Y) = \\mathrm{Var}(X) + \\mathrm{Var}(Y) + 2\\mathrm{Cov}(X,Y)"}</MathInline> ; si <MathInline>X</MathInline> et <MathInline>Y</MathInline> sont indépendants, le terme croisé s'annule.
+La variance d'une somme : <MathInline>{"\\mathrm{Var}(X+Y) = \\mathrm{Var}(X) + \\mathrm{Var}(Y) + 2\\mathrm{Cov}(X,Y)"}</MathInline> ; si <MathInline>{"X"}</MathInline> et <MathInline>{"Y"}</MathInline> sont indépendants, le terme croisé s'annule.
 
 </MdxCard>
 
 ## Moments, skewness et kurtosis
 
 <MdxCard>
-Le moment d'ordre <MathInline>k</MathInline> : <MathInline>{"\\mathbb{E}[X^k]"}</MathInline>. Le moment centré d'ordre 3 et 4 alimentent :
+Le moment d'ordre <MathInline>{"k"}</MathInline> : <MathInline>{"\\mathbb{E}[X^k]"}</MathInline>. Le moment centré d'ordre 3 et 4 alimentent :
 
 - **Skewness** (asymétrie) : queue plus lourde à gauche ou à droite
 - **Kurtosis** (aplatissement) : queues plus ou moins épaisses que la normale
@@ -107,7 +107,7 @@ En finance, des kurtosis élevés signalent un risque de **événements extrême
 ## Loi conditionnelle et indépendance
 
 <MdxCard>
-La loi conditionnelle de <MathInline>X</MathInline> sachant <MathInline>Y</MathInline> :
+La loi conditionnelle de <MathInline>{"X"}</MathInline> sachant <MathInline>{"Y"}</MathInline> :
 
 <MathBlock>{'P(X \\in A \\mid Y = y) = \\frac{P(X \\in A, Y = y)}{P(Y = y)}'}</MathBlock>
 

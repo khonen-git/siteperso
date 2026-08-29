@@ -8,7 +8,7 @@ function throwKatexError(error: Error): never {
   throw error;
 }
 
-/** MDX may pass text nodes instead of string literals — KaTeX requires a string. */
+/** MDX convention: pass TeX as a string literal, e.g. `<MathInline>{"\\sigma"}</MathInline>`. */
 function mathStringFromChildren(children: React.ReactNode): string {
   if (typeof children === 'string') return children;
   if (typeof children === 'number') return String(children);

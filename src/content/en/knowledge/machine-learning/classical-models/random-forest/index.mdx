@@ -40,8 +40,8 @@ Randomizing features at each split **decorrelates** trees — a necessary condit
       <strong>
         <TermTip term="bootstrap">Bootstrap</TermTip>
       </strong>
-      : for each tree <MathInline>b</MathInline>, draw <MathInline>n</MathInline> observations with
-      replacement from <MathInline>n</MathInline> (about 63% unique observations per tree).
+      : for each tree <MathInline>{"b"}</MathInline>, draw <MathInline>{"n"}</MathInline> observations with
+      replacement from <MathInline>{"n"}</MathInline> (about 63% unique observations per tree).
     </li>
     <li>
       <strong>Unpruned tree</strong>: grow until depth or stopping criteria (<code>max_depth</code>,{' '}
@@ -56,7 +56,7 @@ Randomizing features at each split **decorrelates** trees — a necessary condit
     </li>
     <li>
       <strong>Aggregation</strong>: classification → majority class; regression → mean of{' '}
-      <MathInline>B</MathInline> tree predictions.
+      <MathInline>{"B"}</MathInline> tree predictions.
     </li>
   </ol>
 </MdxCard>

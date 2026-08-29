@@ -72,18 +72,15 @@ Le dossier **`/showcase`** était un lab local temporaire — **hors site**, ign
 
 ### MDX / MathInline
 
-- Composants : `MathBlock` / `MathInline` — KaTeX, erreurs **throw** (pas de boîte rouge silencieuse) ; helper `mathStringFromChildren` pour nœuds texte MDX.
-- **Pattern recommandé** : `<MathInline>{"\\LaTeX"}</MathInline>` (blog + tables normale).
-- **Pattern mixte** : identifiants simples `<MathInline>P</MathInline>`, `<MathInline>n</MathInline>` dans probabilités / lois discrètes — fonctionne via nœuds texte, mais incohérent ; risque si caractères spéciaux TeX.
-- **Cas limite** : `taylor-series` — `<MathInline>n</MathInline>` imbriqué dans du gras Markdown ; à surveiller au rendu.
-- Figures blog : composants React inline (plus de SVG morts dans `public/blog/`).
+- Convention : `<MathInline>{"\\LaTeX"}</MathInline>` — script `node scripts/normalize-math-inline.mjs` pour les identifiants simples.
+- `MathBlock` / `MathInline` — KaTeX ; helper `mathStringFromChildren` pour nœuds texte MDX.
+- Figures blog : composants React inline.
 
 ### Dette code / layouts
 
-- ~~Double `KnowledgeLayout`~~ — layout mort supprimé.
+- ~~`TechnologiesSection`~~ — retiré ; stack CV dans `website-creation.mdx`.
 - `distributionStore.ts` : utilisé (PresetManager, tests visualiseur) — **pas mort**.
-- `TechnologiesSection` : utilisé dans `website-creation.mdx` ; candidat simplification (TODO).
-- Tests MDX visualiseurs : dossier `src/components/mdx/__tests__/` **exclu** de Jest.
+- Tests MDX visualiseur : `src/__tests__/components/mdx/MdxDistributionVisualizer.test.tsx`.
 
 ---
 
@@ -148,7 +145,7 @@ Knowledge touché : `normal/index.mdx`, `statistical-tests/index.mdx` (FR+EN). I
 | Zone       | Maturité                                                                           |
 | ---------- | ---------------------------------------------------------------------------------- |
 | Knowledge  | ~50 % MDX avec contenu ; ~32 % hubs rédigés ; piliers finance/ML/engineering vides |
-| Blog       | **Production-ready** (5×2 articles recherche + templates)                          |
+| Blog       | **Production-ready** — tests parité FR/EN, protocoles, figures |
 | Projets    | Contenu OC présent ; polish visuel / ranking manquant                              |
 | References | **OK** — 34 liens, JSON + i18n ; curaté par l'auteur                             |
 | Contact    | **OK** — mailto + liens sociaux                                                    |

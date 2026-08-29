@@ -77,7 +77,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'F(x) = 1'}</MathInline> if <MathInline>{'x \\geq 1'}</MathInline>
         </TableCell>
         <TableCell>
-          Jump of height <MathInline>p</MathInline> at <MathInline>{'x = 1'}</MathInline>
+          Jump of height <MathInline>{"p"}</MathInline> at <MathInline>{'x = 1'}</MathInline>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -97,7 +97,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
       <TableRow>
         <TableCell className="font-medium">Mean</TableCell>
         <TableCell>
-          <MathInline>p</MathInline>
+          <MathInline>{"p"}</MathInline>
         </TableCell>
         <TableCell>Average success probability on one trial</TableCell>
       </TableRow>
@@ -165,7 +165,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'\\mathcal{I}(p) = \\frac{1}{p(1-p)}'}</MathInline>
         </TableCell>
         <TableCell>
-          For one observation; increases as <MathInline>p</MathInline> moves away from{' '}
+          For one observation; increases as <MathInline>{"p"}</MathInline> moves away from{' '}
           <MathInline>{'1/2'}</MathInline>
         </TableCell>
       </TableRow>
@@ -177,8 +177,8 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           </MathInline>
         </TableCell>
         <TableCell>
-          Between two Bernoulli laws with parameters <MathInline>p</MathInline> and{' '}
-          <MathInline>q</MathInline>
+          Between two Bernoulli laws with parameters <MathInline>{"p"}</MathInline> and{' '}
+          <MathInline>{"q"}</MathInline>
         </TableCell>
       </TableRow>
     </TableBody>
@@ -203,8 +203,8 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'X = \\mathbf{1}_A'}</MathInline>
         </TableCell>
         <TableCell>
-          Every Bernoulli is the indicator of an event <MathInline>A</MathInline> with probability{' '}
-          <MathInline>p</MathInline>
+          Every Bernoulli is the indicator of an event <MathInline>{"A"}</MathInline> with probability{' '}
+          <MathInline>{"p"}</MathInline>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -220,7 +220,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'\\sum_{i=1}^n X_i \\sim \\mathrm{Bin}(n, p)'}</MathInline>
         </TableCell>
         <TableCell>
-          <MathInline>n</MathInline> independent trials → [binomial
+          <MathInline>{"n"}</MathInline> independent trials → [binomial
           law](/knowledge/probability/distributions/discrete/binomial)
         </TableCell>
       </TableRow>
@@ -259,7 +259,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'M_{\\sum X_i}(t) = (q + p e^t)^n'}</MathInline>
         </TableCell>
         <TableCell>
-          For <MathInline>n</MathInline> i.i.d. variables; identifies the binomial
+          For <MathInline>{"n"}</MathInline> i.i.d. variables; identifies the binomial
         </TableCell>
       </TableRow>
       <TableRow>
@@ -313,7 +313,7 @@ Coin flips, noisy bit transmission, winning/losing trades under i.i.d. assumptio
 
 ### Building block for counting laws
 
-Sums of i.i.d. Bernoulli variables yield the binomial; in the rare regime (large <MathInline>n</MathInline>, small <MathInline>p</MathInline>), the [Poisson law](/knowledge/probability/distributions/discrete/poisson) appears as a limit.
+Sums of i.i.d. Bernoulli variables yield the binomial; in the rare regime (large <MathInline>{"n"}</MathInline>, small <MathInline>{"p"}</MathInline>), the [Poisson law](/knowledge/probability/distributions/discrete/poisson) appears as a limit.
 
 </MdxCard>
 
@@ -339,8 +339,8 @@ Sums of i.i.d. Bernoulli variables yield the binomial; in the rare regime (large
           </MathInline>
         </TableCell>
         <TableCell>
-          <MathInline>n</MathInline> observed trials; inference targets proportion{' '}
-          <MathInline>p</MathInline>
+          <MathInline>{"n"}</MathInline> observed trials; inference targets proportion{' '}
+          <MathInline>{"p"}</MathInline>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -393,7 +393,7 @@ Sums of i.i.d. Bernoulli variables yield the binomial; in the rare regime (large
           </MathInline>
         </TableCell>
         <TableCell>
-          Under <MathInline>{'H_0 : p = p_0'}</MathInline> and large <MathInline>n</MathInline>
+          Under <MathInline>{'H_0 : p = p_0'}</MathInline> and large <MathInline>{"n"}</MathInline>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -417,12 +417,12 @@ Sums of i.i.d. Bernoulli variables yield the binomial; in the rare regime (large
     <ul className="list-disc pl-6 space-y-2">
       <li>
         A single trial (<MathInline>{'n = 1'}</MathInline>) cannot estimate{' '}
-        <MathInline>p</MathInline> with a margin of error; inference practically concerns an i.i.d.
+        <MathInline>{"p"}</MathInline> with a margin of error; inference practically concerns an i.i.d.
         Bernoulli sample.
       </li>
       <li>
         The Wald interval can yield bounds outside <MathInline>{'[0,1]'}</MathInline> for{' '}
-        <MathInline>p</MathInline> near 0 or 1 and moderate <MathInline>n</MathInline>.
+        <MathInline>{"p"}</MathInline> near 0 or 1 and moderate <MathInline>{"n"}</MathInline>.
       </li>
       <li>For small samples, prefer Clopper-Pearson or the Wilson interval.</li>
       <li>

@@ -237,7 +237,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
         <TableCell>Éclaircissement (thinning)</TableCell>
         <TableCell>
           <MathInline>{'X \\sim \\mathrm{Poisson}(\\lambda)'}</MathInline>, chaque événement retenu
-          avec prob. <MathInline>p</MathInline>{' '}
+          avec prob. <MathInline>{"p"}</MathInline>{' '}
           <MathInline>{'\\Rightarrow \\mathrm{Poisson}(\\lambda p)'}</MathInline>
         </TableCell>
         <TableCell>Filtrage indépendant des événements ; base des modèles de sauts</TableCell>
@@ -270,7 +270,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'N_t \\sim \\mathrm{Poisson}(\\lambda t)'}</MathInline>
         </TableCell>
         <TableCell>
-          Nombre d'arrivées en <MathInline>t</MathInline> dans un processus de Poisson de taux{' '}
+          Nombre d'arrivées en <MathInline>{"t"}</MathInline> dans un processus de Poisson de taux{' '}
           <MathInline>{'\\lambda'}</MathInline>
         </TableCell>
       </TableRow>
@@ -363,7 +363,7 @@ Modélisation élémentaire des arrivées de liquidité ou des ticks ; extension
           </MathInline>
         </TableCell>
         <TableCell>
-          <MathInline>n</MathInline> intervalles ou observations indépendantes
+          <MathInline>{"n"}</MathInline> intervalles ou observations indépendantes
         </TableCell>
       </TableRow>
       <TableRow>
@@ -372,7 +372,7 @@ Modélisation élémentaire des arrivées de liquidité ou des ticks ; extension
           <MathInline>{'S = \\sum_{i=1}^n X_i \\sim \\mathrm{Poisson}(n\\lambda)'}</MathInline>
         </TableCell>
         <TableCell>
-          <MathInline>S</MathInline> résume toute l'information sur{' '}
+          <MathInline>{"S"}</MathInline> résume toute l'information sur{' '}
           <MathInline>{'\\lambda'}</MathInline>
         </TableCell>
       </TableRow>
@@ -405,7 +405,7 @@ Modélisation élémentaire des arrivées de liquidité ou des ticks ; extension
         </TableCell>
         <TableCell>
           IC exact pour <MathInline>{'\\lambda'}</MathInline> à partir de la somme{' '}
-          <MathInline>S</MathInline>
+          <MathInline>{"S"}</MathInline>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -473,7 +473,7 @@ Modélisation élémentaire des arrivées de liquidité ou des ticks ; extension
       </li>
       <li>
         L'intervalle basé sur le <MathInline>{'\\chi^2'}</MathInline> est préférable à Wald pour{' '}
-        <MathInline>{'\\lambda'}</MathInline> petit ou <MathInline>n</MathInline> modéré.
+        <MathInline>{'\\lambda'}</MathInline> petit ou <MathInline>{"n"}</MathInline> modéré.
       </li>
       <li>
         Comparer deux taux <MathInline>{'\\lambda_1'}</MathInline> et{' '}
@@ -509,7 +509,7 @@ Modélisation élémentaire des arrivées de liquidité ou des ticks ; extension
           <code>np.random.poisson(lam)</code> ou <code>rng.poisson(lam, size=m)</code>
         </TableCell>
         <TableCell>
-          <MathInline>m</MathInline> réalisations indépendantes
+          <MathInline>{"m"}</MathInline> réalisations indépendantes
         </TableCell>
       </TableRow>
       <TableRow>

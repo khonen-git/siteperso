@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { DistributionVisualizer } from '@/components/features/knowledge/visualization/DistributionVisualizer';
 import { DistributionConfig } from '@/types/distributions';
 import { PresetManager } from '@/components/features/knowledge/visualization/PresetManager';

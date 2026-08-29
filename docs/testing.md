@@ -71,7 +71,9 @@ Config : [`jest.config.js`](../jest.config.js)
 | Loaders Knowledge      | `src/lib/knowledge/content.test.ts`              |
 | Validation frontmatter | inclus dans content.test projects                |
 | Finance                | `src/lib/finance/__tests__/blackScholes.test.ts` |
+| Loaders Blog           | `src/lib/blog/content.test.ts` (série recherche, protocoles, figures) |
 | Layout UI              | Header, Footer, ThemeProvider                    |
+| MDX visualiseur        | `src/__tests__/components/mdx/MdxDistributionVisualizer.test.tsx` |
 | Breakpoints            | `src/config/breakpoints.test.ts`                 |
 | Knowledge UI           | TreeView, TableOfContents, CodeBlock             |
 | Projects UI            | ProjectCard, useProjectAnimation                 |
@@ -80,7 +82,6 @@ Config : [`jest.config.js`](../jest.config.js)
 ## Reporté
 
 - Playwright (`e2e/`) — campagne multi-viewport (voir [todo-later.md](./todo-later.md))
-- Rewrite `DistributionVisualizer` / intégration MDX `@mdx-js/react` (ignorés dans `jest.config.js` pour l’instant)
 - Rewrite `integration/layout`
 - Co-localisation complète de tous les tests hors `src/__tests__`
 - Menu mobile Header + drawer sidebar Knowledge (navigation sous `md` / `lg`)

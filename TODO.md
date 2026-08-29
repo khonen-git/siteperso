@@ -25,7 +25,7 @@
 - Composant technologies
 - Composant images
 - Mettre un <ul>/<li> pour lister les objectifs dans les mdx ou autre ?
-- TechnologiesSection inutile ? préf suppr et voir plus tard
+- Composant technologies — remplacé par liste stack CV dans `website-creation.mdx`
 
 ## Vérification
 
