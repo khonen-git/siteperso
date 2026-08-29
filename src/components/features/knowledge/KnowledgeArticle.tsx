@@ -54,9 +54,7 @@ export async function KnowledgeArticle({
         </KnowledgeMdxRenderer>
       </KnowledgeLayout>
     );
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error ?? 'erreur inconnue');
-    console.error(`Erreur lors du chargement du contenu (${locale}/${slug.join('/')}):`, message);
+  } catch {
     return <NotFoundKnowledge />;
   }
 }

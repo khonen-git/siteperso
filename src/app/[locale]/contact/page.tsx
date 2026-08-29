@@ -4,30 +4,10 @@ import * as React from 'react';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
-import { Github, Linkedin, Mail, Send } from 'lucide-react';
+import { Github, Linkedin, Mail } from 'lucide-react';
 
 export default function ContactPage(): React.JSX.Element {
   const t = useTranslations('contact');
-  const [formData, setFormData] = React.useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Implémenter l'envoi du formulaire
-    console.log('Form data:', formData);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -86,63 +66,7 @@ export default function ContactPage(): React.JSX.Element {
               </div>
             </Card>
           </motion.div>
-          {/* Formulaire de contact - Temporairement désactivé
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <Card className="p-6">
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <Input
-                    placeholder="Votre nom"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="bg-background"
-                  />
-                </div>
-                <div>
-                  <Input
-                    type="email"
-                    placeholder="Votre email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="bg-background"
-                  />
-                </div>
-                <div>
-                  <Input
-                    placeholder="Sujet"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    className="bg-background"
-                  />
-                </div>
-                <div>
-                  <Textarea
-                    placeholder="Votre message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    className="min-h-[150px] bg-background"
-                  />
-                </div>
-                <Button type="submit" className="w-full">
-                  <Send className="mr-2 h-4 w-4" />
-                  Envoyer
-                </Button>
-              </form>
-            </Card>
-          </motion.div>
-          */}
+          {/* Formulaire de contact — réactiver Input, Textarea, Button, Send et l'état formData si besoin */}
         </div>
       </section>
     </div>

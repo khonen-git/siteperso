@@ -1,5 +1,3 @@
-import { VariantProps } from 'class-variance-authority';
-
 export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
   value?: number;
   max?: number;

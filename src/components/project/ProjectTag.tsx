@@ -15,7 +15,7 @@ interface ProjectTagProps {
 export function ProjectTag({
   tag,
   variant = 'secondary',
-  size = 'default',
+  size: _size = 'default',
   className,
 }: ProjectTagProps) {
   return (

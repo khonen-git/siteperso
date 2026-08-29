@@ -37,8 +37,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       frontmatter,
       content,
     });
-  } catch (error) {
-    console.error(`Erreur lors du chargement du projet ${slug}:`, error);
+  } catch {
     return NextResponse.json({ error: 'Erreur lors du chargement du projet' }, { status: 500 });
   }
 }

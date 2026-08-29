@@ -24,7 +24,7 @@ export function Tr8drDeltaHitFigure(): React.JSX.Element {
         <line x1="60" y1="180" x2="420" y2="180" stroke="#666" strokeWidth="1" />
         <line x1="60" y1="30" x2="60" y2="180" stroke="#666" strokeWidth="1" />
         <path d={path} fill="none" stroke="#2c6e9b" strokeWidth="2.5" />
-        {points.map(([h, d], i) => (
+        {points.map((_, i) => (
           <circle key={i} cx={xs[i]} cy={ys[i]} r={5} fill="#2c6e9b" />
         ))}
         <text

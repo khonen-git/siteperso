@@ -9,12 +9,13 @@ jest.mock('next/font/google', () => ({
 
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => React.createElement('div', props, children),
+    div: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) =>
+      React.createElement('div', props, children),
   },
 }));
 
 jest.mock('next/link', () => {
-  function MockLink({ children, ...props }: any) {
+  function MockLink({ children, ...props }: React.PropsWithChildren<{ href?: string }>) {
     return React.createElement('a', props, children);
   }
   MockLink.displayName = 'MockLink';
@@ -23,7 +24,12 @@ jest.mock('next/link', () => {
 
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: ({ src, alt, ...props }: any) => React.createElement('img', { src, alt, ...props }),
+  default: ({
+    src,
+    alt,
+    ...props
+  }: React.ImgHTMLAttributes<HTMLImageElement> & { src?: string; alt?: string }) =>
+    React.createElement('img', { src, alt, ...props }),
 }));
 
 Object.defineProperty(window, 'matchMedia', {

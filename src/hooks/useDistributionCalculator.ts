@@ -47,9 +47,9 @@ export function useDistributionCalculator(
   options: Partial<CalculationOptions> = {}
 ): CalculationResult {
   const cache = useCalculationCache<CalculationResult>();
-  const mergedOptions = { ...DEFAULT_OPTIONS, ...options } as CalculationOptions;
 
   return useMemo(() => {
+    const mergedOptions = { ...DEFAULT_OPTIONS, ...options } as CalculationOptions;
     const cacheKey = JSON.stringify({
       distribution: distribution.name,
       params,
@@ -74,5 +74,5 @@ export function useDistributionCalculator(
 
     cache.set(cacheKey, result);
     return result;
-  }, [distribution, params, functionType, mergedOptions, cache]);
+  }, [distribution, params, functionType, options, cache]);
 }

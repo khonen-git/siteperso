@@ -70,7 +70,6 @@ export function getBlogPosts(locale: string): BlogPost[] {
       const { data } = matter(fileContents);
 
       if (!isValidBlogFrontmatter(data)) {
-        console.warn(`Article blog invalide ${fileName}: frontmatter incomplet`);
         continue;
       }
 
@@ -87,8 +86,8 @@ export function getBlogPosts(locale: string): BlogPost[] {
         tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
         visible: data.visible !== false,
       });
-    } catch (error) {
-      console.warn(`Impossible de lire ${fileName}:`, error);
+    } catch {
+      // Ignorer les fichiers illisibles
     }
   }
 

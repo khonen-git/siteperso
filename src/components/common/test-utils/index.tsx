@@ -20,7 +20,10 @@ export function renderWithProviders(ui: React.ReactElement) {
 export const mockNextImage = () => {
   jest.mock('next/image', () => ({
     __esModule: true,
-    default: (props: any) => <img alt="" {...props} />,
+    default: (props: React.ComponentProps<'img'>) => (
+      // eslint-disable-next-line @next/next/no-img-element -- mock Jest pour next/image
+      <img alt="" {...props} />
+    ),
   }));
 };
 
@@ -30,7 +33,9 @@ export const mockNextImage = () => {
 export const mockNextLink = () => {
   jest.mock('next/link', () => ({
     __esModule: true,
-    default: ({ children, href }: any) => <a href={href}>{children}</a>,
+    default: ({ children, href }: { children: React.ReactNode; href: string }) => (
+      <a href={href}>{children}</a>
+    ),
   }));
 };
 

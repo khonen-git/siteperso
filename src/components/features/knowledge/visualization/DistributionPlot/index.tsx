@@ -20,11 +20,6 @@ export function DistributionPlot({ distribution, calculator, cache }: PlotProps)
   // Calcul des points pour le graphique avec mise en cache
   const plotData = React.useMemo(() => {
     if (!distribution.range || !calculator?.pdf || !cache) {
-      console.warn('Missing required props:', {
-        hasRange: !!distribution.range,
-        hasCalculator: !!calculator?.pdf,
-        hasCache: !!cache,
-      });
       return [];
     }
 
@@ -43,11 +38,9 @@ export function DistributionPlot({ distribution, calculator, cache }: PlotProps)
           if (typeof y === 'number' && !isNaN(y)) {
             cache.set(cacheKey, y);
           } else {
-            console.warn('Invalid y value:', y);
             continue;
           }
-        } catch (error) {
-          console.error('Error calculating pdf:', error);
+        } catch {
           continue;
         }
       }

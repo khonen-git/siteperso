@@ -27,7 +27,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(projects);
   } catch (error) {
     const err = error as Error;
-    console.error('Erreur lors de la lecture des projets:', err);
     return NextResponse.json(
       {
         error: 'Erreur lors du chargement des projets',

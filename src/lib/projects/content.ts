@@ -64,7 +64,6 @@ export function getProjects(locale: string): Project[] {
       const { data } = matter(fileContents);
 
       if (!isValidProjectFrontmatter(data)) {
-        console.warn(`Projet invalide ${fileName}: données manquantes ou incorrectes`);
         continue;
       }
 
@@ -84,8 +83,8 @@ export function getProjects(locale: string): Project[] {
         visible: data.visible ?? true,
         link: `/projects/${slug}`,
       });
-    } catch (error) {
-      console.error(`Erreur lors de la lecture du projet ${fileName}:`, error);
+    } catch {
+      // Ignorer les fichiers illisibles
     }
   }
 
@@ -141,8 +140,7 @@ export function getProject(locale: string, slug: string): ProjectPageData | null
       project,
       source: content,
     };
-  } catch (error) {
-    console.error(`Erreur lors du chargement du projet ${slug}:`, error);
+  } catch {
     return null;
   }
 }

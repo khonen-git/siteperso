@@ -9,7 +9,7 @@ Synthèse courte. Détail procédural : `docs/tooling.md`, `docs/todo-later.md`.
 | Métrique | Valeur |
 |----------|--------|
 | Erreurs | **0** |
-| Warnings | **~171** (tolérés — types de retour, `any` dans test/) |
+| Warnings | **0** |
 | ESLint au build | **Actif** (`ignoreDuringBuilds: false`) |
 
 ### Commandes
@@ -62,11 +62,9 @@ Dernière exécution réussie : **~78 s** (174 pages statiques).
 - ISR / `dynamic` pour pages Knowledge peu consultées
 - `next build` avec cache CI (`.next/cache`)
 - Audit MDX : éviter listes Markdown à l'intérieur de `<MdxCard>` (pattern fragile)
-- Réduire les ~171 warnings ESLint
 
 ---
 
 ## Dette reportée
 
-- Warnings ESLint (`explicit-function-return-type`, etc.)
 - Migrations ESLint 9 / React 19 / Next 16 — `docs/todo-later.md` §2

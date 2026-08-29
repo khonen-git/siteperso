@@ -63,7 +63,7 @@ interface SearchResult<T> {
   similarity: number;
 }
 
-export function fuzzySearch<T extends Record<string, any>>(
+export function fuzzySearch<T extends object>(
   items: T[],
   searchQuery: string,
   options: FuzzySearchOptions = {}
@@ -79,10 +79,11 @@ export function fuzzySearch<T extends Record<string, any>>(
 
   const results = items.map((item) => {
     let maxSimilarity = 0;
+    const record = item as Record<string, unknown>;
 
     // Pour chaque clé spécifiée, on cherche la meilleure correspondance
     keys.forEach((key) => {
-      const value = item[key];
+      const value = record[key];
       if (typeof value === 'string') {
         // Diviser la valeur en mots pour une recherche plus précise
         const words = value.split(/\s+/);

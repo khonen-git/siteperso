@@ -15,7 +15,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Search } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { fuzzySearch } from '@/lib/search';
 
 // Types d'activités et leurs couleurs
