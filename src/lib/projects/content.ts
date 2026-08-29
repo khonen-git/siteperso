@@ -1,9 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { routing } from '@/i18n/routing';
-import { isValidProjectFrontmatter } from '@/lib/projects/validation';
+import { isValidProjectFrontmatter, parseProjectFrontmatter } from '@/lib/projects/validation';
 import type { Project, ProjectDetail } from '@/types/project';
 
 const CONTENT_ROOT = path.join(process.cwd(), 'src/content');
@@ -71,6 +70,10 @@ export function getProjects(locale: string): Project[] {
         continue;
       }
 
+      const { importance, relatedReferences } = parseProjectFrontmatter(
+        data as Record<string, unknown>
+      );
+
       projects.push({
         slug,
         id: data.id,
@@ -82,13 +85,20 @@ export function getProjects(locale: string): Project[] {
         tags: data.tags,
         visible: data.visible ?? true,
         link: `/projects/${slug}`,
+        importance,
+        relatedReferences,
       });
     } catch {
       // Ignorer les fichiers illisibles
     }
   }
 
-  return projects.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  return projects.sort((a, b) => {
+    if (b.importance !== a.importance) {
+      return b.importance - a.importance;
+    }
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
 }
 
 export interface ProjectPageData {
@@ -115,6 +125,10 @@ export function getProject(locale: string, slug: string): ProjectPageData | null
       return null;
     }
 
+    const { importance, relatedReferences } = parseProjectFrontmatter(
+      data as Record<string, unknown>
+    );
+
     const project: ProjectDetail = {
       id: data.id,
       title: data.title,
@@ -125,15 +139,9 @@ export function getProject(locale: string, slug: string): ProjectPageData | null
       tags: data.tags,
       visible: data.visible ?? true,
       slug,
-      content: {
-        summary: '',
-        objectives: [],
-        approach: '',
-        technologies: [],
-        results: '',
-        images: [],
-        conclusion: '',
-      },
+      link: `/projects/${slug}`,
+      importance,
+      relatedReferences,
     };
 
     return {
@@ -143,21 +151,4 @@ export function getProject(locale: string, slug: string): ProjectPageData | null
   } catch {
     return null;
   }
-}
-
-/** Sérialise un projet pour l'API JSON (clients legacy). */
-export async function serializeProjectSource(
-  source: string,
-  frontmatter: Record<string, unknown>
-): Promise<MDXRemoteSerializeResult> {
-  const { serialize } = await import('next-mdx-remote/serialize');
-  const remarkGfm = (await import('remark-gfm')).default;
-
-  return serialize(source, {
-    mdxOptions: {
-      remarkPlugins: [remarkGfm],
-      rehypePlugins: [],
-    },
-    scope: frontmatter,
-  });
 }

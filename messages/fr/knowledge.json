@@ -2,6 +2,8 @@
   "layout": {
     "tocTitle": "Table des matières",
     "sidebarLabel": "Navigation du contenu",
+    "openSidebar": "Sommaire",
+    "closeSidebar": "Fermer la navigation",
     "expandSection": "Développer la section",
     "collapseSection": "Réduire la section"
   },
@@ -16,7 +18,7 @@
   },
   "home": {
     "title": "Répertoire de connaissances personnelles",
-    "intro1": "Bienvenue dans mon répertoire de connaissances personnelles. Ici, je partage un condensé de diverses notions que j'ai pu acquérir tout au long de mon parcours. Ce répertoire est organisé en sept piliers thématiques. Vous pouvez y naviguer dans la barre latérale gauche et accéder aux informations de la thématique en cliquant dessus ou aller dans les sous-thématiques en cliquant sur la flèche à côté du titre de la thématique. Vous pouvez également naviguer dans la page avec la table des matières à droite de la page.",
+    "intro1": "Bienvenue dans mon répertoire de connaissances personnelles. Ici, je partage un condensé de diverses notions que j'ai pu acquérir tout au long de mon parcours. Ce répertoire est organisé en sept piliers thématiques. Sur grand écran, naviguez via la barre latérale gauche ; sur mobile et tablette, ouvrez le sommaire en haut de page. Cliquez sur une thématique pour y accéder, ou sur la flèche pour développer les sous-thématiques. La table des matières à droite (grand écran) permet de parcourir la page en cours.",
     "intro2": "Il est important de noter que ce répertoire n'est pas conçu comme un cours classique, mais plutôt comme une synthèse de chaque notion avec les éléments essentiels à connaître. Nombreux sont les cours et les outils qui permettent d'apprendre ces notions ; si vous souhaitez mieux apprendre un sujet, je vous invite à faire vos propres recherches ou à demander des explications plus détaillées à des LLM comme ChatGPT. Avec tout le flux d'information que nous recevons, nous oublions vite et retenons peu. Ce répertoire permet de revoir rapidement ces notions et des éléments qui auraient été oubliés.",
     "mathematicsTitle": "Mathématiques",
     "mathematicsText": "Algèbre linéaire, analyse, optimisation et calcul numérique : les fondations mathématiques pour la modélisation quantitative et la finance.",

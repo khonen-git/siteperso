@@ -9,6 +9,7 @@ import { ArrowLeft, Calendar } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import ProjectTag from './ProjectTag';
+import { ProjectImportanceBadge } from './ProjectImportanceBadge';
 import { ProjectDetail } from '@/types/project';
 
 interface ProjectHeroProps {
@@ -40,9 +41,12 @@ export function ProjectHero({ project }: ProjectHeroProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Badge variant="outline" className="mb-2 text-white">
-            {project.category}
-          </Badge>
+          <div className="mb-2 flex flex-wrap items-center gap-3">
+            <Badge variant="outline" className="text-white">
+              {project.category}
+            </Badge>
+            <ProjectImportanceBadge importance={project.importance} className="text-amber-300" />
+          </div>
           <h1 className="text-4xl font-bold text-white md:text-5xl">{project.title}</h1>
           <p className="mt-4 max-w-2xl text-lg text-white/90">{project.description}</p>
           <div className="mt-4 flex items-center gap-2 text-white/80">

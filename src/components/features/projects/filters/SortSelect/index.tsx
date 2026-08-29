@@ -24,6 +24,7 @@ export function SortSelect({ value, onChange, labels, className }: SortSelectPro
       <SelectContent>
         <SelectGroup>
           <SelectLabel>{labels.group}</SelectLabel>
+          <SelectItem value="importance">{labels.importance}</SelectItem>
           <SelectItem value="date">{labels.date}</SelectItem>
           <SelectItem value="title">{labels.title}</SelectItem>
         </SelectGroup>

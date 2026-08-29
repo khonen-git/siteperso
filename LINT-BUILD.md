@@ -6,10 +6,10 @@ Synthèse courte. Détail procédural : `docs/tooling.md`, `docs/todo-later.md`.
 
 ## ESLint
 
-| Métrique | Valeur |
-|----------|--------|
-| Erreurs | **0** |
-| Warnings | **0** |
+| Métrique        | Valeur                                  |
+| --------------- | --------------------------------------- |
+| Erreurs         | **0**                                   |
+| Warnings        | **0**                                   |
 | ESLint au build | **Actif** (`ignoreDuringBuilds: false`) |
 
 ### Commandes
@@ -33,12 +33,12 @@ npm run validate      # lint + typecheck + test + build
 
 ## Build (`npm run build`)
 
-| Étape | Durée typique (machine locale) |
-|-------|------------------------------|
-| Compilation webpack | ~27–46 s |
-| ESLint + TypeScript (gate Next) | ~10 s |
-| SSG **174 pages** (Knowledge MDX, blog, projects…) | ~20–30 s |
-| **Total** | **~1–1,5 min** |
+| Étape                                              | Durée typique (machine locale) |
+| -------------------------------------------------- | ------------------------------ |
+| Compilation webpack                                | ~27–46 s                       |
+| ESLint + TypeScript (gate Next)                    | ~10 s                          |
+| SSG **174 pages** (Knowledge MDX, blog, projects…) | ~20–30 s                       |
+| **Total**                                          | **~1–1,5 min**                 |
 
 Dernière exécution réussie : **~78 s** (174 pages statiques).
 
@@ -50,12 +50,12 @@ Dernière exécution réussie : **~78 s** (174 pages statiques).
 
 ### Optimisations appliquées
 
-| Optimisation | Effet |
-|--------------|-------|
-| `listPublishedKnowledgeSlugs` (stubs masqués) | ~218 → **112** routes Knowledge / locale |
-| Cache `isKnowledgeDraft` + `getFilteredNavigationData` | évite des milliers de `readFileSync` redondants par page |
-| `experimental.optimizePackageImports` (lucide, recharts, radix icons) | bundles plus légers |
-| Fix MDX (`MdxCard` + listes imbriquées) | build ne plante plus au prerender |
+| Optimisation                                                          | Effet                                                    |
+| --------------------------------------------------------------------- | -------------------------------------------------------- |
+| `listPublishedKnowledgeSlugs` (stubs masqués)                         | ~218 → **112** routes Knowledge / locale                 |
+| Cache `isKnowledgeDraft` + `getFilteredNavigationData`                | évite des milliers de `readFileSync` redondants par page |
+| `experimental.optimizePackageImports` (lucide, recharts, radix icons) | bundles plus légers                                      |
+| Fix MDX (`MdxCard` + listes imbriquées)                               | build ne plante plus au prerender                        |
 
 ### Pistes futures (non implémentées)
 

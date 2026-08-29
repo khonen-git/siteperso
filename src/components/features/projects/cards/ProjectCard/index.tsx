@@ -7,6 +7,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useProjectAnimation } from '../../hooks/useProjectAnimation';
+import { ProjectImportanceBadge } from '@/components/project/ProjectImportanceBadge';
 import { ProjectTag } from '@/components/project/ProjectTag';
 import type { ProjectCardProps } from '../../types';
 
@@ -47,6 +48,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <Badge variant="outline" className="absolute top-2 right-2">
             {project.category}
           </Badge>
+          {project.importance > 0 && (
+            <div className="absolute top-2 left-2 rounded-md bg-background/90 px-2 py-1 shadow-sm">
+              <ProjectImportanceBadge importance={project.importance} />
+            </div>
+          )}
         </Card>
       </Link>
     </motion.div>

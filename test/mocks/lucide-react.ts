@@ -23,3 +23,5 @@ export const ChevronRight = createIcon('chevron-right');
 export const Search = createIcon('search');
 export const X = createIcon('x');
 export const Menu = createIcon('menu');
+export const Star = createIcon('star');
+export const ExternalLink = createIcon('external-link');

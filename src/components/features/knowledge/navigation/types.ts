@@ -11,6 +11,7 @@ export interface SidebarProps {
 export interface TreeViewProps {
   items: TreeItem[];
   level?: number;
+  onLinkClick?: () => void;
 }
 
 export interface TableOfContentsProps {

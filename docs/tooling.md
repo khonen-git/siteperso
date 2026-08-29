@@ -2,16 +2,16 @@
 
 ## Current stack
 
-| Tool                                                | Role            | Status                                                                 |
-| --------------------------------------------------- | --------------- | ---------------------------------------------------------------------- |
-| ESLint 8 + `eslint-config-next`                     | Lint TS/React   | OK for Next 15; ESLint 8 is maintenance-only                           |
-| `@typescript-eslint` v6                             | TS rules        | Aligned with `eslint-config-next@15`; v8 needs ESLint 9                |
-| `eslint-plugin-prettier` + `eslint-config-prettier` | Format as lint  | Configured via `plugin:prettier/recommended`                           |
-| Prettier                                            | Format          | [`.prettierrc`](../.prettierrc) — `endOfLine: lf`                      |
-| EditorConfig                                        | Editor defaults | [`.editorconfig`](../.editorconfig) — prefer LF                        |
-| TypeScript                                          | Types           | Checked on `next build` (`ignoreBuildErrors: false`)                   |
-| ESLint on build                                     | Gate            | **Active** (`ignoreDuringBuilds: false`) — 0 errors, ~171 warnings     |
-| Jest                                                | Unit/UI tests   | See [testing.md](./testing.md)                                         |
+| Tool                                                | Role            | Status                                                             |
+| --------------------------------------------------- | --------------- | ------------------------------------------------------------------ |
+| ESLint 8 + `eslint-config-next`                     | Lint TS/React   | OK for Next 15; ESLint 8 is maintenance-only                       |
+| `@typescript-eslint` v6                             | TS rules        | Aligned with `eslint-config-next@15`; v8 needs ESLint 9            |
+| `eslint-plugin-prettier` + `eslint-config-prettier` | Format as lint  | Configured via `plugin:prettier/recommended`                       |
+| Prettier                                            | Format          | [`.prettierrc`](../.prettierrc) — `endOfLine: lf`                  |
+| EditorConfig                                        | Editor defaults | [`.editorconfig`](../.editorconfig) — prefer LF                    |
+| TypeScript                                          | Types           | Checked on `next build` (`ignoreBuildErrors: false`)               |
+| ESLint on build                                     | Gate            | **Active** (`ignoreDuringBuilds: false`) — 0 errors, ~171 warnings |
+| Jest                                                | Unit/UI tests   | See [testing.md](./testing.md)                                     |
 
 ## Commands
 

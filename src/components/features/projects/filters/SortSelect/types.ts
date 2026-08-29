@@ -1,8 +1,9 @@
-export type SortOption = 'date' | 'title';
+export type SortOption = 'importance' | 'date' | 'title';
 
 export interface SortSelectLabels {
   placeholder: string;
   group: string;
+  importance: string;
   date: string;
   title: string;
 }

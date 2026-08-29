@@ -30,7 +30,14 @@ The idea: the gradient points toward steepest ascent; subtracting <MathInline>{"
 ## Intuition
 
 <MdxCard>
-Imagine a ball rolling on a surface: at each step, read the local slope (<MathInline>{"\\nabla f"}</MathInline>) and move in the steepest descent direction. Step **too large**: overshoot and divergence. Step **too small**: very slow convergence. On a **convex** smooth function, a good choice of <MathInline>{"\\eta"}</MathInline> guarantees convergence to the global minimum (see [Convex optimization](/knowledge/mathematics/optimization/convex-optimization)). On a **non-convex** function (neural networks), you often land at a local minimum or saddle — hence initialization and variants (momentum, Adam).
+  Imagine a ball rolling on a surface: at each step, read the local slope (
+  <MathInline>{'\\nabla f'}</MathInline>) and move in the steepest descent direction. Step **too
+  large**: overshoot and divergence. Step **too small**: very slow convergence. On a **convex**
+  smooth function, a good choice of <MathInline>{'\\eta'}</MathInline> guarantees convergence to the
+  global minimum (see [Convex
+  optimization](/knowledge/mathematics/optimization/convex-optimization)). On a **non-convex**
+  function (neural networks), you often land at a local minimum or saddle — hence initialization and
+  variants (momentum, Adam).
 </MdxCard>
 
 ## Learning rate

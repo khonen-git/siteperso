@@ -2,6 +2,8 @@
   "layout": {
     "tocTitle": "Table of contents",
     "sidebarLabel": "Content navigation",
+    "openSidebar": "Contents",
+    "closeSidebar": "Close navigation",
     "expandSection": "Expand section",
     "collapseSection": "Collapse section"
   },
@@ -16,7 +18,7 @@
   },
   "home": {
     "title": "Personal knowledge repository",
-    "intro1": "Welcome to my personal knowledge repository. Here I share a condensed overview of concepts I have learned throughout my journey. The repository is organized into seven thematic pillars. Use the left sidebar to browse topics, click a title to open it, or use the arrow to expand subtopics. You can also navigate the current page with the table of contents on the right.",
+    "intro1": "Welcome to my personal knowledge repository. Here I share a condensed overview of concepts I have learned throughout my journey. The repository is organized into seven thematic pillars. On large screens, use the left sidebar; on mobile and tablet, open the contents menu at the top. Click a title to open it, or use the arrow to expand subtopics. On large screens, the table of contents on the right helps you navigate the current page.",
     "intro2": "This repository is not designed as a traditional course, but as a synthesis of each topic with the essentials to remember. Many courses and tools can help you learn these subjects in depth. If you want to go further, do your own research or ask a LLM for more detail. With the constant flow of information we receive, we forget quickly and retain little. This repository helps you revisit concepts and recover what may have been forgotten.",
     "mathematicsTitle": "Mathematics",
     "mathematicsText": "Linear algebra, analysis, optimization, and numerical methods — mathematical foundations for quantitative modeling and finance.",

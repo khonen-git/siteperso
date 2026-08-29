@@ -1,23 +1,5 @@
-export interface ProjectDetail {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  date: string;
-  category: string;
-  tags: string[];
-  visible?: boolean;
-  slug: string; // Ajout du slug
-  content: {
-    summary: string;
-    objectives: string[];
-    approach: string;
-    technologies: { name: string; description: string }[];
-    results: string;
-    images: { url: string; caption: string }[];
-    conclusion: string;
-  };
-}
+/** Importance rank 0 = none, 1–5 = star count (5 = highest). */
+export type ProjectImportance = 0 | 1 | 2 | 3 | 4 | 5;
 
 export interface Project {
   id: number;
@@ -29,17 +11,13 @@ export interface Project {
   tags: string[];
   visible?: boolean;
   link: string;
-  slug: string; // Ajout du slug
+  slug: string;
+  importance: ProjectImportance;
+  relatedReferences: string[];
 }
+
+export type ProjectDetail = Project;
 
 export interface ThemeColor {
   color: string;
-}
-
-export interface ProjectsDataType {
-  [key: string]: ProjectDetail;
-}
-
-export interface CategoryInfo {
-  [key: string]: string;
 }

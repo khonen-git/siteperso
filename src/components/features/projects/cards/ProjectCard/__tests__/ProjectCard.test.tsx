@@ -22,6 +22,8 @@ const mockProject: Project = {
   tags: ['React', 'TypeScript'],
   date: '2024-01-01',
   visible: true,
+  importance: 3,
+  relatedReferences: [],
 };
 
 describe('ProjectCard', () => {

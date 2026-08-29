@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { useTranslations } from 'next-intl';
+import { KnowledgeSidebarDrawer } from '@/components/features/knowledge/navigation/KnowledgeSidebarDrawer';
 import { KnowledgeSidebar } from '@/components/features/knowledge/navigation/KnowledgeSidebar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { TableOfContents } from '@/components/features/knowledge/navigation/TableOfContents';
@@ -38,6 +39,10 @@ export function KnowledgeHome({ navItems }: KnowledgeHomeProps): React.JSX.Eleme
       </aside>
 
       <main className="min-w-0 flex-1 overflow-y-auto">
+        <div className="flex items-center border-b px-4 py-2 lg:hidden">
+          <KnowledgeSidebarDrawer items={navItems} />
+        </div>
+
         <div className="mx-4 my-6 sm:mx-8">
           <section id="knowledge__presentation" className="space-y-6">
             <h1 id="knowledge-title" className="text-3xl font-bold tracking-tight sm:text-4xl">

@@ -11,6 +11,7 @@
     "technologies": "Technologies",
     "allTechnologies": "Toutes les technologies",
     "sortBy": "Trier par",
+    "sortImportance": "Importance",
     "sortDate": "Date",
     "sortTitle": "Titre"
   },
@@ -33,6 +34,10 @@
   "detail": {
     "backToList": "Retour aux projets",
     "allProjects": "Tous les projets"
+  },
+  "references": {
+    "title": "Références liées",
+    "openLink": "Ouvrir"
   },
   "notFound": {
     "title": "Projet non trouvé",

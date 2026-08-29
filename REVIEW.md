@@ -66,9 +66,12 @@ Le dossier **`/showcase`** était un lab local temporaire — **hors site**, ign
 ### Projets
 
 - **14 MDX/locale** : OC1–OC13 + `website-creation` ; **OC13** `visible: false`.
-- Contenu OC : résumés OpenClassrooms, disclaimer pas de livrables publics ; images **placeholder** (`placehold.co`).
-- TODO ouvert : étoiles importance, images thématiques, rework `TechnologiesSection`, composant références projets.
-- `data/projectsList.ts` : **absent** du repo (mention TODO obsolète).
+- Contenu OC : résumés OpenClassrooms, disclaimer pas de livrables publics ; images **placeholder** (`placehold.co`) — contenu auteur.
+- **Ranking** : frontmatter `importance` (0–5), tri par défaut, badge étoiles sur cartes + hero.
+- **Références liées** : frontmatter `relatedReferences: ['id', …]` → section auto en bas de page détail.
+- ~~TODO étoiles, composant références~~ — **Fait**.
+- ~~`TechnologiesSection`~~ — retiré ; stack CV dans `website-creation.mdx`.
+- ~~`data/projectsList.ts`~~ — absent, mention obsolète retirée.
 
 ### MDX / MathInline
 
@@ -103,8 +106,8 @@ Le dossier **`/showcase`** était un lab local temporaire — **hors site**, ign
 
 - Passer ESLint au build après passe Prettier/LF. ~~**Fait** — voir `LINT-BUILD.md`.~~
 - Migrations majeures séparées : ESLint 9, React 19, Next 16.
-- Playwright multi-viewport (home, knowledge, projects).
-- Drawer sidebar Knowledge mobile (`lg` breakpoint).
+- ~~Playwright multi-viewport (home, knowledge, projects).~~ **Fait** — `e2e/responsive-smoke.spec.ts`.
+- ~~Drawer sidebar Knowledge mobile (`lg` breakpoint).~~ **Fait** — `KnowledgeSidebarDrawer`.
 
 ---
 
@@ -145,8 +148,8 @@ Knowledge touché : `normal/index.mdx`, `statistical-tests/index.mdx` (FR+EN). I
 | Zone       | Maturité                                                                           |
 | ---------- | ---------------------------------------------------------------------------------- |
 | Knowledge  | ~50 % MDX avec contenu ; ~32 % hubs rédigés ; piliers finance/ML/engineering vides |
-| Blog       | **Production-ready** — tests parité FR/EN, protocoles, figures |
-| Projets    | Contenu OC présent ; polish visuel / ranking manquant                              |
-| References | **OK** — 34 liens, JSON + i18n ; curaté par l'auteur                             |
+| Blog       | **Production-ready** — tests parité FR/EN, protocoles, figures                     |
+| Projets    | Contenu OC présent ; ranking + refs dev OK ; images placeholder (contenu auteur) |
+| References | **OK** — 34 liens, JSON + i18n ; curaté par l'auteur                               |
 | Contact    | **OK** — mailto + liens sociaux                                                    |
 | Tooling    | TS strict ; ESLint 0 warning ; build ~78 s / 174 pages                             |

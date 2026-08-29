@@ -84,6 +84,7 @@ export function ProjectsPageClient({ projects }: ProjectsPageClientProps): React
               labels={{
                 placeholder: t('filters.sortBy'),
                 group: t('filters.sortBy'),
+                importance: t('filters.sortImportance'),
                 date: t('filters.sortDate'),
                 title: t('filters.sortTitle'),
               }}

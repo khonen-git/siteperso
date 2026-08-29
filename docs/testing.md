@@ -47,6 +47,7 @@ src/lib/knowledge/content.test.ts
 src/**/__tests__/*.test.tsx   # co-localisés quand pertinent
 e2e/
   smoke-console.spec.ts
+  responsive-smoke.spec.ts
   helpers/console-guard.ts
 playwright.config.ts
 ```
@@ -59,30 +60,31 @@ playwright.config.ts
   - `BREAKPOINT_EDGE_WIDTHS` — juste avant / sur chaque breakpoint (639, 640, 767, 768…)
   - `setViewportSize` — `defineProperty` + event `resize`
   - `mockMatchMedia` — évalue `min-width` / `max-width` vs `innerWidth` ; fallback pour les autres queries
-- **Limite jsdom** : les classes Tailwind (`hidden md:flex`) ne basculent pas le layout CSS. Les tests unitaires vérifient surtout la logique / la présence de classes. La validation visuelle multi-viewport est **Playwright** (reporté).
+- **Limite jsdom** : les classes Tailwind (`hidden md:flex`) ne basculent pas le layout CSS. La validation multi-viewport est **Playwright** — [`e2e/responsive-smoke.spec.ts`](../e2e/responsive-smoke.spec.ts).
 
 Config : [`jest.config.js`](../jest.config.js)
 
 - `testMatch` : uniquement `*.test.*` / `*.spec.*`
-- `testPathIgnorePatterns` : `node_modules`, `.next`
+- `testPathIgnorePatterns` : `node_modules`, `.next`, `e2e`
 - setup : `test/setup.ts`
 
 ## Ce qui est couvert
 
-| Zone                   | Fichiers                                         |
-| ---------------------- | ------------------------------------------------ |
-| Loaders Projects       | `src/lib/projects/content.test.ts`               |
-| Loaders Knowledge      | `src/lib/knowledge/content.test.ts`              |
-| Validation frontmatter | inclus dans content.test projects                |
-| Finance                | `src/lib/finance/__tests__/blackScholes.test.ts` |
-| Loaders Blog           | `src/lib/blog/content.test.ts` (série recherche, protocoles, figures) |
-| Layout UI              | Header, Footer, ThemeProvider                    |
-| MDX visualiseur        | `src/__tests__/components/mdx/MdxDistributionVisualizer.test.tsx` |
-| Breakpoints            | `src/config/breakpoints.test.ts`                 |
-| Knowledge UI           | TreeView, TableOfContents, CodeBlock             |
-| Projects UI            | ProjectCard, useProjectAnimation                 |
-| Visualisation        | hooks cache/calculator, distributionStore, MdxDistributionVisualizer |
-| **E2E smoke**        | [`e2e/smoke-console.spec.ts`](../e2e/smoke-console.spec.ts) — 12 routes, zéro `console.error` |
+| Zone                   | Fichiers                                                                                      |
+| ---------------------- | --------------------------------------------------------------------------------------------- |
+| Loaders Projects       | `src/lib/projects/content.test.ts`                                                            |
+| Loaders Knowledge      | `src/lib/knowledge/content.test.ts`                                                           |
+| Validation frontmatter | inclus dans content.test projects                                                             |
+| Finance                | `src/lib/finance/__tests__/blackScholes.test.ts`                                              |
+| Loaders Blog           | `src/lib/blog/content.test.ts` (série recherche, protocoles, figures)                         |
+| Layout UI              | Header, Footer, ThemeProvider                                                                 |
+| MDX visualiseur        | `src/__tests__/components/mdx/MdxDistributionVisualizer.test.tsx`                             |
+| Breakpoints            | `src/config/breakpoints.test.ts`                                                              |
+| Knowledge UI           | TreeView, TableOfContents, CodeBlock                                                          |
+| Projects UI            | ProjectCard, useProjectAnimation                                                              |
+| Visualisation          | hooks cache/calculator, distributionStore, MdxDistributionVisualizer                          |
+| **E2E smoke**          | [`e2e/smoke-console.spec.ts`](../e2e/smoke-console.spec.ts) — 12 routes, zéro `console.error` |
+| **E2E responsive**     | [`e2e/responsive-smoke.spec.ts`](../e2e/responsive-smoke.spec.ts) — 5 routes × 3 viewports + drawer Knowledge |
 
 ## Playwright (smoke console)
 
@@ -97,6 +99,8 @@ npx playwright test --ui  # mode interactif
 
 Routes couvertes : accueil FR/EN, about, projects (+ website-creation), blog (+ article recherche), knowledge (+ normal + statistical-tests), references, contact.
 
+**Responsive** (`responsive-smoke.spec.ts`) : mobile (375px), tablette sous `lg` (1023px), desktop (1280px) sur home, knowledge, article, projects liste + détail ; test d’ouverture/fermeture du drawer Knowledge.
+
 Scan MDX statique (sans navigateur) :
 
 ```bash
@@ -105,12 +109,9 @@ node scripts/scan-mdx-hazards.mjs
 
 ## Reporté
 
-- Campagne multi-viewport élargie (bords de breakpoints) — voir [todo-later.md](./todo-later.md) §4
 - Rewrite `integration/layout`
 - Co-localisation complète de tous les tests hors `src/__tests__`
-- Menu mobile Header + drawer sidebar Knowledge (navigation sous `md` / `lg`)
-  - Header : `MobileNav` (sheet) — fait
-  - Knowledge sidebar drawer sous `lg` — reste à faire
+- Campagne Playwright aux bords de breakpoints (639/640, 767/768…) — helpers prêts dans `test/utils/responsive.ts`
 
 ## Rules
 

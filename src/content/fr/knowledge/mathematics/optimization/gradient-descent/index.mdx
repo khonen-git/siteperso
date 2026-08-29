@@ -30,7 +30,14 @@ L'idée : le gradient pointe vers la plus forte montée ; en soustrayant <MathIn
 ## Intuition
 
 <MdxCard>
-On imagine une bille roulant le long d'une surface : à chaque pas, on regarde la pente locale (<MathInline>{"\\nabla f"}</MathInline>) et on avance dans la direction la plus descendante. Pas **trop grand** : on peut overshoot et diverger. Pas **trop petit** : convergence très lente. Sur une fonction **convexe** lisse, un bon choix de <MathInline>{"\\eta"}</MathInline> garantit la convergence vers le minimum global (voir [Optimisation convexe](/knowledge/mathematics/optimization/convex-optimization)). Sur une fonction **non convexe** (réseaux de neurones), on converge souvent vers un minimum local ou un point selle — d'où l'importance de l'initialisation et des variantes (momentum, Adam).
+  On imagine une bille roulant le long d'une surface : à chaque pas, on regarde la pente locale (
+  <MathInline>{'\\nabla f'}</MathInline>) et on avance dans la direction la plus descendante. Pas
+  **trop grand** : on peut overshoot et diverger. Pas **trop petit** : convergence très lente. Sur
+  une fonction **convexe** lisse, un bon choix de <MathInline>{'\\eta'}</MathInline> garantit la
+  convergence vers le minimum global (voir [Optimisation
+  convexe](/knowledge/mathematics/optimization/convex-optimization)). Sur une fonction **non
+  convexe** (réseaux de neurones), on converge souvent vers un minimum local ou un point selle —
+  d'où l'importance de l'initialisation et des variantes (momentum, Adam).
 </MdxCard>
 
 ## Pas d'apprentissage

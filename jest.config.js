@@ -8,7 +8,7 @@ const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/test/setup.ts'],
   testEnvironment: 'jest-environment-jsdom',
   testMatch: ['**/?(*.)+(test|spec).[jt]s?(x)'],
-  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/', '<rootDir>/e2e/'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^lucide-react$': '<rootDir>/test/mocks/lucide-react.ts',

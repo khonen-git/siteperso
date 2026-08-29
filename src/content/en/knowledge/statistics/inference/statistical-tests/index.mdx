@@ -39,6 +39,7 @@ export const metadata = {
 **4. Calcul de la statistique de test** — transformation des données en une valeur unique, comparée à la distribution théorique.
 
 **5. Prise de décision** — basée sur la p-valeur ou la valeur critique, avec interprétation dans le contexte.
+
 </MdxCard>
 
 ## Types d'Erreurs
@@ -80,6 +81,7 @@ export const metadata = {
 **Taille de l'échantillon** : petits échantillons (n &lt; 30) vs grands (n ≥ 30).
 
 **Objectif de l'analyse** : comparaison de moyennes, analyse de relations, test d'adéquation.
+
 </MdxCard>
 
 ## Classification des Tests
@@ -129,6 +131,7 @@ export const metadata = {
 La puissance d'un test statistique est sa capacité à détecter un effet lorsqu'il existe réellement. Elle est influencée par la **taille de l'échantillon (n)** (plus n est grand, plus la puissance augmente), la **taille d'effet** (plus l'effet est important, plus il est facile à détecter), le **niveau de signification (α)** (un α plus élevé augmente la puissance mais aussi le risque d'erreur), et la **variabilité des données** (une plus grande variabilité réduit la puissance).
 
 La puissance est calculée comme : <MathInline>{"1 - \\beta"}</MathInline>
+
 </MdxCard>
 
 ## Exemple Pratique avec Python
@@ -188,6 +191,7 @@ plt.show()
 **Pour l'interprétation** : ne pas confondre significativité statistique et importance pratique ; considérer la taille d'effet et le contexte.
 
 **Pour la communication** : rapporter les statistiques descriptives, inclure les intervalles de confiance, présenter les visualisations appropriées.
+
 </MdxCard>
 
 ## Limites et Considérations
@@ -200,10 +204,16 @@ plt.show()
 **Taille d'échantillon** — un grand n peut rendre tout significatif ; un petit n peut masquer des effets importants.
 
 **Hypothèses sous-jacentes** — les violations peuvent invalider les résultats ; vérifier les conditions reste essentiel.
+
 </MdxCard>
 
 ## Références
 
 <MdxCard>
-Wikipedia : *Statistical hypothesis test* (https://en.wikipedia.org/wiki/Statistical_hypothesis_test). XLSTAT : guide de choix de test statistique (https://help.xlstat.com/fr/6443-which-statistical-test-should-you-use). Wikistat (https://www.math.univ-toulouse.fr/~besse/Wikistat/pdf/st-l-inf-tests.pdf). Introduction aux statistiques — Ramousse, Le Berre &amp; Le Guelte (https://www.cons-dev.org/elearning/stat/). Arbre de décision — Guillemot, 2023 (https://shs.hal.science/hal-04292194v1).
+  Wikipedia : *Statistical hypothesis test*
+  (https://en.wikipedia.org/wiki/Statistical_hypothesis_test). XLSTAT : guide de choix de test
+  statistique (https://help.xlstat.com/fr/6443-which-statistical-test-should-you-use). Wikistat
+  (https://www.math.univ-toulouse.fr/~besse/Wikistat/pdf/st-l-inf-tests.pdf). Introduction aux
+  statistiques — Ramousse, Le Berre &amp; Le Guelte (https://www.cons-dev.org/elearning/stat/).
+  Arbre de décision — Guillemot, 2023 (https://shs.hal.science/hal-04292194v1).
 </MdxCard>

@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { TableOfContents } from '@/components/features/knowledge/navigation/TableOfContents';
 import { ProgressBar } from '../ui/ProgressBar';
+import { KnowledgeSidebarDrawer } from '@/components/features/knowledge/navigation/KnowledgeSidebarDrawer';
 import { KnowledgeSidebar } from '@/components/features/knowledge/navigation/KnowledgeSidebar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import type { TreeItem } from '@/config/knowledge/types';
@@ -45,6 +46,10 @@ export function KnowledgeLayout({
       </aside>
 
       <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+        <div className="flex shrink-0 items-center border-b px-4 py-2 lg:hidden">
+          <KnowledgeSidebarDrawer items={navItems} />
+        </div>
+
         <ProgressBar progress={scrollProgress} />
 
         <div className="flex min-h-0 flex-1 flex-col xl:flex-row">

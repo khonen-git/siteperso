@@ -36,7 +36,8 @@ const RESEARCH_FIGURES: Record<(typeof RESEARCH_SLUGS)[number], string[]> = {
 
 function visibleResearchPosts(locale: string) {
   return getBlogPosts(locale).filter(
-    (post) => post.kind === 'research' && post.visible !== false && !post.slug.startsWith('template-')
+    (post) =>
+      post.kind === 'research' && post.visible !== false && !post.slug.startsWith('template-')
   );
 }
 
@@ -96,15 +97,12 @@ describe('blog research series (eurusd-lab)', () => {
     expect(slugs).toEqual([...RESEARCH_SLUGS].sort());
   });
 
-  it.each(['fr', 'en'] as const)(
-    'tags research posts with eurusd-lab for %s',
-    (locale) => {
-      for (const slug of RESEARCH_SLUGS) {
-        const post = getBlogPost(locale, slug);
-        expect(post?.post.tags).toContain('eurusd-lab');
-      }
+  it.each(['fr', 'en'] as const)('tags research posts with eurusd-lab for %s', (locale) => {
+    for (const slug of RESEARCH_SLUGS) {
+      const post = getBlogPost(locale, slug);
+      expect(post?.post.tags).toContain('eurusd-lab');
     }
-  );
+  });
 
   it.each(['fr', 'en'] as const)(
     'links each research article to an existing protocol file for %s',

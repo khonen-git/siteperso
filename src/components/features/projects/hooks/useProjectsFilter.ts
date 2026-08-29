@@ -4,14 +4,14 @@ import type { Project } from '@/types/project';
 interface ProjectFilters {
   category: string;
   tags: string[];
-  sortBy: 'date' | 'title';
+  sortBy: 'importance' | 'date' | 'title';
 }
 
 interface UseProjectsFilterReturn {
   filters: ProjectFilters;
   setCategory: (category: string) => void;
   setTags: (tags: string[]) => void;
-  setSortBy: (sortBy: 'date' | 'title') => void;
+  setSortBy: (sortBy: 'importance' | 'date' | 'title') => void;
   filteredProjects: Project[];
   allTags: string[];
 }
@@ -20,7 +20,7 @@ export function useProjectsFilter(projects: Project[]): UseProjectsFilterReturn 
   const [filters, setFilters] = useState<ProjectFilters>({
     category: 'all',
     tags: [],
-    sortBy: 'date',
+    sortBy: 'importance',
   });
 
   // Récupérer tous les tags uniques
@@ -44,6 +44,12 @@ export function useProjectsFilter(projects: Project[]): UseProjectsFilterReturn 
         return matchesCategory && matchesTags;
       })
       .sort((a, b) => {
+        if (filters.sortBy === 'importance') {
+          if (b.importance !== a.importance) {
+            return b.importance - a.importance;
+          }
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        }
         if (filters.sortBy === 'date') {
           return new Date(b.date).getTime() - new Date(a.date).getTime();
         }
@@ -55,7 +61,8 @@ export function useProjectsFilter(projects: Project[]): UseProjectsFilterReturn 
 
   const setTags = (tags: string[]) => setFilters((prev) => ({ ...prev, tags }));
 
-  const setSortBy = (sortBy: 'date' | 'title') => setFilters((prev) => ({ ...prev, sortBy }));
+  const setSortBy = (sortBy: 'importance' | 'date' | 'title') =>
+    setFilters((prev) => ({ ...prev, sortBy }));
 
   return {
     filters,

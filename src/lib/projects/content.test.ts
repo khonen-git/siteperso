@@ -47,9 +47,13 @@ describe('getProjects', () => {
     );
 
     for (let i = 1; i < projects.length; i += 1) {
-      expect(new Date(projects[i - 1].date).getTime()).toBeGreaterThanOrEqual(
-        new Date(projects[i].date).getTime()
-      );
+      const prev = projects[i - 1];
+      const curr = projects[i];
+      if (prev.importance !== curr.importance) {
+        expect(prev.importance).toBeGreaterThanOrEqual(curr.importance);
+      } else {
+        expect(new Date(prev.date).getTime()).toBeGreaterThanOrEqual(new Date(curr.date).getTime());
+      }
     }
   });
 });
@@ -66,6 +70,14 @@ describe('getProject', () => {
 
   it('returns null for a missing slug', () => {
     expect(getProject('fr', 'does-not-exist-project')).toBeNull();
+  });
+
+  it('loads website-creation with importance and references', () => {
+    const project = getProject('fr', 'website-creation');
+    expect(project?.project.importance).toBe(5);
+    expect(project?.project.relatedReferences).toEqual(
+      expect.arrayContaining(['nextjs', 'react', 'typescript'])
+    );
   });
 
   it('parses oc4-project after YAML fix', () => {

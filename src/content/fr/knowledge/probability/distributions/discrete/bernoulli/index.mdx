@@ -77,7 +77,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'F(x) = 1'}</MathInline> si <MathInline>{'x \\geq 1'}</MathInline>
         </TableCell>
         <TableCell>
-          Saut de hauteur <MathInline>{"p"}</MathInline> en <MathInline>{'x = 1'}</MathInline>
+          Saut de hauteur <MathInline>{'p'}</MathInline> en <MathInline>{'x = 1'}</MathInline>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -97,7 +97,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
       <TableRow>
         <TableCell className="font-medium">Espérance</TableCell>
         <TableCell>
-          <MathInline>{"p"}</MathInline>
+          <MathInline>{'p'}</MathInline>
         </TableCell>
         <TableCell>Probabilité moyenne de succès sur un essai</TableCell>
       </TableRow>
@@ -165,7 +165,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'\\mathcal{I}(p) = \\frac{1}{p(1-p)}'}</MathInline>
         </TableCell>
         <TableCell>
-          Pour une observation ; croît lorsque <MathInline>{"p"}</MathInline> s'éloigne de{' '}
+          Pour une observation ; croît lorsque <MathInline>{'p'}</MathInline> s'éloigne de{' '}
           <MathInline>{'1/2'}</MathInline>
         </TableCell>
       </TableRow>
@@ -177,8 +177,8 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           </MathInline>
         </TableCell>
         <TableCell>
-          Entre deux lois de Bernoulli de paramètres <MathInline>{"p"}</MathInline> et{' '}
-          <MathInline>{"q"}</MathInline>
+          Entre deux lois de Bernoulli de paramètres <MathInline>{'p'}</MathInline> et{' '}
+          <MathInline>{'q'}</MathInline>
         </TableCell>
       </TableRow>
     </TableBody>
@@ -203,8 +203,8 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'X = \\mathbf{1}_A'}</MathInline>
         </TableCell>
         <TableCell>
-          Toute Bernoulli est l'indicatrice d'un événement <MathInline>{"A"}</MathInline> de probabilité{' '}
-          <MathInline>{"p"}</MathInline>
+          Toute Bernoulli est l'indicatrice d'un événement <MathInline>{'A'}</MathInline> de
+          probabilité <MathInline>{'p'}</MathInline>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -220,7 +220,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'\\sum_{i=1}^n X_i \\sim \\mathrm{Bin}(n, p)'}</MathInline>
         </TableCell>
         <TableCell>
-          <MathInline>{"n"}</MathInline> essais indépendants → [loi
+          <MathInline>{'n'}</MathInline> essais indépendants → [loi
           binomiale](/knowledge/probability/distributions/discrete/binomial)
         </TableCell>
       </TableRow>
@@ -260,7 +260,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'M_{\\sum X_i}(t) = (q + p e^t)^n'}</MathInline>
         </TableCell>
         <TableCell>
-          Pour <MathInline>{"n"}</MathInline> variables i.i.d. ; identifie la binomiale
+          Pour <MathInline>{'n'}</MathInline> variables i.i.d. ; identifie la binomiale
         </TableCell>
       </TableRow>
       <TableRow>
@@ -342,8 +342,8 @@ La somme de Bernoulli i.i.d. produit la binomiale ; en régime rare (<MathInline
           </MathInline>
         </TableCell>
         <TableCell>
-          <MathInline>{"n"}</MathInline> essais observés ; l'inférence porte sur la proportion{' '}
-          <MathInline>{"p"}</MathInline>
+          <MathInline>{'n'}</MathInline> essais observés ; l'inférence porte sur la proportion{' '}
+          <MathInline>{'p'}</MathInline>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -396,7 +396,7 @@ La somme de Bernoulli i.i.d. produit la binomiale ; en régime rare (<MathInline
           </MathInline>
         </TableCell>
         <TableCell>
-          Sous <MathInline>{'H_0 : p = p_0'}</MathInline> et <MathInline>{"n"}</MathInline> grand
+          Sous <MathInline>{'H_0 : p = p_0'}</MathInline> et <MathInline>{'n'}</MathInline> grand
         </TableCell>
       </TableRow>
       <TableRow>
@@ -420,12 +420,13 @@ La somme de Bernoulli i.i.d. produit la binomiale ; en régime rare (<MathInline
     <ul className="list-disc pl-6 space-y-2">
       <li>
         Un seul essai (<MathInline>{'n = 1'}</MathInline>) ne permet pas d'estimer{' '}
-        <MathInline>{"p"}</MathInline> avec une marge d'erreur : l'inférence concerne en pratique un
+        <MathInline>{'p'}</MathInline> avec une marge d'erreur : l'inférence concerne en pratique un
         échantillon de Bernoulli i.i.d.
       </li>
       <li>
         L'intervalle de Wald peut produire des bornes hors de <MathInline>{'[0,1]'}</MathInline>{' '}
-        pour <MathInline>{"p"}</MathInline> proche de 0 ou 1 et <MathInline>{"n"}</MathInline> modéré.
+        pour <MathInline>{'p'}</MathInline> proche de 0 ou 1 et <MathInline>{'n'}</MathInline>{' '}
+        modéré.
       </li>
       <li>Pour de petits échantillons, préférer Clopper-Pearson ou l'intervalle de Wilson.</li>
       <li>

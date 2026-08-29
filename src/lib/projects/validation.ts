@@ -1,3 +1,21 @@
+import type { ProjectImportance } from '@/types/project';
+
+const VALID_IMPORTANCE = new Set<ProjectImportance>([0, 1, 2, 3, 4, 5]);
+
+function parseImportance(value: unknown): ProjectImportance {
+  if (typeof value === 'number' && VALID_IMPORTANCE.has(value as ProjectImportance)) {
+    return value as ProjectImportance;
+  }
+  return 0;
+}
+
+function parseRelatedReferences(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+  return value.filter((item): item is string => typeof item === 'string');
+}
+
 export function isValidProjectFrontmatter(data: unknown): data is {
   id: number;
   title: string;
@@ -7,6 +25,8 @@ export function isValidProjectFrontmatter(data: unknown): data is {
   category: string;
   tags: string[];
   visible?: boolean;
+  importance?: ProjectImportance;
+  relatedReferences?: string[];
 } {
   if (!data || typeof data !== 'object') {
     return false;
@@ -23,4 +43,14 @@ export function isValidProjectFrontmatter(data: unknown): data is {
     typeof project.category === 'string' &&
     Array.isArray(project.tags)
   );
+}
+
+export function parseProjectFrontmatter(data: Record<string, unknown>): {
+  importance: ProjectImportance;
+  relatedReferences: string[];
+} {
+  return {
+    importance: parseImportance(data.importance),
+    relatedReferences: parseRelatedReferences(data.relatedReferences),
+  };
 }

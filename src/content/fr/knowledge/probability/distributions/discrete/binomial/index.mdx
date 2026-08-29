@@ -18,10 +18,10 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
 # Loi binomiale
 
 <MdxCard title="Définition">
-  La **loi binomiale** compte le **nombre de succès** obtenus en répétant <MathInline>{"n"}</MathInline>{' '}
-  fois un essai de [Bernoulli](/knowledge/probability/distributions/discrete/bernoulli) de
-  probabilité <MathInline>{"p"}</MathInline>, les essais étant **indépendants** et identiquement
-  distribués.
+  La **loi binomiale** compte le **nombre de succès** obtenus en répétant{' '}
+  <MathInline>{'n'}</MathInline> fois un essai de
+  [Bernoulli](/knowledge/probability/distributions/discrete/bernoulli) de probabilité{' '}
+  <MathInline>{'p'}</MathInline>, les essais étant **indépendants** et identiquement distribués.
 </MdxCard>
 
 ## Caractéristiques
@@ -52,8 +52,8 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'n \\in \\mathbb{N}^*,\\; p \\in [0,1]'}</MathInline>
         </TableCell>
         <TableCell>
-          <MathInline>{"n"}</MathInline> essais ; <MathInline>{"p"}</MathInline> probabilité de succès ;{' '}
-          <MathInline>{'q = 1-p'}</MathInline>
+          <MathInline>{'n'}</MathInline> essais ; <MathInline>{'p'}</MathInline> probabilité de
+          succès ; <MathInline>{'q = 1-p'}</MathInline>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -62,7 +62,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'\\{0, 1, \\ldots, n\\}'}</MathInline>
         </TableCell>
         <TableCell>
-          Tous les entiers entre 0 et <MathInline>{"n"}</MathInline>
+          Tous les entiers entre 0 et <MathInline>{'n'}</MathInline>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -92,7 +92,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'M_X(t) = (q + p e^t)^n'}</MathInline>
         </TableCell>
         <TableCell>
-          Produit des FGM de <MathInline>{"n"}</MathInline> Bernoulli i.i.d.
+          Produit des FGM de <MathInline>{'n'}</MathInline> Bernoulli i.i.d.
         </TableCell>
       </TableRow>
       <TableRow>
@@ -108,7 +108,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'\\mathbb{E}[X] = np'}</MathInline>
         </TableCell>
         <TableCell>
-          Nombre moyen de succès sur <MathInline>{"n"}</MathInline> essais
+          Nombre moyen de succès sur <MathInline>{'n'}</MathInline> essais
         </TableCell>
       </TableRow>
       <TableRow>
@@ -117,8 +117,8 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'\\mathrm{Var}(X) = np(1-p) = npq'}</MathInline>
         </TableCell>
         <TableCell>
-          Croît avec <MathInline>{"n"}</MathInline> ; maximale en <MathInline>{'p = 1/2'}</MathInline>{' '}
-          pour <MathInline>{"n"}</MathInline> fixé
+          Croît avec <MathInline>{'n'}</MathInline> ; maximale en{' '}
+          <MathInline>{'p = 1/2'}</MathInline> pour <MathInline>{'n'}</MathInline> fixé
         </TableCell>
       </TableRow>
       <TableRow>
@@ -176,7 +176,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           <MathInline>{'\\mathcal{I}(p) = \\frac{n}{p(1-p)}'}</MathInline>
         </TableCell>
         <TableCell>
-          Pour le paramètre <MathInline>{"p"}</MathInline> à partir d'une observation{' '}
+          Pour le paramètre <MathInline>{'p'}</MathInline> à partir d'une observation{' '}
           <MathInline>{'X \\sim \\mathrm{Bin}(n,p)'}</MathInline>
         </TableCell>
       </TableRow>
@@ -190,7 +190,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           </MathInline>
         </TableCell>
         <TableCell>
-          Même nombre d'essais <MathInline>{"n"}</MathInline> ; se réduit à la divergence Bernoulli
+          Même nombre d'essais <MathInline>{'n'}</MathInline> ; se réduit à la divergence Bernoulli
         </TableCell>
       </TableRow>
     </TableBody>
@@ -234,7 +234,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
       </TableRow>
       <TableRow>
         <TableCell>
-          Additivité (même <MathInline>{"p"}</MathInline>)
+          Additivité (même <MathInline>{'p'}</MathInline>)
         </TableCell>
         <TableCell>
           <MathInline>{'X \\sim \\mathrm{Bin}(n,p),\\; Y \\sim \\mathrm{Bin}(m,p)'}</MathInline>{' '}
@@ -280,7 +280,7 @@ import { MathBlock, MathInline } from '@/components/features/knowledge/math/Math
           </MathInline>
         </TableCell>
         <TableCell>
-          Améliore l'approximation gaussienne pour <MathInline>{"n"}</MathInline> modéré
+          Améliore l'approximation gaussienne pour <MathInline>{'n'}</MathInline> modéré
         </TableCell>
       </TableRow>
       <TableRow>
@@ -371,8 +371,8 @@ Modélisation multi-périodes de l'évolution d'un sous-jacent (Cox-Ross-Rubinst
           <MathInline>{'k'}</MathInline> succès
         </TableCell>
         <TableCell>
-          Équivalent à <MathInline>{"n"}</MathInline> essais Bernoulli avec <MathInline>{"k"}</MathInline>{' '}
-          succès
+          Équivalent à <MathInline>{'n'}</MathInline> essais Bernoulli avec{' '}
+          <MathInline>{'k'}</MathInline> succès
         </TableCell>
       </TableRow>
       <TableRow>
@@ -381,7 +381,7 @@ Modélisation multi-périodes de l'évolution d'un sous-jacent (Cox-Ross-Rubinst
           <MathInline>{'\\hat{p} = \\frac{k}{n}'}</MathInline>
         </TableCell>
         <TableCell>
-          Proportion empirique ; sans biais pour <MathInline>{"p"}</MathInline>, estimateur naturel
+          Proportion empirique ; sans biais pour <MathInline>{'p'}</MathInline>, estimateur naturel
         </TableCell>
       </TableRow>
       <TableRow>
@@ -390,7 +390,7 @@ Modélisation multi-périodes de l'évolution d'un sous-jacent (Cox-Ross-Rubinst
           <MathInline>{'\\mathrm{Var}(\\hat{p}) = \\frac{p(1-p)}{n}'}</MathInline>
         </TableCell>
         <TableCell>
-          Même formule que pour <MathInline>{"n"}</MathInline> Bernoulli observées
+          Même formule que pour <MathInline>{'n'}</MathInline> Bernoulli observées
         </TableCell>
       </TableRow>
       <TableRow>
@@ -425,7 +425,8 @@ Modélisation multi-périodes de l'évolution d'un sous-jacent (Cox-Ross-Rubinst
           </MathInline>
         </TableCell>
         <TableCell>
-          IC exact au niveau <MathInline>{'1-\\alpha'}</MathInline> pour <MathInline>{"p"}</MathInline>
+          IC exact au niveau <MathInline>{'1-\\alpha'}</MathInline> pour{' '}
+          <MathInline>{'p'}</MathInline>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -438,7 +439,7 @@ Modélisation multi-périodes de l'évolution d'un sous-jacent (Cox-Ross-Rubinst
           </MathInline>
         </TableCell>
         <TableCell>
-          Meilleur comportement que Wald pour <MathInline>{"p"}</MathInline> proche de 0 ou 1
+          Meilleur comportement que Wald pour <MathInline>{'p'}</MathInline> proche de 0 ou 1
         </TableCell>
       </TableRow>
       <TableRow>
@@ -451,8 +452,8 @@ Modélisation multi-périodes de l'évolution d'un sous-jacent (Cox-Ross-Rubinst
           </MathInline>
         </TableCell>
         <TableCell>
-          Loi a posteriori après <MathInline>{"k"}</MathInline> succès sur <MathInline>{"n"}</MathInline>{' '}
-          essais
+          Loi a posteriori après <MathInline>{'k'}</MathInline> succès sur{' '}
+          <MathInline>{'n'}</MathInline> essais
         </TableCell>
       </TableRow>
     </TableBody>
@@ -464,14 +465,14 @@ Modélisation multi-périodes de l'évolution d'un sous-jacent (Cox-Ross-Rubinst
     <h3 className="text-xl font-medium">Remarques importantes</h3>
     <ul className="list-disc pl-6 space-y-2">
       <li>
-        L'inférence sur <MathInline>{"p"}</MathInline> à partir d'une binomiale{' '}
+        L'inférence sur <MathInline>{'p'}</MathInline> à partir d'une binomiale{' '}
         <MathInline>{'\\mathrm{Bin}(n,p)'}</MathInline> observée coïncide avec celle de{' '}
-        <MathInline>{"n"}</MathInline> Bernoulli — voir aussi la page
+        <MathInline>{'n'}</MathInline> Bernoulli — voir aussi la page
         [Bernoulli](/knowledge/probability/distributions/discrete/bernoulli).
       </li>
       <li>
-        Le test exact est préférable pour <MathInline>{"n"}</MathInline> petit ou{' '}
-        <MathInline>{"p"}</MathInline> extrême ; l'approximation normale simplifie les grands
+        Le test exact est préférable pour <MathInline>{'n'}</MathInline> petit ou{' '}
+        <MathInline>{'p'}</MathInline> extrême ; l'approximation normale simplifie les grands
         échantillons.
       </li>
       <li>
@@ -502,7 +503,8 @@ Modélisation multi-périodes de l'évolution d'un sous-jacent (Cox-Ross-Rubinst
       <TableRow>
         <TableCell>Génération pseudo-aléatoire</TableCell>
         <TableCell>
-          Somme de <MathInline>{"n"}</MathInline> Bernoulli ou algorithme équivalent (inversion, BTPE)
+          Somme de <MathInline>{'n'}</MathInline> Bernoulli ou algorithme équivalent (inversion,
+          BTPE)
         </TableCell>
         <TableCell>Simulations de portefeuille, stress tests</TableCell>
       </TableRow>
@@ -512,7 +514,7 @@ Modélisation multi-périodes de l'évolution d'un sous-jacent (Cox-Ross-Rubinst
           <code>np.random.binomial(n, p)</code> ou <code>rng.binomial(n, p, size=m)</code>
         </TableCell>
         <TableCell>
-          <MathInline>{"m"}</MathInline> réalisations indépendantes de{' '}
+          <MathInline>{'m'}</MathInline> réalisations indépendantes de{' '}
           <MathInline>{'\\mathrm{Bin}(n,p)'}</MathInline>
         </TableCell>
       </TableRow>
@@ -538,7 +540,7 @@ Modélisation multi-périodes de l'évolution d'un sous-jacent (Cox-Ross-Rubinst
           <MathInline>{'\\pm 0.5'}</MathInline>
         </TableCell>
         <TableCell>
-          Probabilités cumulées pour <MathInline>{"n"}</MathInline> grand
+          Probabilités cumulées pour <MathInline>{'n'}</MathInline> grand
         </TableCell>
       </TableRow>
       <TableRow>
@@ -547,7 +549,7 @@ Modélisation multi-périodes de l'évolution d'un sous-jacent (Cox-Ross-Rubinst
           <code>proportion_confint</code> (statsmodels) — Wilson, Clopper-Pearson
         </TableCell>
         <TableCell>
-          Estimation robuste de <MathInline>{"p"}</MathInline>
+          Estimation robuste de <MathInline>{'p'}</MathInline>
         </TableCell>
       </TableRow>
     </TableBody>

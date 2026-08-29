@@ -1,9 +1,8 @@
 'use client';
 
 import React from 'react';
-import { useTranslations } from 'next-intl';
 import { ScrollArea } from '@/components/ui/navigation/scroll-area';
-import { TreeView } from '../TreeView';
+import { KnowledgeSidebarNav } from '../KnowledgeSidebarNav';
 import type { TreeItem } from '@/config/knowledge/types';
 import { cn } from '@/lib/utils';
 
@@ -13,22 +12,11 @@ interface KnowledgeSidebarProps {
 }
 
 export function KnowledgeSidebar({ className, items }: KnowledgeSidebarProps) {
-  const t = useTranslations('knowledge.layout');
-
   return (
-    <aside
-      className={cn(
-        'w-64 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60',
-        className
-      )}
-    >
+    <div className={cn('h-full w-full', className)}>
       <ScrollArea className="h-full">
-        <nav className="p-4 space-y-2" aria-label={t('sidebarLabel')}>
-          <div role="tree">
-            <TreeView items={items} />
-          </div>
-        </nav>
+        <KnowledgeSidebarNav items={items} />
       </ScrollArea>
-    </aside>
+    </div>
   );
 }

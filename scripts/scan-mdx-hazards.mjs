@@ -16,7 +16,9 @@ function scanFile(filePath) {
   const rel = path.relative(process.cwd(), filePath).replace(/\\/g, '/');
   const text = fs.readFileSync(filePath, 'utf8');
 
-  for (const match of text.matchAll(/<a\s+href="(https?:[^"]+)"[^>]*>\s*(https?:\/\/[^<\s]+)\s*<\/a>/gi)) {
+  for (const match of text.matchAll(
+    /<a\s+href="(https?:[^"]+)"[^>]*>\s*(https?:\/\/[^<\s]+)\s*<\/a>/gi
+  )) {
     issues.push({
       file: rel,
       type: 'duplicate-url-in-anchor',
@@ -38,7 +40,11 @@ function scanFile(filePath) {
   }
 
   if (/<MdxCard[^>]*>\n- /.test(text)) {
-    issues.push({ file: rel, type: 'mdxcard-immediate-list', detail: 'List directly after <MdxCard> (fragile MDX)' });
+    issues.push({
+      file: rel,
+      type: 'mdxcard-immediate-list',
+      detail: 'List directly after <MdxCard> (fragile MDX)',
+    });
   }
 }
 

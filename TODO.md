@@ -17,8 +17,8 @@
 
 ## Features
 
-- Ajout d'étoiles pour l'inmportance des projet : or, argent, bronze ou nombres d'étoiles (3 à 5 rang + un rang nulle)
-- Ajout d'un composant pour les références
+- ~~Ajout d'étoiles pour l'importance des projets~~ — frontmatter `importance: 0–5`, tri + badge
+- ~~Ajout d'un composant pour les références~~ — `relatedReferences` + `ProjectReferences`
 
 ## Rework
 
@@ -54,8 +54,8 @@ Ne pas hésiter à utiliser l'IA pour faire toutes les vérifications sur utilit
 
 ## Vérification
 
-- utilité de store, distributionStore.ts ?
-- utilité de data/projectsList.ts ?
+- ~~utilité de store, distributionStore.ts ?~~ — actif (visualiseur)
+- ~~utilité de data/projectsList.ts ?~~ — absent, obsolète
 - vérifier les hooks
 - vérifier les types
 - vérifier les composants non utilisés dans components

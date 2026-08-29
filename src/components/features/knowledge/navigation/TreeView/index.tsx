@@ -11,9 +11,10 @@ import type { TreeItem, TreeViewProps } from '../types';
 interface TreeNodeProps {
   item: TreeItem;
   level?: number;
+  onLinkClick?: () => void;
 }
 
-function TreeNode({ item, level = 0 }: TreeNodeProps) {
+function TreeNode({ item, level = 0, onLinkClick }: TreeNodeProps) {
   const pathname = usePathname();
   const t = useTranslations('knowledge.layout');
   const isActive = item.href === pathname;
@@ -38,7 +39,12 @@ function TreeNode({ item, level = 0 }: TreeNodeProps) {
         )}
       >
         {item.href ? (
-          <Link href={item.href} className="flex-1" aria-current={isActive ? 'page' : undefined}>
+          <Link
+            href={item.href}
+            className="flex-1"
+            aria-current={isActive ? 'page' : undefined}
+            onClick={onLinkClick}
+          >
             {item.title}
           </Link>
         ) : (
@@ -62,18 +68,23 @@ function TreeNode({ item, level = 0 }: TreeNodeProps) {
         role="group"
       >
         {item.children?.map((child, index) => (
-          <TreeNode key={`${item.href}-${index}`} item={child} level={level + 1} />
+          <TreeNode
+            key={`${item.href}-${index}`}
+            item={child}
+            level={level + 1}
+            onLinkClick={onLinkClick}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-export function TreeView({ items }: TreeViewProps) {
+export function TreeView({ items, onLinkClick }: TreeViewProps) {
   return (
     <div role="tree" className="space-y-2">
       {items.map((item, index) => (
-        <TreeNode key={index} item={item} />
+        <TreeNode key={index} item={item} onLinkClick={onLinkClick} />
       ))}
     </div>
   );
