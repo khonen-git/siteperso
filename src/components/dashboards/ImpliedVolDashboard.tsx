@@ -134,19 +134,15 @@ export function ImpliedVolDashboard({
     : t('impliedVol.tabs.smile');
 
 
-  const statusBar = (
-    <ImpliedVolStatusBar
-      metadata={snapshot.metadata}
-      onRefresh={handleRefresh}
-      isLoading={loadState === 'loading'}
-    />
-  );
+  const statusBar = <ImpliedVolStatusBar metadata={snapshot.metadata} />;
 
   const toolbar = (
     <ImpliedVolToolbar
       snapshot={snapshot}
       selectedExpiry={selectedExpiry}
       onExpiryChange={setSelectedExpiry}
+      onRefresh={handleRefresh}
+      isLoading={loadState === 'loading'}
     />
   );
 

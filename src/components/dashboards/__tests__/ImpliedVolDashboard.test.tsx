@@ -234,16 +234,9 @@ describe('ImpliedVolDashboard', () => {
 
 describe('ImpliedVolStatusBar', () => {
   it('shows symbol, spot and delayed badge', () => {
-    renderWithProviders(
-      <ImpliedVolStatusBar
-        metadata={mockSnapshot.metadata}
-        onRefresh={jest.fn()}
-        isLoading={false}
-      />
-    );
+    renderWithProviders(<ImpliedVolStatusBar metadata={mockSnapshot.metadata} />);
     expect(screen.getByText('SPY')).toBeInTheDocument();
     expect(screen.getByText('580.00')).toBeInTheDocument();
-    expect(screen.getByText('2026-08-30')).toBeInTheDocument();
     expect(screen.getByText('impliedVol.status.delayed')).toBeInTheDocument();
   });
 });

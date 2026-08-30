@@ -52,10 +52,9 @@ export function ImpliedVolDashboardShell({
             <h1 className="min-w-0 truncate text-sm font-semibold sm:text-base">
               {t('impliedVol.title')}
             </h1>
+            <div className="ml-auto min-w-0">{statusBar}</div>
           </div>
         </header>
-
-        {statusBar}
 
         <Tabs
           value={activeTab}

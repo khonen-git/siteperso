@@ -169,6 +169,10 @@ export function ImpliedVolOverviewPanel({
             value={snapshot.metadata.spot.toFixed(2)}
           />
           <DashboardStat
+            label={t('impliedVol.overview.asOf')}
+            value={snapshot.metadata.asOf}
+          />
+          <DashboardStat
             label={t('impliedVol.overview.expiries')}
             value={String(snapshot.slices.length)}
           />
