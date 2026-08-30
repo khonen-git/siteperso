@@ -1,7 +1,24 @@
 {
   "hero": {
-    "title": "Théo Charron",
-    "subtitle": "Data Analyst",
-    "description": "I analyze data to extract key insights that support decision-making"
+    "eyebrow": "Data & quantitative",
+    "headline": "Data tools and models to make sense of markets.",
+    "subheadline": "Interactive dashboards, ML research pipelines, and documentation — personal projects since 2025.",
+    "ctaDashboard": "IV dashboard (SPY)",
+    "ctaProjects": "Projects",
+    "previewLabel": "Implied volatility · SPY",
+    "previewLive": "Live",
+    "previewHint": "3D surface, smile and options chain — delayed data."
+  },
+  "bento": {
+    "title": "Explore",
+    "lead": "Featured projects, knowledge base, and research notes.",
+    "knowledgeTitle": "Knowledge",
+    "knowledgeDescription": "Personal reference: probability, statistics, ML, quantitative finance, and engineering.",
+    "knowledgeCta": "Browse the hub",
+    "blogLabel": "Latest note",
+    "blogCta": "Read article",
+    "blogFallbackTitle": "Blog & research",
+    "blogFallbackDescription": "Methodology notes and eurusd-lab write-ups.",
+    "projectCta": "View project"
   }
 }

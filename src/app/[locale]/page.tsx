@@ -1,15 +1,25 @@
 import * as React from 'react';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { HeroSection } from '@/components/sections/HeroSection';
-import { RecentProjects } from '@/components/sections/RecentProjects';
+import { setRequestLocale } from 'next-intl/server';
+import { HomeHero } from '@/components/sections/home/HomeHero';
+import { HomeBento } from '@/components/sections/home/HomeBento';
+import { getBlogPosts } from '@/lib/blog/content';
 import { getProjects } from '@/lib/projects/content';
 import { routing } from '@/i18n/routing';
 import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
+import type { Project } from '@/types/project';
+
+const FEATURED_PROJECT_SLUGS = ['financial-ml-lab', 'implied-volatility-surface'] as const;
 
 type HomePageProps = {
   params: Promise<{ locale: string }>;
 };
+
+function pickFeaturedProjects(projects: Project[]): Project[] {
+  return FEATURED_PROJECT_SLUGS.map((slug) => projects.find((p) => p.slug === slug)).filter(
+    (p): p is Project => p != null
+  );
+}
 
 export default async function Home({ params }: HomePageProps): Promise<React.JSX.Element> {
   const { locale } = await params;
@@ -20,17 +30,14 @@ export default async function Home({ params }: HomePageProps): Promise<React.JSX
 
   setRequestLocale(locale);
 
-  const t = await getTranslations('home');
-  const recentProjects = getProjects(locale).slice(0, 3);
+  const projects = getProjects(locale);
+  const featuredProjects = pickFeaturedProjects(projects);
+  const latestBlog = getBlogPosts(locale)[0] ?? null;
 
   return (
     <>
-      <HeroSection
-        title={t('hero.title')}
-        subtitle={t('hero.subtitle')}
-        description={t('hero.description')}
-      />
-      <RecentProjects projects={recentProjects} />
+      <HomeHero />
+      <HomeBento featuredProjects={featuredProjects} latestBlog={latestBlog} />
     </>
   );
 }

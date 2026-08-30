@@ -42,8 +42,18 @@ export function InteractiveCV(): React.JSX.Element {
               <CardContent className="text-left">
                 <div className="space-y-4">
                   <div>
+                    <h4 className="font-semibold">Projets personnels</h4>
+                    <p className="text-sm text-muted-foreground">2025 – Présent • Indépendant</p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Dashboards, pipelines data et site portfolio (data & finance quantitative).
+                    </p>
+                  </div>
+                  <div>
                     <h4 className="font-semibold">Formation Data Analyst</h4>
-                    <p className="text-sm text-muted-foreground">2023 - 2024 • OpenClassrooms</p>
+                    <p className="text-sm text-muted-foreground">2024 – 2025 • OpenClassrooms</p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Formation terminée en 2025.
+                    </p>
                   </div>
                 </div>
               </CardContent>

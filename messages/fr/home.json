@@ -1,7 +1,24 @@
 {
   "hero": {
-    "title": "Théo Charron",
-    "subtitle": "Data Analyst",
-    "description": "J'analyse des données pour en tirer des informations clés qui aident à la prise de décision"
+    "eyebrow": "Data & quantitatif",
+    "headline": "Des outils data et des modèles pour comprendre les marchés.",
+    "subheadline": "Dashboards interactifs, pipelines de recherche ML et documentation — projets personnels depuis 2025.",
+    "ctaDashboard": "Dashboard IV (SPY)",
+    "ctaProjects": "Projets",
+    "previewLabel": "Volatilité implicite · SPY",
+    "previewLive": "Live",
+    "previewHint": "Surface 3D, smile et chaîne options — données différées."
+  },
+  "bento": {
+    "title": "Explorer",
+    "lead": "Projets phares, knowledge et notes de recherche.",
+    "knowledgeTitle": "Knowledge",
+    "knowledgeDescription": "Synthèse personnelle : probabilités, stats, ML, finance quantitative et ingénierie.",
+    "knowledgeCta": "Parcourir le répertoire",
+    "blogLabel": "Dernière note",
+    "blogCta": "Lire l'article",
+    "blogFallbackTitle": "Blog & recherche",
+    "blogFallbackDescription": "Notes méthodo et comptes rendus eurusd-lab.",
+    "projectCta": "Voir le projet"
   }
 }
