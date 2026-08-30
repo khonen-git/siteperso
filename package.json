@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "node -e \"const fs=require('fs');['.next','node_modules/.cache'].forEach(p=>{try{fs.rmSync(p,{recursive:true,force:true})}catch(e){}})\"",
     "dev": "next dev",
-    "dev:clean": "npm run clean && next dev",
+    "dev:clean": "node scripts/dev-clean.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
@@ -22,7 +22,8 @@
     "test:e2e:only": "playwright test",
     "knowledge:stubs": "node scripts/generate-knowledge-stubs.mjs",
     "knowledge:migrate": "node scripts/migrate-knowledge-paths.mjs",
-    "knowledge:math-inline": "node scripts/normalize-math-inline.mjs"
+    "knowledge:math-inline": "node scripts/normalize-math-inline.mjs",
+    "dashboards:iv-snapshot": "node scripts/generate-iv-snapshot.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.0.0",

@@ -1,0 +1,323 @@
+{
+  "metadata": {
+    "symbol": "SPY",
+    "spot": 580,
+    "asOf": "2026-08-30",
+    "source": "Yahoo Finance (delayed, demo snapshot)",
+    "sourceDisclaimer": "Educational demo only. Data may be delayed ~15 min. Not investment advice."
+  },
+  "slices": [
+    {
+      "expiry": "2026-09-19",
+      "daysToExpiry": 20,
+      "ivPoints": [
+        {
+          "strike": 493,
+          "moneyness": 0.85,
+          "iv": 0.1592
+        },
+        {
+          "strike": 507.5,
+          "moneyness": 0.875,
+          "iv": 0.1568
+        },
+        {
+          "strike": 522,
+          "moneyness": 0.9,
+          "iv": 0.1542
+        },
+        {
+          "strike": 536.5,
+          "moneyness": 0.925,
+          "iv": 0.1516
+        },
+        {
+          "strike": 551,
+          "moneyness": 0.95,
+          "iv": 0.1488
+        },
+        {
+          "strike": 565.5,
+          "moneyness": 0.975,
+          "iv": 0.146
+        },
+        {
+          "strike": 580,
+          "moneyness": 1,
+          "iv": 0.143
+        },
+        {
+          "strike": 594.5,
+          "moneyness": 1.025,
+          "iv": 0.14
+        },
+        {
+          "strike": 609,
+          "moneyness": 1.05,
+          "iv": 0.1368
+        },
+        {
+          "strike": 623.5,
+          "moneyness": 1.075,
+          "iv": 0.1336
+        },
+        {
+          "strike": 638,
+          "moneyness": 1.1,
+          "iv": 0.1302
+        },
+        {
+          "strike": 652.5,
+          "moneyness": 1.125,
+          "iv": 0.1268
+        },
+        {
+          "strike": 667,
+          "moneyness": 1.15,
+          "iv": 0.1232
+        }
+      ],
+      "ssvi": {
+        "rho": -0.35,
+        "eta": 0.45,
+        "gamma": 0.5,
+        "m": 0,
+        "sigma": 0.14300000000000002
+      }
+    },
+    {
+      "expiry": "2026-10-17",
+      "daysToExpiry": 48,
+      "ivPoints": [
+        {
+          "strike": 493,
+          "moneyness": 0.85,
+          "iv": 0.1634
+        },
+        {
+          "strike": 507.5,
+          "moneyness": 0.875,
+          "iv": 0.161
+        },
+        {
+          "strike": 522,
+          "moneyness": 0.9,
+          "iv": 0.1584
+        },
+        {
+          "strike": 536.5,
+          "moneyness": 0.925,
+          "iv": 0.1558
+        },
+        {
+          "strike": 551,
+          "moneyness": 0.95,
+          "iv": 0.153
+        },
+        {
+          "strike": 565.5,
+          "moneyness": 0.975,
+          "iv": 0.1502
+        },
+        {
+          "strike": 580,
+          "moneyness": 1,
+          "iv": 0.1472
+        },
+        {
+          "strike": 594.5,
+          "moneyness": 1.025,
+          "iv": 0.1442
+        },
+        {
+          "strike": 609,
+          "moneyness": 1.05,
+          "iv": 0.141
+        },
+        {
+          "strike": 623.5,
+          "moneyness": 1.075,
+          "iv": 0.1378
+        },
+        {
+          "strike": 638,
+          "moneyness": 1.1,
+          "iv": 0.1344
+        },
+        {
+          "strike": 652.5,
+          "moneyness": 1.125,
+          "iv": 0.131
+        },
+        {
+          "strike": 667,
+          "moneyness": 1.15,
+          "iv": 0.1274
+        }
+      ],
+      "ssvi": {
+        "rho": -0.35,
+        "eta": 0.45,
+        "gamma": 0.5,
+        "m": 0,
+        "sigma": 0.14720000000000003
+      }
+    },
+    {
+      "expiry": "2026-11-21",
+      "daysToExpiry": 83,
+      "ivPoints": [
+        {
+          "strike": 493,
+          "moneyness": 0.85,
+          "iv": 0.1687
+        },
+        {
+          "strike": 507.5,
+          "moneyness": 0.875,
+          "iv": 0.1662
+        },
+        {
+          "strike": 522,
+          "moneyness": 0.9,
+          "iv": 0.1637
+        },
+        {
+          "strike": 536.5,
+          "moneyness": 0.925,
+          "iv": 0.161
+        },
+        {
+          "strike": 551,
+          "moneyness": 0.95,
+          "iv": 0.1583
+        },
+        {
+          "strike": 565.5,
+          "moneyness": 0.975,
+          "iv": 0.1554
+        },
+        {
+          "strike": 580,
+          "moneyness": 1,
+          "iv": 0.1525
+        },
+        {
+          "strike": 594.5,
+          "moneyness": 1.025,
+          "iv": 0.1494
+        },
+        {
+          "strike": 609,
+          "moneyness": 1.05,
+          "iv": 0.1463
+        },
+        {
+          "strike": 623.5,
+          "moneyness": 1.075,
+          "iv": 0.143
+        },
+        {
+          "strike": 638,
+          "moneyness": 1.1,
+          "iv": 0.1397
+        },
+        {
+          "strike": 652.5,
+          "moneyness": 1.125,
+          "iv": 0.1362
+        },
+        {
+          "strike": 667,
+          "moneyness": 1.15,
+          "iv": 0.1327
+        }
+      ],
+      "ssvi": {
+        "rho": -0.35,
+        "eta": 0.45,
+        "gamma": 0.5,
+        "m": 0,
+        "sigma": 0.15245
+      }
+    },
+    {
+      "expiry": "2026-12-19",
+      "daysToExpiry": 111,
+      "ivPoints": [
+        {
+          "strike": 493,
+          "moneyness": 0.85,
+          "iv": 0.1729
+        },
+        {
+          "strike": 507.5,
+          "moneyness": 0.875,
+          "iv": 0.1704
+        },
+        {
+          "strike": 522,
+          "moneyness": 0.9,
+          "iv": 0.1679
+        },
+        {
+          "strike": 536.5,
+          "moneyness": 0.925,
+          "iv": 0.1652
+        },
+        {
+          "strike": 551,
+          "moneyness": 0.95,
+          "iv": 0.1625
+        },
+        {
+          "strike": 565.5,
+          "moneyness": 0.975,
+          "iv": 0.1596
+        },
+        {
+          "strike": 580,
+          "moneyness": 1,
+          "iv": 0.1567
+        },
+        {
+          "strike": 594.5,
+          "moneyness": 1.025,
+          "iv": 0.1536
+        },
+        {
+          "strike": 609,
+          "moneyness": 1.05,
+          "iv": 0.1505
+        },
+        {
+          "strike": 623.5,
+          "moneyness": 1.075,
+          "iv": 0.1472
+        },
+        {
+          "strike": 638,
+          "moneyness": 1.1,
+          "iv": 0.1439
+        },
+        {
+          "strike": 652.5,
+          "moneyness": 1.125,
+          "iv": 0.1404
+        },
+        {
+          "strike": 667,
+          "moneyness": 1.15,
+          "iv": 0.1369
+        }
+      ],
+      "ssvi": {
+        "rho": -0.35,
+        "eta": 0.45,
+        "gamma": 0.5,
+        "m": 0,
+        "sigma": 0.15665
+      }
+    }
+  ]
+}

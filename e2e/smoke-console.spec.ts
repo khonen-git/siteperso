@@ -13,6 +13,8 @@ const SMOKE_ROUTES = [
   '/fr/knowledge',
   '/fr/knowledge/probability/distributions/normal',
   '/fr/knowledge/statistics/inference/statistical-tests',
+  '/fr/dashboards',
+  '/fr/dashboards/implied-vol',
   '/fr/references',
   '/fr/contact',
 ] as const;

@@ -1,0 +1,73 @@
+{
+  "hub": {
+    "title": "Tableaux de bord",
+    "lead": "Visualisations interactives liées aux projets quantitatifs — données différées, usage pédagogique.",
+    "statusLive": "En ligne",
+    "statusSoon": "Bientôt",
+    "implied-vol": {
+      "title": "Volatilité implicite (SPY)",
+      "description": "Surface IV, smile et structure à terme à partir d'un snapshot Yahoo Finance.",
+      "hint": "Ouvrir le dashboard"
+    }
+  },
+  "impliedVol": {
+    "title": "Surface de volatilité implicite",
+    "loading": "Chargement…",
+    "tabs": {
+      "overview": "Vue d'ensemble",
+      "smile": "Smile",
+      "term": "Terme",
+      "surface": "Surface",
+      "about": "À propos"
+    },
+    "toolbar": {
+      "expiry": "Échéance",
+      "refresh": "Actualiser"
+    },
+    "overview": {
+      "symbol": "Symbole",
+      "spot": "Spot",
+      "asOf": "Date snapshot",
+      "expiries": "Échéances",
+      "atmRange": "Plage IV ATM"
+    },
+    "term": {
+      "title": "Structure à terme ATM"
+    },
+    "chart": {
+      "moneyness": "Moneyness (K/S)",
+      "strike": "Strike",
+      "iv": "Vol. implicite",
+      "atm": "ATM",
+      "daysToExpiry": "Jours avant échéance",
+      "atmIv": "IV ATM"
+    },
+    "ssviHint": "SSVI — ρ={rho}, η={eta}, σ={sigma}",
+    "disclaimer": {
+      "title": "Avertissement",
+      "body": "Démo éducative uniquement. Données Yahoo Finance différées (~15 min). Ceci ne constitue pas un conseil en investissement."
+    },
+    "about": {
+      "methodologyTitle": "Méthodologie",
+      "methodologyBody": "Chaîne options via yfinance, calibration SVI/SSVI (package ivsurface), export JSON offline servi par l'API Next.js. Refresh = relecture du snapshot en cache.",
+      "linksTitle": "Liens"
+    },
+    "links": {
+      "backToHub": "Dashboards",
+      "project": "Fiche projet",
+      "github": "Code source"
+    },
+    "tooltips": {
+      "expiry": "Sélectionne l'échéance affichée sur le graphique smile (IV vs moneyness).",
+      "refresh": "Recharge le snapshot depuis le cache serveur (pas de flux Yahoo live dans le navigateur).",
+      "moneyness": "Rapport strike / spot (K/S). 1 = ATM.",
+      "ssvi": "Paramètres SSVI calibrés sur la tranche — ρ skew, η courbure, σ niveau ATM.",
+      "termStructure": "IV ATM (moneyness ≈ 1) en fonction des jours avant échéance."
+    },
+    "errors": {
+      "title": "Erreur",
+      "loadFailed": "Impossible de charger les données.",
+      "noData": "Aucune donnée disponible."
+    }
+  }
+}

@@ -170,6 +170,13 @@ const nextConfig = {
     serverActions: {},
     optimizePackageImports: ['lucide-react', 'recharts', '@radix-ui/react-icons'],
   },
+  // Windows dev: avoid corrupted webpack disk cache (ENOENT/EPERM on .pack.gz_)
+  webpack: (config, { dev }) => {
+    if (dev && process.platform === 'win32') {
+      config.cache = { type: 'memory' };
+    }
+    return config;
+  },
 };
 
 module.exports = withNextIntl(withMDX(nextConfig));

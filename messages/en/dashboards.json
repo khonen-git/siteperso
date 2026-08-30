@@ -1,0 +1,73 @@
+{
+  "hub": {
+    "title": "Dashboards",
+    "lead": "Interactive views tied to quantitative projects — delayed data, educational use.",
+    "statusLive": "Live",
+    "statusSoon": "Coming soon",
+    "implied-vol": {
+      "title": "Implied volatility (SPY)",
+      "description": "IV surface, smile and term structure from a Yahoo Finance snapshot.",
+      "hint": "Open dashboard"
+    }
+  },
+  "impliedVol": {
+    "title": "Implied volatility surface",
+    "loading": "Loading…",
+    "tabs": {
+      "overview": "Overview",
+      "smile": "Smile",
+      "term": "Term",
+      "surface": "Surface",
+      "about": "About"
+    },
+    "toolbar": {
+      "expiry": "Expiry",
+      "refresh": "Refresh"
+    },
+    "overview": {
+      "symbol": "Symbol",
+      "spot": "Spot",
+      "asOf": "Snapshot date",
+      "expiries": "Expiries",
+      "atmRange": "ATM IV range"
+    },
+    "term": {
+      "title": "ATM term structure"
+    },
+    "chart": {
+      "moneyness": "Moneyness (K/S)",
+      "strike": "Strike",
+      "iv": "Implied vol",
+      "atm": "ATM",
+      "daysToExpiry": "Days to expiry",
+      "atmIv": "ATM IV"
+    },
+    "ssviHint": "SSVI — ρ={rho}, η={eta}, σ={sigma}",
+    "disclaimer": {
+      "title": "Disclaimer",
+      "body": "Educational demo only. Yahoo Finance delayed data (~15 min). Not investment advice."
+    },
+    "about": {
+      "methodologyTitle": "Methodology",
+      "methodologyBody": "Options chain via yfinance, SVI/SSVI calibration (ivsurface package), offline JSON export served by the Next.js API. Refresh reloads the cached snapshot.",
+      "linksTitle": "Links"
+    },
+    "links": {
+      "backToHub": "Dashboards",
+      "project": "Project page",
+      "github": "Source code"
+    },
+    "tooltips": {
+      "expiry": "Selects the expiry shown on the smile chart (IV vs moneyness).",
+      "refresh": "Reloads the snapshot from server cache (no live Yahoo stream in the browser).",
+      "moneyness": "Strike / spot ratio (K/S). 1 = ATM.",
+      "ssvi": "SSVI parameters fitted on the slice — ρ skew, η curvature, σ ATM level.",
+      "termStructure": "ATM IV (moneyness ≈ 1) vs days to expiry."
+    },
+    "errors": {
+      "title": "Error",
+      "loadFailed": "Failed to load data.",
+      "noData": "No data available."
+    }
+  }
+}
