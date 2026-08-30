@@ -19,6 +19,7 @@ import {
   chartMargins,
   formatIvPercent,
 } from '@/lib/dashboards/chart-theme';
+import { cn } from '@/lib/utils';
 import type { ImpliedVolSnapshot } from '@/types/dashboards/implied-vol';
 
 interface TermLabels {
@@ -37,6 +38,7 @@ interface ImpliedVolTermChartProps {
   snapshot: ImpliedVolSnapshot;
   labels: TermLabels;
   compact?: boolean;
+  fill?: boolean;
   ivYDomain?: { min: number; max: number };
   selectedExpiry?: string;
   onPointClick?: (expiry: string) => void;
@@ -121,6 +123,7 @@ export function ImpliedVolTermChart({
   snapshot,
   labels,
   compact = false,
+  fill = false,
   ivYDomain,
   selectedExpiry,
   onPointClick,
@@ -136,7 +139,10 @@ export function ImpliedVolTermChart({
 
   return (
     <div
-      className={compact ? 'h-[140px] w-full shrink-0' : 'h-full min-h-[280px] w-full flex-1'}
+      className={cn(
+        fill && 'min-h-[80px] h-full w-full min-w-0 flex-1',
+        !fill && (compact ? 'h-[140px] w-full shrink-0' : 'h-full min-h-[280px] w-full flex-1')
+      )}
       data-testid="iv-term-chart"
     >
       <ResponsiveContainer width="100%" height="100%">

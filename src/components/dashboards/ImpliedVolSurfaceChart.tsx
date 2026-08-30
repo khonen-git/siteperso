@@ -56,6 +56,10 @@ interface ImpliedVolSurfaceChartProps {
   onExpirySelect?: (expiry: string) => void;
   /** When false, 3D Plotly is not mounted (lazy tab activation). */
   mount3d?: boolean;
+  /** Always 3D (overview hero) — never heatmap fallback. */
+  force3d?: boolean;
+  /** Square plot for overview hero. */
+  squarePlot?: boolean;
 }
 
 export function ImpliedVolSurfaceChart({
@@ -67,23 +71,26 @@ export function ImpliedVolSurfaceChart({
   selectedMoneyness,
   onExpirySelect,
   mount3d = false,
+  force3d = false,
+  squarePlot = false,
 }: ImpliedVolSurfaceChartProps): React.JSX.Element {
   const t = useTranslations('dashboards');
   const isNarrow = useMaxWidth(639);
 
-  const showMobileFallback = !compact && isNarrow;
+  const showHeatmap = !force3d && (compact || isNarrow);
+  const show3d = force3d || (mount3d && !compact && !isNarrow);
 
   return (
     <div
       className={cn(
         'relative flex min-h-0 flex-1 flex-col',
-        compact ? 'h-[140px] shrink-0' : 'h-full min-h-[280px]'
+        squarePlot ? 'h-full min-h-0' : compact ? 'h-[140px] shrink-0' : 'h-full min-h-[280px]'
       )}
       data-testid="iv-surface-chart"
     >
-      {compact || showMobileFallback ? (
+      {showHeatmap ? (
         <>
-          {showMobileFallback && (
+          {isNarrow && !compact && (
             <p
               className="mb-2 shrink-0 text-xs text-muted-foreground"
               data-testid="iv-surface-mobile-fallback"
@@ -94,20 +101,21 @@ export function ImpliedVolSurfaceChart({
           <ImpliedVolHeatmap
             snapshot={snapshot}
             labels={labels}
-            compact={compact || showMobileFallback}
+            compact={compact || isNarrow}
             ivRange={ivRange}
             selectedDte={selectedDte}
             selectedMoneyness={selectedMoneyness}
             onCellClick={onExpirySelect}
           />
         </>
-      ) : mount3d ? (
+      ) : show3d ? (
         <ImpliedVolSurface3DChart
           snapshot={snapshot}
           labels={labels}
           ivRange={ivRange}
           selectedDte={selectedDte}
           onExpirySelect={onExpirySelect}
+          squarePlot={squarePlot}
         />
       ) : (
         <Surface3DPlaceholder />

@@ -47,7 +47,7 @@
       "indicators": "Indicateurs",
       "expiryHint": "Échéance : {expiry}",
       "termHint": "{count} maturités · plage {min}–{max} %",
-      "surfaceHint": "Aperçu 2D — onglet Surface pour la vue 3D"
+      "surfaceHint": "Aperçu 3D interactif — onglet Surface pour le lab plein écran"
     },
     "smile": {
       "title": "Vol smile · {expiry} ({days} jours)"

@@ -47,7 +47,7 @@
       "indicators": "Indicators",
       "expiryHint": "Expiry: {expiry}",
       "termHint": "{count} maturities · range {min}–{max}%",
-      "surfaceHint": "2D preview — open Surface tab for 3D view"
+      "surfaceHint": "Interactive 3D preview — open Surface tab for full-screen lab"
     },
     "smile": {
       "title": "Vol smile · {expiry} ({days} days)"

@@ -148,7 +148,9 @@ jest.mock('next-themes', () => ({
 }));
 
 jest.mock('@/components/dashboards/ImpliedVolSurface3DChart', () => ({
-  ImpliedVolSurface3DChart: () => <div data-testid="iv-surface-3d" />,
+  ImpliedVolSurface3DChart: ({ squarePlot }: { squarePlot?: boolean }) => (
+    <div data-testid="iv-surface-3d" data-square-plot={squarePlot ? 'true' : undefined} />
+  ),
 }));
 
 jest.mock('@/components/dashboards/useDashboardFocusMode', () => ({
@@ -221,16 +223,20 @@ describe('ImpliedVolDashboard', () => {
     expect(screen.getByTestId('iv-chain-atm-row')).toBeInTheDocument();
   });
 
-  it('renders overview grid with mini panels', () => {
+  it('renders overview layout with KPI strip and surface hero', async () => {
     renderWithProviders(
       <ImpliedVolDashboard initialSnapshot={mockSnapshot} initialTab="overview" />
     );
 
+    expect(screen.getByTestId('iv-overview-root')).toBeInTheDocument();
+    expect(screen.getByTestId('iv-overview-kpi')).toBeInTheDocument();
     expect(screen.getByTestId('iv-overview-smile')).toBeInTheDocument();
     expect(screen.getByTestId('iv-overview-term')).toBeInTheDocument();
     expect(screen.getByTestId('iv-overview-surface')).toBeInTheDocument();
-    expect(screen.getByTestId('iv-overview-stats')).toBeInTheDocument();
-    expect(screen.getByTestId('iv-heatmap')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByTestId('iv-surface-3d')).toBeInTheDocument();
+    });
+    expect(screen.getByTestId('iv-surface-3d')).toHaveAttribute('data-square-plot', 'true');
   });
 
   it('navigates to term tab from overview panel click', () => {

@@ -22,6 +22,7 @@ import {
   formatIvPercent,
 } from '@/lib/dashboards/chart-theme';
 import { buildSmileChartData } from '@/lib/dashboards/ssvi-curve';
+import { cn } from '@/lib/utils';
 import type { IvSlice } from '@/types/dashboards/implied-vol';
 
 interface ChartLabels {
@@ -44,6 +45,8 @@ interface ImpliedVolSmileChartProps {
   slice: IvSlice;
   labels: ChartLabels;
   compact?: boolean;
+  /** Fill parent flex area (overview satellites). */
+  fill?: boolean;
   ivYDomain?: { min: number; max: number };
   selectedMoneyness?: number | null;
   onPointClick?: (moneyness: number) => void;
@@ -128,6 +131,7 @@ export function ImpliedVolSmileChart({
   slice,
   labels,
   compact = false,
+  fill = false,
   ivYDomain,
   selectedMoneyness,
   onPointClick,
@@ -153,7 +157,10 @@ export function ImpliedVolSmileChart({
 
   return (
     <div
-      className={compact ? 'h-[140px] w-full shrink-0' : 'h-full min-h-[280px] w-full flex-1'}
+      className={cn(
+        fill && 'min-h-[80px] h-full w-full min-w-0 flex-1',
+        !fill && (compact ? 'h-[140px] w-full shrink-0' : 'h-full min-h-[280px] w-full flex-1')
+      )}
       data-testid="iv-smile-chart"
     >
       <ResponsiveContainer width="100%" height="100%">

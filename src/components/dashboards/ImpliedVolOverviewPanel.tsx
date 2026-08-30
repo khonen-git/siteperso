@@ -4,7 +4,6 @@ import * as React from 'react';
 import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/badge';
 import { DashboardPanel } from '@/components/dashboards/DashboardPanel';
-import { DashboardStat } from '@/components/dashboards/DashboardStat';
 import { ImpliedVolInfoIcon } from '@/components/dashboards/ImpliedVolInfoIcon';
 import { ImpliedVolSmileChart } from '@/components/dashboards/ImpliedVolSmileChart';
 import { ImpliedVolSurfaceChart } from '@/components/dashboards/ImpliedVolSurfaceChart';
@@ -24,6 +23,15 @@ interface ImpliedVolOverviewPanelProps {
   onTabChange: (tab: ImpliedVolTab) => void;
   onExpirySelect?: (expiry: string) => void;
   onTermPointClick?: (expiry: string) => void;
+}
+
+function KpiItem({ label, value }: { label: string; value: string }): React.JSX.Element {
+  return (
+    <div className="flex min-w-0 flex-col gap-0.5">
+      <span className="text-[10px] uppercase tracking-wide text-muted-foreground">{label}</span>
+      <span className="truncate text-sm font-medium tabular-nums">{value}</span>
+    </div>
+  );
 }
 
 export function ImpliedVolOverviewPanel({
@@ -69,163 +77,134 @@ export function ImpliedVolOverviewPanel({
     ? t('impliedVol.overview.expiryHint', { expiry: selectedSlice.expiry })
     : '';
 
-  const termHint =
-    snapshot.slices.length > 0
-      ? t('impliedVol.overview.termHint', {
-          count: String(snapshot.slices.length),
-          min: (minIv * 100).toFixed(1),
-          max: (maxIv * 100).toFixed(1),
-        })
-      : '';
-
   return (
-    <div className="grid h-full min-h-0 flex-1 grid-cols-1 grid-rows-4 gap-3 md:grid-cols-2 md:grid-rows-2">
-      <DashboardPanel
-        title={t('impliedVol.tabs.smile')}
-        actions={
-          <ImpliedVolInfoIcon
-            content={t('impliedVol.tooltips.moneyness')}
-            label={t('impliedVol.tooltips.moneyness')}
-          />
-        }
-        onClick={() => onTabChange('smile')}
-        data-testid="iv-overview-smile"
-        className="h-full min-h-0 overflow-hidden"
-        bodyClassName="flex min-h-0 flex-1 flex-col overflow-hidden p-2"
+    <div className="flex h-full min-h-0 flex-1 flex-col gap-3" data-testid="iv-overview-root">
+      <div
+        className="flex shrink-0 flex-wrap items-center gap-x-5 gap-y-2 rounded-lg border border-border/60 bg-card px-3 py-2.5"
+        data-testid="iv-overview-kpi"
       >
-        {selectedSlice ? (
-          <>
-            <ImpliedVolSmileChart
-              slice={selectedSlice}
-              labels={chartLabels}
-              compact
-              ivYDomain={ivYDomain}
-              selectedMoneyness={selectedMoneyness}
-            />
-            {expiryHint && (
-              <p className="mt-auto shrink-0 px-1 pt-1 text-[10px] text-muted-foreground">
-                {expiryHint}
-              </p>
-            )}
-          </>
-        ) : (
-          <p className="text-xs text-muted-foreground">{t('impliedVol.errors.noData')}</p>
-        )}
-      </DashboardPanel>
-
-      <DashboardPanel
-        title={t('impliedVol.term.title')}
-        actions={
-          <ImpliedVolInfoIcon
-            content={t('impliedVol.tooltips.termStructure')}
-            label={t('impliedVol.tooltips.termStructure')}
-          />
-        }
-        onClick={() => onTabChange('term')}
-        data-testid="iv-overview-term"
-        className="h-full min-h-0 overflow-hidden"
-        bodyClassName="flex min-h-0 flex-1 flex-col overflow-hidden p-2"
-      >
-        {snapshot.slices.length > 0 ? (
-          <>
-            <ImpliedVolTermChart
-              snapshot={snapshot}
-              labels={termLabels}
-              compact
-              ivYDomain={ivYDomain}
-              selectedExpiry={selectedExpiry}
-              onPointClick={onTermPointClick}
-            />
-            {termHint && (
-              <p className="mt-auto shrink-0 px-1 pt-1 text-[10px] text-muted-foreground">
-                {termHint}
-              </p>
-            )}
-          </>
-        ) : (
-          <p className="text-xs text-muted-foreground">{t('impliedVol.errors.noData')}</p>
-        )}
-      </DashboardPanel>
-
-      <DashboardPanel
-        title={t('impliedVol.tabs.surface')}
-        actions={
-          <ImpliedVolInfoIcon
-            content={t('impliedVol.tooltips.heatmap')}
-            label={t('impliedVol.tooltips.heatmap')}
-          />
-        }
-        onClick={() => onTabChange('surface')}
-        data-testid="iv-overview-surface"
-        className="h-full min-h-0 overflow-hidden"
-        bodyClassName="flex min-h-0 flex-1 flex-col overflow-hidden p-2"
-      >
-        {snapshot.slices.length > 0 ? (
-          <>
-            <ImpliedVolSurfaceChart
-              snapshot={snapshot}
-              labels={surfaceLabels}
-              compact
-              ivRange={ivYDomain}
-              selectedExpiry={selectedExpiry}
-              selectedDte={selectedDte}
-              selectedMoneyness={selectedMoneyness}
-              onExpirySelect={onExpirySelect}
-            />
-            <p className="mt-auto shrink-0 px-1 pt-1 text-[10px] text-muted-foreground">
-              {t('impliedVol.overview.surfaceHint')}
-            </p>
-          </>
-        ) : (
-          <p className="text-xs text-muted-foreground">{t('impliedVol.errors.noData')}</p>
-        )}
-      </DashboardPanel>
-
-      <DashboardPanel
-        title={t('impliedVol.overview.indicators')}
-        actions={
-          <ImpliedVolInfoIcon
-            content={t('impliedVol.tooltips.overviewStats')}
-            label={t('impliedVol.tooltips.overviewStats')}
-          />
-        }
-        data-testid="iv-overview-stats"
-        className="h-full min-h-0 overflow-hidden"
-        bodyClassName="flex min-h-0 flex-1 flex-col justify-between gap-3 overflow-y-auto p-3"
-      >
-        <div className="grid grid-cols-2 gap-3">
-          <DashboardStat label={t('impliedVol.overview.symbol')} value={snapshot.metadata.symbol} />
-          <DashboardStat
-            label={t('impliedVol.overview.spot')}
-            value={snapshot.metadata.spot.toFixed(2)}
-          />
-          <DashboardStat label={t('impliedVol.overview.asOf')} value={snapshot.metadata.asOf} />
-          <DashboardStat
-            label={t('impliedVol.overview.expiries')}
-            value={String(snapshot.slices.length)}
-          />
-          <DashboardStat
-            label={t('impliedVol.overview.atmIv')}
-            value={selectedAtmIv > 0 ? formatIvPercent(selectedAtmIv, 2) : '—'}
-          />
-          <DashboardStat
-            label={t('impliedVol.overview.atmRange')}
-            value={atmIvs.length ? `${(minIv * 100).toFixed(1)}–${(maxIv * 100).toFixed(1)}%` : '—'}
-          />
-          <DashboardStat
-            label={t('impliedVol.overview.skew25d')}
-            value={skew25d != null ? `${skew25d >= 0 ? '+' : ''}${skew25d.toFixed(2)} pp` : '—'}
-          />
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
+        <KpiItem label={t('impliedVol.overview.symbol')} value={snapshot.metadata.symbol} />
+        <KpiItem label={t('impliedVol.overview.spot')} value={snapshot.metadata.spot.toFixed(2)} />
+        <KpiItem
+          label={t('impliedVol.overview.atmIv')}
+          value={selectedAtmIv > 0 ? formatIvPercent(selectedAtmIv, 2) : '—'}
+        />
+        <KpiItem
+          label={t('impliedVol.overview.skew25d')}
+          value={skew25d != null ? `${skew25d >= 0 ? '+' : ''}${skew25d.toFixed(2)} pp` : '—'}
+        />
+        <KpiItem label={t('impliedVol.overview.expiries')} value={String(snapshot.slices.length)} />
+        <KpiItem
+          label={t('impliedVol.overview.atmRange')}
+          value={atmIvs.length ? `${(minIv * 100).toFixed(1)}–${(maxIv * 100).toFixed(1)}%` : '—'}
+        />
+        <div className="ml-auto flex flex-wrap items-center gap-2">
           <Badge variant="secondary" className="text-[10px]">
             {snapshot.metadata.source}
           </Badge>
-          <span className="text-[10px] text-muted-foreground">
-            {snapshot.metadata.sourceDisclaimer}
-          </span>
+          <span className="text-[10px] text-muted-foreground">{snapshot.metadata.asOf}</span>
         </div>
-      </DashboardPanel>
+      </div>
+
+      <div className="grid min-h-0 flex-1 grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:grid-rows-1">
+        <DashboardPanel
+          title={t('impliedVol.tabs.surface')}
+          actions={
+            <ImpliedVolInfoIcon
+              content={t('impliedVol.tooltips.surface3d')}
+              label={t('impliedVol.tooltips.surface3d')}
+            />
+          }
+          onClick={() => onTabChange('surface')}
+          data-testid="iv-overview-surface"
+          className="min-h-0"
+          bodyClassName="flex min-h-0 flex-1 flex-col overflow-hidden p-2"
+        >
+          {snapshot.slices.length > 0 ? (
+            <>
+              <div className="flex min-h-0 flex-1 items-center justify-center">
+                <ImpliedVolSurfaceChart
+                  snapshot={snapshot}
+                  labels={surfaceLabels}
+                  force3d
+                  squarePlot
+                  ivRange={ivYDomain}
+                  selectedDte={selectedDte}
+                  selectedMoneyness={selectedMoneyness}
+                  onExpirySelect={onExpirySelect}
+                />
+              </div>
+              <p className="mt-2 shrink-0 px-1 text-[10px] text-muted-foreground">
+                {t('impliedVol.overview.surfaceHint')}
+              </p>
+            </>
+          ) : (
+            <p className="text-xs text-muted-foreground">{t('impliedVol.errors.noData')}</p>
+          )}
+        </DashboardPanel>
+
+        <div className="grid min-h-0 grid-rows-2 gap-3 lg:min-h-0">
+          <DashboardPanel
+            title={t('impliedVol.term.title')}
+            actions={
+              <ImpliedVolInfoIcon
+                content={t('impliedVol.tooltips.termStructure')}
+                label={t('impliedVol.tooltips.termStructure')}
+              />
+            }
+            onClick={() => onTabChange('term')}
+            data-testid="iv-overview-term"
+            className="min-h-[140px] min-h-0"
+            bodyClassName="flex min-h-0 flex-1 flex-col overflow-hidden p-2"
+          >
+            {snapshot.slices.length > 0 ? (
+              <ImpliedVolTermChart
+                snapshot={snapshot}
+                labels={termLabels}
+                fill
+                ivYDomain={ivYDomain}
+                selectedExpiry={selectedExpiry}
+                onPointClick={onTermPointClick}
+              />
+            ) : (
+              <p className="text-xs text-muted-foreground">{t('impliedVol.errors.noData')}</p>
+            )}
+          </DashboardPanel>
+
+          <DashboardPanel
+            title={t('impliedVol.tabs.smile')}
+            actions={
+              <ImpliedVolInfoIcon
+                content={t('impliedVol.tooltips.moneyness')}
+                label={t('impliedVol.tooltips.moneyness')}
+              />
+            }
+            onClick={() => onTabChange('smile')}
+            data-testid="iv-overview-smile"
+            className="min-h-[140px] min-h-0"
+            bodyClassName="flex min-h-0 flex-1 flex-col overflow-hidden p-2"
+          >
+            {selectedSlice ? (
+              <>
+                <ImpliedVolSmileChart
+                  slice={selectedSlice}
+                  labels={chartLabels}
+                  fill
+                  ivYDomain={ivYDomain}
+                  selectedMoneyness={selectedMoneyness}
+                />
+                {expiryHint && (
+                  <p className="mt-1 shrink-0 px-1 text-[10px] text-muted-foreground">
+                    {expiryHint}
+                  </p>
+                )}
+              </>
+            ) : (
+              <p className="text-xs text-muted-foreground">{t('impliedVol.errors.noData')}</p>
+            )}
+          </DashboardPanel>
+        </div>
+      </div>
     </div>
   );
 }

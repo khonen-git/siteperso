@@ -49,6 +49,8 @@ interface ImpliedVolSurface3DChartProps {
   ivRange?: { min: number; max: number };
   selectedDte?: number;
   onExpirySelect?: (expiry: string) => void;
+  /** Overview hero: square plot area (colorbar may extend outside). */
+  squarePlot?: boolean;
 }
 
 function readHslVar(name: string, fallback: string): string {
@@ -88,6 +90,7 @@ export function ImpliedVolSurface3DChart({
   ivRange: ivRangeProp,
   selectedDte,
   onExpirySelect,
+  squarePlot = false,
 }: ImpliedVolSurface3DChartProps): React.JSX.Element {
   const t = useTranslations('dashboards');
   const theme = usePlotlyThemeColors();
@@ -179,10 +182,11 @@ export function ImpliedVolSurface3DChart({
         cmax,
         showscale: true,
         colorbar: {
-          title: { text: labels.iv, font: { size: 11, color: theme.muted } },
-          tickfont: { size: 10, color: theme.muted },
+          title: { text: labels.iv, font: { size: squarePlot ? 10 : 11, color: theme.muted } },
+          tickfont: { size: squarePlot ? 9 : 10, color: theme.muted },
           ticksuffix: '%',
-          len: 0.75,
+          len: squarePlot ? 0.55 : 0.75,
+          thickness: squarePlot ? 10 : 14,
         },
         hovertemplate:
           `${labels.moneyness}: %{x:.3f}<br>` +
@@ -205,7 +209,7 @@ export function ImpliedVolSurface3DChart({
     }
 
     return traces;
-  }, [cmax, cmin, grid.dteAxis, grid.moneynessAxis, labels, selectedDte, theme.muted, zPercent]);
+  }, [cmax, cmin, grid.dteAxis, grid.moneynessAxis, labels, selectedDte, squarePlot, theme.muted, zPercent]);
 
   const layout = React.useMemo(
     () => ({
@@ -260,9 +264,16 @@ export function ImpliedVolSurface3DChart({
     [startAnimation]
   );
 
+  const minPlotHeight = squarePlot ? 'min-h-0' : 'min-h-[280px]';
+
   if (!grid.zMatrix.length) {
     return (
-      <div className="flex h-full min-h-[280px] items-center justify-center text-sm text-muted-foreground">
+      <div
+        className={cn(
+          'flex h-full w-full items-center justify-center text-sm text-muted-foreground',
+          minPlotHeight
+        )}
+      >
         {t('impliedVol.errors.noData')}
       </div>
     );
@@ -270,14 +281,28 @@ export function ImpliedVolSurface3DChart({
 
   if (plotError) {
     return (
-      <div className="flex h-full min-h-[280px] items-center justify-center px-4 text-center text-sm text-destructive">
+      <div
+        className={cn(
+          'flex h-full w-full items-center justify-center px-4 text-center text-sm text-destructive',
+          minPlotHeight
+        )}
+      >
         {plotError}
       </div>
     );
   }
 
   return (
-    <div className="relative h-full min-h-[280px] w-full flex-1" data-testid="iv-surface-3d">
+    <div
+      className={cn(
+        'relative w-full flex-1',
+        squarePlot
+          ? 'aspect-square h-full max-h-full max-w-full min-h-0'
+          : cn('h-full', minPlotHeight)
+      )}
+      data-testid="iv-surface-3d"
+      data-square-plot={squarePlot ? 'true' : undefined}
+    >
       <div className="absolute right-2 top-2 z-10 flex gap-1">
         {autoRotate && (
           <Button
