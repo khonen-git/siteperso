@@ -1,0 +1,441 @@
+---
+title: Metrics
+description: ML evaluation metric inventory — classification, regression, calibration, model diagnostics.
+---
+
+import { MdxCard } from '@/components/mdx/MdxCard';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from '@/components/ui/table';
+
+# Metrics
+
+<MdxCard>
+  **Condensed inventory** of supervised ML evaluation metrics. **Test performance** metrics are
+  usually **model-agnostic**; **diagnostics** (OOB, importances…) depend on the family. Protocol:
+  train / validation / test,{' '}
+  <a href="/knowledge/machine-learning/general-concepts/cross-validation">stratified CV</a> when
+  needed, baseline, uncertainty (bootstrap or CV), hold-out test once.
+</MdxCard>
+
+## Master table
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Metric</TableHead>
+        <TableHead>Measures</TableHead>
+        <TableHead>Prob</TableHead>
+        <TableHead>Threshold</TableHead>
+        <TableHead>Problem</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Accuracy, F1, MCC</TableCell>
+        <TableCell>Errors @ τ</TableCell>
+        <TableCell>—</TableCell>
+        <TableCell>yes</TableCell>
+        <TableCell>Binary, multiclass</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>AUC-ROC, Gini (model)</TableCell>
+        <TableCell>Ranking</TableCell>
+        <TableCell>no</TableCell>
+        <TableCell>no</TableCell>
+        <TableCell>Binary</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>AUC-PR, AP</TableCell>
+        <TableCell>Ranking (rare class)</TableCell>
+        <TableCell>no</TableCell>
+        <TableCell>no</TableCell>
+        <TableCell>Binary</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Log loss, Brier, ECE</TableCell>
+        <TableCell>Probs & calibration</TableCell>
+        <TableCell>yes</TableCell>
+        <TableCell>no</TableCell>
+        <TableCell>Binary, multiclass</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Lift, quantile buckets, KS, PSI</TableCell>
+        <TableCell>Score ranking / stability</TableCell>
+        <TableCell>score</TableCell>
+        <TableCell>optional</TableCell>
+        <TableCell>Binary</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>MAE, RMSE, R²</TableCell>
+        <TableCell>Continuous error</TableCell>
+        <TableCell>—</TableCell>
+        <TableCell>—</TableCell>
+        <TableCell>Regression</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>OOB, Gini MDI, XGB gain</TableCell>
+        <TableCell>Model diagnostic</TableCell>
+        <TableCell>—</TableCell>
+        <TableCell>—</TableCell>
+        <TableCell>RF, XGBoost</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Threshold & confusion matrix
+
+<MdxCard>
+  Require a **predicted class** ŷ (threshold τ on p̂ in binary). Define the positive class (1).
+
+  <Table className="mt-4">
+    <TableHeader>
+      <TableRow>
+        <TableHead>Metric</TableHead>
+        <TableHead>Definition (binary)</TableHead>
+        <TableHead>Note</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>TP, TN, FP, FN</TableCell>
+        <TableCell>Counts @ τ</TableCell>
+        <TableCell>Threshold block basis</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Accuracy</TableCell>
+        <TableCell>(TP+TN)/N</TableCell>
+        <TableCell>Weak under imbalance</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Precision (PPV), Recall (TPR), Specificity (TNR)</TableCell>
+        <TableCell>TP/(TP+FP), TP/(TP+FN), TN/(TN+FP)</TableCell>
+        <TableCell>—</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>NPV, FDR, FOR</TableCell>
+        <TableCell>TN, FP variants</TableCell>
+        <TableCell>Medical, niche</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>F1, Fβ</TableCell>
+        <TableCell>Harmonic P/R</TableCell>
+        <TableCell>β &gt; 1 → recall</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Balanced accuracy, MCC, Cohen κ</TableCell>
+        <TableCell>½(TPR+TNR), Matthews, agreement</TableCell>
+        <TableCell>κ extends to multiclass</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Expected cost, optimal τ</TableCell>
+        <TableCell>C_FP·FP + C_FN·FN</TableCell>
+        <TableCell>τ chosen on validation</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Discrimination & ranking
+
+<MdxCard>
+  Input: **score or p̂** — no fixed τ. **Gini (model)** = 2×AUC−1 ≠ **Gini MDI** (RF importance).
+
+  <Table className="mt-4">
+    <TableHeader>
+      <TableRow>
+        <TableHead>Metric</TableHead>
+        <TableHead>Idea</TableHead>
+        <TableHead>Note</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>ROC, AUC-ROC</TableCell>
+        <TableCell>TPR vs FPR</TableCell>
+        <TableCell>Global ranking</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Gini (model)</TableCell>
+        <TableCell>2×AUC−1</TableCell>
+        <TableCell>Credit scoring</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>PR curve, AUC-PR, AP</TableCell>
+        <TableCell>Precision vs recall</TableCell>
+        <TableCell>Rare class 1</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Partial AUC, KS</TableCell>
+        <TableCell>FPR band; max|CDF₁−CDF₀|</TableCell>
+        <TableCell>Business / banking</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Lift, cumulative gains</TableCell>
+        <TableCell>Positives in top k%</TableCell>
+        <TableCell>Campaigns, triage</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Quantile buckets (deciles)</TableCell>
+        <TableCell>Observed rate, lift per bucket</TableCell>
+        <TableCell>Score monotonicity</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Probabilistic & calibration
+
+<MdxCard>
+  Require interpretable **p̂**. High AUC does not imply calibrated probabilities.
+
+  <Table className="mt-4">
+    <TableHeader>
+      <TableRow>
+        <TableHead>Metric</TableHead>
+        <TableHead>Role</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Log loss</TableCell>
+        <TableCell>Cross-entropy; penalizes confident wrong probs</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Brier score</TableCell>
+        <TableCell>MSE(y, p̂); decomposable (Murphy)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Reliability diagram, ECE, MCE</TableCell>
+        <TableCell>Observed vs predicted gap per bin</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Sharpness</TableCell>
+        <TableCell>Spread of p̂ (≠ calibration)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Hosmer–Lemeshow</TableCell>
+        <TableCell>Goodness-of-fit test by bins</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Recalibration (Platt, isotonic)</TableCell>
+        <TableCell>Post-hoc on validation</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Multiclass classification
+
+<MdxCard>
+  <strong>Y ∈ {'{1,…,K}'}</strong>, K &gt; 2.
+
+  <Table className="mt-4">
+    <TableHeader>
+      <TableRow>
+        <TableHead>Metric</TableHead>
+        <TableHead>Variant</TableHead>
+        <TableHead>Note</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Accuracy, K×K matrix</TableCell>
+        <TableCell>—</TableCell>
+        <TableCell>Global</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Precision / Recall / F1</TableCell>
+        <TableCell>macro, micro, weighted</TableCell>
+        <TableCell>Macro = equal classes</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Log loss</TableCell>
+        <TableCell>multiclass</TableCell>
+        <TableCell>K-way probabilities</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>AUC</TableCell>
+        <TableCell>OvR, OvO</TableCell>
+        <TableCell>Macro-average</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Top-k accuracy</TableCell>
+        <TableCell>—</TableCell>
+        <TableCell>Label in top k logits</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Hamming loss</TableCell>
+        <TableCell>multi-label</TableCell>
+        <TableCell>Wrong labels</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Regression
+
+<MdxCard>
+  <strong>Y ∈ ℝ</strong> — distinct metric set.
+
+  <Table className="mt-4">
+    <TableHeader>
+      <TableRow>
+        <TableHead>Metric</TableHead>
+        <TableHead>Idea</TableHead>
+        <TableHead>Note</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>MAE, MedAE</TableCell>
+        <TableCell>|y−ŷ|, median</TableCell>
+        <TableCell>Robust (MedAE)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>MSE, RMSE</TableCell>
+        <TableCell>(y−ŷ)²</TableCell>
+        <TableCell>Outlier-sensitive</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>MAPE, SMAPE</TableCell>
+        <TableCell>Relative % error</TableCell>
+        <TableCell>Unstable if y≈0</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>R², adjusted R²</TableCell>
+        <TableCell>Explained variance</TableCell>
+        <TableCell>Adjusted penalizes complexity</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Pinball loss</TableCell>
+        <TableCell>Quantile τ</TableCell>
+        <TableCell>Quantile models</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Interval score</TableCell>
+        <TableCell>Coverage + width</TableCell>
+        <TableCell>Prediction intervals</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Comparison & robustness
+
+<MdxCard>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Item</TableHead>
+        <TableHead>Use</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Bootstrap CI, CV std dev</TableCell>
+        <TableCell>Uncertainty on AUC, F1…</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>McNemar, Delong, paired bootstrap</TableCell>
+        <TableCell>Compare A vs B (same examples)</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Learning curves</TableCell>
+        <TableCell>Bias / variance vs train size</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Out-of-time, FP/FN analysis</TableCell>
+        <TableCell>Temporal drift, error segments</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>PSI, calibration drift</TableCell>
+        <TableCell>p̂ distribution stability over time</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Diagnostics — Random Forest
+
+<MdxCard>
+  ≠ test performance. See{' '}
+  <a href="/knowledge/machine-learning/classical-models/random-forest">Random Forest</a>.
+
+  <Table className="mt-4">
+    <TableHeader>
+      <TableRow>
+        <TableHead>Item</TableHead>
+        <TableHead>Note</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>OOB score / error</TableCell>
+        <TableCell>Internal perf; not a test/CV substitute</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Gini importance (MDI)</TableCell>
+        <TableCell>Impurity decrease; biased if correlated</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Permutation importance</TableCell>
+        <TableCell>More reliable out-of-sample</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Gini impurity (node)</TableCell>
+        <TableCell>Tree build ≠ model Gini</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## Diagnostics — XGBoost
+
+<MdxCard>
+  See <a href="/knowledge/machine-learning/classical-models/xgboost">XGBoost</a>.
+
+  <Table className="mt-4">
+    <TableHeader>
+      <TableRow>
+        <TableHead>Item</TableHead>
+        <TableHead>Note</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Gain / cover / weight importance</TableCell>
+        <TableCell>Weight favors high cardinality</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Early stopping (eval metric)</TableCell>
+        <TableCell>logloss, auc, rmse… → # rounds</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Train vs val curve</TableCell>
+        <TableCell>Overfitting by iteration</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>SHAP (optional)</TableCell>
+        <TableCell>Local interpretation</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</MdxCard>
+
+## sklearn references
+
+<MdxCard>
+  <code>confusion_matrix</code>, <code>classification_report</code>, <code>roc_auc_score</code>,{' '}
+  <code>average_precision_score</code>, <code>log_loss</code>, <code>brier_score_loss</code>,{' '}
+  <code>CalibrationDisplay</code>, <code>CalibratedClassifierCV</code>, <code>f1_score</code>,{' '}
+  <code>mean_absolute_error</code>, <code>r2_score</code>, <code>permutation_importance</code>,{' '}
+  <code>StratifiedKFold</code>
+</MdxCard>

@@ -138,6 +138,7 @@ export const navigationData: TreeItem[] = [
         href: '/knowledge/machine-learning/general-concepts',
         children: [
           { title: 'Validation croisée', href: `${ML}/general-concepts/cross-validation` },
+          { title: 'Métriques', href: `${ML}/general-concepts/metrics` },
         ],
       },
       {

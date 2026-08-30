@@ -133,7 +133,10 @@ export const navigationData: TreeItem[] = [
       {
         title: 'General concepts',
         href: '/knowledge/machine-learning/general-concepts',
-        children: [{ title: 'Cross-validation', href: `${ML}/general-concepts/cross-validation` }],
+        children: [
+          { title: 'Cross-validation', href: `${ML}/general-concepts/cross-validation` },
+          { title: 'Metrics', href: `${ML}/general-concepts/metrics` },
+        ],
       },
       {
         title: 'Classical models',

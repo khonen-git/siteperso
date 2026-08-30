@@ -568,6 +568,17 @@
     "en": { "title": "Cross-validation", "description": "k-fold, walk-forward, and purged CV." }
   },
   {
+    "slug": "machine-learning/general-concepts/metrics",
+    "fr": {
+      "title": "Métriques",
+      "description": "Inventaire ML — seuil, discrimination, calibration, régression, diagnostics."
+    },
+    "en": {
+      "title": "Metrics",
+      "description": "ML inventory — threshold, discrimination, calibration, regression, diagnostics."
+    }
+  },
+  {
     "slug": "machine-learning/classical-models/random-forest",
     "fr": { "title": "Random Forest", "description": "Forêts aléatoires et agrégation d'arbres." },
     "en": { "title": "Random Forest", "description": "Random forests and tree aggregation." }
