@@ -2,18 +2,26 @@
 
 import * as React from 'react';
 import { useTranslations } from 'next-intl';
+import { DashboardPanel } from '@/components/dashboards/DashboardPanel';
 import { ImpliedVolAboutPanel } from '@/components/dashboards/ImpliedVolAboutPanel';
-import { ImpliedVolDashboardShell } from '@/components/dashboards/ImpliedVolDashboardShell';
+import {
+  ImpliedVolDashboardShell,
+  type ImpliedVolTab,
+} from '@/components/dashboards/ImpliedVolDashboardShell';
+import { ImpliedVolChainPanel } from '@/components/dashboards/ImpliedVolChainPanel';
 import { ImpliedVolInfoIcon } from '@/components/dashboards/ImpliedVolInfoIcon';
 import { ImpliedVolOverviewPanel } from '@/components/dashboards/ImpliedVolOverviewPanel';
 import { ImpliedVolSmileChart } from '@/components/dashboards/ImpliedVolSmileChart';
+import { ImpliedVolStatusBar } from '@/components/dashboards/ImpliedVolStatusBar';
 import { ImpliedVolSurfaceChart } from '@/components/dashboards/ImpliedVolSurfaceChart';
 import { ImpliedVolTermChart } from '@/components/dashboards/ImpliedVolTermChart';
 import { ImpliedVolToolbar } from '@/components/dashboards/ImpliedVolToolbar';
 import type { ImpliedVolSnapshot } from '@/types/dashboards/implied-vol';
+import { cn } from '@/lib/utils';
 
 interface ImpliedVolDashboardProps {
   initialSnapshot: ImpliedVolSnapshot;
+  initialTab?: ImpliedVolTab;
 }
 
 type LoadState = 'idle' | 'loading' | 'error';
@@ -34,7 +42,7 @@ function ChartPanel({
   if (isLoading) {
     return (
       <div
-        className="flex flex-1 items-center justify-center text-sm text-muted-foreground"
+        className="flex min-h-[280px] flex-1 items-center justify-center text-sm text-muted-foreground"
         data-testid="iv-loading"
       >
         {loadingLabel}
@@ -43,16 +51,19 @@ function ChartPanel({
   }
   if (!hasData) {
     return (
-      <div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">
+      <div className="flex min-h-[280px] flex-1 items-center justify-center text-sm text-muted-foreground">
         {emptyLabel}
       </div>
     );
   }
-  return <div className="min-h-0 flex-1">{children}</div>;
+  return (
+    <div className={cn('flex h-full min-h-0 flex-1 flex-col', 'min-h-[280px]')}>{children}</div>
+  );
 }
 
 export function ImpliedVolDashboard({
   initialSnapshot,
+  initialTab = 'smile',
 }: ImpliedVolDashboardProps): React.JSX.Element {
   const t = useTranslations('dashboards');
 
@@ -60,6 +71,7 @@ export function ImpliedVolDashboard({
   const [selectedExpiry, setSelectedExpiry] = React.useState(
     initialSnapshot.slices[0]?.expiry ?? ''
   );
+  const [activeTab, setActiveTab] = React.useState<ImpliedVolTab>(initialTab);
   const [loadState, setLoadState] = React.useState<LoadState>('idle');
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
@@ -88,11 +100,18 @@ export function ImpliedVolDashboard({
     }
   };
 
+  const handleHeatmapCellClick = (expiry: string) => {
+    setSelectedExpiry(expiry);
+    setActiveTab('smile');
+  };
+
   const chartLabels = {
     moneyness: t('impliedVol.chart.moneyness'),
     strike: t('impliedVol.chart.strike'),
     iv: t('impliedVol.chart.iv'),
     atm: t('impliedVol.chart.atm'),
+    marketIv: t('impliedVol.chart.marketIv'),
+    ssviFit: t('impliedVol.chart.ssviIv'),
   };
 
   const termLabels = {
@@ -107,18 +126,32 @@ export function ImpliedVolDashboard({
     iv: t('impliedVol.chart.iv'),
   };
 
-  const toolbar = (
-    <ImpliedVolToolbar
-      snapshot={snapshot}
-      selectedExpiry={selectedExpiry}
-      onExpiryChange={setSelectedExpiry}
+  const smileTitle = selectedSlice
+    ? t('impliedVol.smile.title', {
+        expiry: selectedSlice.expiry,
+        days: String(selectedSlice.daysToExpiry),
+      })
+    : t('impliedVol.tabs.smile');
+
+
+  const statusBar = (
+    <ImpliedVolStatusBar
+      metadata={snapshot.metadata}
       onRefresh={handleRefresh}
       isLoading={loadState === 'loading'}
     />
   );
 
+  const toolbar = (
+    <ImpliedVolToolbar
+      snapshot={snapshot}
+      selectedExpiry={selectedExpiry}
+      onExpiryChange={setSelectedExpiry}
+    />
+  );
+
   return (
-    <>
+    <div className="relative flex h-full min-h-0 flex-col">
       {loadState === 'error' && errorMessage && (
         <div className="absolute inset-x-0 top-0 z-40 px-4 pt-2">
           <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive">
@@ -128,17 +161,29 @@ export function ImpliedVolDashboard({
       )}
 
       <ImpliedVolDashboardShell
+        statusBar={statusBar}
         toolbar={toolbar}
-        overview={<ImpliedVolOverviewPanel snapshot={snapshot} />}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        overview={
+          <ImpliedVolOverviewPanel
+            snapshot={snapshot}
+            selectedSlice={selectedSlice}
+            onTabChange={setActiveTab}
+          />
+        }
         smile={
-          <div className="flex h-full min-h-0 flex-col gap-2">
-            <div className="flex shrink-0 items-center gap-1 text-xs text-muted-foreground">
-              <span>{t('impliedVol.chart.moneyness')}</span>
+          <DashboardPanel
+            title={smileTitle}
+            actions={
               <ImpliedVolInfoIcon
                 content={t('impliedVol.tooltips.moneyness')}
                 label={t('impliedVol.tooltips.moneyness')}
               />
-            </div>
+            }
+            className="h-full"
+            bodyClassName="flex min-h-0 flex-1 flex-col p-2"
+          >
             <ChartPanel
               isLoading={loadState === 'loading'}
               hasData={Boolean(selectedSlice)}
@@ -146,37 +191,23 @@ export function ImpliedVolDashboard({
               emptyLabel={t('impliedVol.errors.noData')}
             >
               {selectedSlice && (
-                <>
-                  <ImpliedVolSmileChart slice={selectedSlice} labels={chartLabels} />
-                  {selectedSlice.ssvi && (
-                    <div className="mt-2 flex shrink-0 items-center gap-1 text-xs text-muted-foreground">
-                      <span>
-                        {t('impliedVol.ssviHint', {
-                          rho: selectedSlice.ssvi.rho.toFixed(2),
-                          eta: selectedSlice.ssvi.eta.toFixed(2),
-                          sigma: selectedSlice.ssvi.sigma.toFixed(3),
-                        })}
-                      </span>
-                      <ImpliedVolInfoIcon
-                        content={t('impliedVol.tooltips.ssvi')}
-                        label={t('impliedVol.tooltips.ssvi')}
-                      />
-                    </div>
-                  )}
-                </>
+                <ImpliedVolSmileChart slice={selectedSlice} labels={chartLabels} />
               )}
             </ChartPanel>
-          </div>
+          </DashboardPanel>
         }
         term={
-          <div className="flex h-full min-h-0 flex-col gap-2">
-            <div className="flex shrink-0 items-center gap-1 text-xs text-muted-foreground">
-              <span>{t('impliedVol.term.title')}</span>
+          <DashboardPanel
+            title={t('impliedVol.term.title')}
+            actions={
               <ImpliedVolInfoIcon
                 content={t('impliedVol.tooltips.termStructure')}
                 label={t('impliedVol.tooltips.termStructure')}
               />
-            </div>
+            }
+            className="h-full"
+            bodyClassName="flex min-h-0 flex-1 flex-col p-2"
+          >
             <ChartPanel
               isLoading={loadState === 'loading'}
               hasData={snapshot.slices.length > 0}
@@ -185,20 +216,52 @@ export function ImpliedVolDashboard({
             >
               <ImpliedVolTermChart snapshot={snapshot} labels={termLabels} />
             </ChartPanel>
-          </div>
+          </DashboardPanel>
         }
         surface={
+          <DashboardPanel
+            title={t('impliedVol.tabs.surface')}
+            actions={
+              <ImpliedVolInfoIcon
+                content={t('impliedVol.tooltips.surface3d')}
+                label={t('impliedVol.tooltips.surface3d')}
+              />
+            }
+            className="h-full"
+            bodyClassName="relative flex min-h-0 flex-1 flex-col p-2"
+          >
+            <ChartPanel
+              isLoading={loadState === 'loading'}
+              hasData={snapshot.slices.length > 0}
+              loadingLabel={t('impliedVol.loading')}
+              emptyLabel={t('impliedVol.errors.noData')}
+            >
+              <ImpliedVolSurfaceChart
+                snapshot={snapshot}
+                labels={surfaceLabels}
+                onExpirySelect={handleHeatmapCellClick}
+              />
+            </ChartPanel>
+          </DashboardPanel>
+        }
+        chain={
           <ChartPanel
             isLoading={loadState === 'loading'}
-            hasData={snapshot.slices.length > 0}
+            hasData={Boolean(selectedSlice)}
             loadingLabel={t('impliedVol.loading')}
             emptyLabel={t('impliedVol.errors.noData')}
           >
-            <ImpliedVolSurfaceChart snapshot={snapshot} labels={surfaceLabels} />
+            {selectedSlice && (
+              <ImpliedVolChainPanel
+                slice={selectedSlice}
+                symbol={snapshot.metadata.symbol}
+                className="h-full"
+              />
+            )}
           </ChartPanel>
         }
         about={<ImpliedVolAboutPanel />}
       />
-    </>
+    </div>
   );
 }

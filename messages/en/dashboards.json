@@ -18,7 +18,13 @@
       "smile": "Smile",
       "term": "Term",
       "surface": "Surface",
+      "chain": "Chain",
       "about": "About"
+    },
+    "status": {
+      "spot": "Spot",
+      "snapshot": "Snapshot",
+      "delayed": "Delayed ~15m"
     },
     "toolbar": {
       "expiry": "Expiry",
@@ -29,7 +35,27 @@
       "spot": "Spot",
       "asOf": "Snapshot date",
       "expiries": "Expiries",
-      "atmRange": "ATM IV range"
+      "atmRange": "ATM IV range",
+      "indicators": "Indicators",
+      "expiryHint": "Expiry: {expiry}",
+      "termHint": "{count} maturities · range {min}–{max}%"
+    },
+    "smile": {
+      "title": "Vol smile · {expiry} ({days} days)"
+    },
+    "surface": {
+      "title": "Implied vol surface"
+    },
+    "chain": {
+      "title": "Options chain · {symbol} · {expiry} ({days}d)",
+      "strike": "Strike",
+      "moneyness": "Moneyness",
+      "iv": "IV %",
+      "note": "Note",
+      "atmNote": "ATM",
+      "otmCall": "OTM call",
+      "otmPut": "OTM put",
+      "empty": "No IV points for this expiry."
     },
     "term": {
       "title": "ATM term structure"
@@ -40,7 +66,9 @@
       "iv": "Implied vol",
       "atm": "ATM",
       "daysToExpiry": "Days to expiry",
-      "atmIv": "ATM IV"
+      "atmIv": "ATM IV",
+      "marketIv": "Market IV",
+      "ssviIv": "SSVI fit"
     },
     "ssviHint": "SSVI — ρ={rho}, η={eta}, σ={sigma}",
     "disclaimer": {
@@ -58,11 +86,15 @@
       "github": "Source code"
     },
     "tooltips": {
-      "expiry": "Selects the expiry shown on the smile chart (IV vs moneyness).",
+      "expiry": "Selects the expiry shown on the smile chart and options chain.",
       "refresh": "Reloads the snapshot from server cache (no live Yahoo stream in the browser).",
       "moneyness": "Strike / spot ratio (K/S). 1 = ATM.",
-      "ssvi": "SSVI parameters fitted on the slice — ρ skew, η curvature, σ ATM level.",
-      "termStructure": "ATM IV (moneyness ≈ 1) vs days to expiry."
+      "ssvi": "SSVI curve fitted on the slice — dashed model overlay.",
+      "termStructure": "ATM IV (moneyness ≈ 1) vs days to expiry.",
+      "heatmap": "IV map: moneyness (horizontal) × days to expiry (vertical). Color = IV level.",
+      "surface3d": "3D IV surface: moneyness × days to expiry, height = IV level. Click to select an expiry.",
+      "chain": "Strike and IV grid for the selected expiry (Yahoo snapshot data).",
+      "overviewStats": "Key snapshot metrics: symbol, spot, expiry count and ATM IV range."
     },
     "errors": {
       "title": "Error",

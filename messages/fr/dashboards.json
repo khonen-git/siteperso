@@ -18,7 +18,13 @@
       "smile": "Smile",
       "term": "Terme",
       "surface": "Surface",
+      "chain": "Chaîne",
       "about": "À propos"
+    },
+    "status": {
+      "spot": "Spot",
+      "snapshot": "Snapshot",
+      "delayed": "Différé ~15 min"
     },
     "toolbar": {
       "expiry": "Échéance",
@@ -29,7 +35,27 @@
       "spot": "Spot",
       "asOf": "Date snapshot",
       "expiries": "Échéances",
-      "atmRange": "Plage IV ATM"
+      "atmRange": "Plage IV ATM",
+      "indicators": "Indicateurs",
+      "expiryHint": "Échéance : {expiry}",
+      "termHint": "{count} maturités · plage {min}–{max} %"
+    },
+    "smile": {
+      "title": "Vol smile · {expiry} ({days} jours)"
+    },
+    "surface": {
+      "title": "Surface de vol implicite"
+    },
+    "chain": {
+      "title": "Chaîne options · {symbol} · {expiry} ({days}d)",
+      "strike": "Strike",
+      "moneyness": "Moneyness",
+      "iv": "IV %",
+      "note": "Note",
+      "atmNote": "ATM",
+      "otmCall": "OTM call",
+      "otmPut": "OTM put",
+      "empty": "Aucun point IV pour cette échéance."
     },
     "term": {
       "title": "Structure à terme ATM"
@@ -40,7 +66,9 @@
       "iv": "Vol. implicite",
       "atm": "ATM",
       "daysToExpiry": "Jours avant échéance",
-      "atmIv": "IV ATM"
+      "atmIv": "IV ATM",
+      "marketIv": "IV marché",
+      "ssviIv": "SSVI fit"
     },
     "ssviHint": "SSVI — ρ={rho}, η={eta}, σ={sigma}",
     "disclaimer": {
@@ -58,11 +86,15 @@
       "github": "Code source"
     },
     "tooltips": {
-      "expiry": "Sélectionne l'échéance affichée sur le graphique smile (IV vs moneyness).",
+      "expiry": "Sélectionne l'échéance affichée sur le smile et la chaîne options.",
       "refresh": "Recharge le snapshot depuis le cache serveur (pas de flux Yahoo live dans le navigateur).",
       "moneyness": "Rapport strike / spot (K/S). 1 = ATM.",
-      "ssvi": "Paramètres SSVI calibrés sur la tranche — ρ skew, η courbure, σ niveau ATM.",
-      "termStructure": "IV ATM (moneyness ≈ 1) en fonction des jours avant échéance."
+      "ssvi": "Courbe SSVI calibrée sur la tranche — superposition pointillée du fit modèle.",
+      "termStructure": "IV ATM (moneyness ≈ 1) en fonction des jours avant échéance.",
+      "heatmap": "Carte IV : moneyness (horizontal) × jours avant échéance (vertical). Couleur = niveau IV.",
+      "surface3d": "Surface IV 3D : moneyness × jours avant échéance, hauteur = niveau IV. Cliquer pour sélectionner une échéance.",
+      "chain": "Grille des strikes et IV pour l'échéance sélectionnée (données Yahoo snapshot).",
+      "overviewStats": "Indicateurs clés du snapshot : symbole, spot, nombre d'échéances et plage IV ATM."
     },
     "errors": {
       "title": "Erreur",

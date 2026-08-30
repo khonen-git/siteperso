@@ -6,12 +6,22 @@ import {
   Legend,
   Line,
   LineChart,
+  ReferenceArea,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from 'recharts';
+import {
+  chartAxisStyle,
+  chartColors,
+  chartCursorStyle,
+  chartGridProps,
+  chartMargins,
+  formatIvPercent,
+} from '@/lib/dashboards/chart-theme';
+import { buildSmileChartData } from '@/lib/dashboards/ssvi-curve';
 import type { IvSlice } from '@/types/dashboards/implied-vol';
 
 interface ChartLabels {
@@ -19,53 +29,114 @@ interface ChartLabels {
   strike: string;
   iv: string;
   atm: string;
+  marketIv?: string;
+  ssviFit?: string;
 }
 
 interface ImpliedVolSmileChartProps {
   slice: IvSlice;
   labels: ChartLabels;
+  compact?: boolean;
+}
+
+function SmileTooltip({
+  active,
+  payload,
+  labels,
+}: {
+  active?: boolean;
+  payload?: { payload: { strike: number; moneyness: number; iv: number; ssviIv?: number } }[];
+  labels: ChartLabels;
+}) {
+  if (!active || !payload?.length) return null;
+  const p = payload[0].payload;
+  return (
+    <div className="rounded-md border bg-popover px-3 py-2 text-xs shadow-md">
+      <p>
+        {labels.strike}: {p.strike.toFixed(2)}
+      </p>
+      <p>
+        {labels.moneyness}: {p.moneyness.toFixed(3)}
+      </p>
+      <p>
+        {labels.iv}: {formatIvPercent(p.iv, 2)}
+      </p>
+      {p.ssviIv != null && (
+        <p className="text-muted-foreground">
+          {labels.ssviFit ?? 'SSVI'}: {formatIvPercent(p.ssviIv, 2)}
+        </p>
+      )}
+    </div>
+  );
 }
 
 export function ImpliedVolSmileChart({
   slice,
   labels,
+  compact = false,
 }: ImpliedVolSmileChartProps): React.JSX.Element {
-  const data = [...slice.ivPoints].sort((a, b) => a.moneyness - b.moneyness);
+  const data = React.useMemo(
+    () => buildSmileChartData(slice.ivPoints, slice.daysToExpiry, slice.ssvi),
+    [slice]
+  );
+
+  const hasSsvi = data.some((p) => p.ssviIv != null);
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <LineChart data={data} margin={{ top: 8, right: 16, left: 0, bottom: 8 }}>
-        <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+    <div
+      className={
+        compact ? 'h-[140px] w-full shrink-0' : 'h-full min-h-[280px] w-full flex-1'
+      }
+    >
+      <ResponsiveContainer width="100%" height="100%">
+      <LineChart data={data} margin={compact ? chartMargins.compact : chartMargins.default}>
+        <CartesianGrid {...chartGridProps} />
+        <ReferenceArea x1={0.98} x2={1.02} fill="hsl(var(--primary))" fillOpacity={0.06} />
         <XAxis
           dataKey="moneyness"
           type="number"
           domain={['dataMin', 'dataMax']}
           tickFormatter={(v: number) => v.toFixed(2)}
-          label={{ value: labels.moneyness, position: 'insideBottom', offset: -4, fontSize: 11 }}
+          tick={chartAxisStyle}
+          hide={compact}
         />
         <YAxis
-          tickFormatter={(v: number) => `${(v * 100).toFixed(1)}%`}
-          label={{ value: labels.iv, angle: -90, position: 'insideLeft', fontSize: 11 }}
+          tickFormatter={(v: number) => formatIvPercent(v)}
+          tick={chartAxisStyle}
+          width={compact ? 36 : 48}
         />
         <Tooltip
-          formatter={(value: number) => [`${(value * 100).toFixed(2)}%`, labels.iv]}
-          labelFormatter={(_, payload) => {
-            const p = payload?.[0]?.payload as { strike?: number; moneyness?: number } | undefined;
-            if (!p) return '';
-            return `${labels.strike}: ${p.strike?.toFixed(2)} · ${labels.moneyness}: ${p.moneyness?.toFixed(3)}`;
-          }}
+          cursor={chartCursorStyle}
+          content={<SmileTooltip labels={labels} />}
         />
-        <Legend />
-        <ReferenceLine x={1} stroke="hsl(var(--muted-foreground))" strokeDasharray="4 4" label={labels.atm} />
+        {!compact && <Legend wrapperStyle={{ fontSize: 11 }} />}
+        <ReferenceLine
+          x={1}
+          stroke={chartColors.muted}
+          strokeDasharray="4 4"
+          label={compact ? undefined : labels.atm}
+        />
         <Line
           type="monotone"
           dataKey="iv"
-          name={labels.iv}
-          stroke="hsl(var(--primary))"
-          dot={{ r: 3 }}
+          name={labels.marketIv ?? labels.iv}
+          stroke={chartColors.primary}
+          dot={compact ? false : { r: 3 }}
           strokeWidth={2}
         />
+        {hasSsvi && (
+          <Line
+            type="monotone"
+            dataKey="ssviIv"
+            name={labels.ssviFit ?? 'SSVI'}
+            stroke={chartColors.ssvi}
+            dot={false}
+            strokeWidth={1.5}
+            strokeDasharray="6 4"
+          />
+        )}
       </LineChart>
-    </ResponsiveContainer>
+      </ResponsiveContainer>
+    </div>
   );
 }

@@ -11,6 +11,14 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import {
+  chartAxisStyle,
+  chartColors,
+  chartCursorStyle,
+  chartGridProps,
+  chartMargins,
+  formatIvPercent,
+} from '@/lib/dashboards/chart-theme';
 import type { ImpliedVolSnapshot } from '@/types/dashboards/implied-vol';
 
 interface TermLabels {
@@ -22,6 +30,7 @@ interface TermLabels {
 interface ImpliedVolTermChartProps {
   snapshot: ImpliedVolSnapshot;
   labels: TermLabels;
+  compact?: boolean;
 }
 
 function atmPoint(slice: ImpliedVolSnapshot['slices'][0]) {
@@ -35,38 +44,72 @@ function atmPoint(slice: ImpliedVolSnapshot['slices'][0]) {
   };
 }
 
+function TermTooltip({
+  active,
+  payload,
+  labels,
+}: {
+  active?: boolean;
+  payload?: { payload: { expiry: string; daysToExpiry: number; atmIv: number } }[];
+  labels: TermLabels;
+}) {
+  if (!active || !payload?.length) return null;
+  const p = payload[0].payload;
+  return (
+    <div className="rounded-md border bg-popover px-3 py-2 text-xs shadow-md">
+      <p className="font-medium">{p.expiry}</p>
+      <p>
+        {labels.daysToExpiry}: {p.daysToExpiry}
+      </p>
+      <p>
+        {labels.atmIv}: {formatIvPercent(p.atmIv, 2)}
+      </p>
+    </div>
+  );
+}
+
 export function ImpliedVolTermChart({
   snapshot,
   labels,
+  compact = false,
 }: ImpliedVolTermChartProps): React.JSX.Element {
-  const data = [...snapshot.slices].map(atmPoint).sort((a, b) => a.daysToExpiry - b.daysToExpiry);
+  const data = React.useMemo(
+    () => [...snapshot.slices].map(atmPoint).sort((a, b) => a.daysToExpiry - b.daysToExpiry),
+    [snapshot.slices]
+  );
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <LineChart data={data} margin={{ top: 8, right: 16, left: 0, bottom: 8 }}>
-        <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+    <div
+      className={
+        compact ? 'h-[140px] w-full shrink-0' : 'h-full min-h-[280px] w-full flex-1'
+      }
+    >
+      <ResponsiveContainer width="100%" height="100%">
+      <LineChart data={data} margin={compact ? chartMargins.compact : chartMargins.default}>
+        <CartesianGrid {...chartGridProps} />
         <XAxis
           dataKey="daysToExpiry"
-          label={{ value: labels.daysToExpiry, position: 'insideBottom', offset: -4, fontSize: 11 }}
+          tickFormatter={(v: number) => `${v}d`}
+          tick={chartAxisStyle}
+          hide={compact}
         />
         <YAxis
-          tickFormatter={(v: number) => `${(v * 100).toFixed(1)}%`}
-          label={{ value: labels.iv, angle: -90, position: 'insideLeft', fontSize: 11 }}
+          tickFormatter={(v: number) => formatIvPercent(v)}
+          tick={chartAxisStyle}
+          width={compact ? 36 : 48}
         />
-        <Tooltip
-          formatter={(value: number) => [`${(value * 100).toFixed(2)}%`, labels.atmIv]}
-          labelFormatter={(d) => `${labels.daysToExpiry}: ${d}`}
-        />
-        <Legend />
+        <Tooltip cursor={chartCursorStyle} content={<TermTooltip labels={labels} />} />
+        {!compact && <Legend wrapperStyle={{ fontSize: 11 }} />}
         <Line
           type="monotone"
           dataKey="atmIv"
           name={labels.atmIv}
-          stroke="#8884d8"
-          dot={{ r: 4 }}
+          stroke={chartColors.primary}
+          dot={compact ? { r: 2 } : { r: 4 }}
           strokeWidth={2}
         />
       </LineChart>
-    </ResponsiveContainer>
+      </ResponsiveContainer>
+    </div>
   );
 }

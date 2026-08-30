@@ -150,7 +150,7 @@ const nextConfig = {
   output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
   // Évite des vendor-chunks OpenTelemetry cassés en dev (peer optionnel de Next.js)
   serverExternalPackages: ['@opentelemetry/api'],
-  transpilePackages: ['next-mdx-remote'],
+  transpilePackages: ['next-mdx-remote', 'react-plotly.js', 'plotly.js'],
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
     remotePatterns: [

@@ -8,26 +8,32 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 
-export type ImpliedVolTab = 'overview' | 'smile' | 'term' | 'surface' | 'about';
+export type ImpliedVolTab = 'overview' | 'smile' | 'term' | 'surface' | 'chain' | 'about';
 
 interface ImpliedVolDashboardShellProps {
+  statusBar: React.ReactNode;
   toolbar: React.ReactNode;
   overview: React.ReactNode;
   smile: React.ReactNode;
   term: React.ReactNode;
   surface: React.ReactNode;
+  chain: React.ReactNode;
   about: React.ReactNode;
-  defaultTab?: ImpliedVolTab;
+  activeTab: ImpliedVolTab;
+  onTabChange: (tab: ImpliedVolTab) => void;
 }
 
 export function ImpliedVolDashboardShell({
+  statusBar,
   toolbar,
   overview,
   smile,
   term,
   surface,
+  chain,
   about,
-  defaultTab = 'smile',
+  activeTab,
+  onTabChange,
 }: ImpliedVolDashboardShellProps): React.JSX.Element {
   const t = useTranslations('dashboards');
 
@@ -49,7 +55,13 @@ export function ImpliedVolDashboardShell({
           </div>
         </header>
 
-        <Tabs defaultValue={defaultTab} className="flex min-h-0 flex-1 flex-col">
+        {statusBar}
+
+        <Tabs
+          value={activeTab}
+          onValueChange={(v) => onTabChange(v as ImpliedVolTab)}
+          className="flex min-h-0 flex-1 flex-col"
+        >
           <div className="shrink-0 border-b px-3 py-2 sm:px-4">
             <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
               <TabsList
@@ -70,6 +82,9 @@ export function ImpliedVolDashboardShell({
                 <TabsTrigger value="surface" className="shrink-0">
                   {t('impliedVol.tabs.surface')}
                 </TabsTrigger>
+                <TabsTrigger value="chain" className="shrink-0">
+                  {t('impliedVol.tabs.chain')}
+                </TabsTrigger>
                 <TabsTrigger value="about" className="shrink-0">
                   {t('impliedVol.tabs.about')}
                 </TabsTrigger>
@@ -78,24 +93,44 @@ export function ImpliedVolDashboardShell({
             </div>
           </div>
 
-          <TabsContent value="overview" className="flex min-h-0 flex-1 flex-col px-3 py-3 sm:px-4">
-            {overview}
-          </TabsContent>
-          <TabsContent value="smile" className="flex min-h-0 flex-1 flex-col px-3 py-3 sm:px-4">
-            {smile}
-          </TabsContent>
-          <TabsContent value="term" className="flex min-h-0 flex-1 flex-col px-3 py-3 sm:px-4">
-            {term}
-          </TabsContent>
-          <TabsContent value="surface" className="flex min-h-0 flex-1 flex-col px-3 py-3 sm:px-4">
-            {surface}
-          </TabsContent>
-          <TabsContent
-            value="about"
-            className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 py-3 sm:px-4"
-          >
-            {about}
-          </TabsContent>
+          <div className="relative min-h-0 flex-1 overflow-hidden">
+            <TabsContent
+              value="overview"
+              className="absolute inset-0 mt-0 flex flex-col overflow-hidden px-3 py-3 sm:px-4"
+            >
+              {overview}
+            </TabsContent>
+            <TabsContent
+              value="smile"
+              className="absolute inset-0 mt-0 flex flex-col overflow-hidden px-3 py-3 sm:px-4"
+            >
+              {smile}
+            </TabsContent>
+            <TabsContent
+              value="term"
+              className="absolute inset-0 mt-0 flex flex-col overflow-hidden px-3 py-3 sm:px-4"
+            >
+              {term}
+            </TabsContent>
+            <TabsContent
+              value="surface"
+              className="absolute inset-0 mt-0 flex flex-col overflow-hidden px-3 py-3 sm:px-4"
+            >
+              {surface}
+            </TabsContent>
+            <TabsContent
+              value="chain"
+              className="absolute inset-0 mt-0 flex flex-col overflow-hidden px-3 py-3 sm:px-4"
+            >
+              {chain}
+            </TabsContent>
+            <TabsContent
+              value="about"
+              className="absolute inset-0 mt-0 flex flex-col overflow-y-auto px-3 py-3 sm:px-4"
+            >
+              {about}
+            </TabsContent>
+          </div>
         </Tabs>
       </div>
     </TooltipProvider>
