@@ -7,8 +7,13 @@ import { Link } from '@/i18n/navigation';
 import { ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { HomeDashboardPreview } from '@/components/sections/home/HomeDashboardPreview';
+import type { ImpliedVolSnapshot } from '@/types/dashboards/implied-vol';
 
-export function HomeHero(): React.JSX.Element {
+interface HomeHeroProps {
+  ivSnapshot: ImpliedVolSnapshot | null;
+}
+
+export function HomeHero({ ivSnapshot }: HomeHeroProps): React.JSX.Element {
   const t = useTranslations('home.hero');
 
   return (
@@ -16,7 +21,7 @@ export function HomeHero(): React.JSX.Element {
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,hsl(var(--primary)/0.12),transparent)]" />
 
       <div className="container py-16 md:py-20 lg:py-24">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-10">
+        <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-10">
           <div className="max-w-xl">
             <motion.p
               initial={{ opacity: 0, y: 12 }}
@@ -52,19 +57,21 @@ export function HomeHero(): React.JSX.Element {
               className="mt-8 flex flex-wrap gap-3"
             >
               <Button size="lg" asChild>
-                <Link href="/dashboards/implied-vol" className="gap-2">
+                <Link href="/dashboards/implied-vol" prefetch className="gap-2">
                   {t('ctaDashboard')}
                   <ArrowUpRight className="h-4 w-4" aria-hidden />
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link href="/projects">{t('ctaProjects')}</Link>
+                <Link href="/projects" prefetch>
+                  {t('ctaProjects')}
+                </Link>
               </Button>
             </motion.div>
           </div>
 
-          <div className="lg:pl-4">
-            <HomeDashboardPreview />
+          <div className="self-start lg:-mt-2 lg:pl-4">
+            {ivSnapshot ? <HomeDashboardPreview snapshot={ivSnapshot} /> : null}
           </div>
         </div>
       </div>

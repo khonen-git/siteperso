@@ -7,6 +7,8 @@ import { getProjects } from '@/lib/projects/content';
 import { routing } from '@/i18n/routing';
 import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
+import { getImpliedVolSnapshot } from '@/lib/dashboards/implied-vol.server';
+import type { ImpliedVolSnapshot } from '@/types/dashboards/implied-vol';
 import type { Project } from '@/types/project';
 
 const FEATURED_PROJECT_SLUGS = ['financial-ml-lab', 'implied-volatility-surface'] as const;
@@ -14,6 +16,14 @@ const FEATURED_PROJECT_SLUGS = ['financial-ml-lab', 'implied-volatility-surface'
 type HomePageProps = {
   params: Promise<{ locale: string }>;
 };
+
+function loadIvSnapshot(): ImpliedVolSnapshot | null {
+  try {
+    return getImpliedVolSnapshot('SPY');
+  } catch {
+    return null;
+  }
+}
 
 function pickFeaturedProjects(projects: Project[]): Project[] {
   return FEATURED_PROJECT_SLUGS.map((slug) => projects.find((p) => p.slug === slug)).filter(
@@ -33,10 +43,11 @@ export default async function Home({ params }: HomePageProps): Promise<React.JSX
   const projects = getProjects(locale);
   const featuredProjects = pickFeaturedProjects(projects);
   const latestBlog = getBlogPosts(locale)[0] ?? null;
+  const ivSnapshot = loadIvSnapshot();
 
   return (
     <>
-      <HomeHero />
+      <HomeHero ivSnapshot={ivSnapshot} />
       <HomeBento featuredProjects={featuredProjects} latestBlog={latestBlog} />
     </>
   );

@@ -60,6 +60,8 @@ interface ImpliedVolSurfaceChartProps {
   force3d?: boolean;
   /** Square plot for overview hero. */
   squarePlot?: boolean;
+  /** Hide rotation / camera controls (home preview inside a link). */
+  showControls?: boolean;
 }
 
 export function ImpliedVolSurfaceChart({
@@ -73,6 +75,7 @@ export function ImpliedVolSurfaceChart({
   mount3d = false,
   force3d = false,
   squarePlot = false,
+  showControls = true,
 }: ImpliedVolSurfaceChartProps): React.JSX.Element {
   const t = useTranslations('dashboards');
   const isNarrow = useMaxWidth(639);
@@ -116,6 +119,7 @@ export function ImpliedVolSurfaceChart({
           selectedDte={selectedDte}
           onExpirySelect={onExpirySelect}
           squarePlot={squarePlot}
+          showControls={showControls}
         />
       ) : (
         <Surface3DPlaceholder />

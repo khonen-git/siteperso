@@ -26,6 +26,7 @@ function BentoTile({
   return (
     <Link
       href={href}
+      prefetch
       className={cn(
         'group relative flex h-full flex-col overflow-hidden rounded-xl border bg-card p-5 shadow-sm',
         'transition-all duration-300 hover:border-primary/40 hover:shadow-md',

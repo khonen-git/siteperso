@@ -7,7 +7,7 @@ import remarkGfm from 'remark-gfm';
 import ProjectHero from '@/components/project/ProjectHero';
 import ProjectContent from '@/components/project/ProjectContent';
 import { ProjectReferences } from '@/components/project/ProjectReferences';
-import MDXComponents from '@/components/mdx/MDXComponents';
+import ProjectMDXComponents from '@/components/mdx/ProjectMDXComponents';
 import { getProject, listProjectFileNames } from '@/lib/projects/content';
 import { routing } from '@/i18n/routing';
 
@@ -47,7 +47,7 @@ export default async function ProjectPage({
       <ProjectContent>
         <MDXRemote
           source={projectData.source}
-          components={MDXComponents as React.ComponentProps<typeof MDXRemote>['components']}
+          components={ProjectMDXComponents as React.ComponentProps<typeof MDXRemote>['components']}
           options={{
             mdxOptions: {
               remarkPlugins: [remarkGfm],

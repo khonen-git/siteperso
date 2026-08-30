@@ -51,6 +51,8 @@ interface ImpliedVolSurface3DChartProps {
   onExpirySelect?: (expiry: string) => void;
   /** Overview hero: square plot area (colorbar may extend outside). */
   squarePlot?: boolean;
+  /** Hide toolbar (e.g. home preview embedded in a link). */
+  showControls?: boolean;
 }
 
 function readHslVar(name: string, fallback: string): string {
@@ -91,6 +93,7 @@ export function ImpliedVolSurface3DChart({
   selectedDte,
   onExpirySelect,
   squarePlot = false,
+  showControls = true,
 }: ImpliedVolSurface3DChartProps): React.JSX.Element {
   const t = useTranslations('dashboards');
   const theme = usePlotlyThemeColors();
@@ -313,62 +316,64 @@ export function ImpliedVolSurface3DChart({
       data-testid="iv-surface-3d"
       data-square-plot={squarePlot ? 'true' : undefined}
     >
-      <div className="absolute right-2 top-2 z-10 flex gap-1">
-        {autoRotate && (
+      {showControls && (
+        <div className="absolute right-2 top-2 z-10 flex gap-1">
+          {autoRotate && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="h-7 bg-background/90 px-2 text-[10px] shadow-sm backdrop-blur-sm"
+              data-testid="iv-surface-rotation-speed"
+              onClick={() => setRotationSpeed((s) => (s === 'medium' ? 'slow' : 'medium'))}
+              aria-label={
+                rotationSpeed === 'slow'
+                  ? t('impliedVol.surface.rotationSlow')
+                  : t('impliedVol.surface.rotationMedium')
+              }
+              title={
+                rotationSpeed === 'slow'
+                  ? t('impliedVol.surface.rotationSlow')
+                  : t('impliedVol.surface.rotationMedium')
+              }
+            >
+              {rotationSpeed === 'slow' ? '1×' : '2×'}
+            </Button>
+          )}
           <Button
             type="button"
             variant="outline"
-            size="sm"
-            className="h-7 bg-background/90 px-2 text-[10px] shadow-sm backdrop-blur-sm"
-            data-testid="iv-surface-rotation-speed"
-            onClick={() => setRotationSpeed((s) => (s === 'medium' ? 'slow' : 'medium'))}
+            size="icon"
+            className="h-7 w-7 bg-background/90 shadow-sm backdrop-blur-sm"
+            data-testid="iv-surface-reset-camera"
+            aria-label={t('impliedVol.surface.resetCamera')}
+            title={t('impliedVol.surface.resetCamera')}
+            onClick={() => void resetCamera()}
+          >
+            <RotateCcw className="h-3.5 w-3.5" />
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            className={cn(
+              'h-7 w-7 bg-background/90 shadow-sm backdrop-blur-sm',
+              autoRotate && 'border-primary/50 text-primary'
+            )}
+            data-testid="iv-surface-rotation-toggle"
+            aria-pressed={autoRotate}
             aria-label={
-              rotationSpeed === 'slow'
-                ? t('impliedVol.surface.rotationSlow')
-                : t('impliedVol.surface.rotationMedium')
+              autoRotate ? t('impliedVol.surface.rotationOff') : t('impliedVol.surface.rotationOn')
             }
             title={
-              rotationSpeed === 'slow'
-                ? t('impliedVol.surface.rotationSlow')
-                : t('impliedVol.surface.rotationMedium')
+              autoRotate ? t('impliedVol.surface.rotationOff') : t('impliedVol.surface.rotationOn')
             }
+            onClick={() => setAutoRotate((value) => !value)}
           >
-            {rotationSpeed === 'slow' ? '1×' : '2×'}
+            <Rotate3d className="h-3.5 w-3.5" />
           </Button>
-        )}
-        <Button
-          type="button"
-          variant="outline"
-          size="icon"
-          className="h-7 w-7 bg-background/90 shadow-sm backdrop-blur-sm"
-          data-testid="iv-surface-reset-camera"
-          aria-label={t('impliedVol.surface.resetCamera')}
-          title={t('impliedVol.surface.resetCamera')}
-          onClick={() => void resetCamera()}
-        >
-          <RotateCcw className="h-3.5 w-3.5" />
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          size="icon"
-          className={cn(
-            'h-7 w-7 bg-background/90 shadow-sm backdrop-blur-sm',
-            autoRotate && 'border-primary/50 text-primary'
-          )}
-          data-testid="iv-surface-rotation-toggle"
-          aria-pressed={autoRotate}
-          aria-label={
-            autoRotate ? t('impliedVol.surface.rotationOff') : t('impliedVol.surface.rotationOn')
-          }
-          title={
-            autoRotate ? t('impliedVol.surface.rotationOff') : t('impliedVol.surface.rotationOn')
-          }
-          onClick={() => setAutoRotate((value) => !value)}
-        >
-          <Rotate3d className="h-3.5 w-3.5" />
-        </Button>
-      </div>
+        </div>
+      )}
 
       <Plot
         data={data}

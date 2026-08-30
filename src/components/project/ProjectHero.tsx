@@ -16,18 +16,30 @@ interface ProjectHeroProps {
   project: ProjectDetail;
 }
 
+function isPlaceholderImage(src: string): boolean {
+  return src.includes('placehold.co');
+}
+
 export function ProjectHero({ project }: ProjectHeroProps) {
   const t = useTranslations('projects.detail');
+  const useGradient = isPlaceholderImage(project.image);
 
   return (
     <section className="relative h-[50vh] w-full overflow-hidden">
-      <Image
-        src={project.image}
-        alt={project.title}
-        fill
-        className="object-cover brightness-[0.7]"
-        priority
-      />
+      {useGradient ? (
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-primary/50"
+        />
+      ) : (
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          className="object-cover brightness-[0.7]"
+          priority
+        />
+      )}
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent" />
       <div className="container relative z-10 flex h-full flex-col justify-end pb-16">
         <Button variant="ghost" size="sm" className="absolute left-4 top-4 text-white" asChild>

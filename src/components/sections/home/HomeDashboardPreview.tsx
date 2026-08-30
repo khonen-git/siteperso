@@ -1,20 +1,65 @@
 'use client';
 
 import * as React from 'react';
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Activity, LineChart } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { formatIvPercent } from '@/lib/dashboards/chart-theme';
+import { computeSkew25d, computeSnapshotIvRange, findAtmIv } from '@/lib/dashboards/iv-metrics';
 import { cn } from '@/lib/utils';
+import type { ImpliedVolSnapshot } from '@/types/dashboards/implied-vol';
 
-/** Static mock of the IV dashboard — no Plotly on the home page. */
-export function HomeDashboardPreview(): React.JSX.Element {
+/** ~200px à 840px de hauteur viewport ; s’adapte en % (vh), borné min/max. */
+const surfaceHeightClass = 'h-[clamp(160px,24vh,260px)]';
+
+const ImpliedVolSurfaceChart = dynamic(
+  () =>
+    import('@/components/dashboards/ImpliedVolSurfaceChart').then((m) => m.ImpliedVolSurfaceChart),
+  {
+    ssr: false,
+    loading: () => <SurfaceLoading />,
+  }
+);
+
+function SurfaceLoading(): React.JSX.Element {
+  return (
+    <div className={cn('flex items-center justify-center', surfaceHeightClass)}>
+      <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+    </div>
+  );
+}
+
+interface HomeDashboardPreviewProps {
+  snapshot: ImpliedVolSnapshot;
+}
+
+export function HomeDashboardPreview({ snapshot }: HomeDashboardPreviewProps): React.JSX.Element {
   const t = useTranslations('home.hero');
+  const tDash = useTranslations('dashboards');
+
+  const nearestSlice = React.useMemo(() => {
+    const sorted = [...snapshot.slices].sort((a, b) => a.daysToExpiry - b.daysToExpiry);
+    return sorted.find((s) => s.daysToExpiry >= 21) ?? sorted[0];
+  }, [snapshot.slices]);
+
+  const atmIv = nearestSlice ? findAtmIv(nearestSlice) : 0;
+  const rr25 =
+    nearestSlice?.analytics?.riskReversal25 ?? (nearestSlice ? computeSkew25d(nearestSlice) : null);
+  const ivRange = React.useMemo(() => computeSnapshotIvRange(snapshot), [snapshot]);
+
+  const surfaceLabels = {
+    moneyness: tDash('impliedVol.chart.moneyness'),
+    daysToExpiry: tDash('impliedVol.chart.daysToExpiry'),
+    iv: tDash('impliedVol.chart.iv'),
+  };
 
   return (
     <Link
       href="/dashboards/implied-vol"
+      prefetch
       className="group block h-full"
       aria-label={t('ctaDashboard')}
     >
@@ -23,11 +68,11 @@ export function HomeDashboardPreview(): React.JSX.Element {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, delay: 0.15 }}
         className={cn(
-          'relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-xl border bg-card/80 shadow-lg',
+          'relative flex w-full flex-col overflow-hidden rounded-xl border bg-card/80 shadow-lg lg:ml-auto lg:max-w-[75%]',
           'transition-shadow duration-300 group-hover:shadow-xl group-hover:ring-1 group-hover:ring-primary/30'
         )}
       >
-        <div className="flex items-center justify-between gap-2 border-b bg-muted/30 px-4 py-3">
+        <div className="flex items-center justify-between gap-2 border-b bg-muted/30 px-3 py-2">
           <div className="flex items-center gap-2">
             <LineChart className="h-4 w-4 text-primary" aria-hidden />
             <span className="text-sm font-medium">{t('previewLabel')}</span>
@@ -38,39 +83,47 @@ export function HomeDashboardPreview(): React.JSX.Element {
           </Badge>
         </div>
 
-        <div className="relative flex flex-1 flex-col gap-3 p-4">
+        <div className="relative flex flex-col gap-2 p-3">
           <div className="grid grid-cols-3 gap-2 text-center text-xs">
-            {[
-              { label: 'Spot', value: '580.0' },
-              { label: 'IV ATM', value: '14.2%' },
-              { label: 'RR 25Δ', value: '+1.8 pp' },
-            ].map((kpi) => (
-              <div key={kpi.label} className="rounded-md bg-muted/40 px-2 py-1.5">
-                <div className="text-[10px] text-muted-foreground">{kpi.label}</div>
-                <div className="font-semibold tabular-nums">{kpi.value}</div>
+            <div className="rounded-md bg-muted/40 px-2 py-1.5">
+              <div className="text-[10px] text-muted-foreground">
+                {tDash('impliedVol.overview.spot')}
               </div>
-            ))}
+              <div className="font-semibold tabular-nums">{snapshot.metadata.spot.toFixed(1)}</div>
+            </div>
+            <div className="rounded-md bg-muted/40 px-2 py-1.5">
+              <div className="text-[10px] text-muted-foreground">
+                {tDash('impliedVol.overview.atmIv')}
+              </div>
+              <div className="font-semibold tabular-nums">
+                {atmIv > 0 ? formatIvPercent(atmIv, 1) : '—'}
+              </div>
+            </div>
+            <div className="rounded-md bg-muted/40 px-2 py-1.5">
+              <div className="text-[10px] text-muted-foreground">
+                {tDash('impliedVol.overview.rr25')}
+              </div>
+              <div className="font-semibold tabular-nums">
+                {rr25 != null ? `${rr25 >= 0 ? '+' : ''}${rr25.toFixed(1)} pp` : '—'}
+              </div>
+            </div>
           </div>
 
           <div
-            className="relative min-h-[140px] flex-1 overflow-hidden rounded-lg border bg-gradient-to-br from-primary/5 via-background to-secondary/10"
+            className={cn(
+              'relative shrink-0 overflow-hidden rounded-lg border bg-muted/10',
+              surfaceHeightClass
+            )}
             aria-hidden
           >
-            <div
-              className="absolute inset-0 opacity-80"
-              style={{
-                backgroundImage: `
-                  linear-gradient(135deg, hsl(var(--primary) / 0.35) 0%, transparent 45%),
-                  linear-gradient(225deg, hsl(var(--secondary) / 0.25) 0%, transparent 50%),
-                  radial-gradient(circle at 70% 30%, hsl(var(--primary) / 0.2), transparent 55%)
-                `,
-              }}
+            <ImpliedVolSurfaceChart
+              snapshot={snapshot}
+              labels={surfaceLabels}
+              force3d
+              squarePlot
+              showControls={false}
+              ivRange={ivRange}
             />
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.4)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.4)_1px,transparent_1px)] bg-[size:24px_24px]" />
-            <div className="absolute bottom-3 left-3 right-3 flex justify-between text-[10px] text-muted-foreground">
-              <span>Moneyness</span>
-              <span>Days → IV</span>
-            </div>
           </div>
 
           <p className="text-xs text-muted-foreground">{t('previewHint')}</p>
