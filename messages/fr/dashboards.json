@@ -96,7 +96,7 @@
       "ssvi": "Courbe SSVI calibrée sur la tranche — superposition pointillée du fit modèle.",
       "termStructure": "IV ATM (moneyness ≈ 1) en fonction des jours avant échéance.",
       "heatmap": "Carte IV : moneyness (horizontal) × jours avant échéance (vertical). Couleur = niveau IV.",
-      "surface3d": "Surface IV 3D : rotation automatique autour de l'axe vertical par défaut. Bouton en haut à droite pour activer/désactiver. Rotation manuelle (axe vertical) et clic pour sélectionner une échéance quand l'auto-rotation est off.",
+      "surface3d": "Surface IV 3D : rotation automatique autour de l'axe vertical. Bouton en haut à droite pour activer/désactiver. Clic sur un point (rotation arrêtée) pour sélectionner une échéance.",
       "chain": "Grille des strikes et IV pour l'échéance sélectionnée (données Yahoo snapshot).",
       "overviewStats": "Indicateurs clés du snapshot : symbole, spot, nombre d'échéances et plage IV ATM."
     },

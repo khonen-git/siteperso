@@ -21,6 +21,10 @@ const CAMERA_RADIUS = Math.hypot(1.55, 1.55);
 const CAMERA_HEIGHT = 0.85;
 const ROTATION_SPEED = 0.004;
 
+// TODO: rotation manuelle (clic-glisser orbit/turntable Plotly) — ne fonctionne pas
+// fiablement avec le layout fixed + auto-rotate. Réactiver via scene.dragmode
+// + scrollZoom une fois le conflit pointer/relayout résolu.
+
 function Surface3DLoading(): React.JSX.Element {
   const t = useTranslations('dashboards');
   return (
@@ -127,26 +131,14 @@ export function ImpliedVolSurface3DChart({
     void runAnimationFrame();
   }, [runAnimationFrame, stopAnimation]);
 
-  const setDragMode = React.useCallback(async (mode: false | 'turntable') => {
-    if (!graphDivRef.current) return;
-    const Plotly = (await import('plotly.js-dist-min')).default;
-    try {
-      await Plotly.relayout(graphDivRef.current, { 'scene.dragmode': mode });
-    } catch {
-      /* plot unmounted */
-    }
-  }, []);
-
   React.useEffect(() => {
     if (autoRotate) {
-      void setDragMode(false);
       startAnimation();
     } else {
       stopAnimation();
-      void setDragMode('turntable');
     }
     return stopAnimation;
-  }, [autoRotate, setDragMode, startAnimation, stopAnimation]);
+  }, [autoRotate, startAnimation, stopAnimation]);
 
   React.useEffect(() => () => stopAnimation(), [stopAnimation]);
 
@@ -182,7 +174,7 @@ export function ImpliedVolSurface3DChart({
       margin: { l: 0, r: 0, t: 0, b: 0 },
       scene: {
         bgcolor: 'transparent',
-        dragmode: (autoRotate ? false : 'turntable') as false | 'turntable',
+        dragmode: false,
         xaxis: {
           title: { text: labels.moneyness, font: { size: 11, color: theme.muted } },
           tickfont: { size: 10, color: theme.muted },
@@ -205,7 +197,7 @@ export function ImpliedVolSurface3DChart({
         camera: { eye: eyeFromAngle(angleRef.current) },
       },
     }),
-    [autoRotate, labels, theme.border, theme.muted]
+    [labels, theme.border, theme.muted]
   );
 
   const handleClick = React.useCallback(
@@ -269,7 +261,7 @@ export function ImpliedVolSurface3DChart({
       <Plot
         data={data}
         layout={layout}
-        config={{ displayModeBar: false, responsive: true, scrollZoom: !autoRotate }}
+        config={{ displayModeBar: false, responsive: true, scrollZoom: false }}
         style={{ width: '100%', height: '100%' }}
         onClick={handleClick}
         onInitialized={handleInitialized}
