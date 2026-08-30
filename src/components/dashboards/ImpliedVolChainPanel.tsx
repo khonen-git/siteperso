@@ -70,6 +70,21 @@ export function ImpliedVolChainPanel({
     [slice.ivPoints, sortKey, sortDir, otmFilter]
   );
 
+  const showQuotes = React.useMemo(
+    () => slice.ivPoints.some((p) => p.bid != null || p.ask != null),
+    [slice.ivPoints]
+  );
+  const showOi = React.useMemo(
+    () => slice.ivPoints.some((p) => p.openInterest != null && p.openInterest > 0),
+    [slice.ivPoints]
+  );
+
+  const formatBidAsk = (bid?: number, ask?: number) => {
+    if (bid == null && ask == null) return '—';
+    if (bid != null && ask != null) return `${bid.toFixed(2)} / ${ask.toFixed(2)}`;
+    return bid != null ? bid.toFixed(2) : ask!.toFixed(2);
+  };
+
   const title = t('impliedVol.chain.title', {
     symbol,
     expiry: slice.expiry,
@@ -183,6 +198,16 @@ export function ImpliedVolChainPanel({
                   <SortIcon column="iv" />
                 </button>
               </TableHead>
+              {showQuotes && (
+                <TableHead className="hidden text-xs md:table-cell">
+                  {t('impliedVol.chain.bidAsk')}
+                </TableHead>
+              )}
+              {showOi && (
+                <TableHead className="hidden text-xs lg:table-cell">
+                  {t('impliedVol.chain.openInterest')}
+                </TableHead>
+              )}
               <TableHead className="hidden text-xs sm:table-cell">
                 {t('impliedVol.chain.note')}
               </TableHead>
@@ -215,6 +240,16 @@ export function ImpliedVolChainPanel({
                   <TableCell className="py-1.5 text-xs tabular-nums">
                     {formatIvPercent(row.iv, 2)}
                   </TableCell>
+                  {showQuotes && (
+                    <TableCell className="hidden py-1.5 text-xs tabular-nums md:table-cell">
+                      {formatBidAsk(row.bid, row.ask)}
+                    </TableCell>
+                  )}
+                  {showOi && (
+                    <TableCell className="hidden py-1.5 text-xs tabular-nums lg:table-cell">
+                      {row.openInterest != null ? row.openInterest.toLocaleString() : '—'}
+                    </TableCell>
+                  )}
                   <TableCell className="hidden py-1.5 text-xs text-muted-foreground sm:table-cell">
                     {noteForMoneyness(row.moneyness, t)}
                   </TableCell>

@@ -5,7 +5,8 @@
     "asOf": "2026-08-30",
     "fetchedAt": "2026-08-30T14:00:00.000Z",
     "source": "Yahoo Finance (delayed, demo snapshot)",
-    "sourceDisclaimer": "Educational demo only. Data may be delayed ~15 min. Not investment advice."
+    "sourceDisclaimer": "Educational demo only. Data may be delayed ~15 min. Not investment advice.",
+    "realizedVol20d": 0.118
   },
   "slices": [
     {
@@ -15,67 +16,132 @@
         {
           "strike": 493,
           "moneyness": 0.85,
-          "iv": 0.1592
+          "iv": 0.1592,
+          "bid": 0.87,
+          "ask": 0.94,
+          "openInterest": 28400,
+          "volume": 350,
+          "optionType": "put"
         },
         {
           "strike": 507.5,
           "moneyness": 0.875,
-          "iv": 0.1568
+          "iv": 0.1568,
+          "bid": 0.86,
+          "ask": 0.93,
+          "openInterest": 2750,
+          "volume": 300,
+          "optionType": "put"
         },
         {
           "strike": 522,
           "moneyness": 0.9,
-          "iv": 0.1542
+          "iv": 0.1542,
+          "bid": 0.84,
+          "ask": 0.91,
+          "openInterest": 7100,
+          "volume": 250,
+          "optionType": "put"
         },
         {
           "strike": 536.5,
           "moneyness": 0.925,
-          "iv": 0.1516
+          "iv": 0.1516,
+          "bid": 0.83,
+          "ask": 0.9,
+          "openInterest": 11450,
+          "volume": 200,
+          "optionType": "put"
         },
         {
           "strike": 551,
           "moneyness": 0.95,
-          "iv": 0.1488
+          "iv": 0.1488,
+          "bid": 0.81,
+          "ask": 0.88,
+          "openInterest": 15800,
+          "volume": 150,
+          "optionType": "put"
         },
         {
           "strike": 565.5,
           "moneyness": 0.975,
-          "iv": 0.146
+          "iv": 0.146,
+          "bid": 0.8,
+          "ask": 0.86,
+          "openInterest": 20150,
+          "volume": 100,
+          "optionType": "put"
         },
         {
           "strike": 580,
           "moneyness": 1,
-          "iv": 0.143
+          "iv": 0.143,
+          "bid": 0.78,
+          "ask": 0.85,
+          "openInterest": 24500,
+          "volume": 50,
+          "optionType": "call"
         },
         {
           "strike": 594.5,
           "moneyness": 1.025,
-          "iv": 0.14
+          "iv": 0.14,
+          "bid": 0.76,
+          "ask": 0.83,
+          "openInterest": 28850,
+          "volume": 500,
+          "optionType": "call"
         },
         {
           "strike": 609,
           "moneyness": 1.05,
-          "iv": 0.1368
+          "iv": 0.1368,
+          "bid": 0.75,
+          "ask": 0.81,
+          "openInterest": 3200,
+          "volume": 450,
+          "optionType": "call"
         },
         {
           "strike": 623.5,
           "moneyness": 1.075,
-          "iv": 0.1336
+          "iv": 0.1336,
+          "bid": 0.73,
+          "ask": 0.79,
+          "openInterest": 7550,
+          "volume": 400,
+          "optionType": "call"
         },
         {
           "strike": 638,
           "moneyness": 1.1,
-          "iv": 0.1302
+          "iv": 0.1302,
+          "bid": 0.71,
+          "ask": 0.77,
+          "openInterest": 11900,
+          "volume": 350,
+          "optionType": "call"
         },
         {
           "strike": 652.5,
           "moneyness": 1.125,
-          "iv": 0.1268
+          "iv": 0.1268,
+          "bid": 0.69,
+          "ask": 0.75,
+          "openInterest": 16250,
+          "volume": 300,
+          "optionType": "call"
         },
         {
           "strike": 667,
           "moneyness": 1.15,
-          "iv": 0.1232
+          "iv": 0.1232,
+          "bid": 0.67,
+          "ask": 0.73,
+          "openInterest": 20600,
+          "volume": 250,
+          "optionType": "call"
         }
       ],
       "ssvi": {
@@ -84,6 +150,12 @@
         "gamma": 0.5,
         "m": 0,
         "sigma": 0.14300000000000002
+      },
+      "analytics": {
+        "atmIv": 0.143,
+        "riskReversal25": 2.3999999999999995,
+        "butterfly25": -0.07999999999999952,
+        "ssviRmse": 2.484846522635646
       }
     },
     {
@@ -93,67 +165,132 @@
         {
           "strike": 493,
           "moneyness": 0.85,
-          "iv": 0.1634
+          "iv": 0.1634,
+          "bid": 0.89,
+          "ask": 0.97,
+          "openInterest": 28400,
+          "volume": 350,
+          "optionType": "put"
         },
         {
           "strike": 507.5,
           "moneyness": 0.875,
-          "iv": 0.161
+          "iv": 0.161,
+          "bid": 0.88,
+          "ask": 0.95,
+          "openInterest": 2750,
+          "volume": 300,
+          "optionType": "put"
         },
         {
           "strike": 522,
           "moneyness": 0.9,
-          "iv": 0.1584
+          "iv": 0.1584,
+          "bid": 0.86,
+          "ask": 0.94,
+          "openInterest": 7100,
+          "volume": 250,
+          "optionType": "put"
         },
         {
           "strike": 536.5,
           "moneyness": 0.925,
-          "iv": 0.1558
+          "iv": 0.1558,
+          "bid": 0.85,
+          "ask": 0.92,
+          "openInterest": 11450,
+          "volume": 200,
+          "optionType": "put"
         },
         {
           "strike": 551,
           "moneyness": 0.95,
-          "iv": 0.153
+          "iv": 0.153,
+          "bid": 0.83,
+          "ask": 0.9,
+          "openInterest": 15800,
+          "volume": 150,
+          "optionType": "put"
         },
         {
           "strike": 565.5,
           "moneyness": 0.975,
-          "iv": 0.1502
+          "iv": 0.1502,
+          "bid": 0.82,
+          "ask": 0.89,
+          "openInterest": 20150,
+          "volume": 100,
+          "optionType": "put"
         },
         {
           "strike": 580,
           "moneyness": 1,
-          "iv": 0.1472
+          "iv": 0.1472,
+          "bid": 0.8,
+          "ask": 0.87,
+          "openInterest": 24500,
+          "volume": 50,
+          "optionType": "call"
         },
         {
           "strike": 594.5,
           "moneyness": 1.025,
-          "iv": 0.1442
+          "iv": 0.1442,
+          "bid": 0.79,
+          "ask": 0.85,
+          "openInterest": 28850,
+          "volume": 500,
+          "optionType": "call"
         },
         {
           "strike": 609,
           "moneyness": 1.05,
-          "iv": 0.141
+          "iv": 0.141,
+          "bid": 0.77,
+          "ask": 0.83,
+          "openInterest": 3200,
+          "volume": 450,
+          "optionType": "call"
         },
         {
           "strike": 623.5,
           "moneyness": 1.075,
-          "iv": 0.1378
+          "iv": 0.1378,
+          "bid": 0.75,
+          "ask": 0.81,
+          "openInterest": 7550,
+          "volume": 400,
+          "optionType": "call"
         },
         {
           "strike": 638,
           "moneyness": 1.1,
-          "iv": 0.1344
+          "iv": 0.1344,
+          "bid": 0.73,
+          "ask": 0.79,
+          "openInterest": 11900,
+          "volume": 350,
+          "optionType": "call"
         },
         {
           "strike": 652.5,
           "moneyness": 1.125,
-          "iv": 0.131
+          "iv": 0.131,
+          "bid": 0.71,
+          "ask": 0.77,
+          "openInterest": 16250,
+          "volume": 300,
+          "optionType": "call"
         },
         {
           "strike": 667,
           "moneyness": 1.15,
-          "iv": 0.1274
+          "iv": 0.1274,
+          "bid": 0.7,
+          "ask": 0.75,
+          "openInterest": 20600,
+          "volume": 250,
+          "optionType": "call"
         }
       ],
       "ssvi": {
@@ -162,6 +299,12 @@
         "gamma": 0.5,
         "m": 0,
         "sigma": 0.14720000000000003
+      },
+      "analytics": {
+        "atmIv": 0.1472,
+        "riskReversal25": 2.400000000000002,
+        "butterfly25": -0.07999999999999952,
+        "ssviRmse": 1.3062827947754938
       }
     },
     {
@@ -171,67 +314,132 @@
         {
           "strike": 493,
           "moneyness": 0.85,
-          "iv": 0.1687
+          "iv": 0.1687,
+          "bid": 0.92,
+          "ask": 1,
+          "openInterest": 28400,
+          "volume": 350,
+          "optionType": "put"
         },
         {
           "strike": 507.5,
           "moneyness": 0.875,
-          "iv": 0.1662
+          "iv": 0.1662,
+          "bid": 0.91,
+          "ask": 0.98,
+          "openInterest": 2750,
+          "volume": 300,
+          "optionType": "put"
         },
         {
           "strike": 522,
           "moneyness": 0.9,
-          "iv": 0.1637
+          "iv": 0.1637,
+          "bid": 0.89,
+          "ask": 0.97,
+          "openInterest": 7100,
+          "volume": 250,
+          "optionType": "put"
         },
         {
           "strike": 536.5,
           "moneyness": 0.925,
-          "iv": 0.161
+          "iv": 0.161,
+          "bid": 0.88,
+          "ask": 0.95,
+          "openInterest": 11450,
+          "volume": 200,
+          "optionType": "put"
         },
         {
           "strike": 551,
           "moneyness": 0.95,
-          "iv": 0.1583
+          "iv": 0.1583,
+          "bid": 0.86,
+          "ask": 0.94,
+          "openInterest": 15800,
+          "volume": 150,
+          "optionType": "put"
         },
         {
           "strike": 565.5,
           "moneyness": 0.975,
-          "iv": 0.1554
+          "iv": 0.1554,
+          "bid": 0.85,
+          "ask": 0.92,
+          "openInterest": 20150,
+          "volume": 100,
+          "optionType": "put"
         },
         {
           "strike": 580,
           "moneyness": 1,
-          "iv": 0.1525
+          "iv": 0.1525,
+          "bid": 0.83,
+          "ask": 0.9,
+          "openInterest": 24500,
+          "volume": 50,
+          "optionType": "call"
         },
         {
           "strike": 594.5,
           "moneyness": 1.025,
-          "iv": 0.1494
+          "iv": 0.1494,
+          "bid": 0.82,
+          "ask": 0.88,
+          "openInterest": 28850,
+          "volume": 500,
+          "optionType": "call"
         },
         {
           "strike": 609,
           "moneyness": 1.05,
-          "iv": 0.1463
+          "iv": 0.1463,
+          "bid": 0.8,
+          "ask": 0.86,
+          "openInterest": 3200,
+          "volume": 450,
+          "optionType": "call"
         },
         {
           "strike": 623.5,
           "moneyness": 1.075,
-          "iv": 0.143
+          "iv": 0.143,
+          "bid": 0.78,
+          "ask": 0.85,
+          "openInterest": 7550,
+          "volume": 400,
+          "optionType": "call"
         },
         {
           "strike": 638,
           "moneyness": 1.1,
-          "iv": 0.1397
+          "iv": 0.1397,
+          "bid": 0.76,
+          "ask": 0.83,
+          "openInterest": 11900,
+          "volume": 350,
+          "optionType": "call"
         },
         {
           "strike": 652.5,
           "moneyness": 1.125,
-          "iv": 0.1362
+          "iv": 0.1362,
+          "bid": 0.74,
+          "ask": 0.8,
+          "openInterest": 16250,
+          "volume": 300,
+          "optionType": "call"
         },
         {
           "strike": 667,
           "moneyness": 1.15,
-          "iv": 0.1327
+          "iv": 0.1327,
+          "bid": 0.72,
+          "ask": 0.78,
+          "openInterest": 20600,
+          "volume": 250,
+          "optionType": "call"
         }
       ],
       "ssvi": {
@@ -240,6 +448,12 @@
         "gamma": 0.5,
         "m": 0,
         "sigma": 0.15245
+      },
+      "analytics": {
+        "atmIv": 0.1525,
+        "riskReversal25": 2.400000000000002,
+        "butterfly25": -0.07999999999999952,
+        "ssviRmse": 0.806230087555675
       }
     },
     {
@@ -249,67 +463,132 @@
         {
           "strike": 493,
           "moneyness": 0.85,
-          "iv": 0.1729
+          "iv": 0.1729,
+          "bid": 0.94,
+          "ask": 1.02,
+          "openInterest": 28400,
+          "volume": 350,
+          "optionType": "put"
         },
         {
           "strike": 507.5,
           "moneyness": 0.875,
-          "iv": 0.1704
+          "iv": 0.1704,
+          "bid": 0.93,
+          "ask": 1.01,
+          "openInterest": 2750,
+          "volume": 300,
+          "optionType": "put"
         },
         {
           "strike": 522,
           "moneyness": 0.9,
-          "iv": 0.1679
+          "iv": 0.1679,
+          "bid": 0.92,
+          "ask": 0.99,
+          "openInterest": 7100,
+          "volume": 250,
+          "optionType": "put"
         },
         {
           "strike": 536.5,
           "moneyness": 0.925,
-          "iv": 0.1652
+          "iv": 0.1652,
+          "bid": 0.9,
+          "ask": 0.98,
+          "openInterest": 11450,
+          "volume": 200,
+          "optionType": "put"
         },
         {
           "strike": 551,
           "moneyness": 0.95,
-          "iv": 0.1625
+          "iv": 0.1625,
+          "bid": 0.89,
+          "ask": 0.96,
+          "openInterest": 15800,
+          "volume": 150,
+          "optionType": "put"
         },
         {
           "strike": 565.5,
           "moneyness": 0.975,
-          "iv": 0.1596
+          "iv": 0.1596,
+          "bid": 0.87,
+          "ask": 0.94,
+          "openInterest": 20150,
+          "volume": 100,
+          "optionType": "put"
         },
         {
           "strike": 580,
           "moneyness": 1,
-          "iv": 0.1567
+          "iv": 0.1567,
+          "bid": 0.85,
+          "ask": 0.93,
+          "openInterest": 24500,
+          "volume": 50,
+          "optionType": "call"
         },
         {
           "strike": 594.5,
           "moneyness": 1.025,
-          "iv": 0.1536
+          "iv": 0.1536,
+          "bid": 0.84,
+          "ask": 0.91,
+          "openInterest": 28850,
+          "volume": 500,
+          "optionType": "call"
         },
         {
           "strike": 609,
           "moneyness": 1.05,
-          "iv": 0.1505
+          "iv": 0.1505,
+          "bid": 0.82,
+          "ask": 0.89,
+          "openInterest": 3200,
+          "volume": 450,
+          "optionType": "call"
         },
         {
           "strike": 623.5,
           "moneyness": 1.075,
-          "iv": 0.1472
+          "iv": 0.1472,
+          "bid": 0.8,
+          "ask": 0.87,
+          "openInterest": 7550,
+          "volume": 400,
+          "optionType": "call"
         },
         {
           "strike": 638,
           "moneyness": 1.1,
-          "iv": 0.1439
+          "iv": 0.1439,
+          "bid": 0.79,
+          "ask": 0.85,
+          "openInterest": 11900,
+          "volume": 350,
+          "optionType": "call"
         },
         {
           "strike": 652.5,
           "moneyness": 1.125,
-          "iv": 0.1404
+          "iv": 0.1404,
+          "bid": 0.77,
+          "ask": 0.83,
+          "openInterest": 16250,
+          "volume": 300,
+          "optionType": "call"
         },
         {
           "strike": 667,
           "moneyness": 1.15,
-          "iv": 0.1369
+          "iv": 0.1369,
+          "bid": 0.75,
+          "ask": 0.81,
+          "openInterest": 20600,
+          "volume": 250,
+          "optionType": "call"
         }
       ],
       "ssvi": {
@@ -318,7 +597,46 @@
         "gamma": 0.5,
         "m": 0,
         "sigma": 0.15665
+      },
+      "analytics": {
+        "atmIv": 0.1567,
+        "riskReversal25": 2.3999999999999995,
+        "butterfly25": -0.08000000000000229,
+        "ssviRmse": 0.6125394222813725
       }
     }
-  ]
+  ],
+  "analytics": {
+    "forwardVols": [
+      {
+        "fromDte": 20,
+        "toDte": 48,
+        "forwardIv": 0.1501280786528623
+      },
+      {
+        "fromDte": 48,
+        "toDte": 83,
+        "forwardIv": 0.15948241551074793
+      },
+      {
+        "fromDte": 83,
+        "toDte": 111,
+        "forwardIv": 0.1685361385578773
+      }
+    ],
+    "termStructure": "contango",
+    "expectedMove": {
+      "daysToExpiry": 20,
+      "move68Pct": 3.3473768098093335,
+      "move95Pct": 6.560858547226293,
+      "move68Dollars": 19.414785496894133,
+      "move95Dollars": 38.0529795739125
+    },
+    "realizedVol20d": 0.118,
+    "volatilityRiskPremium": 2.4999999999999996,
+    "ivRank30d": 76.6,
+    "ivPercentile30d": 63.3,
+    "previousAtmIv": 0.1362,
+    "atmIvDelta": 0.68
+  }
 }

@@ -209,7 +209,17 @@ export function ImpliedVolSurface3DChart({
     }
 
     return traces;
-  }, [cmax, cmin, grid.dteAxis, grid.moneynessAxis, labels, selectedDte, squarePlot, theme.muted, zPercent]);
+  }, [
+    cmax,
+    cmin,
+    grid.dteAxis,
+    grid.moneynessAxis,
+    labels,
+    selectedDte,
+    squarePlot,
+    theme.muted,
+    zPercent,
+  ]);
 
   const layout = React.useMemo(
     () => ({

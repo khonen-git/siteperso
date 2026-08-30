@@ -44,6 +44,11 @@
       "atmRange": "Plage IV ATM",
       "atmIv": "IV ATM (échéance)",
       "skew25d": "Skew 25Δ (proxy)",
+      "rr25": "RR 25Δ (proxy)",
+      "ivRank": "IV rank 30j",
+      "expectedMove68": "Move attendu 68%",
+      "vrp": "VRP (IV − RV)",
+      "termStructure": "Structure à terme",
       "indicators": "Indicateurs",
       "expiryHint": "Échéance : {expiry}",
       "termHint": "{count} maturités · plage {min}–{max} %",
@@ -67,6 +72,8 @@
       "strike": "Strike",
       "moneyness": "Moneyness",
       "iv": "IV %",
+      "bidAsk": "Bid / Ask",
+      "openInterest": "OI",
       "note": "Note",
       "atmNote": "ATM",
       "otmCall": "OTM call",
@@ -77,6 +84,13 @@
       "sortAsc": "tri croissant",
       "sortDesc": "tri décroissant",
       "empty": "Aucun point IV pour cette échéance."
+    },
+    "analytics": {
+      "term": {
+        "contango": "Contango",
+        "backwardation": "Backwardation",
+        "flat": "Plate"
+      }
     },
     "term": {
       "title": "Structure à terme ATM"
@@ -98,7 +112,7 @@
     },
     "about": {
       "methodologyTitle": "Méthodologie",
-      "methodologyBody": "Chaîne options via yfinance, calibration SVI/SSVI (package ivsurface), export JSON offline servi par l'API Next.js. Refresh = relecture du snapshot en cache.",
+      "methodologyBody": "Chaîne options via yfinance, calibration SVI/SSVI (package ivsurface), export JSON offline servi par l'API Next.js. Actualiser lance le pipeline export → enrichissement analytics → historique ATM.",
       "pipelineTitle": "Pipeline de données",
       "pipelineSteps": "Yahoo Finance (yfinance) → chaîne options → calibration SSVI (ivsurface) → export JSON → API Next.js → dashboard React.",
       "linksTitle": "Liens",
@@ -111,7 +125,7 @@
     },
     "tooltips": {
       "expiry": "Sélectionne l'échéance affichée sur le smile et la chaîne options.",
-      "refresh": "Recharge le snapshot depuis le cache serveur (pas de flux Yahoo live dans le navigateur).",
+      "refresh": "Lance le pipeline serveur (export yfinance/ivsurface si disponible, enrichissement analytics, historique ATM) puis recharge les données.",
       "moneyness": "Rapport strike / spot (K/S). 1 = ATM.",
       "ssvi": "Courbe SSVI calibrée sur la tranche — superposition pointillée du fit modèle.",
       "termStructure": "IV ATM (moneyness ≈ 1) en fonction des jours avant échéance.",

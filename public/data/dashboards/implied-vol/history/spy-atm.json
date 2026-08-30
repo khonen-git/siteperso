@@ -1,0 +1,186 @@
+{
+  "symbol": "SPY",
+  "updatedAt": "2026-08-30T15:35:00.505Z",
+  "points": [
+    {
+      "asOf": "2026-08-01",
+      "atmIv": 0.131,
+      "spot": 580.54,
+      "realizedVol20d": 0.1078
+    },
+    {
+      "asOf": "2026-08-02",
+      "atmIv": 0.1284,
+      "spot": 580.5,
+      "realizedVol20d": 0.1074
+    },
+    {
+      "asOf": "2026-08-03",
+      "atmIv": 0.1261,
+      "spot": 580.46,
+      "realizedVol20d": 0.107
+    },
+    {
+      "asOf": "2026-08-04",
+      "atmIv": 0.1242,
+      "spot": 580.43,
+      "realizedVol20d": 0.1066
+    },
+    {
+      "asOf": "2026-08-05",
+      "atmIv": 0.1229,
+      "spot": 580.39,
+      "realizedVol20d": 0.1064
+    },
+    {
+      "asOf": "2026-08-06",
+      "atmIv": 0.1222,
+      "spot": 580.35,
+      "realizedVol20d": 0.1062
+    },
+    {
+      "asOf": "2026-08-07",
+      "atmIv": 0.1221,
+      "spot": 580.31,
+      "realizedVol20d": 0.106
+    },
+    {
+      "asOf": "2026-08-08",
+      "atmIv": 0.1225,
+      "spot": 580.27,
+      "realizedVol20d": 0.106
+    },
+    {
+      "asOf": "2026-08-09",
+      "atmIv": 0.1235,
+      "spot": 580.23,
+      "realizedVol20d": 0.106
+    },
+    {
+      "asOf": "2026-08-10",
+      "atmIv": 0.1251,
+      "spot": 580.19,
+      "realizedVol20d": 0.1062
+    },
+    {
+      "asOf": "2026-08-11",
+      "atmIv": 0.1271,
+      "spot": 580.15,
+      "realizedVol20d": 0.1064
+    },
+    {
+      "asOf": "2026-08-12",
+      "atmIv": 0.1295,
+      "spot": 580.12,
+      "realizedVol20d": 0.1066
+    },
+    {
+      "asOf": "2026-08-13",
+      "atmIv": 0.1321,
+      "spot": 580.08,
+      "realizedVol20d": 0.107
+    },
+    {
+      "asOf": "2026-08-14",
+      "atmIv": 0.1349,
+      "spot": 580.04,
+      "realizedVol20d": 0.1074
+    },
+    {
+      "asOf": "2026-08-15",
+      "atmIv": 0.1377,
+      "spot": 580,
+      "realizedVol20d": 0.1078
+    },
+    {
+      "asOf": "2026-08-16",
+      "atmIv": 0.1404,
+      "spot": 579.96,
+      "realizedVol20d": 0.1083
+    },
+    {
+      "asOf": "2026-08-17",
+      "atmIv": 0.143,
+      "spot": 579.92,
+      "realizedVol20d": 0.1089
+    },
+    {
+      "asOf": "2026-08-18",
+      "atmIv": 0.1452,
+      "spot": 579.88,
+      "realizedVol20d": 0.1094
+    },
+    {
+      "asOf": "2026-08-19",
+      "atmIv": 0.147,
+      "spot": 579.85,
+      "realizedVol20d": 0.11
+    },
+    {
+      "asOf": "2026-08-20",
+      "atmIv": 0.1484,
+      "spot": 579.81,
+      "realizedVol20d": 0.1106
+    },
+    {
+      "asOf": "2026-08-21",
+      "atmIv": 0.1492,
+      "spot": 579.77,
+      "realizedVol20d": 0.1111
+    },
+    {
+      "asOf": "2026-08-22",
+      "atmIv": 0.1494,
+      "spot": 579.73,
+      "realizedVol20d": 0.1117
+    },
+    {
+      "asOf": "2026-08-23",
+      "atmIv": 0.149,
+      "spot": 579.69,
+      "realizedVol20d": 0.1122
+    },
+    {
+      "asOf": "2026-08-24",
+      "atmIv": 0.148,
+      "spot": 579.65,
+      "realizedVol20d": 0.1126
+    },
+    {
+      "asOf": "2026-08-25",
+      "atmIv": 0.1465,
+      "spot": 579.61,
+      "realizedVol20d": 0.113
+    },
+    {
+      "asOf": "2026-08-26",
+      "atmIv": 0.1444,
+      "spot": 579.57,
+      "realizedVol20d": 0.1134
+    },
+    {
+      "asOf": "2026-08-27",
+      "atmIv": 0.142,
+      "spot": 579.54,
+      "realizedVol20d": 0.1136
+    },
+    {
+      "asOf": "2026-08-28",
+      "atmIv": 0.1392,
+      "spot": 579.5,
+      "realizedVol20d": 0.1138
+    },
+    {
+      "asOf": "2026-08-29",
+      "atmIv": 0.1362,
+      "spot": 579.46,
+      "realizedVol20d": 0.114
+    },
+    {
+      "asOf": "2026-08-30",
+      "atmIv": 0.143,
+      "spot": 580,
+      "realizedVol20d": 0.118
+    }
+  ]
+}

@@ -13,10 +13,18 @@ describe('implied-vol snapshot', () => {
     expect(snapshot.slices.length).toBeGreaterThan(0);
     for (const slice of snapshot.slices) {
       expect(slice.ivPoints.length).toBeGreaterThan(0);
+      expect(slice.analytics?.atmIv).toBeGreaterThan(0);
       for (const pt of slice.ivPoints) {
         expect(pt.iv).toBeGreaterThan(0);
         expect(pt.moneyness).toBeGreaterThan(0);
       }
     }
+  });
+
+  it('loads enriched snapshot analytics', () => {
+    const snapshot = getImpliedVolSnapshot('SPY');
+    expect(snapshot.analytics?.expectedMove).toBeDefined();
+    expect(snapshot.analytics?.termStructure).toBeDefined();
+    expect(snapshot.slices[0].analytics?.riskReversal25).toBeDefined();
   });
 });

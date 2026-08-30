@@ -25,6 +25,8 @@ npm run validate    # lint + typecheck + test + build
 npm test
 ```
 
+Build prod Windows (verrous, timeout 5 min, EPERM `.next/trace`) : voir [LINT-BUILD.md](../LINT-BUILD.md#build-lent-ou-bloqué--diagnostic-windows).
+
 ## Known issues / debt
 
 1. **`next lint` is deprecated** — Next.js 16 will remove it. Prefer `npm run lint` (`eslint .`).

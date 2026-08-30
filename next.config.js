@@ -13,6 +13,9 @@ const withMDX = createMDX({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Windows: `npm run build` uses a separate dist dir (see scripts/build-clean.mjs) when
+  // `.next/trace` is locked by a dev server or the IDE.
+  distDir: process.env.NEXT_BUILD_DIST_DIR || '.next',
   async redirects() {
     const locale = ':locale';
     const permanent = true;

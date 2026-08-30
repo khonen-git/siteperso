@@ -44,6 +44,11 @@
       "atmRange": "ATM IV range",
       "atmIv": "ATM IV (expiry)",
       "skew25d": "25Δ skew (proxy)",
+      "rr25": "25Δ RR (proxy)",
+      "ivRank": "IV rank 30d",
+      "expectedMove68": "Expected move 68%",
+      "vrp": "VRP (IV − RV)",
+      "termStructure": "Term structure",
       "indicators": "Indicators",
       "expiryHint": "Expiry: {expiry}",
       "termHint": "{count} maturities · range {min}–{max}%",
@@ -67,6 +72,8 @@
       "strike": "Strike",
       "moneyness": "Moneyness",
       "iv": "IV %",
+      "bidAsk": "Bid / Ask",
+      "openInterest": "OI",
       "note": "Note",
       "atmNote": "ATM",
       "otmCall": "OTM call",
@@ -77,6 +84,13 @@
       "sortAsc": "ascending sort",
       "sortDesc": "descending sort",
       "empty": "No IV points for this expiry."
+    },
+    "analytics": {
+      "term": {
+        "contango": "Contango",
+        "backwardation": "Backwardation",
+        "flat": "Flat"
+      }
     },
     "term": {
       "title": "ATM term structure"
@@ -98,7 +112,7 @@
     },
     "about": {
       "methodologyTitle": "Methodology",
-      "methodologyBody": "Options chain via yfinance, SVI/SSVI calibration (ivsurface package), offline JSON export served by the Next.js API. Refresh reloads the cached snapshot.",
+      "methodologyBody": "Options chain via yfinance, SVI/SSVI calibration (ivsurface package), offline JSON export served by the Next.js API. Refresh runs the export → analytics enrichment → ATM history pipeline.",
       "pipelineTitle": "Data pipeline",
       "pipelineSteps": "Yahoo Finance (yfinance) → options chain → SSVI calibration (ivsurface) → JSON export → Next.js API → React dashboard.",
       "linksTitle": "Links",
@@ -111,7 +125,7 @@
     },
     "tooltips": {
       "expiry": "Selects the expiry shown on the smile chart and options chain.",
-      "refresh": "Reloads the snapshot from server cache (no live Yahoo stream in the browser).",
+      "refresh": "Runs the server pipeline (yfinance/ivsurface export when available, analytics enrichment, ATM history) then reloads data.",
       "moneyness": "Strike / spot ratio (K/S). 1 = ATM.",
       "ssvi": "SSVI curve fitted on the slice — dashed model overlay.",
       "termStructure": "ATM IV (moneyness ≈ 1) vs days to expiry.",

@@ -128,11 +128,12 @@ export function ImpliedVolDashboard({
   }, [refreshSuccess]);
 
   const fetchSnapshot = React.useCallback(
-    async (symbol: SupportedIvSymbol) => {
+    async (symbol: SupportedIvSymbol, options?: { refresh?: boolean }) => {
       setLoadState('loading');
       setErrorMessage(null);
       try {
-        const res = await fetch(`/api/dashboards/implied-vol?symbol=${encodeURIComponent(symbol)}`);
+        const url = `/api/dashboards/implied-vol?symbol=${encodeURIComponent(symbol)}`;
+        const res = await fetch(url, { method: options?.refresh ? 'POST' : 'GET' });
         if (!res.ok) throw new Error(t('impliedVol.errors.loadFailed'));
         const data = (await res.json()) as ImpliedVolSnapshot;
         setSnapshot(data);
@@ -141,7 +142,7 @@ export function ImpliedVolDashboard({
           data.slices.some((s) => s.expiry === prev) ? prev : (data.slices[0]?.expiry ?? '')
         );
         setLoadState('idle');
-        setRefreshSuccess(true);
+        if (options?.refresh) setRefreshSuccess(true);
       } catch (err) {
         setLoadState('error');
         setErrorMessage(err instanceof Error ? err.message : t('impliedVol.errors.loadFailed'));
@@ -151,7 +152,7 @@ export function ImpliedVolDashboard({
   );
 
   const handleRefresh = () => {
-    void fetchSnapshot(snapshot.metadata.symbol as SupportedIvSymbol);
+    void fetchSnapshot(snapshot.metadata.symbol as SupportedIvSymbol, { refresh: true });
   };
 
   const handleSymbolChange = (symbol: SupportedIvSymbol) => {

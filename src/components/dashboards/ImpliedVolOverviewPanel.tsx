@@ -46,11 +46,16 @@ export function ImpliedVolOverviewPanel({
   onTermPointClick,
 }: ImpliedVolOverviewPanelProps): React.JSX.Element {
   const t = useTranslations('dashboards');
-  const atmIvs = snapshot.slices.map(findAtmIv).filter((v) => v > 0);
-  const minIv = atmIvs.length ? Math.min(...atmIvs) : 0;
-  const maxIv = atmIvs.length ? Math.max(...atmIvs) : 0;
   const selectedAtmIv = selectedSlice ? findAtmIv(selectedSlice) : 0;
-  const skew25d = selectedSlice ? computeSkew25d(selectedSlice) : null;
+  const rr25 =
+    selectedSlice?.analytics?.riskReversal25 ??
+    (selectedSlice ? computeSkew25d(selectedSlice) : null);
+  const { analytics } = snapshot;
+  const expectedMove = analytics?.expectedMove;
+  const termLabel =
+    analytics?.termStructure != null
+      ? t(`impliedVol.analytics.term.${analytics.termStructure}`)
+      : null;
 
   const chartLabels = {
     moneyness: t('impliedVol.chart.moneyness'),
@@ -90,14 +95,31 @@ export function ImpliedVolOverviewPanel({
           value={selectedAtmIv > 0 ? formatIvPercent(selectedAtmIv, 2) : '—'}
         />
         <KpiItem
-          label={t('impliedVol.overview.skew25d')}
-          value={skew25d != null ? `${skew25d >= 0 ? '+' : ''}${skew25d.toFixed(2)} pp` : '—'}
+          label={t('impliedVol.overview.rr25')}
+          value={rr25 != null ? `${rr25 >= 0 ? '+' : ''}${rr25.toFixed(2)} pp` : '—'}
         />
-        <KpiItem label={t('impliedVol.overview.expiries')} value={String(snapshot.slices.length)} />
         <KpiItem
-          label={t('impliedVol.overview.atmRange')}
-          value={atmIvs.length ? `${(minIv * 100).toFixed(1)}–${(maxIv * 100).toFixed(1)}%` : '—'}
+          label={t('impliedVol.overview.ivRank')}
+          value={analytics?.ivRank30d != null ? `${analytics.ivRank30d.toFixed(1)}%` : '—'}
         />
+        <KpiItem
+          label={t('impliedVol.overview.expectedMove68')}
+          value={
+            expectedMove
+              ? `±${expectedMove.move68Pct.toFixed(1)}% · ${expectedMove.move68Dollars.toFixed(2)}$`
+              : '—'
+          }
+        />
+        <KpiItem
+          label={t('impliedVol.overview.vrp')}
+          value={
+            analytics?.volatilityRiskPremium != null
+              ? `${analytics.volatilityRiskPremium >= 0 ? '+' : ''}${analytics.volatilityRiskPremium.toFixed(2)} pp`
+              : '—'
+          }
+        />
+        {termLabel && <KpiItem label={t('impliedVol.overview.termStructure')} value={termLabel} />}
+        <KpiItem label={t('impliedVol.overview.expiries')} value={String(snapshot.slices.length)} />
         <div className="ml-auto flex flex-wrap items-center gap-2">
           <Badge variant="secondary" className="text-[10px]">
             {snapshot.metadata.source}

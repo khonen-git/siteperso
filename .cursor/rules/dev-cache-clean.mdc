@@ -14,7 +14,19 @@ Après **toute modification** de code ou de configuration qui affecte l'applicat
 | `npm run clean` | Supprime `.next` et `node_modules/.cache` |
 | `npm run dev:clean` | **Préféré** pour (re)lancer le dev : libère le port 3000/3001, clean, puis `next dev` |
 | `npm run dev` | Uniquement si le cache a déjà été nettoyé |
-| `npm run build` | Toujours après `npm run clean` si des fichiers sources ont changé |
+| `npm run build` | Build prod via `scripts/build-clean.mjs` (dossier `.next-build`, voir [LINT-BUILD.md](LINT-BUILD.md)) |
+
+## Build prod — timeout agents (Windows)
+
+**Ne pas attendre plus de ~5 minutes** sans log utile (`✓ Compiled`, erreur EPERM/ENOENT, ou progression SSG).
+
+Si le build semble figé après `Creating an optimized production build ...` :
+
+1. Arrêter d’attendre ; tuer le processus `next build` / shell concerné.
+2. Lire [LINT-BUILD.md § Build lent ou bloqué](LINT-BUILD.md#build-lent-ou-bloqué--diagnostic-windows) — cause typique : **`EPERM` sur `.next/trace`** (dev + build concurrents, build zombie, verrou IDE).
+3. Relancer **une seule fois** : `npm run build` (jamais plusieurs builds parallèles).
+
+**Ne pas** lancer `npm run clean` pendant qu’un `dev` tourne (EPERM / `.next` corrompu). Pour le dev : `dev:clean`. Pour le prod : `npm run build` gère `.next-build` seul.
 
 ## Script `clean` (package.json)
 
@@ -33,7 +45,7 @@ Sur Windows : identifie le PID qui écoute sur le port 3000 (ou 3001) via `netst
 ## Workflow agent
 
 1. Modifier le code / config
-2. `npm run clean` (ou `npm run dev:clean` pour relancer le dev)
-3. `npm run dev`, `npm run build`, ou vérification navigateur
+2. Dev : `npm run dev:clean` — Build prod : `npm run build` (sans clean manuel préalable)
+3. Vérification navigateur ou CI
 
-**Ne pas** sauter le clean après des changements de sources — évite les artefacts obsolètes et les erreurs de cache.
+**Ne pas** sauter le clean avant **dev** après des changements de sources. Pour **build prod**, `npm run build` nettoie `.next-build` automatiquement.

@@ -6,7 +6,8 @@
     "clean": "node -e \"const fs=require('fs');['.next','node_modules/.cache'].forEach(p=>{try{fs.rmSync(p,{recursive:true,force:true})}catch(e){}})\"",
     "dev": "next dev",
     "dev:clean": "node scripts/dev-clean.mjs",
-    "build": "next build",
+    "build": "node scripts/build-clean.mjs",
+    "build:next": "node scripts/build-clean.mjs --skip-clean",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:next": "next lint",
@@ -23,7 +24,10 @@
     "knowledge:stubs": "node scripts/generate-knowledge-stubs.mjs",
     "knowledge:migrate": "node scripts/migrate-knowledge-paths.mjs",
     "knowledge:math-inline": "node scripts/normalize-math-inline.mjs",
-    "dashboards:iv-snapshot": "node scripts/generate-iv-snapshot.mjs"
+    "dashboards:iv-snapshot": "node scripts/generate-iv-snapshot.mjs",
+    "dashboards:iv-export": "node scripts/generate-iv-snapshot.mjs --export",
+    "dashboards:iv-enrich": "node scripts/enrich-iv-snapshot.mjs",
+    "dashboards:iv-pipeline": "node scripts/iv-data-pipeline.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.0.0",
