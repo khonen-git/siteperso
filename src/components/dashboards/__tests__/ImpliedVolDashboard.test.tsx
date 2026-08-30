@@ -116,6 +116,9 @@ jest.mock('lucide-react', () => {
     HelpCircle: MockIcon,
     ChevronDown: MockIcon,
     Check: MockIcon,
+    Maximize2: MockIcon,
+    Minimize2: MockIcon,
+    Rotate3d: MockIcon,
   };
 });
 
@@ -182,17 +185,21 @@ describe('ImpliedVolDashboard', () => {
     renderWithProviders(<ImpliedVolDashboard initialSnapshot={mockSnapshot} />);
     expect(screen.getByTestId('iv-dashboard-shell')).toBeInTheDocument();
     expect(screen.getByTestId('iv-status-bar')).toBeInTheDocument();
-    expect(screen.getByText('impliedVol.tabs.overview')).toBeInTheDocument();
-    expect(screen.getByText('impliedVol.tabs.smile')).toBeInTheDocument();
-    expect(screen.getByText('impliedVol.tabs.term')).toBeInTheDocument();
-    expect(screen.getByText('impliedVol.tabs.surface')).toBeInTheDocument();
-    expect(screen.getByText('impliedVol.tabs.chain')).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'impliedVol.tabs.overview' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'impliedVol.tabs.smile' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'impliedVol.tabs.term' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'impliedVol.tabs.surface' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'impliedVol.tabs.chain' })).toBeInTheDocument();
     expect(screen.getByText('impliedVol.status.delayed')).toBeInTheDocument();
   });
 
-  it('shows smile chart by default', () => {
+  it('shows overview grid by default', () => {
     renderWithProviders(<ImpliedVolDashboard initialSnapshot={mockSnapshot} />);
-    expect(screen.getByTestId('line-chart')).toBeInTheDocument();
+    expect(screen.getByTestId('iv-overview-smile')).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'impliedVol.tabs.overview' })).toHaveAttribute(
+      'data-state',
+      'active'
+    );
   });
 
   it('renders chain panel when chain tab is active', () => {

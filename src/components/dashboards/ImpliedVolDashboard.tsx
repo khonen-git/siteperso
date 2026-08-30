@@ -64,7 +64,7 @@ function ChartPanel({
 
 export function ImpliedVolDashboard({
   initialSnapshot,
-  initialTab = 'smile',
+  initialTab = 'overview',
 }: ImpliedVolDashboardProps): React.JSX.Element {
   const t = useTranslations('dashboards');
 

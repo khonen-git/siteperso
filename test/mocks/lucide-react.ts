@@ -23,6 +23,7 @@ export const RefreshCw = createIcon('refresh-cw');
 export const Maximize2 = createIcon('maximize-2');
 export const Minimize2 = createIcon('minimize-2');
 export const Rotate3d = createIcon('rotate-3d');
+export const LineChart = createIcon('line-chart');
 export const Github = createIcon('github');
 export const ChevronDown = createIcon('chevron-down');
 export const Check = createIcon('check');
