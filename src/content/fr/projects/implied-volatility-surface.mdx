@@ -1,0 +1,197 @@
+---
+id: 15
+title: 'Surface de volatilité implicite — calibration SVI/SSVI/Heston'
+description: "Package Python ivsurface : données options réelles (yfinance), pricing Black-Scholes, calibration SVI/SSVI/Heston, Monte Carlo et app Streamlit."
+image: 'https://placehold.co/1200x600/png'
+date: '2026-08'
+category: 'Finance quantitative'
+tags: ['Python', 'Options', 'Volatilité implicite', 'Streamlit', 'Monte Carlo', 'Heston']
+importance: 4
+relatedReferences: ['python-docs', 'scipy', 'jupyter', 'matplotlib', 'quant-guild']
+---
+
+# Surface de volatilité implicite — calibration SVI/SSVI/Heston
+
+## Résumé
+
+**IVSurface** (`ivsurface`) est un projet open source éducatif pour construire et calibrer une **surface de volatilité implicite** à partir de données d’options réelles. Le package couvre l’ingestion et le nettoyage de chaînes options (via yfinance), le pricing Black-Scholes et l’inversion IV, la calibration **SSVI** (surface globale cohérente), **SVI** slice par slice, le modèle **Heston** (Carr-Madan), ainsi que des simulations Monte Carlo et du delta-hedging.
+
+Application Streamlit interactive, notebooks pédagogiques et suite pytest complète. Code public : [khonen-git/ImpliedVolatilitySurface](https://github.com/khonen-git/ImpliedVolatilitySurface).
+
+## Objectifs
+
+- Comprendre le pricing options et la reconstruction d’une surface IV à partir du marché
+- Implémenter des modèles paramétriques standard (SVI, SSVI, Heston) avec calibration robuste
+- Comparer marché, SVI brut, SSVI et Heston sur une grille commune
+- Proposer une expérience pédagogique reproductible : scripts, notebooks, app Streamlit, tests
+- Maintenir un package installable (`pip install -e .`) avec lint ruff et CI locale
+
+## Contexte
+
+La volatilité implicite condense l’information du marché options au-delà du mouvement spot. Pour un profil quant orienté recherche FX, ce projet complète mon lab EURUSD en explorant l’**autre jambe** de la microstructure : le pricing dérivés et la structure par terme et par moneyness.
+
+Contrairement au lab privé, tout le code est **public** : données téléchargées à la volée (SPY par défaut), cache parquet local, aucune contrainte IP.
+
+## Pipeline de données
+
+### Sources et nettoyage
+
+- **Sous-jacent et chaîne options** : [yfinance](https://pypi.org/project/yfinance/) (SPY par défaut, extensible)
+- **Taux sans risque** : courbe simple `^IRX` (3M) → `^TNX` (10Y), interpolation linéaire en maturité
+- **Dividendes** : yfinance si disponible ; fallback SPY ≈ 1,3 %
+- **Expiries** : modes `short` / `long` / `mixed` via `FetchConfig`
+
+La fonction `prepare_options_chain()` nettoie bid/ask, filtre strikes aberrants et produit un DataFrame prêt pour calibration. Les chaînes sont mises en cache sous `data/cache/` (non versionnées).
+
+### Chaîne de traitement
+
+```
+Marché nettoyé → IV implicite
+     ├── SSVI (surface globale cohérente, primaire)
+     ├── SVI brut (fit slice par slice, comparaison smile)
+     ├── Heston (modèle dynamique, calibré sur mid prices)
+     └── Comparaison marché / SSVI / SVI / Heston (Streamlit, notebooks)
+```
+
+## Modèles et pricing
+
+### Black-Scholes et Greeks
+
+Module `ivsurface.pricing` : pricing vanilles, sensibilités (delta, gamma, vega, theta, rho) et **inversion IV** numérique. Point de départ du notebook `01_black_scholes.ipynb`.
+
+### SVI et SSVI
+
+- **SVI brut** : calibration indépendante par maturité — utile pour visualiser les smiles locaux et diagnostiquer les arbitrages slice par slice
+- **SSVI** : paramétrisation globale cohérente en (T, k) — surface principale pour interpolation et comparaison Heston
+
+API principale :
+
+```python
+from ivsurface.viz import run_svi_pipeline, run_heston_pipeline, run_full_pipeline
+
+svi = run_svi_pipeline(df, stats)
+sigma = svi.svi_surface(t_years, log_moneyness)
+
+heston = run_heston_pipeline(df, stats)
+result = run_full_pipeline(df, stats, heston_use_svi_guess=True)
+```
+
+### Heston et simulation
+
+- Calibration Heston via Carr-Madan sur les mid prices
+- Possibilité d’initialiser Heston avec les fits SVI comme point de départ (`heston_use_svi_guess=True`)
+- Module `simulation` : Monte Carlo, delta-hedging, pricing d’exotiques (notebook `05_simulation_hedging.ipynb`)
+
+## Application Streamlit
+
+```bash
+streamlit run src/ivsurface/viz/app.py
+```
+
+Deux modes :
+
+- **Live** : fetch yfinance en temps réel (réseau requis)
+- **Cache** : chargement d’un parquet `data/cache/{TICKER}_clean_*.parquet`
+
+Visualisations Plotly : smiles 2D/3D, comparaison modèles, diagnostics de fit.
+
+## Notebooks pédagogiques
+
+| Notebook | Contenu |
+| -------- | ------- |
+| `01_black_scholes.ipynb` | Pricing BS, Greeks, inversion IV |
+| `02_iv_surface.ipynb` | Surface IV, interpolation 2D |
+| `03_svi_calibration.ipynb` | Calibration SVI par maturité |
+| `04_heston.ipynb` | Heston Carr-Madan, comparaison SVI vs marché |
+| `05_simulation_hedging.ipynb` | Monte Carlo Heston, delta-hedge, exotiques |
+
+Extra `[viz]` requis pour Plotly/Matplotlib ; `[dev]` pour pytest et ruff.
+
+## Qualité et reproductibilité
+
+### Tests
+
+```bash
+pytest                          # tous les tests
+pytest -m integration           # réseau (yfinance)
+pytest -m "not integration"     # local uniquement (CI)
+```
+
+Markers `integration` pour isoler les tests réseau ; la CI locale exécute la suite hors intégration.
+
+### Lint et packaging
+
+- **ruff** check + format sur `src/` et `tests/`
+- Installation editable : `pip install -e ".[dev,viz]"`
+- Reproductibilité optionnelle avec [uv](https://docs.astral.sh/uv/) : `uv sync --extra dev --extra viz`
+- Python **3.11+**
+
+## Structure du package
+
+```
+src/ivsurface/
+├── data/       # fetch & nettoyage
+├── pricing/    # Black-Scholes, Greeks, IV
+├── surface/    # grille & interpolation
+├── models/     # SVI, SSVI, Heston
+├── simulation/ # Monte Carlo, hedging, exotiques
+└── viz/        # Plotly & Streamlit
+```
+
+## Technologies
+
+### Langages
+
+Python 3.11+
+
+### Données
+
+yfinance · pandas · parquet cache
+
+### Modèles numériques
+
+SciPy (optimisation) · Carr-Madan FFT · calibration SVI/SSVI
+
+### Visualisation
+
+Plotly · Matplotlib · Streamlit
+
+### Qualité
+
+pytest · ruff · markers integration
+
+## Résultats
+
+- Package installable avec pipeline complet marché → IV → SSVI/SVI → Heston
+- App Streamlit et 5 notebooks couvrant BS → hedging
+- Dépôt public MIT : [ImpliedVolatilitySurface](https://github.com/khonen-git/ImpliedVolatilitySurface)
+- Script de validation rapide : `python scripts/fetch_spy.py`
+
+## Conclusion
+
+Ce projet est volontairement **pédagogique** : il ne vise pas la production trading options, mais une compréhension hands-on de la surface IV et des modèles standard de la industrie. Il complète mon profil quant en montrant une brique dérivés equity, distincte du lab FX tick-level.
+
+## Compétences acquises
+
+### Finance dérivés
+
+- Pricing Black-Scholes, sensibilités, inversion IV
+- Paramétrisations SVI/SSVI et arbitrage smile
+- Modèle Heston, calibration et comparaison marché
+
+### Ingénierie Python
+
+- Package structuré (`src/` layout), extras `[dev]` / `[viz]`
+- Pipelines composables (`run_full_pipeline`)
+- Cache parquet et modes fetch configurables
+
+### Simulation et risque
+
+- Monte Carlo sous Heston
+- Delta-hedging et pricing d’exotiques simplifiés
+
+### Outils
+
+- Streamlit pour exploration interactive
+- pytest avec séparation tests réseau / locaux
+- ruff pour lint et format

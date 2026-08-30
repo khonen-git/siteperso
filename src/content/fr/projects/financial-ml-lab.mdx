@@ -1,0 +1,209 @@
+---
+id: 14
+title: 'Financial ML Lab — pipeline de recherche EURUSD'
+description: "Framework AFML-style : ingestion tick, bars multi-échelle, labels, CPCV, orchestration Dagster/Hydra et méthodologie process-first sur données FX."
+image: 'https://placehold.co/1200x600/png'
+date: '2026-08'
+category: 'Finance quantitative'
+tags: ['Python', 'Machine Learning', 'Hydra', 'Dagster', 'EURUSD', 'Backtesting', 'Process-first']
+importance: 5
+relatedReferences: ['python-docs', 'numpy', 'pandas', 'scikit-learn', 'tr8dr']
+---
+
+# Financial ML Lab — pipeline de recherche EURUSD
+
+## Résumé
+
+Ce projet est mon laboratoire privé de recherche quantitative sur le FX, inspiré des pratiques décrites dans _Advances in Financial Machine Learning_ (López de Prado). Il couvre l’ensemble de la chaîne : ingestion multi-sources de ticks, schéma canonique, construction de barres (temps, tick, tick-imbalance), features causales, labels supervisés, validation CPCV anti-fuite, entraînement primary/meta dual-side, rapports HTML et exploration Streamlit.
+
+Le dépôt actif reste **privé** (configs de recherche, presets Dagster, notebooks). Une **instantané public MIT** du framework — sans alpha ni données de marché — est disponible sur GitHub : [khonen-git/FinancialMLResearchLab](https://github.com/khonen-git/FinancialMLResearchLab).
+
+## Objectifs
+
+- Construire un pipeline reproductible de bout en bout, piloté par la configuration plutôt que par du code ad hoc
+- Traiter des volumes réels de microstructure FX (ticks EURUSD à l’échelle dizaines de millions) avec des backends interchangeables
+- Encadrer la recherche par des **gates** process-first (existence → détection → prédictibilité → tradabilité) avant toute optimisation de PnL
+- Garantir la discipline anti-fuite : contrats de données, tests de causalité, CPCV, suites de tests automatisées en CI
+- Séparer clairement **framework open source** et **IP de recherche** (hypothèses, paramètres sensibles, stratégies)
+
+## Contexte
+
+Après plusieurs cycles d’exploration ad hoc (notebooks isolés, scripts one-shot), j’ai consolidé mes travaux EURUSD dans un seul dépôt structuré. L’enjeu n’était pas de « trouver un signal » rapidement, mais de poser une **infrastructure de recherche** capable d’absorber des itérations rapides sans dégrader la rigueur statistique.
+
+Les articles du blog tagués **eurusd-lab** documentent des pistes concrètes testées dans ce lab (pullback multi-échelle, compression/expansion, labels Tr8dr, HMM slope, event sampling stochastique). Cette page décrit l’**écosystème technique** ; les détails méthodologiques et les verdicts de gates restent dans les articles, pas ici.
+
+## Architecture et design patterns
+
+### Configuration Hydra (~149 YAML)
+
+L’arborescence `config/` compose runtime, dataset, bars, features, labels, modèles, CV, expériences et politiques d’exécution. Chaque profil d’expérience (ex. dual-side primary/meta) relie des rôles de modèle à des groupes de features et labels via **`ConfigService`** — point d’entrée unique, sans accès Hydra dispersé dans le pipeline.
+
+Les presets Dagster (`presets/experiments/`) ne contiennent que des overrides Hydra : un run reproductible se lance depuis l’UI ou la CLI avec un fichier YAML explicite.
+
+### Registry / factory / engine
+
+Les builders de features, labels, barres et events suivent un pattern **registry + factory + engine** :
+
+- **Registry** : catalogue de types enregistrés (`@register_feature`, builders de labels, presets EBS)
+- **Factory** : instanciation à partir du YAML Hydra et validation des contrats
+- **Engine** : exécution vectorisée (pandas, Polars, cuDF, kernels Numba) sur la grille de barres primaire
+
+Cette séparation permet d’ajouter un nouveau builder en YAML + une classe enregistrée, sans modifier le graphe Dagster.
+
+### Contrats de données et backends multi-plateforme
+
+Les ticks ingérés (Dukascopy, MT5) sont normalisés vers un **schéma canonique** (timestamps `datetime64[ns]`, mid, spread, session UTC). Les barres composites (`multi_tick_ti`) matérialisent plusieurs samplings à partir d’une seule lecture tick ; les features auxiliaires sont alignées causalement sur la grille primaire via `merge_asof` backward.
+
+Backends interchangeables : **pandas**, **Polars**, **cuDF/RAPIDS**, kernels **Numba** — sélectionnables par expérience (`preferred_dataframe_backend`, `preferred_compute_backend`).
+
+## Pipeline de données
+
+### Ingestion et échelle
+
+- Multi-source : Dukascopy (historique) et MT5 (compléments / validation)
+- Instrument principal : **EURUSD**, ~**79 millions** de ticks sur la fenêtre de recherche
+- Stockage partitionné sous `data/processed/` ; artifacts MLflow/Dagster séparés (voir doc architecture bases)
+
+### Barres et event-based sampling (EBS)
+
+Types de barres supportés :
+
+- **Temps** (OHLC classiques)
+- **Tick** (fenêtres de N ticks)
+- **Tick-imbalance** (sampling information-driven)
+
+L’**Event-Based Sampling** filtre les barres où une règle structurelle est confirmée (pivots HA, pullbacks PBH/PBL, breakouts HH-X/LL-X). Un event n’est pas un signal de trade : c’est un **filtre d’échantillonnage** causal (`confirm_index` uniquement) qui concentre l’information pour l’étape features + label + modèle.
+
+### Labels supervisés
+
+Pipeline dual-side **primary / meta** (long et short) :
+
+- **Triple barrière** (barrières sup/inf + timeout séparé)
+- **Meta-labeling** : filtre binaire sur la géométrie primary
+- Labels d’**amplitude** et variantes de recherche (MFE/MAE, first-passage) documentées dans les notes méthodologiques internes
+
+Les labels sont construits sur la grille de barres **primaire** ; le purge horizon CPCV en découle.
+
+## Validation et anti-fuite
+
+### CPCV (Combinatorial Purged Cross-Validation)
+
+Validation par défaut : profil `cpcv_10_2` (10 folds, 2 folds test). Les partitions Dagster (`path_i`) sont mappées explicitement aux chemins CPCV sur disque ; les jobs de rapports HTML restent séparés des jobs ML partitionnés pour éviter les materialisations incohérentes.
+
+### Pyramide de tests
+
+| Couche | Intention |
+| ------ | --------- |
+| Contrats config | Paramètres requis, fixtures YAML invalides |
+| Formules | Oracle indépendant (pandas/numpy) sur séries synthétiques |
+| Causalité | Absence de lookahead sur chaque builder |
+| Parité | pandas / Polars (pilote) |
+| Intégration | Pipeline Hydra, golden parquet, assets Dagster statiques |
+| Leakage | Purge CV, alignement dataset |
+
+Le snapshot public exécute **~950 tests unitaires** (`pytest -m unit`) ; le dépôt privé étend la suite (intégration GPU, régression, perf) pour un total de **centaines de tests** supplémentaires en CI.
+
+## Orchestration et observabilité
+
+### Dagster + PostgreSQL
+
+Jobs principaux : prep (ticks → bars → features → labels), CPCV ML primary/meta, rapports HTML, validation finale holdout. L’instance Dagster persiste runs, partitions et lineage ; PostgreSQL stocke métadonnées Dagster et MLflow.
+
+### MLflow
+
+Tracking des expériences, métriques de modèle (accuracy, F1, AUC, Brier, calibration), artifacts de dataset. Séparation claire des bases Dagster vs MLflow documentée en interne.
+
+### Exploration et rapports
+
+- **Streamlit day explorer** : visualisation d’une journée UTC (OHLC, labels, features) depuis parquets materialisés ; sélecteur de bar preset en sidebar
+- **Rapports HTML** : primary/meta research, labels, EBS, backtest distribution — thème dark/light, viewer HTTP local pour sidecars JSON
+- **Notebooks exemple** (`notebooks_example/`) dans le snapshot public : ConfigService, triple barrière, features lab
+
+## Méthodologie process-first
+
+La recherche suit une progression en **gates** (0→4) : existence statistique, détection mesurable, prédictibilité OOS, tradabilité nette après coûts. Chaque piste du blog eurusd-lab rapporte un verdict par gate — sans exposer ici les paramètres ni les résultats alpha.
+
+Principe directeur : **ne pas optimiser en amont sur le PnL** ; valider d’abord que le phénomène existe et se prédit hors échantillon, avant toute couche d’exécution ou de sizing.
+
+Articles liés (série **eurusd-lab**) :
+
+- <Link href="/blog/multi-scale-countertrend">Pullback multi-échelle</Link>
+- <Link href="/blog/compression-expansion">Compression → expansion</Link>
+- <Link href="/blog/hmm-slope-denoise">HMM slope & débruitage</Link>
+- <Link href="/blog/tr8dr-trend-labels">Labels de tendance Tr8dr</Link>
+- <Link href="/blog/stoch-event-sampling">Event sampling stochastique</Link>
+
+## Public vs privé
+
+| Élément | Snapshot public MIT | Dépôt privé |
+| ------- | ------------------- | ----------- |
+| Framework `financial_ml` | Oui | Oui (actif) |
+| `config_example/` + symlink | Oui | Prod `config/` (~149 YAML) |
+| Presets Dagster research | Non | Oui |
+| Données tick réelles | Non | Oui |
+| Alpha / stratégies | Non | Oui (non publié) |
+| Support | Snapshot v1.0.0 non maintenu | Recherche active |
+
+Publication contrôlée via script interne ; seul le framework et les exemples pédagogiques sortent — jamais les configs de production ni les notebooks de recherche.
+
+## Technologies
+
+### Langages et runtime
+
+Python 3.12+ · micromamba (`financial-ml` / `financial-ml-cpu`)
+
+### Configuration et orchestration
+
+Hydra · Dagster · PostgreSQL · Docker Compose
+
+### Data & compute
+
+pandas · Polars · cuDF/RAPIDS · Numba · PyArrow/Parquet
+
+### ML & validation
+
+scikit-learn · cuML · MLflow · CPCV custom · GARCH auxiliaire
+
+### UI & rapports
+
+Streamlit · Plotly · templates HTML (viewer intégré)
+
+### Qualité
+
+pytest (unit / integration / perf) · markers stricts · golden fixtures · CI
+
+## Résultats
+
+- Pipeline end-to-end materialisable depuis Dagster (prep → CPCV → rapports)
+- Instantané public clonable en ~15 min CPU : [FinancialMLResearchLab](https://github.com/khonen-git/FinancialMLResearchLab)
+- Série d’articles de recherche EURUSD publiés sur ce site (tag eurusd-lab)
+- Discipline de tests et de validation reproductible, extensible à de nouveaux builders via registry
+
+## Conclusion
+
+Ce lab n’est pas un produit de trading : c’est une **infrastructure de recherche** où la rigueur méthodologique prime sur la course au backtest « gagnant ». Le framework public permet d’explorer l’architecture AFML-style ; l’IP de recherche reste privée.
+
+## Compétences acquises
+
+### Architecture logicielle
+
+- Design registry/factory/engine pour pipelines configurables
+- Séparation ConfigService / Hydra / Dagster assets
+- Contrats de données et validation systématique
+
+### Finance quantitative
+
+- Microstructure FX, barres information-driven, EBS causal
+- Labels triple barrière, meta-labeling, pipeline dual-side
+- CPCV, purge, tests anti-fuite
+
+### MLOps & recherche
+
+- Orchestration Dagster partitionnée, tracking MLflow
+- Pyramide de tests (formules, causalité, parité, golden)
+- Méthodologie process-first et gates de validation
+
+### Data engineering
+
+- Ingestion multi-source, schéma tick canonique, backends interchangeables
+- Materialisation parquet partitionnée, exploration Streamlit jour par jour

@@ -22,7 +22,8 @@
     "Développement Web": "Applications et sites web",
     "Développement web": "Applications et sites web",
     "Machine Learning": "Projets d'intelligence artificielle",
-    "Automatisation": "Scripts et outils d'automatisation"
+    "Automatisation": "Scripts et outils d'automatisation",
+    "Finance quantitative": "Pipeline ML, microstructure et recherche systématique FX"
   },
   "errors": {
     "loadFailed": "Erreur lors du chargement des projets",

@@ -22,7 +22,9 @@
     "Développement Web": "Web applications and websites",
     "Développement web": "Web applications and websites",
     "Machine Learning": "Artificial intelligence projects",
-    "Automatisation": "Automation scripts and tools"
+    "Automatisation": "Automation scripts and tools",
+    "Finance quantitative": "ML pipeline, microstructure, and systematic FX research",
+    "Quantitative finance": "ML pipeline, microstructure, and systematic FX research"
   },
   "errors": {
     "loadFailed": "Failed to load projects",

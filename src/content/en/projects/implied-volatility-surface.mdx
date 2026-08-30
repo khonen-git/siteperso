@@ -1,0 +1,197 @@
+---
+id: 15
+title: 'Implied volatility surface — SVI/SSVI/Heston calibration'
+description: 'Python ivsurface package: real options data (yfinance), Black-Scholes pricing, SVI/SSVI/Heston calibration, Monte Carlo, and Streamlit app.'
+image: 'https://placehold.co/1200x600/png'
+date: '2026-08'
+category: 'Quantitative finance'
+tags: ['Python', 'Options', 'Implied volatility', 'Streamlit', 'Monte Carlo', 'Heston']
+importance: 4
+relatedReferences: ['python-docs', 'scipy', 'jupyter', 'matplotlib', 'quant-guild']
+---
+
+# Implied volatility surface — SVI/SSVI/Heston calibration
+
+## Summary
+
+**IVSurface** (`ivsurface`) is an open-source educational project to build and calibrate an **implied volatility surface** from real options data. The package covers options chain ingestion and cleaning (via yfinance), Black-Scholes pricing and IV inversion, **SSVI** calibration (coherent global surface), slice-by-slice **SVI**, the **Heston** model (Carr-Madan), plus Monte Carlo simulations and delta-hedging.
+
+Interactive Streamlit app, tutorial notebooks, and a full pytest suite. Public code: [khonen-git/ImpliedVolatilitySurface](https://github.com/khonen-git/ImpliedVolatilitySurface).
+
+## Objectives
+
+- Understand options pricing and IV surface reconstruction from market data
+- Implement standard parametric models (SVI, SSVI, Heston) with robust calibration
+- Compare market, raw SVI, SSVI, and Heston on a common grid
+- Deliver a reproducible learning experience: scripts, notebooks, Streamlit app, tests
+- Maintain an installable package (`pip install -e .`) with ruff lint and local CI
+
+## Context
+
+Implied volatility compresses options market information beyond spot moves. For a quant profile focused on FX research, this project complements my EURUSD lab by exploring the **derivatives** side: option pricing and term/moneyness structure.
+
+Unlike the private lab, all code is **public**: data fetched on demand (SPY by default), local parquet cache, no IP constraints.
+
+## Data pipeline
+
+### Sources and cleaning
+
+- **Underlying and options chain**: [yfinance](https://pypi.org/project/yfinance/) (SPY default, extensible)
+- **Risk-free rate**: simple curve `^IRX` (3M) → `^TNX` (10Y), linear interpolation in maturity
+- **Dividends**: yfinance when available; SPY fallback ≈ 1.3%
+- **Expiries**: `short` / `long` / `mixed` modes via `FetchConfig`
+
+`prepare_options_chain()` cleans bid/ask, filters outlier strikes, and returns a calibration-ready DataFrame. Chains cache under `data/cache/` (not versioned).
+
+### Processing chain
+
+```
+Cleaned market → Implied volatility
+     ├── SSVI (coherent global surface, primary)
+     ├── Raw SVI (slice-by-slice fit, smile comparison)
+     ├── Heston (dynamic model, calibrated on mid prices)
+     └── Market / SSVI / SVI / Heston comparison (Streamlit, notebooks)
+```
+
+## Models and pricing
+
+### Black-Scholes and Greeks
+
+`ivsurface.pricing` module: vanilla pricing, sensitivities (delta, gamma, vega, theta, rho), and numerical **IV inversion**. Starting point of notebook `01_black_scholes.ipynb`.
+
+### SVI and SSVI
+
+- **Raw SVI**: independent calibration per maturity — useful for local smile visualization and slice-level arbitrage diagnostics
+- **SSVI**: global coherent parameterization in (T, k) — main surface for interpolation and Heston comparison
+
+Main API:
+
+```python
+from ivsurface.viz import run_svi_pipeline, run_heston_pipeline, run_full_pipeline
+
+svi = run_svi_pipeline(df, stats)
+sigma = svi.svi_surface(t_years, log_moneyness)
+
+heston = run_heston_pipeline(df, stats)
+result = run_full_pipeline(df, stats, heston_use_svi_guess=True)
+```
+
+### Heston and simulation
+
+- Heston calibration via Carr-Madan on mid prices
+- Optional Heston initialization from SVI fits (`heston_use_svi_guess=True`)
+- `simulation` module: Monte Carlo, delta-hedging, simplified exotic pricing (notebook `05_simulation_hedging.ipynb`)
+
+## Streamlit app
+
+```bash
+streamlit run src/ivsurface/viz/app.py
+```
+
+Two modes:
+
+- **Live**: real-time yfinance fetch (network required)
+- **Cache**: load parquet from `data/cache/{TICKER}_clean_*.parquet`
+
+Plotly visualizations: 2D/3D smiles, model comparison, fit diagnostics.
+
+## Tutorial notebooks
+
+| Notebook | Content |
+| -------- | ------- |
+| `01_black_scholes.ipynb` | BS pricing, Greeks, IV inversion |
+| `02_iv_surface.ipynb` | IV surface, 2D interpolation |
+| `03_svi_calibration.ipynb` | SVI calibration by maturity |
+| `04_heston.ipynb` | Heston Carr-Madan, SVI vs market |
+| `05_simulation_hedging.ipynb` | Heston Monte Carlo, delta-hedge, exotics |
+
+`[viz]` extra required for Plotly/Matplotlib; `[dev]` for pytest and ruff.
+
+## Quality and reproducibility
+
+### Tests
+
+```bash
+pytest                          # all tests
+pytest -m integration           # network (yfinance)
+pytest -m "not integration"     # local only (CI)
+```
+
+`integration` markers isolate network tests; local CI runs the non-integration suite.
+
+### Lint and packaging
+
+- **ruff** check + format on `src/` and `tests/`
+- Editable install: `pip install -e ".[dev,viz]"`
+- Optional reproducibility with [uv](https://docs.astral.sh/uv/): `uv sync --extra dev --extra viz`
+- Python **3.11+**
+
+## Package structure
+
+```
+src/ivsurface/
+├── data/       # fetch & cleaning
+├── pricing/    # Black-Scholes, Greeks, IV
+├── surface/    # grid & interpolation
+├── models/     # SVI, SSVI, Heston
+├── simulation/ # Monte Carlo, hedging, exotics
+└── viz/        # Plotly & Streamlit
+```
+
+## Stack
+
+### Languages
+
+Python 3.11+
+
+### Data
+
+yfinance · pandas · parquet cache
+
+### Numerical models
+
+SciPy (optimization) · Carr-Madan FFT · SVI/SSVI calibration
+
+### Visualization
+
+Plotly · Matplotlib · Streamlit
+
+### Quality
+
+pytest · ruff · integration markers
+
+## Results
+
+- Installable package with full market → IV → SSVI/SVI → Heston pipeline
+- Streamlit app and 5 notebooks from BS through hedging
+- Public MIT repo: [ImpliedVolatilitySurface](https://github.com/khonen-git/ImpliedVolatilitySurface)
+- Quick validation script: `python scripts/fetch_spy.py`
+
+## Conclusion
+
+This project is deliberately **educational**: it does not target production options trading, but hands-on understanding of IV surfaces and industry-standard models. It complements my quant profile with an equity derivatives building block, distinct from tick-level FX research.
+
+## Skills gained
+
+### Derivatives finance
+
+- Black-Scholes pricing, sensitivities, IV inversion
+- SVI/SSVI parameterizations and smile arbitrage
+- Heston model, calibration, and market comparison
+
+### Python engineering
+
+- Structured package (`src/` layout), `[dev]` / `[viz]` extras
+- Composable pipelines (`run_full_pipeline`)
+- Parquet cache and configurable fetch modes
+
+### Simulation and risk
+
+- Heston Monte Carlo
+- Delta-hedging and simplified exotic pricing
+
+### Tooling
+
+- Streamlit for interactive exploration
+- pytest with network / local test separation
+- ruff for lint and format
