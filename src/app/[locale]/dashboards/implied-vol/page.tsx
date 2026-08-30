@@ -1,8 +1,9 @@
+import { Suspense } from 'react';
 import { setRequestLocale } from 'next-intl/server';
 import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { ImpliedVolDashboard } from '@/components/dashboards/ImpliedVolDashboard';
-import { getImpliedVolSnapshot } from '@/lib/dashboards/implied-vol';
+import { getImpliedVolSnapshot } from '@/lib/dashboards/implied-vol.server';
 import { routing } from '@/i18n/routing';
 
 interface ImpliedVolPageProps {
@@ -27,5 +28,9 @@ export default async function ImpliedVolPage({
     notFound();
   }
 
-  return <ImpliedVolDashboard initialSnapshot={snapshot} />;
+  return (
+    <Suspense fallback={<div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">…</div>}>
+      <ImpliedVolDashboard initialSnapshot={snapshot} />
+    </Suspense>
+  );
 }

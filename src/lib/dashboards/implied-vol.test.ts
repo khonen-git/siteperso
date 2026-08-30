@@ -1,4 +1,5 @@
-import { getImpliedVolSnapshot, getSupportedIvSymbols } from '@/lib/dashboards/implied-vol';
+import { getSupportedIvSymbols } from '@/lib/dashboards/implied-vol';
+import { getImpliedVolSnapshot } from '@/lib/dashboards/implied-vol.server';
 
 describe('implied-vol snapshot', () => {
   it('supports SPY symbol', () => {

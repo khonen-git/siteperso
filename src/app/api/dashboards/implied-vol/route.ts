@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { getImpliedVolSnapshot, getSupportedIvSymbols } from '@/lib/dashboards/implied-vol';
+import { getSupportedIvSymbols } from '@/lib/dashboards/implied-vol';
+import { getImpliedVolSnapshot } from '@/lib/dashboards/implied-vol.server';
 
 export const dynamic = 'force-dynamic';
 
