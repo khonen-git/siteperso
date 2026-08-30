@@ -38,13 +38,15 @@
       "atmRange": "Plage IV ATM",
       "indicators": "Indicateurs",
       "expiryHint": "Échéance : {expiry}",
-      "termHint": "{count} maturités · plage {min}–{max} %"
+      "termHint": "{count} maturités · plage {min}–{max} %",
+      "surfaceHint": "Aperçu 2D — onglet Surface pour la vue 3D"
     },
     "smile": {
       "title": "Vol smile · {expiry} ({days} jours)"
     },
     "surface": {
-      "title": "Surface de vol implicite"
+      "title": "Surface de vol implicite",
+      "loading3d": "Chargement de la surface 3D…"
     },
     "chain": {
       "title": "Chaîne options · {symbol} · {expiry} ({days}d)",

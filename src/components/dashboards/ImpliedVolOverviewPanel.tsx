@@ -139,7 +139,12 @@ export function ImpliedVolOverviewPanel({
         bodyClassName="flex min-h-0 flex-1 flex-col overflow-hidden p-2"
       >
         {snapshot.slices.length > 0 ? (
-          <ImpliedVolSurfaceChart snapshot={snapshot} labels={surfaceLabels} compact />
+          <>
+            <ImpliedVolSurfaceChart snapshot={snapshot} labels={surfaceLabels} compact />
+            <p className="mt-auto shrink-0 px-1 pt-1 text-[10px] text-muted-foreground">
+              {t('impliedVol.overview.surfaceHint')}
+            </p>
+          </>
         ) : (
           <p className="text-xs text-muted-foreground">{t('impliedVol.errors.noData')}</p>
         )}

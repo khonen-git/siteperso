@@ -149,8 +149,13 @@ const nextConfig = {
   },
   output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
   // Évite des vendor-chunks OpenTelemetry cassés en dev (peer optionnel de Next.js)
-  serverExternalPackages: ['@opentelemetry/api'],
-  transpilePackages: ['next-mdx-remote', 'react-plotly.js', 'plotly.js'],
+  serverExternalPackages: [
+    '@opentelemetry/api',
+    'plotly.js',
+    'plotly.js-dist-min',
+    'react-plotly.js',
+  ],
+  transpilePackages: ['next-mdx-remote'],
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
     remotePatterns: [
@@ -171,9 +176,12 @@ const nextConfig = {
     optimizePackageImports: ['lucide-react', 'recharts', '@radix-ui/react-icons'],
   },
   // Windows dev: avoid corrupted webpack disk cache (ENOENT/EPERM on .pack.gz_)
-  webpack: (config, { dev }) => {
+  webpack: (config, { dev, isServer }) => {
     if (dev && process.platform === 'win32') {
       config.cache = { type: 'memory' };
+    }
+    if (isServer) {
+      config.externals = [...(config.externals ?? []), 'plotly.js-dist-min', 'plotly.js', 'react-plotly.js'];
     }
     return config;
   },

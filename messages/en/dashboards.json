@@ -38,13 +38,15 @@
       "atmRange": "ATM IV range",
       "indicators": "Indicators",
       "expiryHint": "Expiry: {expiry}",
-      "termHint": "{count} maturities · range {min}–{max}%"
+      "termHint": "{count} maturities · range {min}–{max}%",
+      "surfaceHint": "2D preview — open Surface tab for 3D view"
     },
     "smile": {
       "title": "Vol smile · {expiry} ({days} days)"
     },
     "surface": {
-      "title": "Implied vol surface"
+      "title": "Implied vol surface",
+      "loading3d": "Loading 3D surface…"
     },
     "chain": {
       "title": "Options chain · {symbol} · {expiry} ({days}d)",

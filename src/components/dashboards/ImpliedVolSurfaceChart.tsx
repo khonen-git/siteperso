@@ -1,10 +1,31 @@
 'use client';
 
 import * as React from 'react';
+import dynamic from 'next/dynamic';
+import { useTranslations } from 'next-intl';
 import { ImpliedVolHeatmap } from '@/components/dashboards/ImpliedVolHeatmap';
-import { ImpliedVolSurface3DChart } from '@/components/dashboards/ImpliedVolSurface3DChart';
 import { cn } from '@/lib/utils';
 import type { ImpliedVolSnapshot } from '@/types/dashboards/implied-vol';
+
+const ImpliedVolSurface3DChart = dynamic(
+  () =>
+    import('@/components/dashboards/ImpliedVolSurface3DChart').then(
+      (m) => m.ImpliedVolSurface3DChart
+    ),
+  {
+    ssr: false,
+    loading: () => <Surface3DPlaceholder />,
+  }
+);
+
+function Surface3DPlaceholder(): React.JSX.Element {
+  const t = useTranslations('dashboards');
+  return (
+    <div className="flex h-full min-h-[280px] items-center justify-center text-sm text-muted-foreground">
+      {t('impliedVol.surface.loading3d')}
+    </div>
+  );
+}
 
 interface SurfaceLabels {
   moneyness: string;

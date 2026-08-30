@@ -221,12 +221,14 @@ describe('ImpliedVolDashboard', () => {
     );
   });
 
-  it('renders 3D surface when surface tab is active', () => {
+  it('renders 3D surface when surface tab is active', async () => {
     renderWithProviders(
       <ImpliedVolDashboard initialSnapshot={mockSnapshot} initialTab="surface" />
     );
 
-    expect(screen.getByTestId('iv-surface-3d')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByTestId('iv-surface-3d')).toBeInTheDocument();
+    });
   });
 });
 

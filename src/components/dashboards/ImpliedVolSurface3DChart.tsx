@@ -2,20 +2,26 @@
 
 import * as React from 'react';
 import dynamic from 'next/dynamic';
+import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import type { PlotMouseEvent } from 'plotly.js';
 import { ivPlotlyColorscale } from '@/lib/dashboards/chart-theme';
 import { buildSurfaceGrid } from '@/lib/dashboards/surface-grid';
 import type { ImpliedVolSnapshot } from '@/types/dashboards/implied-vol';
 
-const Plot = dynamic(() => import('react-plotly.js'), {
+const Plot = dynamic(() => import('@/components/dashboards/ImpliedVolPlotly'), {
   ssr: false,
-  loading: () => (
-    <div className="flex h-full min-h-[280px] items-center justify-center text-sm text-muted-foreground">
-      …
-    </div>
-  ),
+  loading: () => <Surface3DLoading />,
 });
+
+function Surface3DLoading(): React.JSX.Element {
+  const t = useTranslations('dashboards');
+  return (
+    <div className="flex h-full min-h-[280px] items-center justify-center text-sm text-muted-foreground">
+      {t('impliedVol.surface.loading3d')}
+    </div>
+  );
+}
 
 interface SurfaceLabels {
   moneyness: string;
@@ -57,7 +63,9 @@ export function ImpliedVolSurface3DChart({
   labels,
   onExpirySelect,
 }: ImpliedVolSurface3DChartProps): React.JSX.Element {
+  const t = useTranslations('dashboards');
   const theme = usePlotlyThemeColors();
+  const [plotError, setPlotError] = React.useState<string | null>(null);
   const grid = React.useMemo(() => buildSurfaceGrid(snapshot), [snapshot]);
 
   const zPercent = React.useMemo(
@@ -135,7 +143,15 @@ export function ImpliedVolSurface3DChart({
   if (!grid.zMatrix.length) {
     return (
       <div className="flex h-full min-h-[280px] items-center justify-center text-sm text-muted-foreground">
-        —
+        {t('impliedVol.errors.noData')}
+      </div>
+    );
+  }
+
+  if (plotError) {
+    return (
+      <div className="flex h-full min-h-[280px] items-center justify-center px-4 text-center text-sm text-destructive">
+        {plotError}
       </div>
     );
   }
@@ -148,6 +164,7 @@ export function ImpliedVolSurface3DChart({
         config={{ displayModeBar: false, responsive: true }}
         style={{ width: '100%', height: '100%' }}
         onClick={handleClick}
+        onError={(err: Error) => setPlotError(err.message)}
         useResizeHandler
       />
     </div>
