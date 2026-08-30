@@ -28,7 +28,9 @@
     },
     "toolbar": {
       "expiry": "Expiry",
-      "refresh": "Refresh"
+      "refresh": "Refresh",
+      "enterFocus": "Fullscreen",
+      "exitFocus": "Exit fullscreen"
     },
     "overview": {
       "symbol": "Symbol",

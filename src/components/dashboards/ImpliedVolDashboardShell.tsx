@@ -21,6 +21,7 @@ interface ImpliedVolDashboardShellProps {
   about: React.ReactNode;
   activeTab: ImpliedVolTab;
   onTabChange: (tab: ImpliedVolTab) => void;
+  isFocused?: boolean;
 }
 
 export function ImpliedVolDashboardShell({
@@ -34,27 +35,34 @@ export function ImpliedVolDashboardShell({
   about,
   activeTab,
   onTabChange,
+  isFocused = false,
 }: ImpliedVolDashboardShellProps): React.JSX.Element {
   const t = useTranslations('dashboards');
 
   return (
     <TooltipProvider delayDuration={200}>
-      <div className="flex h-full min-h-0 flex-col" data-testid="iv-dashboard-shell">
-        <header className="shrink-0 border-b px-3 py-2 sm:px-4">
-          <div className="flex min-w-0 items-center gap-2">
-            <Link
-              href="/dashboards"
-              className="inline-flex shrink-0 items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <ArrowLeft className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">{t('impliedVol.links.backToHub')}</span>
-            </Link>
-            <h1 className="min-w-0 truncate text-sm font-semibold sm:text-base">
-              {t('impliedVol.title')}
-            </h1>
-            <div className="ml-auto min-w-0">{statusBar}</div>
-          </div>
-        </header>
+      <div
+        className={cn('flex h-full min-h-0 flex-col', isFocused && 'iv-dashboard-focused')}
+        data-testid="iv-dashboard-shell"
+        data-focused={isFocused ? 'true' : 'false'}
+      >
+        {!isFocused && (
+          <header className="shrink-0 border-b px-3 py-2 sm:px-4">
+            <div className="flex min-w-0 items-center gap-2">
+              <Link
+                href="/dashboards"
+                className="inline-flex shrink-0 items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
+              >
+                <ArrowLeft className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">{t('impliedVol.links.backToHub')}</span>
+              </Link>
+              <h1 className="min-w-0 truncate text-sm font-semibold sm:text-base">
+                {t('impliedVol.title')}
+              </h1>
+              <div className="ml-auto min-w-0">{statusBar}</div>
+            </div>
+          </header>
+        )}
 
         <Tabs
           value={activeTab}

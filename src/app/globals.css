@@ -172,3 +172,7 @@
     padding: 0;
   }
 }
+
+body.iv-dashboard-focus .site-chrome {
+  display: none;
+}

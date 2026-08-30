@@ -142,6 +142,14 @@ jest.mock('@/components/dashboards/ImpliedVolSurface3DChart', () => ({
   ImpliedVolSurface3DChart: () => <div data-testid="iv-surface-3d" />,
 }));
 
+jest.mock('@/components/dashboards/useDashboardFocusMode', () => ({
+  useDashboardFocusMode: () => ({
+    isFocused: false,
+    toggle: jest.fn(),
+    setIsFocused: jest.fn(),
+  }),
+}));
+
 const mockSnapshot: ImpliedVolSnapshot = {
   metadata: {
     symbol: 'SPY',
@@ -219,6 +227,11 @@ describe('ImpliedVolDashboard', () => {
       'data-state',
       'active'
     );
+  });
+
+  it('renders focus toggle in toolbar', () => {
+    renderWithProviders(<ImpliedVolDashboard initialSnapshot={mockSnapshot} />);
+    expect(screen.getByTestId('iv-focus-toggle')).toBeInTheDocument();
   });
 
   it('renders 3D surface when surface tab is active', async () => {

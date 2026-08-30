@@ -16,6 +16,7 @@ import { ImpliedVolStatusBar } from '@/components/dashboards/ImpliedVolStatusBar
 import { ImpliedVolSurfaceChart } from '@/components/dashboards/ImpliedVolSurfaceChart';
 import { ImpliedVolTermChart } from '@/components/dashboards/ImpliedVolTermChart';
 import { ImpliedVolToolbar } from '@/components/dashboards/ImpliedVolToolbar';
+import { useDashboardFocusMode } from '@/components/dashboards/useDashboardFocusMode';
 import type { ImpliedVolSnapshot } from '@/types/dashboards/implied-vol';
 import { cn } from '@/lib/utils';
 
@@ -74,6 +75,7 @@ export function ImpliedVolDashboard({
   const [activeTab, setActiveTab] = React.useState<ImpliedVolTab>(initialTab);
   const [loadState, setLoadState] = React.useState<LoadState>('idle');
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const { isFocused, toggle: toggleFocus } = useDashboardFocusMode();
 
   const selectedSlice = React.useMemo(
     () => snapshot.slices.find((s) => s.expiry === selectedExpiry) ?? snapshot.slices[0],
@@ -143,11 +145,20 @@ export function ImpliedVolDashboard({
       onExpiryChange={setSelectedExpiry}
       onRefresh={handleRefresh}
       isLoading={loadState === 'loading'}
+      isFocused={isFocused}
+      onToggleFocus={toggleFocus}
     />
   );
 
   return (
-    <div className="relative flex h-full min-h-0 flex-col">
+    <div
+      className={cn(
+        'relative flex h-full min-h-0 flex-col',
+        isFocused && 'fixed inset-0 z-[100] bg-background'
+      )}
+      data-testid="iv-dashboard-root"
+      data-focused={isFocused ? 'true' : 'false'}
+    >
       {loadState === 'error' && errorMessage && (
         <div className="absolute inset-x-0 top-0 z-40 px-4 pt-2">
           <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive">
@@ -161,6 +172,7 @@ export function ImpliedVolDashboard({
         toolbar={toolbar}
         activeTab={activeTab}
         onTabChange={setActiveTab}
+        isFocused={isFocused}
         overview={
           <ImpliedVolOverviewPanel
             snapshot={snapshot}

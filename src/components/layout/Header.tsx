@@ -15,7 +15,7 @@ const Header = async (): Promise<React.JSX.Element> => {
   }));
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="site-chrome sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center gap-2">
         <Link href="/" className="mr-2 flex shrink-0 items-center sm:mr-6">
           <span className="font-bold">{t('brand')}</span>

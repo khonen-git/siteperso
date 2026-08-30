@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { useTranslations } from 'next-intl';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, Maximize2, Minimize2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -20,6 +20,8 @@ interface ImpliedVolToolbarProps {
   onExpiryChange: (expiry: string) => void;
   onRefresh: () => void;
   isLoading: boolean;
+  isFocused: boolean;
+  onToggleFocus: () => void;
 }
 
 export function ImpliedVolToolbar({
@@ -28,6 +30,8 @@ export function ImpliedVolToolbar({
   onExpiryChange,
   onRefresh,
   isLoading,
+  isFocused,
+  onToggleFocus,
 }: ImpliedVolToolbarProps): React.JSX.Element {
   const t = useTranslations('dashboards');
 
@@ -64,10 +68,25 @@ export function ImpliedVolToolbar({
       >
         <RefreshCw className={`h-3.5 w-3.5 ${isLoading ? 'animate-spin' : ''}`} />
       </Button>
-      <ImpliedVolInfoIcon
-        content={t('impliedVol.tooltips.refresh')}
-        label={t('impliedVol.tooltips.refresh')}
-      />
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon"
+        className="h-8 w-8"
+        onClick={onToggleFocus}
+        aria-pressed={isFocused}
+        aria-label={
+          isFocused ? t('impliedVol.toolbar.exitFocus') : t('impliedVol.toolbar.enterFocus')
+        }
+        title={isFocused ? t('impliedVol.toolbar.exitFocus') : t('impliedVol.toolbar.enterFocus')}
+        data-testid="iv-focus-toggle"
+      >
+        {isFocused ? (
+          <Minimize2 className="h-3.5 w-3.5" />
+        ) : (
+          <Maximize2 className="h-3.5 w-3.5" />
+        )}
+      </Button>
     </div>
   );
 }
