@@ -46,7 +46,9 @@
     },
     "surface": {
       "title": "Implied vol surface",
-      "loading3d": "Loading 3D surface…"
+      "loading3d": "Loading 3D surface…",
+      "rotationOn": "Enable auto-rotation",
+      "rotationOff": "Stop auto-rotation"
     },
     "chain": {
       "title": "Options chain · {symbol} · {expiry} ({days}d)",
@@ -94,7 +96,7 @@
       "ssvi": "SSVI curve fitted on the slice — dashed model overlay.",
       "termStructure": "ATM IV (moneyness ≈ 1) vs days to expiry.",
       "heatmap": "IV map: moneyness (horizontal) × days to expiry (vertical). Color = IV level.",
-      "surface3d": "3D IV surface: moneyness × days to expiry, height = IV level. Click to select an expiry.",
+      "surface3d": "3D IV surface: auto-rotation around the vertical axis by default. Top-right button toggles it. Manual vertical-axis drag and click-to-select expiry when auto-rotation is off.",
       "chain": "Strike and IV grid for the selected expiry (Yahoo snapshot data).",
       "overviewStats": "Key snapshot metrics: symbol, spot, expiry count and ATM IV range."
     },
