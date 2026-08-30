@@ -6,23 +6,32 @@ import { ImpliedVolStatusBar } from '@/components/dashboards/ImpliedVolStatusBar
 import { ImpliedVolChainPanel } from '@/components/dashboards/ImpliedVolChainPanel';
 import type { ImpliedVolSnapshot } from '@/types/dashboards/implied-vol';
 
+const mockReplace = jest.fn();
+
 function renderWithProviders(ui: React.ReactElement) {
   return render(<TooltipProvider>{ui}</TooltipProvider>);
 }
 
-jest.mock('next-intl', () => ({
-  useTranslations: () => (key: string, values?: Record<string, string | number>) => {
-    if (values) {
-      return `${key}:${JSON.stringify(values)}`;
-    }
-    return key;
-  },
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => new URLSearchParams(),
 }));
 
 jest.mock('@/i18n/navigation', () => ({
   Link: ({ children, href }: { children: React.ReactNode; href: string }) => (
     <a href={href}>{children}</a>
   ),
+  usePathname: () => '/dashboards/implied-vol',
+  useRouter: () => ({ replace: mockReplace }),
+}));
+
+jest.mock('next-intl', () => ({
+  useLocale: () => 'en',
+  useTranslations: () => (key: string, values?: Record<string, string | number>) => {
+    if (values) {
+      return `${key}:${JSON.stringify(values)}`;
+    }
+    return key;
+  },
 }));
 
 jest.mock('@/components/ui/tabs', () => {
@@ -48,13 +57,7 @@ jest.mock('@/components/ui/tabs', () => {
     </TabsContext.Provider>
   );
 
-  const TabsList = ({
-    children,
-    className,
-  }: {
-    children: React.ReactNode;
-    className?: string;
-  }) => (
+  const TabsList = ({ children, className }: { children: React.ReactNode; className?: string }) => (
     <div role="tablist" className={className}>
       {children}
     </div>
@@ -112,6 +115,8 @@ jest.mock('lucide-react', () => {
   MockIcon.displayName = 'MockIcon';
   return {
     ArrowLeft: MockIcon,
+    ArrowDown: MockIcon,
+    ArrowUp: MockIcon,
     RefreshCw: MockIcon,
     HelpCircle: MockIcon,
     ChevronDown: MockIcon,
@@ -119,6 +124,7 @@ jest.mock('lucide-react', () => {
     Maximize2: MockIcon,
     Minimize2: MockIcon,
     Rotate3d: MockIcon,
+    RotateCcw: MockIcon,
   };
 });
 
@@ -158,6 +164,7 @@ const mockSnapshot: ImpliedVolSnapshot = {
     symbol: 'SPY',
     spot: 580,
     asOf: '2026-08-30',
+    fetchedAt: '2026-08-30T12:00:00.000Z',
     source: 'Yahoo Finance (delayed)',
     sourceDisclaimer: 'Demo',
   },
@@ -181,6 +188,10 @@ const mockSnapshot: ImpliedVolSnapshot = {
 };
 
 describe('ImpliedVolDashboard', () => {
+  beforeEach(() => {
+    mockReplace.mockClear();
+  });
+
   it('renders shell with tabs, status bar and expiry toolbar', () => {
     renderWithProviders(<ImpliedVolDashboard initialSnapshot={mockSnapshot} />);
     expect(screen.getByTestId('iv-dashboard-shell')).toBeInTheDocument();
@@ -190,7 +201,8 @@ describe('ImpliedVolDashboard', () => {
     expect(screen.getByRole('tab', { name: 'impliedVol.tabs.term' })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: 'impliedVol.tabs.surface' })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: 'impliedVol.tabs.chain' })).toBeInTheDocument();
-    expect(screen.getByText('impliedVol.status.delayed')).toBeInTheDocument();
+    expect(screen.getByTestId('iv-symbol-select')).toBeInTheDocument();
+    expect(screen.getByTestId('iv-tab-announcer')).toBeInTheDocument();
   });
 
   it('shows overview grid by default', () => {
@@ -203,9 +215,7 @@ describe('ImpliedVolDashboard', () => {
   });
 
   it('renders chain panel when chain tab is active', () => {
-    renderWithProviders(
-      <ImpliedVolDashboard initialSnapshot={mockSnapshot} initialTab="chain" />
-    );
+    renderWithProviders(<ImpliedVolDashboard initialSnapshot={mockSnapshot} initialTab="chain" />);
 
     expect(screen.getByTestId('iv-chain-panel')).toBeInTheDocument();
     expect(screen.getByTestId('iv-chain-atm-row')).toBeInTheDocument();
@@ -250,21 +260,31 @@ describe('ImpliedVolDashboard', () => {
       expect(screen.getByTestId('iv-surface-3d')).toBeInTheDocument();
     });
   });
+
+  it('syncs tab and expiry to URL', () => {
+    renderWithProviders(<ImpliedVolDashboard initialSnapshot={mockSnapshot} />);
+    expect(mockReplace).toHaveBeenCalled();
+    const url = mockReplace.mock.calls[0][0] as string;
+    expect(url).toContain('tab=overview');
+    expect(url).toContain('expiry=');
+  });
 });
 
 describe('ImpliedVolStatusBar', () => {
-  it('shows symbol, spot and delayed badge', () => {
-    renderWithProviders(<ImpliedVolStatusBar metadata={mockSnapshot.metadata} />);
+  it('shows symbol, spot and fetched badge', () => {
+    renderWithProviders(<ImpliedVolStatusBar metadata={mockSnapshot.metadata} locale="en" />);
     expect(screen.getByText('SPY')).toBeInTheDocument();
     expect(screen.getByText('580.00')).toBeInTheDocument();
-    expect(screen.getByText('impliedVol.status.delayed')).toBeInTheDocument();
+    expect(screen.getByTestId('iv-status-fetched')).toBeInTheDocument();
   });
 });
 
 describe('ImpliedVolChainPanel', () => {
-  it('highlights ATM row', () => {
+  it('highlights ATM row and supports OTM filter', () => {
     renderWithProviders(<ImpliedVolChainPanel slice={mockSnapshot.slices[0]} symbol="SPY" />);
     expect(screen.getByTestId('iv-chain-atm-row')).toBeInTheDocument();
     expect(screen.getByText('580.00')).toBeInTheDocument();
+    fireEvent.click(screen.getByTestId('iv-chain-filter-otmCall'));
+    expect(screen.queryByTestId('iv-chain-atm-row')).not.toBeInTheDocument();
   });
 });

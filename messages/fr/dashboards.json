@@ -24,13 +24,17 @@
     "status": {
       "spot": "Spot",
       "snapshot": "Snapshot",
-      "delayed": "Différé ~15 min"
+      "delayed": "Différé ~15 min",
+      "fetchedAt": "Actualisé {time}",
+      "lastRefresh": "Dernier refresh {time}"
     },
     "toolbar": {
+      "symbol": "Symbole",
       "expiry": "Échéance",
       "refresh": "Actualiser",
       "enterFocus": "Plein écran",
-      "exitFocus": "Quitter le plein écran"
+      "exitFocus": "Quitter le plein écran",
+      "refreshSuccess": "Données actualisées."
     },
     "overview": {
       "symbol": "Symbole",
@@ -38,6 +42,8 @@
       "asOf": "Date snapshot",
       "expiries": "Échéances",
       "atmRange": "Plage IV ATM",
+      "atmIv": "IV ATM (échéance)",
+      "skew25d": "Skew 25Δ (proxy)",
       "indicators": "Indicateurs",
       "expiryHint": "Échéance : {expiry}",
       "termHint": "{count} maturités · plage {min}–{max} %",
@@ -50,7 +56,11 @@
       "title": "Surface de vol implicite",
       "loading3d": "Chargement de la surface 3D…",
       "rotationOn": "Activer la rotation automatique",
-      "rotationOff": "Arrêter la rotation automatique"
+      "rotationOff": "Arrêter la rotation automatique",
+      "rotationSlow": "Rotation lente",
+      "rotationMedium": "Rotation moyenne",
+      "resetCamera": "Réinitialiser la caméra",
+      "mobileFallback": "Vue 3D masquée sur petit écran — utilisez la heatmap ci-dessous."
     },
     "chain": {
       "title": "Chaîne options · {symbol} · {expiry} ({days}d)",
@@ -61,6 +71,11 @@
       "atmNote": "ATM",
       "otmCall": "OTM call",
       "otmPut": "OTM put",
+      "filterAll": "Tous",
+      "filterOtmCalls": "OTM calls",
+      "filterOtmPuts": "OTM puts",
+      "sortAsc": "tri croissant",
+      "sortDesc": "tri décroissant",
       "empty": "Aucun point IV pour cette échéance."
     },
     "term": {
@@ -84,7 +99,10 @@
     "about": {
       "methodologyTitle": "Méthodologie",
       "methodologyBody": "Chaîne options via yfinance, calibration SVI/SSVI (package ivsurface), export JSON offline servi par l'API Next.js. Refresh = relecture du snapshot en cache.",
-      "linksTitle": "Liens"
+      "pipelineTitle": "Pipeline de données",
+      "pipelineSteps": "Yahoo Finance (yfinance) → chaîne options → calibration SSVI (ivsurface) → export JSON → API Next.js → dashboard React.",
+      "linksTitle": "Liens",
+      "knowledgeLink": "Volatilité implicite (knowledge)"
     },
     "links": {
       "backToHub": "Dashboards",
@@ -100,7 +118,8 @@
       "heatmap": "Carte IV : moneyness (horizontal) × jours avant échéance (vertical). Couleur = niveau IV.",
       "surface3d": "Surface IV 3D : rotation automatique autour de l'axe vertical. Bouton en haut à droite pour activer/désactiver. Clic sur un point (rotation arrêtée) pour sélectionner une échéance.",
       "chain": "Grille des strikes et IV pour l'échéance sélectionnée (données Yahoo snapshot).",
-      "overviewStats": "Indicateurs clés du snapshot : symbole, spot, nombre d'échéances et plage IV ATM."
+      "overviewStats": "Indicateurs clés du snapshot : symbole, spot, nombre d'échéances et plage IV ATM.",
+      "skew25d": "Proxy de skew : différence IV entre moneyness ~0,9 (puts) et ~1,1 (calls), en points de pourcentage."
     },
     "errors": {
       "title": "Erreur",

@@ -21,24 +21,30 @@ interface ImpliedVolHeatmapProps {
     iv: string;
   };
   compact?: boolean;
+  ivRange?: { min: number; max: number };
+  selectedDte?: number;
+  selectedMoneyness?: number | null;
   onCellClick?: (expiry: string) => void;
 }
+
+const MONEYNESS_HIGHLIGHT_TOLERANCE = 0.03;
 
 export function ImpliedVolHeatmap({
   snapshot,
   labels,
   compact = false,
+  ivRange: ivRangeProp,
+  selectedDte,
+  selectedMoneyness,
   onCellClick,
 }: ImpliedVolHeatmapProps): React.JSX.Element {
   const [hover, setHover] = React.useState<HeatmapPoint | null>(null);
 
   const grid = React.useMemo(() => buildSurfaceGrid(snapshot), [snapshot]);
-  const { heatmapRows: gridRows, ivRange, moneynessAxis } = grid;
+  const { heatmapRows: gridRows, ivRange: gridIvRange, moneynessAxis } = grid;
+  const ivRange = ivRangeProp ?? gridIvRange;
 
-  const dteValues = React.useMemo(
-    () => gridRows.map((row) => row.dte),
-    [gridRows]
-  );
+  const dteValues = React.useMemo(() => gridRows.map((row) => row.dte), [gridRows]);
 
   const moneynessRange = React.useMemo(() => {
     if (!moneynessAxis.length) return { min: 0, max: 1 };
@@ -47,9 +53,9 @@ export function ImpliedVolHeatmap({
 
   const legendSteps = 5;
   const legendColors = Array.from({ length: legendSteps }, (_, i) => {
-    const t = i / (legendSteps - 1);
-    const iv = ivRange.min + t * (ivRange.max - ivRange.min);
-    return { iv, color: ivHeatmapColor(t) };
+    const tVal = i / (legendSteps - 1);
+    const iv = ivRange.min + tVal * (ivRange.max - ivRange.min);
+    return { iv, color: ivHeatmapColor(tVal) };
   }).reverse();
 
   const moneynessTicks = [moneynessRange.min, 1, moneynessRange.max].filter(
@@ -59,10 +65,18 @@ export function ImpliedVolHeatmap({
   const cellH = compact ? 'h-2.5' : 'h-5';
   const legendW = compact ? 'w-2' : 'w-3';
 
+  const colorT = (iv: number) => {
+    if (ivRange.max <= ivRange.min) return 0.5;
+    return (iv - ivRange.min) / (ivRange.max - ivRange.min);
+  };
+
+  const isMoneynessHighlighted = (m: number) =>
+    selectedMoneyness != null && Math.abs(m - selectedMoneyness) <= MONEYNESS_HIGHLIGHT_TOLERANCE;
+
   return (
     <div
       className={cn(
-        'flex gap-3',
+        'relative flex gap-3',
         compact ? 'h-full max-h-[140px] shrink-0 flex-col' : 'min-h-0 flex-1 flex-row'
       )}
       data-testid="iv-heatmap"
@@ -71,38 +85,52 @@ export function ImpliedVolHeatmap({
         <div className={cn('flex gap-1', compact ? 'h-full flex-1' : 'min-h-0 flex-1')}>
           <div className="flex shrink-0 flex-col justify-around text-[10px] tabular-nums text-muted-foreground">
             {dteValues.map((dte) => (
-              <span key={dte} className={cn('leading-none', compact ? 'h-2.5' : 'h-5')}>
+              <span
+                key={dte}
+                className={cn(
+                  'leading-none',
+                  cellH,
+                  selectedDte === dte && 'font-semibold text-primary'
+                )}
+              >
                 {dte}d
               </span>
             ))}
           </div>
 
           <div className="flex min-w-0 flex-1 flex-col gap-px">
-            {gridRows.map(({ dte, cells }) => (
-              <div key={dte} className={cn('flex gap-px', cellH)}>
-                {cells.map((cell, idx) => {
-                  const t =
-                    ivRange.max > ivRange.min
-                      ? (cell.iv - ivRange.min) / (ivRange.max - ivRange.min)
-                      : 0.5;
-                  return (
-                    <button
-                      key={`${dte}-${idx}`}
-                      type="button"
-                      className={cn(
-                        'min-w-0 flex-1 rounded-[1px] border-0 p-0 transition-opacity hover:opacity-80',
-                        onCellClick && 'cursor-pointer'
-                      )}
-                      style={{ backgroundColor: ivHeatmapColor(t) }}
-                      onMouseEnter={() => setHover(cell)}
-                      onMouseLeave={() => setHover(null)}
-                      onClick={() => onCellClick?.(cell.expiry)}
-                      aria-label={`${labels.iv} ${(cell.iv * 100).toFixed(1)}%`}
-                    />
-                  );
-                })}
-              </div>
-            ))}
+            {gridRows.map(({ dte, cells }) => {
+              const rowSelected = selectedDte === dte;
+              return (
+                <div
+                  key={dte}
+                  className={cn('flex gap-px', cellH, rowSelected && 'ring-1 ring-primary/40')}
+                >
+                  {cells.map((cell, idx) => {
+                    const tVal = colorT(cell.iv);
+                    const mHighlighted = isMoneynessHighlighted(cell.moneyness);
+                    return (
+                      <button
+                        key={`${dte}-${idx}`}
+                        type="button"
+                        className={cn(
+                          'min-w-0 flex-1 rounded-[1px] border-0 p-0 transition-opacity hover:opacity-80',
+                          onCellClick && 'cursor-pointer',
+                          mHighlighted && 'ring-1 ring-inset ring-primary/70',
+                          rowSelected && 'opacity-100'
+                        )}
+                        style={{ backgroundColor: ivHeatmapColor(tVal) }}
+                        onMouseEnter={() => setHover(cell)}
+                        onMouseLeave={() => setHover(null)}
+                        onClick={() => onCellClick?.(cell.expiry)}
+                        aria-label={`${labels.iv} ${(cell.iv * 100).toFixed(1)}%`}
+                        data-selected-dte={rowSelected ? 'true' : undefined}
+                      />
+                    );
+                  })}
+                </div>
+              );
+            })}
           </div>
         </div>
 

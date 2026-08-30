@@ -9,9 +9,7 @@ function renderWithTooltip(ui: React.ReactElement) {
 
 describe('ImpliedVolInfoIcon', () => {
   it('renders accessible help button', () => {
-    renderWithTooltip(
-      <ImpliedVolInfoIcon content="Tooltip text" label="Help about moneyness" />
-    );
+    renderWithTooltip(<ImpliedVolInfoIcon content="Tooltip text" label="Help about moneyness" />);
     expect(screen.getByRole('button', { name: 'Help about moneyness' })).toBeInTheDocument();
     expect(screen.getByTestId('help-circle')).toBeInTheDocument();
   });

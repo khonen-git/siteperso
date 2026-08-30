@@ -41,7 +41,13 @@ export async function gotoWithoutConsoleErrors(
   options?: { waitUntil?: 'load' | 'domcontentloaded' | 'networkidle' }
 ): Promise<ConsoleGuard> {
   const guard = attachConsoleGuard(page);
-  await page.goto(path, { waitUntil: options?.waitUntil ?? 'domcontentloaded' });
+  const response = await page.goto(path, {
+    waitUntil: options?.waitUntil ?? 'domcontentloaded',
+  });
+  const status = response?.status() ?? 0;
+  if (status >= 400) {
+    throw new Error(`HTTP ${status} for ${path}`);
+  }
   await page.waitForTimeout(300);
   guard.assertClean(path);
   return guard;

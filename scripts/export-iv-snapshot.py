@@ -5,11 +5,13 @@ from __future__ import annotations
 import json
 import os
 import sys
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "public" / "data" / "dashboards" / "implied-vol" / "spy.json"
+
+# Optional per-point fields (future): bid, ask, openInterest on each ivPoints entry.
 
 
 def main() -> int:
@@ -35,6 +37,9 @@ def main() -> int:
                 "strike": float(row["strike"]),
                 "iv": float(row["iv"]),
                 "moneyness": float(row.get("moneyness", row["strike"] / spot)),
+                # "bid": float(row["bid"]) if row.get("bid") else None,
+                # "ask": float(row["ask"]) if row.get("ask") else None,
+                # "openInterest": int(row["openInterest"]) if row.get("openInterest") else None,
             }
             for _, row in group.iterrows()
             if row.get("iv") and row["iv"] > 0
@@ -61,6 +66,7 @@ def main() -> int:
             "symbol": symbol,
             "spot": spot,
             "asOf": date.today().isoformat(),
+            "fetchedAt": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
             "source": "Yahoo Finance via yfinance (delayed)",
             "sourceDisclaimer": (
                 "Educational demo only. Data may be delayed ~15 min. Not investment advice."

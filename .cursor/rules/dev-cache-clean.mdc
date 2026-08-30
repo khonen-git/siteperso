@@ -1,0 +1,39 @@
+---
+description: Vider le cache Next.js (.next) avant dev/build après modifications de code
+alwaysApply: true
+---
+
+# Nettoyage du cache Next.js (dev / build)
+
+Après **toute modification** de code ou de configuration qui affecte l'application Next.js — `src/`, `next.config.js`, `package.json`, `messages/`, `public/`, etc. — les agents **doivent** vider le cache avant de lancer le serveur de dev, un build, ou de vérifier dans le navigateur.
+
+## Commandes
+
+| Commande | Usage |
+|----------|-------|
+| `npm run clean` | Supprime `.next` et `node_modules/.cache` |
+| `npm run dev:clean` | **Préféré** pour (re)lancer le dev : libère le port 3000/3001, clean, puis `next dev` |
+| `npm run dev` | Uniquement si le cache a déjà été nettoyé |
+| `npm run build` | Toujours après `npm run clean` si des fichiers sources ont changé |
+
+## Script `clean` (package.json)
+
+```json
+"clean": "node -e \"const fs=require('fs');['.next','node_modules/.cache'].forEach(p=>{try{fs.rmSync(p,{recursive:true,force:true})}catch(e){}})\""
+```
+
+Supprime récursivement :
+- `.next/` — cache et artefacts de build Next.js
+- `node_modules/.cache/` — cache Webpack/SWC
+
+## Script `dev:clean` (scripts/dev-clean.mjs)
+
+Sur Windows : identifie le PID qui écoute sur le port 3000 (ou 3001) via `netstat`, puis `taskkill /F /PID <pid>` — **jamais** `taskkill` sur tous les `node.exe`. Ensuite supprime `.next` et `node_modules/.cache`, puis lance `next dev`.
+
+## Workflow agent
+
+1. Modifier le code / config
+2. `npm run clean` (ou `npm run dev:clean` pour relancer le dev)
+3. `npm run dev`, `npm run build`, ou vérification navigateur
+
+**Ne pas** sauter le clean après des changements de sources — évite les artefacts obsolètes et les erreurs de cache.

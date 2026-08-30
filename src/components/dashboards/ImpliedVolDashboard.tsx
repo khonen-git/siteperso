@@ -1,7 +1,9 @@
 'use client';
 
 import * as React from 'react';
-import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
+import { usePathname, useRouter } from '@/i18n/navigation';
 import { DashboardPanel } from '@/components/dashboards/DashboardPanel';
 import { ImpliedVolAboutPanel } from '@/components/dashboards/ImpliedVolAboutPanel';
 import {
@@ -17,6 +19,8 @@ import { ImpliedVolSurfaceChart } from '@/components/dashboards/ImpliedVolSurfac
 import { ImpliedVolTermChart } from '@/components/dashboards/ImpliedVolTermChart';
 import { ImpliedVolToolbar } from '@/components/dashboards/ImpliedVolToolbar';
 import { useDashboardFocusMode } from '@/components/dashboards/useDashboardFocusMode';
+import { computeSnapshotIvRange } from '@/lib/dashboards/iv-metrics';
+import { getSupportedIvSymbols, type SupportedIvSymbol } from '@/lib/dashboards/implied-vol';
 import type { ImpliedVolSnapshot } from '@/types/dashboards/implied-vol';
 import { cn } from '@/lib/utils';
 
@@ -26,6 +30,15 @@ interface ImpliedVolDashboardProps {
 }
 
 type LoadState = 'idle' | 'loading' | 'error';
+
+const VALID_TABS: ImpliedVolTab[] = ['overview', 'smile', 'term', 'surface', 'chain', 'about'];
+
+function parseTab(value: string | null): ImpliedVolTab | null {
+  if (value && VALID_TABS.includes(value as ImpliedVolTab)) {
+    return value as ImpliedVolTab;
+  }
+  return null;
+}
 
 function ChartPanel({
   isLoading,
@@ -67,44 +80,101 @@ export function ImpliedVolDashboard({
   initialTab = 'overview',
 }: ImpliedVolDashboardProps): React.JSX.Element {
   const t = useTranslations('dashboards');
+  const locale = useLocale();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const [snapshot, setSnapshot] = React.useState(initialSnapshot);
-  const [selectedExpiry, setSelectedExpiry] = React.useState(
-    initialSnapshot.slices[0]?.expiry ?? ''
+  const [selectedExpiry, setSelectedExpiry] = React.useState(() =>
+    searchParams.get('expiry') &&
+    initialSnapshot.slices.some((s) => s.expiry === searchParams.get('expiry'))
+      ? (searchParams.get('expiry') as string)
+      : (initialSnapshot.slices[0]?.expiry ?? '')
   );
-  const [activeTab, setActiveTab] = React.useState<ImpliedVolTab>(initialTab);
+  const [selectedMoneyness, setSelectedMoneyness] = React.useState<number | null>(null);
+  const [activeTab, setActiveTab] = React.useState<ImpliedVolTab>(
+    () => parseTab(searchParams.get('tab')) ?? initialTab
+  );
   const [loadState, setLoadState] = React.useState<LoadState>('idle');
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [refreshSuccess, setRefreshSuccess] = React.useState(false);
+  const [lastRefreshedAt, setLastRefreshedAt] = React.useState<string>(
+    () => initialSnapshot.metadata.fetchedAt ?? new Date().toISOString()
+  );
   const { isFocused, toggle: toggleFocus } = useDashboardFocusMode();
+
+  const ivYDomain = React.useMemo(() => computeSnapshotIvRange(snapshot), [snapshot]);
 
   const selectedSlice = React.useMemo(
     () => snapshot.slices.find((s) => s.expiry === selectedExpiry) ?? snapshot.slices[0],
     [snapshot.slices, selectedExpiry]
   );
 
-  const handleRefresh = async () => {
-    setLoadState('loading');
-    setErrorMessage(null);
-    try {
-      const res = await fetch(
-        `/api/dashboards/implied-vol?symbol=${encodeURIComponent(snapshot.metadata.symbol)}`
-      );
-      if (!res.ok) throw new Error(t('impliedVol.errors.loadFailed'));
-      const data = (await res.json()) as ImpliedVolSnapshot;
-      setSnapshot(data);
-      if (!data.slices.some((s) => s.expiry === selectedExpiry)) {
-        setSelectedExpiry(data.slices[0]?.expiry ?? '');
+  const selectedDte = selectedSlice?.daysToExpiry;
+
+  React.useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('tab', activeTab);
+    if (selectedExpiry) params.set('expiry', selectedExpiry);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- sync URL when tab/expiry change only
+  }, [activeTab, selectedExpiry]);
+
+  React.useEffect(() => {
+    if (!refreshSuccess) return;
+    const timer = window.setTimeout(() => setRefreshSuccess(false), 3500);
+    return () => window.clearTimeout(timer);
+  }, [refreshSuccess]);
+
+  const fetchSnapshot = React.useCallback(
+    async (symbol: SupportedIvSymbol) => {
+      setLoadState('loading');
+      setErrorMessage(null);
+      try {
+        const res = await fetch(`/api/dashboards/implied-vol?symbol=${encodeURIComponent(symbol)}`);
+        if (!res.ok) throw new Error(t('impliedVol.errors.loadFailed'));
+        const data = (await res.json()) as ImpliedVolSnapshot;
+        setSnapshot(data);
+        setLastRefreshedAt(data.metadata.fetchedAt ?? new Date().toISOString());
+        setSelectedExpiry((prev) =>
+          data.slices.some((s) => s.expiry === prev) ? prev : (data.slices[0]?.expiry ?? '')
+        );
+        setLoadState('idle');
+        setRefreshSuccess(true);
+      } catch (err) {
+        setLoadState('error');
+        setErrorMessage(err instanceof Error ? err.message : t('impliedVol.errors.loadFailed'));
       }
-      setLoadState('idle');
-    } catch (err) {
-      setLoadState('error');
-      setErrorMessage(err instanceof Error ? err.message : t('impliedVol.errors.loadFailed'));
-    }
+    },
+    [t]
+  );
+
+  const handleRefresh = () => {
+    void fetchSnapshot(snapshot.metadata.symbol as SupportedIvSymbol);
+  };
+
+  const handleSymbolChange = (symbol: SupportedIvSymbol) => {
+    if (symbol === snapshot.metadata.symbol) return;
+    void fetchSnapshot(symbol);
+  };
+
+  const handleExpirySelect = (expiry: string) => {
+    setSelectedExpiry(expiry);
+    setSelectedMoneyness(null);
   };
 
   const handleHeatmapCellClick = (expiry: string) => {
-    setSelectedExpiry(expiry);
+    handleExpirySelect(expiry);
     setActiveTab('smile');
+  };
+
+  const handleTermPointClick = (expiry: string) => {
+    handleExpirySelect(expiry);
+  };
+
+  const handleMoneynessSelect = (moneyness: number) => {
+    setSelectedMoneyness(moneyness);
   };
 
   const chartLabels = {
@@ -135,18 +205,27 @@ export function ImpliedVolDashboard({
       })
     : t('impliedVol.tabs.smile');
 
-
-  const statusBar = <ImpliedVolStatusBar metadata={snapshot.metadata} />;
+  const statusBar = (
+    <ImpliedVolStatusBar
+      metadata={snapshot.metadata}
+      lastRefreshedAt={lastRefreshedAt}
+      locale={locale}
+    />
+  );
 
   const toolbar = (
     <ImpliedVolToolbar
       snapshot={snapshot}
+      supportedSymbols={[...getSupportedIvSymbols()]}
       selectedExpiry={selectedExpiry}
-      onExpiryChange={setSelectedExpiry}
+      onExpiryChange={handleExpirySelect}
+      onSymbolChange={handleSymbolChange}
       onRefresh={handleRefresh}
       isLoading={loadState === 'loading'}
       isFocused={isFocused}
       onToggleFocus={toggleFocus}
+      lastRefreshedAt={lastRefreshedAt}
+      locale={locale}
     />
   );
 
@@ -159,6 +238,18 @@ export function ImpliedVolDashboard({
       data-testid="iv-dashboard-root"
       data-focused={isFocused ? 'true' : 'false'}
     >
+      {refreshSuccess && (
+        <div
+          className="absolute inset-x-0 top-0 z-40 px-4 pt-2"
+          role="status"
+          data-testid="iv-refresh-success"
+        >
+          <div className="rounded-lg border border-primary/30 bg-primary/10 px-3 py-2 text-sm text-primary">
+            {t('impliedVol.toolbar.refreshSuccess')}
+          </div>
+        </div>
+      )}
+
       {loadState === 'error' && errorMessage && (
         <div className="absolute inset-x-0 top-0 z-40 px-4 pt-2">
           <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive">
@@ -177,7 +268,13 @@ export function ImpliedVolDashboard({
           <ImpliedVolOverviewPanel
             snapshot={snapshot}
             selectedSlice={selectedSlice}
+            selectedExpiry={selectedExpiry}
+            selectedDte={selectedDte}
+            selectedMoneyness={selectedMoneyness}
+            ivYDomain={ivYDomain}
             onTabChange={setActiveTab}
+            onExpirySelect={handleHeatmapCellClick}
+            onTermPointClick={handleTermPointClick}
           />
         }
         smile={
@@ -199,7 +296,13 @@ export function ImpliedVolDashboard({
               emptyLabel={t('impliedVol.errors.noData')}
             >
               {selectedSlice && (
-                <ImpliedVolSmileChart slice={selectedSlice} labels={chartLabels} />
+                <ImpliedVolSmileChart
+                  slice={selectedSlice}
+                  labels={chartLabels}
+                  ivYDomain={ivYDomain}
+                  selectedMoneyness={selectedMoneyness}
+                  onPointClick={handleMoneynessSelect}
+                />
               )}
             </ChartPanel>
           </DashboardPanel>
@@ -222,35 +325,48 @@ export function ImpliedVolDashboard({
               loadingLabel={t('impliedVol.loading')}
               emptyLabel={t('impliedVol.errors.noData')}
             >
-              <ImpliedVolTermChart snapshot={snapshot} labels={termLabels} />
+              <ImpliedVolTermChart
+                snapshot={snapshot}
+                labels={termLabels}
+                ivYDomain={ivYDomain}
+                selectedExpiry={selectedExpiry}
+                onPointClick={handleTermPointClick}
+              />
             </ChartPanel>
           </DashboardPanel>
         }
         surface={
-          <DashboardPanel
-            title={t('impliedVol.tabs.surface')}
-            actions={
-              <ImpliedVolInfoIcon
-                content={t('impliedVol.tooltips.surface3d')}
-                label={t('impliedVol.tooltips.surface3d')}
-              />
-            }
-            className="h-full"
-            bodyClassName="relative flex min-h-0 flex-1 flex-col p-2"
-          >
-            <ChartPanel
-              isLoading={loadState === 'loading'}
-              hasData={snapshot.slices.length > 0}
-              loadingLabel={t('impliedVol.loading')}
-              emptyLabel={t('impliedVol.errors.noData')}
+          activeTab === 'surface' ? (
+            <DashboardPanel
+              title={t('impliedVol.tabs.surface')}
+              actions={
+                <ImpliedVolInfoIcon
+                  content={t('impliedVol.tooltips.surface3d')}
+                  label={t('impliedVol.tooltips.surface3d')}
+                />
+              }
+              className="h-full"
+              bodyClassName="relative flex min-h-0 flex-1 flex-col p-2"
             >
-              <ImpliedVolSurfaceChart
-                snapshot={snapshot}
-                labels={surfaceLabels}
-                onExpirySelect={handleHeatmapCellClick}
-              />
-            </ChartPanel>
-          </DashboardPanel>
+              <ChartPanel
+                isLoading={loadState === 'loading'}
+                hasData={snapshot.slices.length > 0}
+                loadingLabel={t('impliedVol.loading')}
+                emptyLabel={t('impliedVol.errors.noData')}
+              >
+                <ImpliedVolSurfaceChart
+                  snapshot={snapshot}
+                  labels={surfaceLabels}
+                  ivRange={ivYDomain}
+                  selectedExpiry={selectedExpiry}
+                  selectedDte={selectedDte}
+                  selectedMoneyness={selectedMoneyness}
+                  onExpirySelect={handleHeatmapCellClick}
+                  mount3d
+                />
+              </ChartPanel>
+            </DashboardPanel>
+          ) : null
         }
         chain={
           <ChartPanel
@@ -263,6 +379,8 @@ export function ImpliedVolDashboard({
               <ImpliedVolChainPanel
                 slice={selectedSlice}
                 symbol={snapshot.metadata.symbol}
+                selectedMoneyness={selectedMoneyness}
+                onMoneynessSelect={handleMoneynessSelect}
                 className="h-full"
               />
             )}

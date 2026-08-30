@@ -24,13 +24,17 @@
     "status": {
       "spot": "Spot",
       "snapshot": "Snapshot",
-      "delayed": "Delayed ~15m"
+      "delayed": "Delayed ~15m",
+      "fetchedAt": "Updated {time}",
+      "lastRefresh": "Last refresh {time}"
     },
     "toolbar": {
+      "symbol": "Symbol",
       "expiry": "Expiry",
       "refresh": "Refresh",
       "enterFocus": "Fullscreen",
-      "exitFocus": "Exit fullscreen"
+      "exitFocus": "Exit fullscreen",
+      "refreshSuccess": "Data refreshed."
     },
     "overview": {
       "symbol": "Symbol",
@@ -38,6 +42,8 @@
       "asOf": "Snapshot date",
       "expiries": "Expiries",
       "atmRange": "ATM IV range",
+      "atmIv": "ATM IV (expiry)",
+      "skew25d": "25Δ skew (proxy)",
       "indicators": "Indicators",
       "expiryHint": "Expiry: {expiry}",
       "termHint": "{count} maturities · range {min}–{max}%",
@@ -50,7 +56,11 @@
       "title": "Implied vol surface",
       "loading3d": "Loading 3D surface…",
       "rotationOn": "Enable auto-rotation",
-      "rotationOff": "Stop auto-rotation"
+      "rotationOff": "Stop auto-rotation",
+      "rotationSlow": "Slow rotation",
+      "rotationMedium": "Medium rotation",
+      "resetCamera": "Reset camera",
+      "mobileFallback": "3D view hidden on small screens — use the heatmap below."
     },
     "chain": {
       "title": "Options chain · {symbol} · {expiry} ({days}d)",
@@ -61,6 +71,11 @@
       "atmNote": "ATM",
       "otmCall": "OTM call",
       "otmPut": "OTM put",
+      "filterAll": "All",
+      "filterOtmCalls": "OTM calls",
+      "filterOtmPuts": "OTM puts",
+      "sortAsc": "ascending sort",
+      "sortDesc": "descending sort",
       "empty": "No IV points for this expiry."
     },
     "term": {
@@ -84,7 +99,10 @@
     "about": {
       "methodologyTitle": "Methodology",
       "methodologyBody": "Options chain via yfinance, SVI/SSVI calibration (ivsurface package), offline JSON export served by the Next.js API. Refresh reloads the cached snapshot.",
-      "linksTitle": "Links"
+      "pipelineTitle": "Data pipeline",
+      "pipelineSteps": "Yahoo Finance (yfinance) → options chain → SSVI calibration (ivsurface) → JSON export → Next.js API → React dashboard.",
+      "linksTitle": "Links",
+      "knowledgeLink": "Implied volatility (knowledge)"
     },
     "links": {
       "backToHub": "Dashboards",
@@ -100,7 +118,8 @@
       "heatmap": "IV map: moneyness (horizontal) × days to expiry (vertical). Color = IV level.",
       "surface3d": "3D IV surface: auto-rotation around the vertical axis. Top-right button toggles it. Click a point (when rotation is off) to select an expiry.",
       "chain": "Strike and IV grid for the selected expiry (Yahoo snapshot data).",
-      "overviewStats": "Key snapshot metrics: symbol, spot, expiry count and ATM IV range."
+      "overviewStats": "Key snapshot metrics: symbol, spot, expiry count and ATM IV range.",
+      "skew25d": "Skew proxy: IV difference between ~0.9 moneyness (puts) and ~1.1 (calls), in percentage points."
     },
     "errors": {
       "title": "Error",

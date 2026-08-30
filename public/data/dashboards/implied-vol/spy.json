@@ -3,6 +3,7 @@
     "symbol": "SPY",
     "spot": 580,
     "asOf": "2026-08-30",
+    "fetchedAt": "2026-08-30T14:00:00.000Z",
     "source": "Yahoo Finance (delayed, demo snapshot)",
     "sourceDisclaimer": "Educational demo only. Data may be delayed ~15 min. Not investment advice."
   },

@@ -24,6 +24,15 @@ interface ImpliedVolDashboardShellProps {
   isFocused?: boolean;
 }
 
+const TAB_LABEL_KEYS: Record<ImpliedVolTab, string> = {
+  overview: 'impliedVol.tabs.overview',
+  smile: 'impliedVol.tabs.smile',
+  term: 'impliedVol.tabs.term',
+  surface: 'impliedVol.tabs.surface',
+  chain: 'impliedVol.tabs.chain',
+  about: 'impliedVol.tabs.about',
+};
+
 export function ImpliedVolDashboardShell({
   statusBar,
   toolbar,
@@ -38,6 +47,7 @@ export function ImpliedVolDashboardShell({
   isFocused = false,
 }: ImpliedVolDashboardShellProps): React.JSX.Element {
   const t = useTranslations('dashboards');
+  const activeTabLabel = t(TAB_LABEL_KEYS[activeTab]);
 
   return (
     <TooltipProvider delayDuration={200}>
@@ -98,6 +108,15 @@ export function ImpliedVolDashboardShell({
               </TabsList>
               <div className="shrink-0">{toolbar}</div>
             </div>
+          </div>
+
+          <div
+            className="sr-only"
+            aria-live="polite"
+            aria-atomic="true"
+            data-testid="iv-tab-announcer"
+          >
+            {activeTabLabel}
           </div>
 
           <div className="relative min-h-0 flex-1 overflow-hidden">

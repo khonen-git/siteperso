@@ -25,6 +25,19 @@ export function ImpliedVolAboutPanel(): React.JSX.Element {
         <p className="text-sm text-muted-foreground">{t('impliedVol.about.methodologyBody')}</p>
       </section>
 
+      <section className="space-y-3" data-testid="iv-about-pipeline">
+        <h2 className="text-sm font-semibold">{t('impliedVol.about.pipelineTitle')}</h2>
+        <p className="text-sm text-muted-foreground">{t('impliedVol.about.pipelineSteps')}</p>
+        <pre className="overflow-x-auto rounded-lg border bg-muted/30 p-3 text-[11px] leading-relaxed text-muted-foreground">
+          {`flowchart LR
+  A[Yahoo Finance] --> B[yfinance chain]
+  B --> C[SSVI calibration]
+  C --> D[JSON snapshot]
+  D --> E[Next.js API]
+  E --> F[Dashboard]`}
+        </pre>
+      </section>
+
       <section className="space-y-2">
         <h2 className="text-sm font-semibold">{t('impliedVol.about.linksTitle')}</h2>
         <div className="flex flex-wrap gap-2">
@@ -33,6 +46,11 @@ export function ImpliedVolAboutPanel(): React.JSX.Element {
               <Link href={`/projects/${entry.projectSlug}`}>{t('impliedVol.links.project')}</Link>
             </Button>
           )}
+          <Button variant="secondary" size="sm" asChild>
+            <Link href="/knowledge/statistics/inference/statistical-tests">
+              {t('impliedVol.about.knowledgeLink')}
+            </Link>
+          </Button>
           {entry?.githubUrl && (
             <Button variant="outline" size="sm" asChild>
               <a href={entry.githubUrl} target="_blank" rel="noopener noreferrer">

@@ -29,7 +29,13 @@ export default async function ImpliedVolPage({
   }
 
   return (
-    <Suspense fallback={<div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">…</div>}>
+    <Suspense
+      fallback={
+        <div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">
+          …
+        </div>
+      }
+    >
       <ImpliedVolDashboard initialSnapshot={snapshot} />
     </Suspense>
   );
