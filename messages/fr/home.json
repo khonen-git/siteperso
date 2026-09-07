@@ -1,8 +1,8 @@
 {
   "hero": {
-    "eyebrow": "Data & quantitatif",
+    "eyebrow": "Data science & finance quantitative",
     "headline": "Des outils data et des modèles pour comprendre les marchés.",
-    "subheadline": "Dashboards interactifs, pipelines de recherche ML et documentation — projets personnels depuis 2025.",
+    "subheadline": "Dashboards interactifs, pipelines machine learning end to end et notes de recherche — Consultez l'ensemble de mes réalisations tout au long de mon parcours.",
     "ctaDashboard": "Dashboard IV (SPY)",
     "ctaProjects": "Projets",
     "previewLabel": "Volatilité implicite · SPY",
@@ -11,9 +11,9 @@
   },
   "bento": {
     "title": "Explorer",
-    "lead": "Projets phares, knowledge et notes de recherche.",
-    "knowledgeTitle": "Knowledge",
-    "knowledgeDescription": "Synthèse personnelle : probabilités, stats, ML, finance quantitative et ingénierie.",
+    "lead": "Mes projets phares, mon répertoire de connaissances et mes notes de recherche.",
+    "knowledgeTitle": "Connaissances",
+    "knowledgeDescription": "Synthèse & répertoire de connaissances personnelles : maths, probabilités, stats, machine learning, finance quantitative et ingénierie logiciel et bien plus.",
     "knowledgeCta": "Parcourir le répertoire",
     "blogLabel": "Dernière note",
     "blogCta": "Lire l'article",

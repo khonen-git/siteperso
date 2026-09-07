@@ -1,19 +1,18 @@
 import * as React from 'react';
 import { setRequestLocale } from 'next-intl/server';
-import { HomeHero } from '@/components/sections/home/HomeHero';
-import { HomeBento } from '@/components/sections/home/HomeBento';
-import { getBlogPosts } from '@/lib/blog/content';
-import { getProjects } from '@/lib/projects/content';
-import { routing } from '@/i18n/routing';
 import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
+import { HomePage } from '@/components/sections/home/HomePage';
+import { getBlogPosts } from '@/lib/blog/content';
 import { getImpliedVolSnapshot } from '@/lib/dashboards/implied-vol.server';
+import { getProjects } from '@/lib/projects/content';
+import { routing } from '@/i18n/routing';
 import type { ImpliedVolSnapshot } from '@/types/dashboards/implied-vol';
 import type { Project } from '@/types/project';
 
 const FEATURED_PROJECT_SLUGS = ['financial-ml-lab', 'implied-volatility-surface'] as const;
 
-type HomePageProps = {
+type PageProps = {
   params: Promise<{ locale: string }>;
 };
 
@@ -31,7 +30,7 @@ function pickFeaturedProjects(projects: Project[]): Project[] {
   );
 }
 
-export default async function Home({ params }: HomePageProps): Promise<React.JSX.Element> {
+export default async function Home({ params }: PageProps): Promise<React.JSX.Element> {
   const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {
@@ -46,9 +45,6 @@ export default async function Home({ params }: HomePageProps): Promise<React.JSX
   const ivSnapshot = loadIvSnapshot();
 
   return (
-    <>
-      <HomeHero ivSnapshot={ivSnapshot} />
-      <HomeBento featuredProjects={featuredProjects} latestBlog={latestBlog} />
-    </>
+    <HomePage featuredProjects={featuredProjects} latestBlog={latestBlog} ivSnapshot={ivSnapshot} />
   );
 }
