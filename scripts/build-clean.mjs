@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 /**
- * Windows-safe production build: free dev ports, remove .next, then next build.
- * Avoids EPERM/ENOENT on .next when dev server or stale Node processes hold locks.
+ * Production build wrapper.
+ * - Windows local: isolated distDir `.next-build` so a locked `.next/trace` (dev/IDE)
+ *   cannot block the build (EPERM/ENOENT).
+ * - Vercel / non-Windows: standard `.next` (Next.js / Vercel default).
  */
 import { execSync, spawnSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -93,11 +95,13 @@ if (!skipClean) {
   Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 800);
 }
 
-const buildDir = path.join(root, '.next-build');
 const cacheDir = path.join(root, 'node_modules', '.cache');
 
-// Production build uses an isolated dist dir so a locked `.next/trace` (dev / IDE) cannot block CI.
-const distDirName = '.next-build';
+// Isolate dist only on Windows outside Vercel; CI/Vercel must emit `.next`.
+const useIsolatedDist = process.platform === 'win32' && !process.env.VERCEL;
+const distDirName = useIsolatedDist ? '.next-build' : '.next';
+const buildDir = path.join(root, distDirName);
+
 if (!skipClean) {
   if (!rmDirWithRetry(buildDir)) {
     console.warn(`Could not fully remove ${distDirName} — retrying after ACL reset…`);
